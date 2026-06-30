@@ -1,0 +1,1178 @@
+[data-md-color-primary="indigo"] {
+  --md-primary-fg-color:        #1D4F91;
+  --md-primary-fg-color--light: #3a6cae;
+  --md-primary-fg-color--dark:  #163b6e;
+}
+[data-md-color-accent="indigo"] {
+  --md-accent-fg-color:              #2c7fc0;
+  --md-accent-fg-color--transparent: rgba(124, 203, 238, 0.18);
+}
+[data-md-color-scheme="default"] { --md-typeset-a-color: #1D4F91; --md-footer-bg-color: #1D4F91; --md-footer-bg-color--dark: #163b6e; }
+[data-md-color-scheme="slate"]   { --md-primary-fg-color: #2f6cb0; --md-typeset-a-color: #7CCBEE; --md-footer-bg-color: #163b6e; --md-footer-bg-color--dark: #11294d; }
+
+/* Sayfa başlıkları (H1): tema varsayılanı 300 (ince) — site diliyle uyumlu, daha kalın.
+   Hero kendi kuralını korur (aşağıda tanımlı, kaynakta sonra geldiği için kazanır). */
+.md-typeset h1 { font-weight: 600; color: var(--md-default-fg-color); }
+
+/* Bölüm başlıkları (H2): tema varsayılanı ince/sönük — site genelinde daha
+   belirgin: büyük, kalın, ayırıcı alt çizgi. */
+.md-typeset h2 {
+  font-weight: 700;
+  font-size: 1.45rem;
+  margin-top: 2.6rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid rgba(124, 203, 238, 0.55);
+}
+/* Alt başlıklar (H3): kalın + marka mavisi → gövde metninden net ayrışır.
+   Ana sayfadaki adım kartlarının kendi kuralı (.staj-step h3) kaynakta sonra
+   geldiği için orada baskın kalır; o tasarım korunur. */
+.md-typeset h3 {
+  font-weight: 700;
+  font-size: 1.12rem;
+  color: var(--md-primary-fg-color);
+}
+
+.md-header { border-bottom: 3px solid #7CCBEE; }
+.md-tabs   { background-color: var(--md-primary-fg-color--dark); }
+.md-footer { border-top: 3px solid #7CCBEE; }
+
+.md-header__button.md-logo {
+  display: inline-flex !important;   
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 50%;
+  padding: 0.18rem;
+  margin-right: 0.4rem;
+}
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 1.6rem;
+  width: 1.6rem;
+}
+
+.staj-hero {
+  background: #1D4F91;
+  color: #fff;
+  border-radius: 6px;
+  padding: 2.4rem 2rem 2.6rem;
+  margin: 0 0 2.2rem;
+}
+.staj-hero__eyebrow {
+  color: #7CCBEE;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+.staj-hero h1 {
+  color: #fff;
+  font-size: 2.1rem;
+  line-height: 1.15;
+  font-weight: 700;
+  margin: 0 0 0.6rem;
+}
+.staj-hero h1 .headerlink { display: none; }
+.staj-hero__sub {
+  color: #d7e6f4;
+  font-size: 1rem;
+  max-width: 42rem;
+  margin: 0 0 1.4rem;
+}
+
+.staj-hero .md-button {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+  margin: 0.2rem 0.4rem 0.2rem 0;
+}
+.staj-hero .md-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+  color: #fff;
+}
+.staj-hero .md-button--primary {
+  background: #7CCBEE;
+  border-color: #7CCBEE;
+  color: #0e2c52;
+}
+.staj-hero .md-button--primary:hover {
+  background: #9bd9f2;
+  border-color: #9bd9f2;
+  color: #0e2c52;
+}
+
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid.cards > :is(.card, li) {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.3rem;
+  transition: border-color 120ms, box-shadow 120ms, transform 100ms;
+}
+.md-typeset .grid.cards > ul > li:hover {
+  border-color: #7CCBEE;
+  box-shadow: 0 4px 14px rgba(29, 79, 145, 0.12);
+  transform: translateY(-2px);
+}
+
+/* ── İkon stilleri ────────────────────────────────────────────────
+   Kart ikonları (.grid.cards içindeki .lg ikonlar): marka rengi + "chip" zemin.
+   Yalnızca .lg taşıyan kart ikonlarını hedefler → satır içi ikonlara dokunmaz. */
+.md-typeset .grid.cards .twemoji.lg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-right: 0.5rem;
+  background: rgba(29, 79, 145, 0.08);
+  border-radius: 0.45rem;
+  vertical-align: middle;
+}
+.md-typeset .grid.cards .twemoji.lg svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: #1D4F91;
+}
+[data-md-color-scheme="slate"] .md-typeset .grid.cards .twemoji.lg {
+  background: rgba(124, 203, 238, 0.12);
+}
+[data-md-color-scheme="slate"] .md-typeset .grid.cards .twemoji.lg svg { fill: #7CCBEE; }
+
+/* Satır içi dosya/form ikonları (tablo + indirme linkleri + kayıt linki):
+   chip YOK; link rengiyle aynı markaya boyanır → metne yapışık koyu glif gider. */
+.md-typeset .twemoji.staj-fileicon svg { fill: #1D4F91; }
+[data-md-color-scheme="slate"] .md-typeset .twemoji.staj-fileicon svg { fill: #7CCBEE; }
+
+.staj-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin: 0.6rem 0 2rem;
+}
+.staj-step {
+  position: relative;
+  overflow: hidden;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-top: 4px solid #1D4F91;
+  border-radius: 5px;
+  padding: 1.1rem 1.2rem 0.6rem;
+}
+.staj-step__num {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.7rem;
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(29, 79, 145, 0.08);
+}
+[data-md-color-scheme="slate"] .staj-step__num { color: rgba(124, 203, 238, 0.12); }
+.staj-step__pill {
+  display: inline-block;
+  background: #1D4F91;
+  color: #fff;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  margin-bottom: 0.6rem;
+}
+.staj-step h3,
+.staj-step__title {
+  margin: 0.1rem 0 0.5rem;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--md-default-fg-color);
+}
+.staj-step ul { margin: 0 0 0.4rem; }
+.staj-step .headerlink { display: none; }
+
+.staj-takvim {
+  list-style: none;
+  margin: 0.4rem 0 2.2rem;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.staj-takvim__item {
+  padding: 0.7rem 0.95rem;
+  line-height: 1.5;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 4px solid #1D4F91;
+  border-radius: 5px;
+  transition: border-color 120ms, box-shadow 120ms;
+}
+.staj-takvim__item:hover {
+  border-color: #7CCBEE;
+  box-shadow: 0 3px 12px rgba(29, 79, 145, 0.10);
+}
+
+.staj-takvim__label { font-weight: 700; color: var(--md-default-fg-color); }
+.staj-takvim__date  { color: #1D4F91; font-variant-numeric: tabular-nums; }
+.staj-takvim__date::before {
+  content: "—";
+  margin: 0 0.45rem;
+  color: var(--md-default-fg-color--light);
+}
+/* Geçici/tahmini tarih alt notu (settings.yml'de takvim girdisi `notu:` ile) */
+.staj-takvim__note {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--md-default-fg-color--light);
+}
+[data-md-color-scheme="slate"] .staj-takvim__date { color: #7CCBEE; }
+
+.staj-takvim__item--akademik { border-left-color: #1D4F91; }  
+.staj-takvim__item--staj     { border-left-color: #2c7fc0; }  
+.staj-takvim__item--teslim   { border-left-color: #d4a017; }  
+.staj-takvim__item--tatil    { border-left-color: #5a9e6f; }  
+
+.staj-contact {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin: 0.7rem 0 1.4rem;
+}
+.staj-contact__card {
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-top: 4px solid #1D4F91;
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem 1.2rem;
+  transition: border-color 120ms, box-shadow 120ms, transform 100ms;
+}
+.staj-contact__card:hover {
+  border-color: #7CCBEE;
+  box-shadow: 0 4px 14px rgba(29, 79, 145, 0.12);
+  transform: translateY(-2px);
+}
+.staj-contact__card--primary {
+  border-top-color: #7CCBEE;
+  background: rgba(124, 203, 238, 0.07);
+}
+.staj-contact__role {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #1D4F91;
+  margin-bottom: 0.45rem;
+}
+[data-md-color-scheme="slate"] .staj-contact__role { color: #7CCBEE; }
+.staj-contact__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 0.1rem;
+  color: var(--md-default-fg-color);
+}
+.staj-contact__note {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 0.7rem;
+}
+.md-typeset .staj-contact__mail {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* ── Kutu (admonition) markerları ─────────────────────────────────
+   Tüm tipler tek aile (MDI outline); anlam rengi Material'dan korunur.
+   tip ikonu artık gizlenmiyor → her kutuda işaret var. doldurulacak
+   kutusu --note değişkenini miras aldığı için otomatik aynı stile girer. */
+:root {
+  --md-admonition-icon--tip:      url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M11,18H13V15.87C14.73,15.43 16,13.86 16,12A4,4 0 0,0 12,8A4,4 0 0,0 8,12C8,13.86 9.27,15.43 11,15.87V18Z'/></svg>");
+  --md-admonition-icon--note:     url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M15 3H5A2 2 0 0 0 3 5V19A2 2 0 0 0 5 21H19A2 2 0 0 0 21 19V9L15 3M19 19H5V5H14V10H19M17 14H7V12H17M14 17H7V15H14'/></svg>");
+  --md-admonition-icon--info:     url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z'/></svg>");
+  --md-admonition-icon--warning:  url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12,2L1,21H23M12,6L19.53,19H4.47M11,10V14H13V10M11,16V18H13V16'/></svg>");
+  --md-admonition-icon--danger:   url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8.27,3L3,8.27V15.73L8.27,21H15.73C17.5,19.24 21,15.73 21,15.73V8.27L15.73,3M9.1,5H14.9L19,9.1V14.9L14.9,19H9.1L5,14.9V9.1M11,15H13V17H11V15M11,7H13V13H11V7'/></svg>");
+  --md-admonition-icon--question: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z'/></svg>");
+}
+
+.staj-results {
+  max-width: 30rem;
+  margin: 2rem auto;
+  padding: 2.2rem 2rem 2rem;
+  text-align: center;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-top: 4px solid #1D4F91;
+  border-radius: 10px;
+  box-shadow: 0 6px 22px rgba(29, 79, 145, 0.08);
+}
+.md-typeset .staj-results > * { margin: 0.55rem 0; }
+.md-typeset .staj-results > :first-child { margin-top: 0; }
+.md-typeset .staj-results > :last-child { margin-bottom: 0; }
+.staj-results .staj-results__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  background: rgba(29, 79, 145, 0.08);
+  border-radius: 0.9rem;
+}
+.staj-results .staj-results__icon svg {
+  width: 2.4rem;
+  height: 2.4rem;
+  fill: #1D4F91;
+}
+[data-md-color-scheme="slate"] .staj-results .staj-results__icon { background: rgba(124, 203, 238, 0.12); }
+[data-md-color-scheme="slate"] .staj-results .staj-results__icon svg { fill: #7CCBEE; }
+.md-typeset .staj-results .md-button--primary {
+  background: #1D4F91;
+  border-color: #1D4F91;
+}
+.md-typeset .staj-results .md-button--primary:hover {
+  background: #163b6e;
+  border-color: #163b6e;
+}
+
+.md-typeset ul.staj-people {
+  list-style: none;
+  margin: 0.6rem 0 1.4rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.7rem;
+}
+.md-typeset ul.staj-people > li.staj-person {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 3px solid #7CCBEE;
+  border-radius: 5px;
+}
+.staj-person__name { font-weight: 700; color: var(--md-default-fg-color); }
+.md-typeset a.staj-person__mail { font-size: 0.82rem; overflow-wrap: anywhere; }
+/* Mail linkleri gövde-link degrade çizgisinden hariç tutulduğundan kendi :focus-visible halkaları (router kartı deseniyle aynı) */
+.md-typeset .staj-contact__mail:focus-visible,
+.md-typeset a.staj-person__mail:focus-visible { outline: none; border-radius: 4px; box-shadow: 0 0 0 3px rgba(124, 203, 238, 0.55); }
+
+.staj-deadline {
+  background: #1D4F91;
+  border-left: 5px solid #7CCBEE;
+  border-radius: 8px;
+  padding: 1.3rem 1.5rem;
+  margin: 1rem 0 1.6rem;
+}
+.staj-deadline__term {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7CCBEE;
+}
+.staj-deadline__label {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #cfe5f5;
+}
+.staj-deadline__date {
+  display: block;
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #fff;
+}
+.staj-deadline__note {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.74rem;
+  font-style: italic;
+  color: #cfe5f5;
+}
+.md-typeset .staj-deadline > p {
+  margin: 0.7rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #d7e6f4;
+}
+.md-typeset .staj-deadline a { color: #fff; text-decoration: underline; }
+
+.md-typeset .admonition.doldurulacak,
+.md-typeset details.doldurulacak { border-color: #d4a017; }
+.md-typeset .doldurulacak > .admonition-title,
+.md-typeset .doldurulacak > summary { background-color: rgba(212, 160, 23, 0.12); }
+.md-typeset .doldurulacak > .admonition-title::before,
+.md-typeset .doldurulacak > summary::before {
+  background-color: #d4a017;
+  -webkit-mask-image: var(--md-admonition-icon--note);
+          mask-image: var(--md-admonition-icon--note);
+}
+
+/* ============================================================================
+   DIRECTION C — "SICAK DERINLIK" (Warm Depth)
+   Append-only enhancement block. Brand korunur: navy #1D4F91, acik mavi #7CCBEE,
+   kritik/teslim aksani gold #d4a017. Tum yeni renkler icin slate (koyu tema)
+   karsiligi tanimlidir. Logo/muhur ASLA dekor olarak kullanilmaz; tum hero
+   dekoru saf CSS gradient + soyut SVG data-uri desenidir.
+   Daha gec-in-file oldugu icin esit ozgulukteki onceki kurallari ezer.
+   NOT (palet): item (2) dort gercekten ayrisan hue ister; kategori renkleri
+   tabandan (extra.css) miras alinir — staj #2c7fc0 (navy ailesi acik tonu) ve
+   tatil #5a9e6f (yesil) onceden tanimli, C bunlari surdurur. Gold KESINLIKLE
+   yalniz teslim/son-tarih semantigine ayrilmistir; dekoratif hicbir yerde yok.
+   ============================================================================ */
+
+/* (7) HOVER/TRANSITION POLISH — ortak yumusak gecis egrisi (~200ms cubic-bezier).
+   Mevcut 120ms gecisleri burada tek bir rafine micro-interaction diline tasiriz.
+   Not: kart kurali, mevcut yuksek-ozgulukteki selektoru birebir tekrarlar. */
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid.cards > :is(.card, li) {
+  transition: border-color 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.staj-step,
+.staj-contact__card,
+.staj-takvim__item {
+  transition: border-color 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* (1) HERO — duz navy blok yerine cok-duraktan derin gradient + yumusak ic parlama
+   + dusuk-opak soyut geometrik SVG dokusu. Eyebrow (#7CCBEE) ve beyaz H1 okunur kalir. */
+.staj-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 12px;
+  background:
+    radial-gradient(125% 145% at 12% 0%, rgba(124, 203, 238, 0.20) 0%, rgba(124, 203, 238, 0) 46%),
+    radial-gradient(120% 130% at 100% 100%, #163b6e 0%, rgba(22, 59, 110, 0) 55%),
+    linear-gradient(135deg, #225aa0 0%, #1D4F91 48%, #173f76 100%);
+  box-shadow: 0 18px 44px rgba(22, 59, 110, 0.28),
+              inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+/* Soyut geometrik desen (ince diyagonal cizgiler) — saf SVG data-uri, logo degil. */
+.staj-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'><path d='M-4 4L4 -4M0 44L44 0M40 48L48 40' stroke='%23ffffff' stroke-opacity='0.05' stroke-width='1.1' fill='none'/></svg>");
+}
+/* Yumusak ic parlama (ust-sol vurgu) — metnin arkasinda, dusuk opak. */
+.staj-hero::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -10%;
+  width: 60%;
+  height: 120%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(124, 203, 238, 0.16), rgba(124, 203, 238, 0));
+  filter: blur(8px);
+}
+[data-md-color-scheme="slate"] .staj-hero {
+  background:
+    radial-gradient(125% 145% at 12% 0%, rgba(124, 203, 238, 0.16) 0%, rgba(124, 203, 238, 0) 46%),
+    radial-gradient(120% 130% at 100% 100%, #0e2747 0%, rgba(14, 39, 71, 0) 55%),
+    linear-gradient(135deg, #1c4d8c 0%, #15396b 48%, #0f2c53 100%);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45),
+              inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.staj-hero__eyebrow,
+.staj-hero h1,
+.staj-hero__sub,
+.staj-hero .md-button { position: relative; z-index: 1; }
+.staj-hero .md-button {
+  transition: background-color 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              border-color 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              color 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* (6) TYPOGRAPHY RHYTHM — yalniz govde satir araligi. H2 alt cizgisi: ince, kisa, marka.
+   NOT: paragraf okuma-genisligi (max-width) KALDIRILDI — tam-genislik kutu/form ile ayni
+   sayfada ( or. teslim.md) duran paragraflari daraltip "ortadan kayma" hissi veriyordu. */
+.md-typeset > p,
+.md-typeset > ul,
+.md-typeset > ol { line-height: 1.72; }
+.md-typeset h2 {
+  border-bottom: none;
+  box-shadow: none;
+  position: relative;
+  padding-bottom: 0.42rem;
+}
+.md-typeset h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 3rem;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #1D4F91 0%, #7CCBEE 100%);
+}
+[data-md-color-scheme="slate"] .md-typeset h2::after {
+  background: linear-gradient(90deg, #7CCBEE 0%, #2f6cb0 100%);
+}
+
+/* (4) VERTICAL RHYTHM — mevcut ozel bloklarin kendisine cok hafif tintli "bant"
+   verir (yeni HTML yok). Donusumlu serin gri / soluk mavi; nazik kalir. */
+.staj-steps,
+.staj-takvim {
+  background: rgba(29, 79, 145, 0.035);
+  border-radius: 12px;
+  padding: 1.4rem 1.4rem 0.6rem;
+}
+.staj-takvim { padding-bottom: 1.4rem; }
+.staj-contact {
+  background: rgba(124, 203, 238, 0.06);
+  border-radius: 12px;
+  padding: 1.4rem;
+}
+[data-md-color-scheme="slate"] .staj-steps,
+[data-md-color-scheme="slate"] .staj-takvim {
+  background: rgba(124, 203, 238, 0.05);
+}
+[data-md-color-scheme="slate"] .staj-contact {
+  background: rgba(124, 203, 238, 0.07);
+}
+
+/* Kartlar — yumusak katmanli golge + nazik hover lift (Warm Depth dokunusu). */
+.staj-step,
+.staj-contact__card {
+  box-shadow: 0 1px 2px rgba(22, 59, 110, 0.06),
+              0 6px 18px rgba(22, 59, 110, 0.07);
+}
+.staj-step:hover,
+.staj-contact__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(22, 59, 110, 0.10),
+              0 14px 30px rgba(22, 59, 110, 0.14);
+}
+[data-md-color-scheme="slate"] .staj-step,
+[data-md-color-scheme="slate"] .staj-contact__card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.30),
+              0 6px 18px rgba(0, 0, 0, 0.34);
+}
+[data-md-color-scheme="slate"] .staj-step:hover,
+[data-md-color-scheme="slate"] .staj-contact__card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.40),
+              0 14px 30px rgba(0, 0, 0, 0.48);
+}
+
+/* (2) TIMELINE — 4 kategori gercekten ayrisir: belirgin sol bar + satir basinda
+   kategori ikonu (mask-image, dosyadaki admonition idiomu). Renkler farkli
+   ton/aciklikta. Ikon, bar rengini miras alir. ::before'da box-shadow/border-radius
+   sifirlanir ki maskeli glifin etrafinda hayalet bir sekil kalmasin. */
+.staj-takvim__item {
+  position: relative;
+  padding-left: 2.35rem;
+  border-left-width: 5px;
+}
+.staj-takvim__item::before {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  top: 0.92rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 0;
+  box-shadow: none;
+  background-color: #1D4F91;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-size: contain; mask-size: contain;
+}
+.staj-takvim__item:hover {
+  box-shadow: 0 3px 14px rgba(29, 79, 145, 0.12);
+  transform: translateX(2px);
+}
+
+/* Kategori ikonlari — anlamli, tutarli MDI cizgi setine gecildi (eski jenerik
+   admonition glifleri yerine): akademik=TAKVIM, staj=EVRAK CANTASI, teslim=UYARI,
+   tatil=GUNES. Hepsi inline data-uri mask; renk background-color'dan gelir. */
+/* Kategori 1 — Akademik (navy): takvim ikonu. */
+.staj-takvim__item--akademik { border-left-color: #1D4F91; }
+.staj-takvim__item--akademik::before {
+  background-color: #1D4F91;
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m0 16H5V8h14z'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m0 16H5V8h14z'/></svg>");
+}
+/* Kategori 2 — Staj (acik mavi): evrak cantasi (calisma donemi). */
+.staj-takvim__item--staj { border-left-color: #2c7fc0; }
+.staj-takvim__item--staj::before {
+  background-color: #2c7fc0;
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M10 4h4v2h-4zm10 15H4V8h16z'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M10 4h4v2h-4zm10 15H4V8h16z'/></svg>");
+}
+/* Kategori 3 — Teslim (GOLD, kritik): uyari ikonu — item 5 (gold) ile anlamca hizali. */
+.staj-takvim__item--teslim { border-left-color: #d4a017; }
+.staj-takvim__item--teslim::before {
+  background-color: #d4a017;
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2 1 21h22M12 6l7.53 13H4.47M11 10v4h2v-4m-2 6v2h2v-2'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2 1 21h22M12 6l7.53 13H4.47M11 10v4h2v-4m-2 6v2h2v-2'/></svg>");
+}
+/* Kategori 4 — Tatil (yesil): gunes (tatil/dinlenme). */
+.staj-takvim__item--tatil { border-left-color: #5a9e6f; }
+.staj-takvim__item--tatil::before {
+  background-color: #5a9e6f;
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42zM3.34 7l4.16-.35C6.9 7.16 6.36 7.78 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77c.14.77.41 1.55.83 2.27.42.74.96 1.36 1.55 1.87zM20.65 7l-1.77 3.79c-.14-.79-.41-1.56-.83-2.29-.42-.72-.95-1.35-1.55-1.86zm-.01 10-4.14.36c.59-.51 1.12-1.13 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42zM3.34 7l4.16-.35C6.9 7.16 6.36 7.78 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77c.14.77.41 1.55.83 2.27.42.74.96 1.36 1.55 1.87zM20.65 7l-1.77 3.79c-.14-.79-.41-1.56-.83-2.29-.42-.72-.95-1.35-1.55-1.86zm-.01 10-4.14.36c.59-.51 1.12-1.13 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z'/></svg>");
+}
+/* Slate: ayni kategori hue'lari koyu zeminde okunur tonlara cekilir. */
+[data-md-color-scheme="slate"] .staj-takvim__item--akademik { border-left-color: #5b93d6; }
+[data-md-color-scheme="slate"] .staj-takvim__item--akademik::before { background-color: #5b93d6; }
+[data-md-color-scheme="slate"] .staj-takvim__item--staj { border-left-color: #7CCBEE; }
+[data-md-color-scheme="slate"] .staj-takvim__item--staj::before { background-color: #7CCBEE; }
+[data-md-color-scheme="slate"] .staj-takvim__item--teslim { border-left-color: #e8b53a; }
+[data-md-color-scheme="slate"] .staj-takvim__item--teslim::before { background-color: #e8b53a; }
+[data-md-color-scheme="slate"] .staj-takvim__item--tatil { border-left-color: #79bf90; }
+[data-md-color-scheme="slate"] .staj-takvim__item--tatil::before { background-color: #79bf90; }
+
+/* (5) GOLD = "kritik / son teslim" — tutarli semantik aksan. Yalniz teslim satiri
+   ve .staj-deadline gold tasir. Deadline'a yumusak altin parlama eklenir. */
+.staj-takvim__item--teslim {
+  background:
+    linear-gradient(90deg, rgba(212, 160, 23, 0.07) 0%, rgba(212, 160, 23, 0) 60%),
+    var(--md-default-bg-color);
+}
+.staj-takvim__item--teslim:hover {
+  box-shadow: 0 3px 16px rgba(212, 160, 23, 0.22);
+}
+.staj-deadline {
+  position: relative;
+  background:
+    radial-gradient(120% 160% at 100% 0%, rgba(212, 160, 23, 0.22) 0%, rgba(212, 160, 23, 0) 52%),
+    linear-gradient(135deg, #225aa0 0%, #1D4F91 55%, #173f76 100%);
+  border-left: 5px solid #d4a017;
+  box-shadow: 0 10px 30px rgba(22, 59, 110, 0.24),
+              0 0 0 1px rgba(212, 160, 23, 0.30),
+              0 0 26px rgba(212, 160, 23, 0.16);
+}
+.staj-deadline__date { text-shadow: 0 1px 10px rgba(212, 160, 23, 0.30); }
+[data-md-color-scheme="slate"] .staj-takvim__item--teslim {
+  background:
+    linear-gradient(90deg, rgba(232, 181, 58, 0.10) 0%, rgba(232, 181, 58, 0) 60%),
+    var(--md-default-bg-color);
+}
+[data-md-color-scheme="slate"] .staj-deadline {
+  background:
+    radial-gradient(120% 160% at 100% 0%, rgba(232, 181, 58, 0.20) 0%, rgba(232, 181, 58, 0) 52%),
+    linear-gradient(135deg, #1c4d8c 0%, #15396b 55%, #0f2c53 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.42),
+              0 0 0 1px rgba(232, 181, 58, 0.34),
+              0 0 26px rgba(232, 181, 58, 0.18);
+}
+
+/* Erisilebilirlik: hareket azaltma tercihinde lift/transform sonlanir. */
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .grid.cards > ul > li,
+  .md-typeset .grid.cards > :is(.card, li),
+  .staj-step,
+  .staj-contact__card,
+  .staj-takvim__item {
+    transition: none;
+  }
+  .staj-step:hover,
+  .staj-contact__card:hover,
+  .staj-takvim__item:hover { transform: none; }
+}
+/* ===================== Direction C blok sonu ===================== */
+
+/* ============================================================================
+   TIKLANABILIR ADIM KARTLARI (anasayfa) — tum kart, "Detay" linkine yonlenir.
+   "Stretched-link" deseni: gorunur "Detay →" ipucu kalir; kart icindeki gercek
+   linkler (or. adim 3'teki "sonuc sayfasi") overlay'in ustunde tiklanir kalir.
+   ============================================================================ */
+.staj-step { cursor: pointer; }
+/* "Detay" linkinin ::after'i tum karti kaplar → karta her tiklayis o linke gider.
+   ONEMLI: link KENDISI position:relative OLMAMALI; aksi halde ::after linke gore
+   konumlanir (tum karti kaplamaz). .staj-step zaten position:relative → overlay ona
+   gore inset:0 ile tum karta yayilir. */
+.staj-step .staj-step__more::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+/* Kart icindeki diger gercek linkler overlay'in uzerinde → bagimsiz tiklanir. */
+.staj-step a:not(.staj-step__more) { position: relative; z-index: 2; }
+/* "Detay →" GORUNUR metni/oku kaldirildi (kullanici istegi). Link erisilebilirlik
+   icin DOM'da kalir; ::after overlay'i tum karti kaplamaya devam eder → kutu
+   tiklanabilir kalir. Sarmalayan paragraf da collapse edilir. */
+.staj-step p:has(> .staj-step__more) { margin: 0; height: 0; line-height: 0; overflow: hidden; }
+.staj-step .staj-step__more { font-size: 0; }
+/* Klavye erisilebilirligi: link odaktayken kart belirginlesir. */
+.staj-step:focus-within {
+  border-color: #7CCBEE;
+  box-shadow: 0 4px 14px rgba(29, 79, 145, 0.12);
+}
+/* ============================================================================
+   404 — markali "sayfa bulunamadi" sayfasi (overrides/404.html).
+   ============================================================================ */
+.md-typeset .staj-404 { max-width: 34rem; margin: 3rem auto; text-align: center; }
+.staj-404__code {
+  font-size: 6rem; font-weight: 800; line-height: 1; letter-spacing: -2px; margin: 0;
+  color: #1D4F91;
+  background: linear-gradient(135deg, #1D4F91 0%, #7CCBEE 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+[data-md-color-scheme="slate"] .staj-404__code { background: linear-gradient(135deg, #7CCBEE 0%, #2f6cb0 100%); -webkit-background-clip: text; background-clip: text; }
+.md-typeset .staj-404__title { margin: 0.2rem 0 0.6rem; }
+.md-typeset .staj-404__lead { color: var(--md-default-fg-color--light); }
+.staj-404__actions { margin: 1.4rem 0 0.6rem; }
+.md-typeset .staj-404__links {
+  list-style: none; margin: 1rem 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.3rem;
+}
+.md-typeset .staj-404__links li { margin: 0; }
+
+/* ============================================================================
+   ŞIKLIK TURU — degrade / renk-geçişi öncelikli rafine dokunuşlar.
+   Marka paleti içinde (navy #1D4F91 ↔ cyan #7CCBEE; gold YALNIZ deadline),
+   slate (koyu) karşılıkları tanımlı, kurumsal/sade kalır.
+   ============================================================================ */
+
+/* #1 Gradient footer — düz lacivert yerine hero'nun degrade dili + köşe ışıması */
+.md-footer-meta {
+  background:
+    radial-gradient(130% 240% at 0% 0%, rgba(124,203,238,0.16) 0%, rgba(124,203,238,0) 52%),
+    linear-gradient(135deg, #225aa0 0%, #1D4F91 55%, #163b6e 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+[data-md-color-scheme="slate"] .md-footer-meta {
+  background:
+    radial-gradient(130% 240% at 0% 0%, rgba(124,203,238,0.12) 0%, rgba(124,203,238,0) 52%),
+    linear-gradient(135deg, #1c4d8c 0%, #15396b 55%, #0f2c53 100%);
+}
+
+/* #5 Degrade kenar hairline'ları (header altı / footer üstü / tabs altı) — "ince metal tel" */
+.md-header {
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(90deg, #1D4F91 0%, #7CCBEE 50%, #1D4F91 100%) 1;
+}
+.md-footer {
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, #1D4F91 0%, #7CCBEE 50%, #1D4F91 100%) 1;
+}
+.md-tabs {
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, #163b6e 0%, #7CCBEE 50%, #163b6e 100%) 1;
+}
+[data-md-color-scheme="slate"] .md-header,
+[data-md-color-scheme="slate"] .md-footer {
+  border-image: linear-gradient(90deg, #11294d 0%, #7CCBEE 50%, #11294d 100%) 1;
+}
+
+/* #2 Degrade saç-teli <hr> — uçları şeffaf, ortası navy→cyan. (Şu an sayfalarda
+   `---` kullanılmıyor; ileride eklenirse otomatik devreye girer.) */
+.md-typeset hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(29,79,145,0) 0%, rgba(29,79,145,0.45) 50%, rgba(29,79,145,0) 100%);
+}
+[data-md-color-scheme="slate"] .md-typeset hr {
+  background: linear-gradient(90deg, rgba(124,203,238,0) 0%, rgba(124,203,238,0.45) 50%, rgba(124,203,238,0) 100%);
+}
+
+/* #3 Gövde linklerinde hover/odakta soldan dolan navy→cyan alt çizgi (özel linkler hariç) */
+.md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink):not(.staj-router__card) {
+  background-image: linear-gradient(90deg, #1D4F91 0%, #7CCBEE 100%);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 200ms ease;
+}
+.md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink):not(.staj-router__card):hover,
+.md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink):not(.staj-router__card):focus-visible {
+  background-size: 100% 2px;
+}
+[data-md-color-scheme="slate"] .md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink):not(.staj-router__card) {
+  background-image: linear-gradient(90deg, #7CCBEE 0%, #2f6cb0 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink):not(.staj-router__card) { transition: none; }
+}
+
+/* #4 Kart üst-kenarı: dinlenmede düz lacivert, HOVER'da navy→cyan degrade (marka kimliği korunur) */
+.staj-step:hover, .staj-contact__card:hover {
+  border-image: linear-gradient(90deg, #1D4F91 0%, #7CCBEE 100%) 1 / 4px 0 0 0;
+}
+[data-md-color-scheme="slate"] .staj-step:hover,
+[data-md-color-scheme="slate"] .staj-contact__card:hover {
+  border-image: linear-gradient(90deg, #7CCBEE 0%, #2f6cb0 100%) 1 / 4px 0 0 0;
+}
+
+/* #6 Kişi kartlarında (iletişim) solup giden degrade sol-ray; timeline çubukları ETKİLENMEZ */
+.md-typeset ul.staj-people > li.staj-person {
+  border-left: 3px solid transparent;
+  border-image: linear-gradient(180deg, #7CCBEE 0%, rgba(124,203,238,0.12) 100%) 1 / 0 0 0 3px;
+}
+[data-md-color-scheme="slate"] .md-typeset ul.staj-people > li.staj-person {
+  border-image: linear-gradient(180deg, #7CCBEE 0%, rgba(124,203,238,0.10) 100%) 1 / 0 0 0 3px;
+}
+
+/* #7 Bölüm bantlarında çok soluk köşe "ışıltısı" — bandın ARKA PLANINA radial degrade
+   (border-radius'a uyar, kart gölgelerini KIRPMAZ). Mevcut düz tinti degradeli sürümle ezer. */
+.staj-steps {
+  background:
+    radial-gradient(70% 95% at 95% 5%, rgba(124,203,238,0.14) 0%, rgba(124,203,238,0) 58%),
+    rgba(29,79,145,0.035);
+}
+.staj-takvim {
+  background:
+    radial-gradient(70% 95% at 5% 95%, rgba(124,203,238,0.14) 0%, rgba(124,203,238,0) 58%),
+    rgba(29,79,145,0.035);
+}
+.staj-contact {
+  background:
+    radial-gradient(70% 95% at 5% 5%, rgba(124,203,238,0.16) 0%, rgba(124,203,238,0) 58%),
+    rgba(124,203,238,0.06);
+}
+[data-md-color-scheme="slate"] .staj-steps {
+  background: radial-gradient(70% 95% at 95% 5%, rgba(124,203,238,0.10) 0%, rgba(124,203,238,0) 58%), rgba(124,203,238,0.05);
+}
+[data-md-color-scheme="slate"] .staj-takvim {
+  background: radial-gradient(70% 95% at 5% 95%, rgba(124,203,238,0.10) 0%, rgba(124,203,238,0) 58%), rgba(124,203,238,0.05);
+}
+[data-md-color-scheme="slate"] .staj-contact {
+  background: radial-gradient(70% 95% at 5% 5%, rgba(124,203,238,0.12) 0%, rgba(124,203,238,0) 58%), rgba(124,203,238,0.07);
+}
+
+/* #8 Dul/yetim satır kontrolü — başlıklar dengeli sarar, paragraflar düzgün (progressive) */
+.md-typeset h1, .md-typeset h2, .md-typeset h3,
+.staj-hero h1, .staj-step h3, .staj-step__title, .staj-contact__name, .staj-deadline__date {
+  text-wrap: balance;
+}
+.md-typeset p, .md-typeset li { text-wrap: pretty; }
+
+/* #9 Butonlarda yumuşak iki-katmanlı degrade odak halkası (:focus-visible — klavye) */
+.md-typeset .md-button:focus-visible,
+.staj-hero .md-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124,203,238,0.55), 0 0 0 6px rgba(29,79,145,0.18);
+}
+
+/* ============================================================================
+   GELİŞTİRME TURU 5 — iç sayfa yapısı + cila.
+   Durum-router, dikey süreç timeline, "Bir Bakışta" özet, anahtar-sayı blokları,
+   SSS marka rengi, okuma ölçüsü, masthead, "Sıradaki adım", a11y.
+   Marka içi: navy #1D4F91 / cyan #7CCBEE; gold YALNIZ teslim. Tam slate paritesi.
+   ============================================================================ */
+
+/* (1) SSS "question" kutuları → marka navy/cyan (Material varsayılan lime-yeşil
+   "tatil" semantiğiyle çakışıyordu; en çok ziyaret edilen sayfa). */
+.md-typeset .admonition.question,
+.md-typeset details.question { border-color: rgba(124, 203, 238, 0.55); }
+.md-typeset .question > .admonition-title,
+.md-typeset .question > summary { background-color: rgba(29, 79, 145, 0.06); }
+.md-typeset .question > .admonition-title::before,
+.md-typeset .question > summary::before { background-color: #1D4F91; }
+[data-md-color-scheme="slate"] .md-typeset .question > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .question > summary { background-color: rgba(124, 203, 238, 0.10); }
+[data-md-color-scheme="slate"] .md-typeset .question > .admonition-title::before,
+[data-md-color-scheme="slate"] .md-typeset .question > summary::before { background-color: #7CCBEE; }
+
+/* (2) [KALDIRILDI] Okuma ölçüsü (72ch) — metin sayfa genişliğini tam kullansın
+   diye geri alındı (paragraflar erken sarmıyor artık). */
+
+/* (3) Soluk notlar AA üstüne + dokunma hedefleri 44px. */
+:root { --staj-note: rgba(0, 0, 0, 0.62); }
+[data-md-color-scheme="slate"] { --staj-note: rgba(255, 255, 255, 0.62); }
+.staj-takvim__note, .staj-contact__note { color: var(--staj-note); }
+.staj-hero .md-button { min-height: 44px; }
+
+/* (4) Masthead — hero H1 akışkan ölçek + eyebrow altı ince marka cetveli.
+   (Yalnız font-size/line-height/letter-spacing ezilir; 69-75'teki diğerleri kalır.) */
+.staj-hero h1 { font-size: clamp(2.1rem, 1.4rem + 2vw, 2.6rem); line-height: 1.08; letter-spacing: -0.01em; }
+.staj-hero__eyebrow { position: relative; }
+.staj-hero__eyebrow::after {
+  content: ""; display: block; width: 2.4rem; height: 2px;
+  margin-top: 0.5rem; background: #7CCBEE;
+}
+
+/* (5) "Sıradaki adım" yönlendirme kutusu (terminal sayfa sonları). */
+.md-typeset .staj-next {
+  margin: 2.4rem 0 0; padding: 0.9rem 1.1rem;
+  border-left: 4px solid #7CCBEE; background: rgba(124, 203, 238, 0.06);
+  border-radius: 0 6px 6px 0;
+}
+.md-typeset .staj-next > :last-child { margin-bottom: 0; }
+.md-typeset .staj-next__label {
+  display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase; color: #1D4F91; margin-bottom: 0.25rem;
+}
+[data-md-color-scheme="slate"] .md-typeset .staj-next { background: rgba(124, 203, 238, 0.07); }
+[data-md-color-scheme="slate"] .md-typeset .staj-next__label { color: #7CCBEE; }
+
+/* (6) "Bir Bakışta" özet admonition — nötr navy (.doldurulacak deseninin kopyası).
+   Alarm tonuna (warning/danger) kaçmadan sakin özet. */
+:root {
+  --md-admonition-icon--ozet: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 5h2v2H3zm0 6h2v2H3zm0 6h2v2H3zM7 5h14v2H7zm0 6h14v2H7zm0 6h14v2H7z'/></svg>");
+}
+.md-typeset .admonition.ozet,
+.md-typeset details.ozet { border-color: #1D4F91; }
+.md-typeset .ozet > .admonition-title,
+.md-typeset .ozet > summary { background-color: rgba(29, 79, 145, 0.10); }
+.md-typeset .ozet > .admonition-title::before,
+.md-typeset .ozet > summary::before {
+  background-color: #1D4F91;
+  -webkit-mask-image: var(--md-admonition-icon--ozet);
+          mask-image: var(--md-admonition-icon--ozet);
+}
+[data-md-color-scheme="slate"] .md-typeset .admonition.ozet,
+[data-md-color-scheme="slate"] .md-typeset details.ozet { border-color: #7CCBEE; }
+[data-md-color-scheme="slate"] .md-typeset .ozet > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .ozet > summary { background-color: rgba(124, 203, 238, 0.10); }
+[data-md-color-scheme="slate"] .md-typeset .ozet > .admonition-title::before,
+[data-md-color-scheme="slate"] .md-typeset .ozet > summary::before { background-color: #7CCBEE; }
+
+/* (7) Anahtar-sayı blokları (40 iş günü / 15 üretim / ≤20 sayfa). Navy, gold YOK. */
+.md-typeset ul.staj-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.8rem; margin: 1rem 0 1.6rem; padding: 0; list-style: none;
+}
+.md-typeset ul.staj-stats > li {
+  margin: 0; background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest); border-top: 3px solid #1D4F91;
+  border-radius: 6px; padding: 0.9rem 1rem;
+}
+.staj-stat__num {
+  display: block; font-size: 2.2rem; font-weight: 800; line-height: 1.05;
+  color: #1D4F91; font-variant-numeric: tabular-nums;
+}
+.staj-stat__label { display: block; font-size: 0.8rem; color: var(--staj-note); margin-top: 0.2rem; }
+[data-md-color-scheme="slate"] .staj-stat__num { color: #7CCBEE; }
+
+/* (8) Süreç sayfası dikey adım-timeline (G1) — sol-ray idiomunun dikey uzantısı. */
+.staj-flow { position: relative; padding-left: 2.4rem; }
+.staj-flow::before {
+  content: ""; position: absolute; left: calc(1.175rem - 1px); top: 1.1rem; bottom: 1rem;
+  width: 2px; background: linear-gradient(180deg, #1D4F91, #7CCBEE);
+}
+.staj-flow > h2 { position: relative; }
+.staj-flow > h2::before {
+  content: ""; position: absolute; left: -1.775rem; top: 0.3rem;
+  width: 1.1rem; height: 1.1rem; border-radius: 50%;
+  background: var(--md-default-bg-color); border: 3px solid #1D4F91;
+  box-shadow: 0 0 0 4px var(--md-default-bg-color);
+}
+[data-md-color-scheme="slate"] .staj-flow > h2::before { border-color: #7CCBEE; }
+
+/* (9) Durum-router (anasayfa) — öğrencinin DURUMUNA göre 3 kapı. Tam-kart link;
+   adım kartlarından (ghost rakam/pill) görsel olarak AYRI, daha hafif. */
+.staj-router {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.8rem; margin: 0 0 1.8rem;
+}
+.md-typeset a.staj-router__card {
+  display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit;
+  background: var(--md-default-bg-color); border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px; padding: 0.85rem 1rem;
+  transition: border-color 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 200ms cubic-bezier(0.22, 0.61, 0.36, 1), transform 100ms;
+}
+.md-typeset a.staj-router__card:hover { border-color: #7CCBEE; box-shadow: 0 4px 14px rgba(29, 79, 145, 0.12); transform: translateY(-2px); }
+.md-typeset a.staj-router__card:focus-visible { outline: none; border-color: #7CCBEE; box-shadow: 0 0 0 3px rgba(124, 203, 238, 0.55); }
+.staj-router__icon {
+  flex-shrink: 0; width: 2.2rem; height: 2.2rem; border-radius: 8px;
+  background: rgba(29, 79, 145, 0.08); color: #1D4F91;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.staj-router__icon svg { width: 1.3rem; height: 1.3rem; fill: currentColor; }
+.staj-router__role { display: block; font-weight: 700; color: var(--md-default-fg-color); line-height: 1.2; }
+.staj-router__go { display: block; font-size: 0.78rem; color: #1D4F91; margin-top: 0.1rem; }
+[data-md-color-scheme="slate"] .staj-router__icon { background: rgba(124, 203, 238, 0.12); color: #7CCBEE; }
+[data-md-color-scheme="slate"] .staj-router__go { color: #7CCBEE; }
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset a.staj-router__card { transition: none; }
+  .md-typeset a.staj-router__card:hover { transform: none; }
+}
+/* (10) Yıl şeridi (G3) — SABİT Ocak–Aralık, gün-hassas zonlar. ≥720px; mobilde
+   gizli, .staj-takvim listesi kesin tarihleri taşır. Marka tonları: açık cyan =
+   staj yapılabilir; navy = ders dönemi; cyan/navy taralı = yaz okulu (koşullu);
+   gold YALNIZ teslim çizgisi. Etiketsiz — anlam legend + alttaki listede. */
+.staj-yearbar { display: none; }
+@media (min-width: 720px) {
+  .staj-yearbar { display: block; margin: 0.2rem 0 1.6rem; }
+}
+.staj-yearbar__cap { font-size: 0.72rem; color: var(--staj-note); margin-bottom: 6px; }
+/* Önemli Tarihler altı not — sade: kutu yok, ince marka ikonu + okunur koyu metin. */
+.md-typeset p.staj-dates-note {
+  display: flex; align-items: center; gap: 0.45rem;
+  margin: 1rem 0 0; font-size: 0.8rem; color: var(--md-default-fg-color);
+}
+.md-typeset p.staj-dates-note::before {
+  content: ""; flex-shrink: 0; width: 0.95rem; height: 0.95rem; background-color: #2d5b96;
+  -webkit-mask: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z'/></svg>") center / contain no-repeat;
+}
+[data-md-color-scheme="slate"] .md-typeset p.staj-dates-note::before { background-color: #7CCBEE; }
+
+/* Liste tarihleri (anasayfa) gantt ile aynı renge boyanır (staj_durum'a göre):
+   kapali=koyu mavi, kosullu=açık mavi; teslim zaten gold. İkon ŞEKLİ kategoriden gelir. */
+.staj-takvim__item--kapali { border-left-color: #2d5b96; }
+.staj-takvim__item--kapali::before { background-color: #2d5b96; }
+.staj-takvim__item--kosullu { border-left-color: #86c9ed; }
+.staj-takvim__item--kosullu::before { background-color: #86c9ed; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kapali { border-left-color: #5183ba; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kapali::before { background-color: #5183ba; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kosullu { border-left-color: #9fd0f0; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kosullu::before { background-color: #9fd0f0; }
+.staj-yearbar__axis { display: grid; grid-template-columns: repeat(12, 1fr); margin-bottom: 4px; }
+.staj-yearbar__month {
+  font-size: 0.62rem; text-align: center; color: var(--staj-note);
+  font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
+}
+.staj-yearbar__track {
+  position: relative; height: 2.4rem; border-radius: 6px; overflow: hidden;
+  background: #79b0e0; border: 1px solid var(--md-default-fg-color--lightest);
+}
+.staj-yearbar__seg { position: absolute; top: 0; bottom: 0; }
+.staj-yearbar__seg--block { background: #2d5b96; }
+.staj-yearbar__seg--cond { background: repeating-linear-gradient(45deg, #a8d4f0 0 6px, #cae5f9 6px 12px); }
+.staj-yearbar__mark {
+  position: absolute; top: -1px; bottom: -1px; width: 3px; z-index: 3;
+  background: #d4a017; border-radius: 2px; box-shadow: 0 0 0 2px var(--md-default-bg-color);
+}
+.staj-yearbar__legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; margin-top: 8px; font-size: 0.68rem; color: var(--staj-note); }
+.staj-yearbar__legend > span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.staj-yearbar__sw { width: 0.7rem; height: 0.7rem; border-radius: 50%; flex-shrink: 0; }
+.staj-yearbar__sw--ok { background: #79b0e0; }
+.staj-yearbar__sw--block { background: #2d5b96; }
+.staj-yearbar__sw--cond { background: repeating-linear-gradient(45deg, #a8d4f0 0 3px, #cae5f9 3px 6px); }
+.staj-yearbar__sw--mark { width: 3px; height: 0.85rem; background: #d4a017; border-radius: 2px; }
+[data-md-color-scheme="slate"] .staj-yearbar__track { background: #4a7cae; border-color: rgba(255, 255, 255, 0.12); }
+[data-md-color-scheme="slate"] .staj-yearbar__seg--block { background: #27466f; }
+[data-md-color-scheme="slate"] .staj-yearbar__seg--cond { background: repeating-linear-gradient(45deg, #9fd0f0 0 6px, #c3e2f8 6px 12px); }
+[data-md-color-scheme="slate"] .staj-yearbar__mark,
+[data-md-color-scheme="slate"] .staj-yearbar__sw--mark { background: #e8b53a; }
+[data-md-color-scheme="slate"] .staj-yearbar__sw--ok { background: #4a7cae; }
+[data-md-color-scheme="slate"] .staj-yearbar__sw--block { background: #27466f; }
+[data-md-color-scheme="slate"] .staj-yearbar__sw--cond { background: repeating-linear-gradient(45deg, #9fd0f0 0 3px, #c3e2f8 3px 6px); }
+/* ===================== Geliştirme Turu 5 blok sonu ===================== */
+
+/* ============================================================================
+   GELİŞTİRME TURU 6 — rapor outline kartları, sayfa-içi atlama, bölüm numaraları,
+   belge kontrol-listesi (+print), terim sözlüğü, Üretim↔Serbest karşılaştırma,
+   teslime kalan gün. Marka içi; gold YALNIZ deadline. Tam slate paritesi.
+   ============================================================================ */
+
+/* (1) Rapor outline → numaralı hayalet-rakam kart dizisi (G2). */
+.staj-outline { display: grid; gap: 0.8rem; margin: 1rem 0 1.6rem; }
+.md-typeset .staj-outline__card {
+  position: relative; overflow: hidden; background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest); border-left: 4px solid #1D4F91;
+  border-radius: 6px; padding: 0.9rem 1.2rem 0.4rem;
+}
+.md-typeset .staj-outline__card > h3 { margin-top: 0.1rem; }
+
+/* (2) Tek tutarlı sayfa-içi atlama şeridi (uzun sayfalar). */
+.md-typeset nav.staj-jump { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.2rem 0 1.6rem; }
+.md-typeset nav.staj-jump a {
+  display: inline-flex; align-items: center; min-height: 40px; text-decoration: none;
+  font-size: 0.8rem; font-weight: 600; padding: 0.35rem 0.85rem;
+  border: 1px solid var(--md-default-fg-color--lightest); border-radius: 999px;
+  color: var(--md-default-fg-color);
+}
+.md-typeset nav.staj-jump a:hover { border-color: #7CCBEE; color: var(--md-primary-fg-color); }
+.md-typeset nav.staj-jump a:focus-visible { outline: none; border-color: #7CCBEE; box-shadow: 0 0 0 3px rgba(124, 203, 238, 0.5); }
+
+/* (3) Wrapper-scoped bölüm numarası (01/02) — yalnız .staj-numbered içinde. */
+.staj-numbered { counter-reset: staj-h2; }
+.staj-numbered > h2 { counter-increment: staj-h2; }
+.staj-numbered > h2::before {
+  content: "0" counter(staj-h2); display: block; margin-bottom: 0.1rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; color: #7CCBEE;
+  font-variant-numeric: tabular-nums;
+}
+
+/* (4) Belge kontrol-listesi — gerçek checkbox + yazdırma dostu. */
+.md-typeset ul.staj-checklist { list-style: none; margin: 1rem 0; padding: 0; display: grid; gap: 0.5rem; }
+.md-typeset ul.staj-checklist > li {
+  display: flex; align-items: flex-start; gap: 0.6rem; margin: 0;
+  padding: 0.6rem 0.85rem; border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 6px; background: var(--md-default-bg-color);
+}
+.staj-checklist input[type="checkbox"] { margin: 0.15rem 0 0; width: 1.1rem; height: 1.1rem; accent-color: #1D4F91; flex-shrink: 0; }
+.staj-checklist label { cursor: pointer; }
+.staj-checklist__opt { color: var(--staj-note); font-size: 0.82rem; font-weight: 600; }
+[data-md-color-scheme="slate"] .staj-checklist input[type="checkbox"] { accent-color: #7CCBEE; }
+
+/* (5) Terim sözlüğü (atıl def_list açılır). */
+.md-typeset .staj-terms dt { font-weight: 700; color: var(--md-primary-fg-color); margin-top: 0.9rem; }
+.md-typeset .staj-terms dd { margin: 0.2rem 0 0; border-left: 3px solid #7CCBEE; padding-left: 0.9rem; color: var(--md-default-fg-color--light); }
+
+/* (6) Üretim ↔ Serbest karşılaştırma + satır-içi chip primitive. */
+.staj-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.6rem; }
+@media (max-width: 600px) { .staj-compare { grid-template-columns: 1fr; } }
+.md-typeset .staj-compare__card {
+  background: var(--md-default-bg-color); border: 1px solid var(--md-default-fg-color--lightest);
+  border-top: 4px solid #1D4F91; border-radius: 6px; padding: 0.9rem 1.1rem 0.5rem; min-width: 0;
+}
+.md-typeset .staj-compare__card--alt { border-top-color: #2c7fc0; }
+.md-typeset .staj-compare__card > :first-child { margin-top: 0; }
+.md-typeset .staj-chip {
+  display: inline-block; font-size: 0.64rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.03em; padding: 0.18rem 0.5rem; border-radius: 3px;
+  background: rgba(29, 79, 145, 0.10); color: #1D4F91;
+}
+[data-md-color-scheme="slate"] .md-typeset .staj-chip { background: rgba(124, 203, 238, 0.14); color: #7CCBEE; }
+
+/* (7) Teslime kalan gün — sade bilgilendirici (rozet/animasyon YOK). */
+.staj-deadline__countdown { display: block; margin-top: 0.5rem; font-size: 0.9rem; font-weight: 700; color: #7CCBEE; }
+.staj-deadline__countdown b { color: #fff; font-size: 1.15rem; }
+.staj-deadline__countdown--urgent { color: #e8c04a; }
+
+/* (8) Yazdırma: site iskeletini gizle (kontrol listesi/temiz çıktı). */
+@media print {
+  .md-header, .md-tabs, .md-footer, .md-sidebar, .staj-router, .staj-yearbar, .staj-next { display: none !important; }
+  .staj-checklist input[type="checkbox"] { -webkit-appearance: checkbox; appearance: checkbox; }
+}
+/* ===================== Geliştirme Turu 6 blok sonu ===================== */
+
+/* ============================================================================
+   SEKME (tabbed) RAFINESI — aktif gösterge çubuğunu marka mavisine sabitle
+   (varsayılan koyu metin-rengi yerine), hover etiketini accent'e çek. Material'ın
+   JS-ile/JS-siz fallback rengi tutarsızlığını giderir → gösterge hep marka mavisi
+   ve aktif etiketin tam altında. Konu Rehberi + Yazım İpuçları (ve tüm sekmeler). */
+/* Sekmeler: kayan/hover MAVİ ÇİZGİ YOK (kullanıcı istemiyor). Material'ın ::before
+   VE ::after göstergeleri tamamen gizli; hover efekti yok. Aktif sekme yalnızca
+   hafif tonlu zeminle (çizgisiz) belli olur. */
+:root { --staj-tab-active: rgba(45, 91, 150, 0.10); }
+[data-md-color-scheme="slate"] { --staj-tab-active: rgba(124, 203, 238, 0.14); }
+.md-typeset .tabbed-alternate .tabbed-labels::before,
+.md-typeset .tabbed-alternate .tabbed-labels::after { display: none !important; }
+.md-typeset .tabbed-alternate .tabbed-labels > label { border-bottom: none; }
+.md-typeset .tabbed-set > input:nth-child(1):checked ~ .tabbed-labels > label:nth-child(1),
+.md-typeset .tabbed-set > input:nth-child(2):checked ~ .tabbed-labels > label:nth-child(2),
+.md-typeset .tabbed-set > input:nth-child(3):checked ~ .tabbed-labels > label:nth-child(3),
+.md-typeset .tabbed-set > input:nth-child(4):checked ~ .tabbed-labels > label:nth-child(4),
+.md-typeset .tabbed-set > input:nth-child(5):checked ~ .tabbed-labels > label:nth-child(5),
+.md-typeset .tabbed-set > input:nth-child(6):checked ~ .tabbed-labels > label:nth-child(6),
+.md-typeset .tabbed-set > input:nth-child(7):checked ~ .tabbed-labels > label:nth-child(7),
+.md-typeset .tabbed-set > input:nth-child(8):checked ~ .tabbed-labels > label:nth-child(8) {
+  background: var(--staj-tab-active); border-radius: 6px 6px 0 0;
+}
+
+/* ANA SAYFA bölüm başlıkları — sade, rafine uppercase "eyebrow" etiket stili
+   (Önemli Tarihler / Staj Süreci / İletişim). Yalnız .staj-section taşıyan H2'ler. */
+.md-typeset h2.staj-section {
+  font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--md-primary-fg-color); margin-top: 2.8rem; padding-bottom: 0;
+}
+.md-typeset h2.staj-section::after { display: none; }
+[data-md-color-scheme="slate"] .md-typeset h2.staj-section { color: #7CCBEE; }

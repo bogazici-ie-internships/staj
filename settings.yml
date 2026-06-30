@@ -1,0 +1,82 @@
+# ============================================================================
+#  SİTE AYARLARI — düzenli değişen TÜM değerler burada.
+#  Her dönem / değişiklikte SADECE bu dosyayı düzenleyin; site otomatik kullanır.
+#  Commit edince yayınlanır. (Kurallar gibi değişmeyen metinler sayfalarda kalır.)
+# ============================================================================
+
+# --- Güncel dönem & tarihler ---------------------------------------------
+donem:
+  etiket: "2026 Yaz" # güncel dönem (sitede görünür)
+
+  # SON TESLİM KİLİDİ — tarih + SAAT (+03:00). Biçim: "YYYY-AA-GG SS:DD"
+  # Örn: "2026-10-15 23:59". Bu saatten sonra teslim formu OTOMATİK KAPANIR.
+  # Boş ("") = kilit kapalı.
+  teslim_kilit: "2026-11-01 10:00"
+
+# --- İletişim (kişi/birim değişince burayı güncelleyin) ------------------
+iletisim:
+  genel_eposta: "ie.boun.internships@gmail.com"
+
+  staj_sorumlusu: # öğretim üyesi (hoca)
+    ad: "Prof. Dr. Refik Güllü"
+    eposta: "refik.gullu@bogazici.edu.tr"
+
+  staj_asistanlari: # her yıl değişebilir (alfabetik sırada tutun)
+    - { ad: "Ayşe Sevde Edizer", eposta: "ayse.edizer@bogazici.edu.tr" }
+    - { ad: "Berat Kubilay Güngez", eposta: "berat.gungez@bogazici.edu.tr" }
+    - { ad: "Ebrar Baştan", eposta: "ebrar.bastan@bogazici.edu.tr" }
+
+# --- Bağlantılar ----------------------------------------------------------
+baglantilar:
+  kayit_formu: "https://forms.gle/SzyvatVjATsLY7ZR7" # staj kayıt / duyuru formu
+  portal_url: "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec" # Teslim formu yükleme adresi
+  portal_token: "" # build sırasında ayarlanır; repoda boş durur
+  # Sonuç klasörü — paylaşım KISITLI olmalı (yetkili kişiler/öğrenciler), "herkese açık" DEĞİL.
+  sonuclar_klasoru: "https://drive.google.com/drive/folders/16EzmFYGdXy477NIv4Z49AkiJIRAOdIdi"
+
+# --- Anasayfa "Önemli Tarihler" (BÜ akademik takviminden) ----------------
+# Her satır YA tek bir gün YA da bir tarih aralığı olabilir:
+#   tek gün -> { tarih: "15 Ekim 2026", baslik: "...", kategori: ... }
+#   aralık  -> { baslangic: "22 Haziran", bitis: "10 Ağustos", baslik: "...", kategori: ... }
+# kategori (satırın sol renk şeridi): akademik (lacivert) | staj (mavi) |
+#                                     teslim (amber) | tatil (yeşil)
+# Sıralama burada nasılsa sayfada da öyle görünür → kronolojik yazın.
+# Tarih henüz belli değilse: { tarih: "Güncellenecektir", ... }
+# Geçici/tahmini tarihe küçük alt not: { ..., notu: "Akademik takvim açıklanınca güncellenecektir" }
+#
+# --- Yıl şeridi (anasayfa görsel zaman çizelgesi) -------------------------
+# Şerit HER ZAMAN bu yılın Ocak–Aralık'ını gösterir (sabit eksen):
+takvim_yil: 2026
+# staj_durum (yıl şeridini VE alttaki tarih listesini renklendirir):
+#   kapali  -> ders dönemi, staj YAPILAMAZ (Bahar, Güz)     → koyu mavi
+#   kosullu -> Yaz Okulu; ders almıyorsan staj yapılabilir  → açık mavi (tırtıklı)
+#   (alan hiç yoksa o aralık "staj yapılabilir" = dolgun mavi; aralar otomatik mavi kalır; teslim = gold)
+takvim:
+  - {
+      baslangic: "9 Şubat 2026",
+      bitis: "15 Mayıs 2026",
+      baslik: "Bahar Dönemi",
+      kategori: "akademik",
+      staj_durum: "kapali",
+    }
+  - {
+      baslangic: "24 Haziran 2026",
+      bitis: "12 Ağustos 2026",
+      baslik: "Yaz Okulu",
+      kategori: "akademik",
+      staj_durum: "kosullu",
+    }
+  - {
+      baslangic: "1 Eylül 2026",
+      bitis: "1 Ocak 2027",
+      baslik: "Güz Dönemi",
+      kategori: "akademik",
+      staj_durum: "kapali",
+      notu: "Akademik takvim açıklanınca güncellenecektir",
+    }
+  - {
+      tarih: "1 Kasım 2026",
+      baslik: "Staj Raporu Teslim Son Günü",
+      kategori: "teslim",
+      notu: "Akademik takvim açıklanınca güncellenecektir",
+    }

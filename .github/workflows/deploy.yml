@@ -1,0 +1,67 @@
+name: Siteyi yayınla (GitHub Pages)
+
+# main'e her push'ta site yeniden build edilip GitHub Pages'e yayınlanır.
+# Bakımcılar için: bir .md dosyasını GitHub'da düzenleyip commit'leyin — gerisi otomatik.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Aynı anda tek deploy çalışsın.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Yapılandırmayı build için hazırla
+        env:
+          PORTAL_TOKEN: ${{ secrets.PORTAL_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import os, re, pathlib, datetime
+          tok = os.environ.get("PORTAL_TOKEN", "")
+          assert tok, "yapilandirma degeri tanimsiz"
+          p = pathlib.Path("settings.yml")
+          s = p.read_text(encoding="utf-8")
+          s = re.sub(r'portal_token:\s*"[^"]*"', 'portal_token: "' + tok + '"', s, count=1)
+          p.write_text(s, encoding="utf-8")
+          # Footer "Son güncelleme" tarihini Türkiye saatiyle güncelle
+          aylar = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"]
+          now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=3)))  # Türkiye sabit UTC+3 (tzdata gerektirmez)
+          tarih = "%d %s %d" % (now.day, aylar[now.month - 1], now.year)
+          m = pathlib.Path("mkdocs.yml")
+          ms = m.read_text(encoding="utf-8")
+          ms, _n = re.subn(r'Son güncelleme: [^"]*"', 'Son güncelleme: ' + tarih + '"', ms, count=1)
+          assert _n == 1, "footer 'Son guncelleme' deseni bulunamadi"
+          m.write_text(ms, encoding="utf-8")
+          print("hazir (%d) son guncelleme %s" % (len(tok), tarih))
+          PY
+      - run: mkdocs build --strict
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,22 @@
+# MkDocs build çıktısı
+/site/
+
+# Claude Code lokal önizleme ayarı (mkdocs serve)
+/.claude/
+
+# İç tasarım keşfi / önizleme görselleri (siteye dahil değil, public repoda gerekmez)
+/mockups/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# Apps Script teslim portalı kaynağı — GERÇEK SECRET_TOKEN + FOLDER_ID içerir.
+# ASLA commit'lenmez; gerçek değerler yalnız Apps Script editöründe / lokalde tutulur.
+Code.gs
+*.gs
