@@ -1,0 +1,30 @@
+{#-
+  Kapanış künyesi — sade, header'dan koyu derin ink şerit. Header'ın marka
+  lockup'ını TEKRAR ETMEZ (mühür / "Zorunlu Staj Kılavuzu" servis satırı yok).
+  Üst satır: kurum + iletişim + bölüm linki. Alt satır: hazırlayan + son güncelleme.
+  Kimlik/künye copyright'tan türetilir (deploy "Son güncelleme"yi otomatik
+  günceller) → tek kaynak.
+-#}
+{%- set _cp = config.copyright.split('<br>') if config.copyright else [] -%}
+<footer class="md-footer" aria-label="Site alt bilgisi">
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid staj-minfoot">
+
+      <div class="staj-minfoot__row">
+        {% if _cp | length > 0 %}<span class="staj-minfoot__id">{{ _cp[0] }}</span>{% endif %}
+        <span class="staj-minfoot__links">
+          {%- for social in config.extra.social %}
+            <a href="{{ social.link }}">{{ social.link | replace('mailto:', '') }}</a>
+          {%- endfor %}
+          {% if config.extra.bolum_sitesi %}
+            <span class="staj-minfoot__dot" aria-hidden="true">·</span>
+            <a href="{{ config.extra.bolum_sitesi }}" target="_blank" rel="noopener">Bölüm sitesi <span aria-hidden="true">↗</span></a>
+          {% endif %}
+        </span>
+      </div>
+
+      {% if _cp | length > 1 %}<div class="staj-minfoot__sub">{{ _cp[1] }}</div>{% endif %}
+
+    </div>
+  </div>
+</footer>

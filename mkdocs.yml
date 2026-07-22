@@ -1,0 +1,117 @@
+site_name: Boğaziçi Üniversitesi — Endüstri Mühendisliği Zorunlu Staj
+site_description: >-
+  Boğaziçi Üniversitesi Endüstri Mühendisliği Bölümü zorunlu staj süreci:
+  adım adım rehber, formlar, kurallar, rapor hazırlama ve sık sorulan sorular.
+site_author: Boğaziçi Üniversitesi Endüstri Mühendisliği Bölümü
+
+# Yayın adresi (mutlak linkler / SEO / sitemap için). Özel alan adı bağlarsan değiştir.
+site_url: https://bogazici-ie-internships.github.io/staj/
+
+# İç geliştirme tasarımları/planları public site içeriği değildir.
+exclude_docs: |
+  superpowers/**
+
+# Footer alt barında gösterilir. "Son güncelleme" tarihi her deploy'da deploy.yml tarafından otomatik güncellenir.
+copyright: "Boğaziçi Üniversitesi — Endüstri Mühendisliği<br>Hazırlayan: Berat Kubilay Güngez · Son güncelleme: 21 Haziran 2026"
+
+theme:
+  name: material
+  custom_dir: overrides     # overrides/main.html → sekme (tab) başlığı için kısa marka
+  language: tr
+  logo: assets/bulogo.svg             # ORİJİNAL tam renkli BÜ mührü (boyanmaz); header'da beyaz zemin üzerinde gösterilir
+  favicon: assets/bulogo.svg          # tarayıcı sekmesi (aynı tam renkli mühür)
+  palette:
+    # Açık mod (VARSAYILAN)
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Koyu moda geç
+    # Koyu mod (opsiyonel — kullanıcı isterse)
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Açık moda geç
+  # PERF: Google Fonts dış isteği kapatıldı. Inter + Bricolage self-host (extra.css
+  # @font-face), kod fontu sistem-mono. Render-blocking dış istek kalmadı.
+  font: false
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.path
+    - navigation.top
+    - navigation.indexes
+    - toc.follow
+    - toc.integrate          # sayfa içi başlıkları SOL menüye taşır → sağ TOC barı kalkar
+    - search.suggest
+    - search.highlight
+    - content.tooltips
+
+# Build sırasında kırık linkleri/anchor'ları yakala (CI'da --strict ile hataya döner).
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+plugins:
+  - search:
+      lang: tr
+  # Düzenli değişen TÜM değerleri (dönem, tarihler, iletişim, bağlantılar) dış
+  # config dosyasından okur: docs içinde {{ donem.etiket }}, {{ iletisim.* }} vb.
+  # Tek kaynak → settings.yml
+  - macros:
+      include_yaml:
+        - settings.yml
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - def_list
+  - toc:
+      permalink: false      # başlık yanındaki ¶ kalıcı bağlantı simgesi kapalı (site geneli)
+      title: Bu sayfada
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra_css:
+  # Stil değişince ?v sayısını artır → öğrenci tarayıcısındaki eski CSS cache'i hemen kırılır.
+  - assets/extra.css?v=66
+
+extra_javascript:
+  # JS değişince ?v sayısını artır → eski cache hemen kırılır.
+  - assets/yearbar.js?v=2
+  - assets/header.js?v=1
+  # reveal.js KALDIRILDI (PERF): ana sayfa scroll-reveal animasyonları jank
+  # üretiyordu; içerik artık anında ve tam görünür.
+
+extra:
+  generator: false          # alttaki "Made with Material for MkDocs" yazısını kaldırır
+  bolum_sitesi: "https://ie.bogazici.edu.tr/"   # Boğaziçi EM Bölümü resmi sitesi (footer linki)
+  social:
+    - icon: fontawesome/solid/envelope
+      link: mailto:ie.boun.internships@gmail.com
+      name: Staj asistanları — genel iletişim
+
+nav:
+  - Ana Sayfa: index.md
+  - Staj Süreci: surec/index.md
+  - Kurallar: kurallar.md
+  - Rapor Hazırlama: rapor.md
+  - Formlar & Belgeler: formlar.md
+  - Teslim: teslim.md
+  - Sık Sorulan Sorular: sss.md
+  - Sonuçlar: sonuclar.md
+  - İletişim: iletisim.md

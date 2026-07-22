@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block htmltitle %}
+  <title>{% if page.title and not page.is_homepage %}{{ page.title | striptags }} · Zorunlu Staj Kılavuzu{% else %}Zorunlu Staj Kılavuzu · Boğaziçi Üniversitesi Endüstri Mühendisliği{% endif %}</title>
+{% endblock %}
+
+{% block extrahead %}
+  {# --- PERF: self-host Inter'i preload et (Google Fonts dış isteği kaldırıldı) --- #}
+  <link rel="preload" href="{{ 'assets/fonts/inter-latin.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ 'assets/fonts/inter-latin-ext.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+  {# --- Open Graph / Twitter paylaşım kartı (statik 1200×630 görsel) --- #}
+  {%- set _title = (page.title ~ ' · ' if page and page.title and not page.is_homepage else '') ~ 'Boğaziçi EM — Zorunlu Staj Kılavuzu' -%}
+  {%- set _desc = page.meta.description if page and page.meta and page.meta.description else config.site_description -%}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ config.site_name }}">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:title" content="{{ _title }}">
+  <meta property="og:description" content="{{ _desc | striptags | trim }}">
+  <meta property="og:image" content="{{ config.site_url }}assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Boğaziçi Üniversitesi Endüstri Mühendisliği — Zorunlu Staj Kılavuzu">
+  {% if page and page.canonical_url %}<meta property="og:url" content="{{ page.canonical_url }}">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ _title }}">
+  <meta name="twitter:description" content="{{ _desc | striptags | trim }}">
+  <meta name="twitter:image" content="{{ config.site_url }}assets/og-image.png">
+{% endblock %}

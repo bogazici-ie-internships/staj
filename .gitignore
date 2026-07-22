@@ -1,0 +1,42 @@
+# MkDocs build output
+/site/
+
+# Claude Code local preview setting (mkdocs serve)
+/.claude/
+
+# Internal design exploration / preview images (not part of the site, not needed in the public repo)
+/mockups/
+.impeccable/
+
+# Internal development plans/specs (superpowers). Local dev notes only;
+# not part of the published site (mkdocs.yml exclude_docs) and not needed in the public repo.
+/docs/superpowers/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# macOS
+.DS_Store
+._*
+
+# Apps Script submission-portal source — contains the REAL SECRET_TOKEN + FOLDER_ID.
+# NEVER committed; real values are kept only in the Apps Script editor / locally.
+Code.gs
+*.gs
+
+# Isolated feature worktrees
+.worktrees/
+
+# Unit tests — not required to build/serve the site, not run by CI (deploy.yml
+# only calls scripts/validate_*.py). Local dev-only, not needed in the public repo.
+/tests/
+
+# Maintainer-only docs — not referenced by mkdocs.yml/CI, not needed for the
+# site to build or deploy. Local dev-only, not needed in the public repo.
+/QUICKSTART.md
+/DEPLOYMENT.md
