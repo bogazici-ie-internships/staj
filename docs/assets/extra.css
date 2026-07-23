@@ -1277,7 +1277,13 @@
    Balon (tip) yearbar'a göre konumlanır → yearbar position:relative.
    Teslim çizgisi 3px görünür kalır; ::before ile ~19px görünmez hover hedefi kazanır.
    Teslim günü ayrıca şeritte hep etiketli (marklabel), böylece hover'a gerek kalmaz. */
-.staj-yearbar { position: relative; }
+/* Yıl şeridi KENDİ yığın bağlamını kurar. Aksi halde içindeki z-index'ler
+   (seg.is-active=4, mark.is-active=5, tip=20) kök yığın bağlamında yarışır ve
+   sticky header'ı (z-index:4) AŞAR: sayfa aşağı kaydırılmışken bir takvim
+   satırının üzerine gelince, şerit header'ın arkasında olmasına rağmen altın
+   teslim çizgisi header'ın üstünde görünürdü. isolation:isolate tüm iç
+   sıralamayı aynen korur, yalnız dışarı taşmayı engeller. */
+.staj-yearbar { position: relative; isolation: isolate; }
 
 .staj-yearbar__mark::before {
   content: "";

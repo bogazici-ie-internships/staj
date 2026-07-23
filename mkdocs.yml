@@ -88,11 +88,11 @@ markdown_extensions:
 
 extra_css:
   # Stil değişince ?v sayısını artır → öğrenci tarayıcısındaki eski CSS cache'i hemen kırılır.
-  - assets/extra.css?v=67
+  - assets/extra.css?v=68
 
 extra_javascript:
   # JS değişince ?v sayısını artır → eski cache hemen kırılır.
-  - assets/yearbar.js?v=2
+  - assets/yearbar.js?v=3
   - assets/header.js?v=1
   # reveal.js KALDIRILDI (PERF): ana sayfa scroll-reveal animasyonları jank
   # üretiyordu; içerik artık anında ve tam görünür.

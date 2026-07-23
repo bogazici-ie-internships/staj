@@ -17,24 +17,36 @@
     var tip = document.createElement("div");
     tip.className = "staj-yearbar__tip";
     tip.setAttribute("aria-hidden", "true");
+    // Balonun iç yapısı BİR KEZ kurulur; her hover'da yalnız metin güncellenir.
+    // (Eskiden her hover'da innerHTML yeniden ayrıştırılıyordu.)
+    var tipName = document.createElement("b");
+    var tipRange = document.createElement("span");
+    tip.appendChild(tipName);
+    tip.appendChild(tipRange);
     bar.appendChild(tip);
 
     function byKey(arr, k) {
       return arr.filter(function (el) { return el.dataset.key === k; });
     }
 
-    function showTip(el) {
-      var name = el.dataset.key || "";
-      var range = el.dataset.range || "";
-      tip.innerHTML = "<b></b><span></span>";
-      tip.firstChild.textContent = name;
-      tip.lastChild.textContent = range;
+    // Balon konumunu ÖLÇER ama hiçbir şey yazmaz. Yazma işlerinden önce
+    // çağrıldığı sürece layout zaten geçerlidir → zorlanmış yeniden hesaplama yok.
+    function measureTip(el) {
       var barRect = bar.getBoundingClientRect();
       var r = el.getBoundingClientRect();
       var cx = r.left + r.width / 2 - barRect.left;
-      cx = Math.max(46, Math.min(barRect.width - 46, cx));
-      tip.style.left = cx + "px";
-      tip.style.top = (r.top - barRect.top - 6) + "px";
+      return {
+        left: Math.max(46, Math.min(barRect.width - 46, cx)),
+        top: r.top - barRect.top - 6
+      };
+    }
+
+    // Yalnız yazar. Ölçüm sonucu dışarıdan verilir.
+    function showTip(el, pos) {
+      tipName.textContent = el.dataset.key || "";
+      tipRange.textContent = el.dataset.range || "";
+      tip.style.left = pos.left + "px";
+      tip.style.top = pos.top + "px";
       tip.classList.add("is-visible");
     }
     function hideTip() { tip.classList.remove("is-visible"); }
@@ -69,7 +81,13 @@
       var k = s.dataset.key;
       bind(
         s,
-        function () { activateKey(k, true); showTip(s); },
+        function () {
+          // ÖNCE ölç (layout temiz), SONRA yaz → yaz/oku/yaz döngüsü yok.
+          // is-active yalnız filter/box-shadow uyguladığı için ölçümü etkilemez.
+          var pos = measureTip(s);
+          activateKey(k, true);
+          showTip(s, pos);
+        },
         function () { activateKey(k, false); hideTip(); }
       );
     });
