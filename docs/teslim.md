@@ -36,80 +36,9 @@ Bu form yalnızca **online belge teslimi** içindir. Sigortanız **EK-1** ile ya
 {% endif %}
 
 <style>
-  .suf *{box-sizing:border-box}
-  /* Teslim sayfasını rahat okunur, hizalı tek sütuna sabitle — geniş ekranda
-     deadline kutusu + form aynı genişlikte hizalansın (yalnız bu sayfada). */
+  /* Bu sayfaya özgü TEK kural: teslim kutusu + form aynı genişlikte hizalansın.
+     Diğer tüm .suf-* stilleri docs/assets/extra.css içindedir. */
   .md-content__inner{max-width:54rem;margin-inline:auto;padding-inline:.8rem}
-  .suf-gate,.suf-closed,.suf-done{max-width:680px;margin:1.2rem 0}
-  .suf{max-width:none;margin:1.2rem auto}
-  .suf{border:1px solid var(--md-default-fg-color--lightest);border-radius:8px;overflow:hidden}
-  .suf-gate{padding:14px 16px;border:1px dashed var(--md-default-fg-color--lighter);border-radius:8px;color:var(--md-default-fg-color--light);font-size:.9rem}
-  .suf-closed{padding:18px 20px;border:1px solid #f0a0a0;background:rgba(226,75,74,.10);border-radius:8px;color:#a32d2d;font-size:.92rem;line-height:1.55}
-  .suf-done{padding:18px 20px;border:1px solid #9fe1cb;background:rgba(93,202,165,.12);border-radius:8px;color:#0f6e56;font-size:.92rem;line-height:1.6}
-  /* Geç teslim uyarısı (form içinde, grace penceresinde görünür) */
-  .suf-late{margin:0 0 16px;padding:13px 15px;border:1px solid #e6b800;background:rgba(255,203,0,.12);border-radius:8px;color:#7a5f00;font-size:.9rem;line-height:1.5}
-  .suf-late b{display:block;font-size:.98rem;margin-bottom:3px}
-  .suf-late p{margin:0 0 10px}
-  .suf-ack{display:flex;gap:9px;align-items:flex-start;font-size:.82rem;font-weight:600;color:#6b5400;cursor:pointer}
-  .suf-ack input{margin-top:2px;flex:none;width:18px;height:18px}
-  [data-md-color-scheme="slate"] .suf-late{background:rgba(255,203,0,.14);border-color:rgba(230,184,0,.55);color:#ffe08a}
-  [data-md-color-scheme="slate"] .suf-ack{color:#ffdf85}
-  .suf-bar{background:#17457F;border-bottom:3px solid #5AA6D6;color:#fff;padding:13px 18px}
-  .suf-bar b{font-size:1rem}
-  .suf-body{padding:16px 18px 20px}
-  .suf-sec{margin-bottom:16px}
-  .suf-sec h2{font-size:.74rem;font-weight:700;color:#16335c;text-transform:uppercase;letter-spacing:.04em;margin:0 0 .6rem;line-height:1.3;display:flex;align-items:center;gap:8px;border:0;padding:0}
-  .suf-sec h2::after{display:none}   /* genel H2 altı degrade çizgisini bu mini-etiketlerde gizle */
-  [data-md-color-scheme="slate"] .suf-sec h2{color:#9bc3ec}
-  .suf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:10px 14px}
-  .suf-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
-  .suf-cols>*{min-width:0}
-  @media(max-width:720px){.suf-cols{grid-template-columns:1fr;gap:0}}
-  .suf-field{display:flex;flex-direction:column;gap:4px}
-  .suf-field.full{grid-column:1/-1}
-  .suf-field label{font-size:.78rem;color:var(--md-default-fg-color--light);font-weight:600}
-  .suf-field input[type=text],.suf-field input[type=email]{height:38px;border:1px solid var(--md-default-fg-color--lighter);border-radius:6px;padding:0 10px;font:inherit;font-size:.85rem;background:var(--md-default-bg-color);color:var(--md-default-fg-color)}
-  .suf-field input:focus{outline:none;border-color:#17457F;box-shadow:0 0 0 3px rgba(29,79,145,.14)}
-  .suf-field input.bad{border-color:#e2614a}
-  .suf-warn{font-size:.72rem;color:#a32d2d;margin-top:3px;display:none}
-  .suf-warn.show{display:block}
-  .suf-drop{position:relative;display:flex;align-items:center;gap:12px;border:1.5px dashed var(--md-default-fg-color--lighter);border-radius:8px;padding:11px 14px;margin-bottom:9px;background:var(--md-default-bg-color)}
-  /* Dosya input'u görünmez ama KLAVYEYLE ODAKLANABİLİR (display:none DEĞİL); odakta .suf-drop:focus-within halkası yanar. */
-  .suf-drop input[type=file]{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%)}
-  .suf-drop .m{flex:1;min-width:0}
-  .suf-drop .m b{font-size:.85rem;color:var(--md-default-fg-color);display:block}
-  .suf-drop .m span{font-size:.72rem;color:var(--md-default-fg-color--light);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .suf-drop .pick{font-size:.78rem;font-weight:600;color:#17457F;border:1px solid #17457F;border-radius:6px;padding:10px 14px;background:transparent;cursor:pointer;white-space:nowrap}
-  .suf-drop.ok{border-style:solid;border-color:#5dcaa5;background:rgba(93,202,165,.08)}
-  .suf-kvkk{display:flex;gap:9px;align-items:flex-start;font-size:.78rem;color:var(--md-default-fg-color--light);margin:4px 0 14px}
-  .suf-kvkk input{margin-top:3px}
-  .suf-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-  .suf-submit{width:100%;background:#17457F;color:#fff;font-size:.95rem;font-weight:700;border:none;border-radius:8px;padding:13px;cursor:pointer}
-  .suf-submit:disabled{opacity:.6;cursor:not-allowed}
-  .suf-retry{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:10px 0 0;padding:8px 13px;border:1px solid #17457F;border-radius:6px;background:transparent;color:#17457F;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
-  .suf-retry:focus-visible{outline:2px solid #17457F;outline-offset:2px}
-  .suf-msg{margin-top:12px;padding:11px 14px;border-radius:8px;font-size:.84rem;display:none}
-  .suf-msg.show{display:block}
-  .suf-msg.ok{background:rgba(93,202,165,.14);color:#0f6e56;border:1px solid #9fe1cb}
-  .suf-msg.err{background:rgba(226,75,74,.12);color:#a32d2d;border:1px solid #f0a0a0}
-  @media(max-width:720px){.suf-grid{grid-template-columns:1fr}}
-
-  /* Koyu mod (slate): sabit hex durum/uyarı ögeleri okunur kontrasta çekilir */
-  [data-md-color-scheme="slate"] .suf-closed,[data-md-color-scheme="slate"] .suf-msg.err{background:rgba(226,75,74,.18);color:#f3b0b0;border-color:rgba(240,160,160,.5)}
-  [data-md-color-scheme="slate"] .suf-done,[data-md-color-scheme="slate"] .suf-msg.ok{background:rgba(93,202,165,.18);color:#86e0c3;border-color:rgba(134,224,195,.5)}
-  [data-md-color-scheme="slate"] .suf-warn{color:#f3a3a3}
-  [data-md-color-scheme="slate"] .suf-drop .pick{color:#5AA6D6;border-color:#5AA6D6}
-  [data-md-color-scheme="slate"] .suf-retry{color:#5AA6D6;border-color:#5AA6D6}
-  [data-md-color-scheme="slate"] .suf-field input:focus{border-color:#5AA6D6;box-shadow:0 0 0 3px rgba(124,203,238,.18)}
-
-  /* a11y: klavye odağı görünür (dosya-seç label'ı + Gönder); 44px dokunma hedefi */
-  .suf-drop .pick{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
-  .suf-drop:focus-within{border-style:solid;border-color:#17457F;box-shadow:0 0 0 3px rgba(29,79,145,.18)}
-  .suf-submit:focus-visible{outline:2px solid #17457F;outline-offset:2px}
-  [data-md-color-scheme="slate"] .suf-drop:focus-within{border-color:#5AA6D6;box-shadow:0 0 0 3px rgba(124,203,238,.22)}
-  [data-md-color-scheme="slate"] .suf-submit:focus-visible{outline-color:#5AA6D6}
-  [data-md-color-scheme="slate"] .suf-retry:focus-visible{outline-color:#5AA6D6}
-  @media (forced-colors:active){.suf-field input:focus,.suf-drop:focus-within{outline:2px solid Highlight}.suf-submit:focus-visible{outline:2px solid Highlight}}
 </style>
 
 <!-- Üst banner: yalnızca doğrulama HATASI/başarısızlığında görünür. Kontrol durumu Gönder butonunda gösterilir. -->
