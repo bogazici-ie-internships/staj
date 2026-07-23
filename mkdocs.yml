@@ -88,7 +88,7 @@ markdown_extensions:
 
 extra_css:
   # Stil değişince ?v sayısını artır → öğrenci tarayıcısındaki eski CSS cache'i hemen kırılır.
-  - assets/extra.css?v=66
+  - assets/extra.css?v=67
 
 extra_javascript:
   # JS değişince ?v sayısını artır → eski cache hemen kırılır.
