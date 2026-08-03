@@ -1,0 +1,1886 @@
+/* ============================================================================
+   BAŞLIK YAZI TİPİ — Newsreader (self-host, yalnız H1/H2/H3'te). Gövde Inter,
+   kod sistem-mono aynı kalır. latin + latin-ext (Türkçe ğ/ş/İ için).
+   Yalnız 700 taşınır: 600 de eklenseydi font yükü 38 KB'den 76 KB'ye çıkardı,
+   bu da Google Fonts'u perf için kaldırma kararıyla çelişirdi.
+   ============================================================================ */
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/newsreader-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/newsreader-700-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+/* GÖVDE YAZI TİPİ — Inter self-host (PERF: Google Fonts dış isteği kaldırıldı).
+   Variable woff2, 400–700, latin + latin-ext (Türkçe). Metrics-matched fallback
+   → font yüklenirken layout kayması olmaz. */
+@font-face{
+  font-family:"Inter"; font-style:normal; font-weight:400 700; font-display:swap;
+  src:url("fonts/inter-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Inter"; font-style:normal; font-weight:400 700; font-display:swap;
+  src:url("fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face{
+  font-family:"Inter Fallback"; src:local("Segoe UI"),local("Arial");
+  ascent-override:90%; descent-override:22.43%; line-gap-override:0%; size-adjust:107%;
+}
+:root{
+  --staj-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --md-text-font: "Inter", "Inter Fallback", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --md-code-font: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  /* ── TİP ÖLÇEĞİ ──────────────────────────────────────────────────
+     Başlık ve arayüz boyutlarının TEK kaynağı (~1.28 oran). Yeni bir
+     boyut gerekirse buraya eklenir; bileşenlerde serbest rem yazılmaz.
+     H1/H2 akışkan: masaüstündeki tam boy dar ekranda başlığı 3 satıra
+     yayıp ekranı yutuyordu (Material'da 1rem = 20px). */
+  /* Anasayfa açılış başlığı — sayfa başlıklarından ayrı, daha iri bir kademe.
+     Editoryal açılışın taşıyıcısı bu; ölçek dışına serbest değer yazılmaz. */
+  --fs-display: clamp(2.2rem, 1.6rem + 2.4vw, 3.1rem);
+  --fs-h1: clamp(1.9rem, 1.4rem + 2.2vw, 2.60rem);
+  --fs-h2: clamp(1.4rem, 1.15rem + 1.1vw, 1.75rem);
+  --fs-h3: 1.20rem;
+  --fs-body: 1rem;
+  --fs-sm: 0.82rem;
+  --fs-xs: 0.72rem;
+  /* Uzun kural/SSS metinleri için okuma ritmi. */
+  --lh-body: 1.7;
+
+  /* ── MARKA PALETİ ────────────────────────────────────────────────
+     Tekrar eden renk sabitlerinin TEK kaynağı. Değer değiştirmek
+     gerekirse yalnız burası düzenlenir. Anlam notları bağlayıcıdır:
+     altın YALNIZ teslim/son-tarih semantiğine ayrılmıştır. */
+  --staj-navy: #17457F;           /* kurumsal lacivert (BÜ) */
+  --staj-navy-dark: #123763;      /* koyu lacivert (footer/tabs) */
+  --staj-navy-light: #225AA0;     /* açık lacivert (degrade üst durak) */
+  --staj-blue: #2C79B8;           /* orta mavi */
+  --staj-sky: #5AA6D6;            /* gök mavisi (aksan) */
+  --staj-cyan: #7CCBEE;           /* parlak cyan (koyu zemin üstü etiket) */
+  --staj-gold: #C9971A;           /* altın — YALNIZ teslim/son tarih */
+  --staj-gold-dark: #DCAA33;      /* altın, koyu mod karşılığı */
+}
+
+[data-md-color-primary="indigo"] {
+  --md-primary-fg-color:        var(--staj-navy);
+  --md-primary-fg-color--light: #3a6cae;
+  --md-primary-fg-color--dark:  var(--staj-navy-dark);
+}
+[data-md-color-accent="indigo"] {
+  --md-accent-fg-color:              var(--staj-blue);
+  --md-accent-fg-color--transparent: rgba(124, 203, 238, 0.18);
+}
+[data-md-color-scheme="default"] { --md-typeset-a-color: var(--staj-navy); --md-footer-bg-color: var(--staj-navy); --md-footer-bg-color--dark: var(--staj-navy-dark); }
+[data-md-color-scheme="slate"]   { --md-primary-fg-color: #2A6AA8; --md-typeset-a-color: var(--staj-sky); --md-footer-bg-color: var(--staj-navy-dark); --md-footer-bg-color--dark: #11294d; }
+
+/* Sayfa başlıkları (H1): tema varsayılanı 300 (ince) — site diliyle uyumlu, daha kalın.
+   Hero kendi kuralını korur (aşağıda tanımlı, kaynakta sonra geldiği için kazanır). */
+.md-typeset h1 {
+  font-family: var(--staj-display);
+  font-weight: 700;
+  font-size: var(--fs-h1);
+  line-height: 1.08;
+  /* Newsreader bir serif: Bricolage'ın gerektirdiği sıkı negatif tracking
+     burada harfleri birbirine yapıştırır. Hafif negatif yeterli. */
+  letter-spacing: -0.012em;
+  color: var(--md-default-fg-color);
+  margin-bottom: 0.6rem;   /* sayfa başlığı ↔ ilk metin arası azaltıldı (Material varsayılanı çok genişti) */
+}
+/* Sayfa başlığından sonraki ilk öğenin büyük üst boşluğunu da sıfırla. */
+.md-typeset h1 + * { margin-top: 0 !important; }
+
+/* Bölüm başlıkları (H2): tema varsayılanı ince/sönük — site genelinde daha
+   belirgin: büyük, kalın, ayırıcı alt çizgi. */
+.md-typeset h2 {
+  font-family: var(--staj-display);
+  font-weight: 700;
+  font-size: var(--fs-h2);
+  line-height: 1.16;
+  letter-spacing: -0.008em;
+  margin-top: 2.6rem;
+}
+/* Alt başlıklar (H3): kalın + marka mavisi → gövde metninden net ayrışır.
+   Ana sayfadaki adım kartlarının kendi kuralı (.staj-step h3) kaynakta sonra
+   geldiği için orada baskın kalır; o tasarım korunur. */
+.md-typeset h3 {
+  font-family: var(--staj-display);
+  font-weight: 700;
+  font-size: var(--fs-h3);
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: var(--md-primary-fg-color);
+}
+
+/* Gövde okuma ritmi — kurallar/SSS gibi uzun metinler için Material'ın 1.6
+   varsayılanından biraz açık. Kart/rozet gibi sıkı bileşenler kendi
+   line-height'ını yazdığı için etkilenmez. */
+.md-typeset p,
+.md-typeset li { line-height: var(--lh-body); }
+
+/* Header/tabs/footer kenar ve zeminleri tek yerde: "ŞIKLIK TURU" bölümü. */
+
+.md-header__button.md-logo {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 12px;                 /* daire yerine yumuşak kare çip → daha kurumsal */
+  padding: 0.28rem;
+  margin-right: 0.7rem;
+  box-shadow: 0 2px 8px rgba(8, 24, 45, 0.28), inset 0 0 0 1px rgba(23, 69, 127, 0.10);
+  cursor: default;                     /* statik mühür — tıklama/pointer yok */
+}
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 1.7rem;
+  width: 1.7rem;
+}
+/* İki satırlı marka lockup'ı (kurum · bölüm / servis) — düz tek satır yerine hiyerarşi */
+/* Header topic'leri (marka lockup'ı + kaydırma başlığı) dikey ortala — Material
+   varsayılanı top:0'a yaslıyordu → logoya göre yukarıda duruyordu. */
+.md-header__title .md-header__topic { display: flex; align-items: center; height: 100%; }
+/* Kaydırınca çıkan sayfa başlığı (ör. "Kurallar") — ince/soluk Inter yerine
+   markayla aynı ağırlıkta: Newsreader 700, net beyaz. */
+.md-header__topic[data-md-component="header-topic"] .md-ellipsis {
+  color: #fff;
+  font-family: var(--staj-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+.md-header__title .staj-brand.md-ellipsis {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 1px; overflow: visible; white-space: normal; line-height: 1.12;
+}
+.staj-brand__inst { color: #cbdff1; font-size: .68rem; font-weight: 600; letter-spacing: .012em; white-space: nowrap; }
+.staj-brand__svc {
+  color: #fff; font-family: var(--staj-display);
+  font-size: .96rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.05; white-space: nowrap;
+}
+/* Header üst/alt nefes payı — içerik üst kenara yapışmasın (iki satırlı lockup). */
+.md-header__inner { padding-top: .55rem; padding-bottom: .5rem; }
+/* Dil seçici: palet düğmesiyle aynı header ritminde, iki harfli doğrudan geçiş.
+   Seçici .md-header__button ile birlikte yazılır: Material'ın
+   `.md-header__button:not([hidden]){display:inline-block}` kuralı tek sınıflı bir
+   seçiciyi ezip flex kutusunu bozar → harfler dikeyde ortalanmaz. */
+/* Header yardımcıları — palet ve dil TEK bir sessiz düğme dili paylaşır ve
+   aramadan ince ayraçla ayrılır. Önce ikisi şeffaf 40px kare, arama ise 234px
+   dolu pill olduğu için üçü farklı ağırlıkta ve gruplanmamış duruyordu. */
+.md-header__option .md-header__button.md-icon:not([hidden]),
+.md-header__button.staj-lang-toggle {
+  /* :not([hidden]) ŞART — Material pasif palet ikonunu `hidden` ile gizler;
+     display yazmak o gizlemeyi ezip iki ikonu birden gösteriyordu. */
+  align-items: center;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  display: inline-flex;
+  height: 1.8rem;
+  width: 1.8rem;
+  justify-content: center;
+  margin: .2rem .1rem;
+  padding: 0;
+  opacity: .82;
+  transition: background-color 160ms ease, opacity 160ms ease;
+}
+.md-header__button.staj-lang-toggle {
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+.md-header__option .md-header__button.md-icon:not([hidden]) svg { width: 1.1rem; height: 1.1rem; }
+.md-header__option .md-header__button.md-icon:not([hidden]):hover,
+.staj-lang-toggle:hover {
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .md-header__option .md-header__button.md-icon:not([hidden]),
+  .md-header__button.staj-lang-toggle { transition: none; }
+}
+.staj-lang-toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+/* Header köşe ışıması KALDIRILDI — hero'daki kaynağı da kalktı; gradient +
+   doku + ışıma üst üste binince kabuk gövdeden kopuk duruyordu. */
+@media screen and (max-width: 44em) {
+  .staj-brand__inst { font-size: .62rem; }
+  .staj-brand__svc { font-size: .82rem; }
+  /* Dar ekranda iki satır kurum·bölüm metni arama/palet ikonlarının üzerine
+     taşıyordu — burada kırpılıp "..." ile bitirilir, taşma önlenir. */
+  .md-header__title .staj-brand.md-ellipsis { overflow: hidden; }
+  .staj-brand__inst, .staj-brand__svc { overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* ============================================================================
+   AÇILIŞ (anasayfa) — navy slab DEĞİL. Eski hero header'ın marka satırını
+   birebir tekrarlıyor ve navy header + navy sekme barının üstüne üçüncü bir
+   navy blok koyuyordu. Açılış artık içerik sayfalarıyla aynı tuval üzerinde:
+   başlığı Newsreader taşır, tek renkli vurgu son teslim künyesindeki gold'dur
+   (palet kuralı: gold YALNIZ teslim semantiği).
+   ============================================================================ */
+.staj-lede { margin: .4rem 0 2.8rem; }
+.md-typeset .staj-lede > h1 {
+  font-size: var(--fs-display);
+  line-height: 1.02;
+  letter-spacing: -.018em;
+  margin: 0 0 .7rem;
+  max-width: 18ch;          /* başlık 2 satıra kırılsın → kapak hissi */
+}
+.md-typeset .staj-lede__sub {
+  color: var(--md-default-fg-color--light);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 36rem;
+  margin: 0 0 1.5rem;
+}
+/* Son teslim künyesi: gold saç teli çizgi + etiket + tarih. Kutu değil, satır. */
+.md-typeset .staj-lede__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .1rem .6rem;
+  margin: 0 0 2rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--staj-gold);
+}
+.staj-lede__meta-label {
+  color: var(--md-default-fg-color--light);
+  font-size: var(--fs-sm);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.staj-lede__meta-value {
+  font-family: var(--staj-display);
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--md-default-fg-color);
+  font-variant-numeric: tabular-nums;
+}
+.md-typeset .staj-lede .md-button { margin: 0; }
+[data-md-color-scheme="slate"] .md-typeset .staj-lede__meta { border-left-color: var(--staj-gold-dark); }
+@media screen and (max-width: 44em) {
+  .md-typeset .staj-lede__sub { font-size: 1.02rem; }
+  .staj-lede__meta-value { font-size: 1.16rem; }
+}
+
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid.cards > :is(.card, li) {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.3rem;
+}
+.md-typeset .grid.cards > ul > li:hover {
+  border-color: var(--staj-sky);
+  box-shadow: 0 4px 14px rgba(29, 79, 145, 0.12);
+  transform: translateY(-2px);
+}
+
+/* ── İkon stilleri ────────────────────────────────────────────────
+   Kart ikonları (.grid.cards içindeki .lg ikonlar): marka rengi + "chip" zemin.
+   Yalnızca .lg taşıyan kart ikonlarını hedefler → satır içi ikonlara dokunmaz. */
+.md-typeset .grid.cards .twemoji.lg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-right: 0.5rem;
+  background: rgba(29, 79, 145, 0.08);
+  border-radius: 0.45rem;
+  vertical-align: middle;
+}
+.md-typeset .grid.cards .twemoji.lg svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: var(--staj-navy);
+}
+[data-md-color-scheme="slate"] .md-typeset .grid.cards .twemoji.lg {
+  background: rgba(124, 203, 238, 0.12);
+}
+[data-md-color-scheme="slate"] .md-typeset .grid.cards .twemoji.lg svg { fill: var(--staj-sky); }
+
+/* Satır içi dosya/form ikonları (tablo + indirme linkleri + kayıt linki):
+   chip YOK; link rengiyle aynı markaya boyanır → metne yapışık koyu glif gider. */
+.md-typeset .twemoji.staj-fileicon svg { fill: var(--staj-navy); }
+[data-md-color-scheme="slate"] .md-typeset .twemoji.staj-fileicon svg { fill: var(--staj-sky); }
+
+.staj-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin: 0.6rem 0 2rem;
+  counter-reset: staj-stepc;
+}
+.staj-step {
+  position: relative;
+  overflow: hidden;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 14px;
+  padding: 1.2rem 1.3rem 0.7rem;
+}
+/* Dev soluk rakam KALDIRILDI: numara zaten .staj-step__pill sayacında
+   yazıyordu, aynı bilgi kartta iki kez görünüyordu. Markup'taki
+   aria-hidden span'i zararsız; burada gizlenir. */
+.staj-step__num { display: none; }
+/* Adım etiketi (Yön A): navy "pill" yerine → gradient numaralı çip + uppercase eyebrow.
+   Numara .staj-steps üzerindeki sayaçtan gelir → markup'a dokunmadan 1·2·3. */
+.staj-step__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  color: var(--staj-navy);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0;
+  border-radius: 0;
+  margin-bottom: 0.7rem;
+}
+.staj-step__pill::before {
+  counter-increment: staj-stepc;
+  content: counter(staj-stepc);
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  color: #fff;
+  /* Düz navy — degrade ve gölge kaldırıldı, kabuktaki sadeleşmeyle aynı dil. */
+  background: var(--staj-navy);
+}
+[data-md-color-scheme="slate"] .staj-step__pill::before { background: #2a5f9e; }
+[data-md-color-scheme="slate"] .staj-step__pill { color: #7fc4ec; }
+
+.staj-step ul { margin: 0 0 0.4rem; }
+
+.staj-takvim {
+  list-style: none;
+  margin: 0.4rem 0 2.2rem;
+  display: grid;
+  gap: 0.5rem;
+}
+.staj-takvim__item {
+  padding: 0.7rem 0.95rem;
+  line-height: 1.5;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 3px solid var(--staj-navy);
+  border-radius: 5px;
+}
+.staj-takvim__item:hover {
+  border-color: var(--staj-sky);
+  box-shadow: 0 3px 12px rgba(29, 79, 145, 0.10);
+}
+
+.staj-takvim__label { font-weight: 700; color: var(--md-default-fg-color); }
+.staj-takvim__date  { color: var(--staj-navy); font-variant-numeric: tabular-nums; }
+.staj-takvim__date::before {
+  content: "—";
+  margin: 0 0.45rem;
+  color: var(--md-default-fg-color--light);
+}
+/* Geçici/tahmini tarih alt notu (settings.yml'de takvim girdisi `notu:` ile) */
+.staj-takvim__note {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--md-default-fg-color--light);
+}
+[data-md-color-scheme="slate"] .staj-takvim__date { color: var(--staj-sky); }
+
+/* Kategori renkleri + ikonları aşağıda "TIMELINE" bölümünde birlikte tanımlı. */
+
+.staj-contact {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin: 0.7rem 0 1.4rem;
+}
+/* Anasayfa İletişim bölümü kısa yönlendirme metni. */
+.md-typeset p.staj-contact__lead {
+  margin: 0.2rem 0 1rem;
+  max-width: 60rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset p.staj-contact__lead strong { color: var(--md-default-fg-color); font-weight: 700; }
+.staj-contact__card {
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 14px;
+  padding: 1.2rem 1.3rem 1.3rem;
+}
+.staj-contact__card:hover {
+  border-color: rgba(124, 203, 238, 0.6);
+}
+/* Birincil (asistanlar) kart: üst-çizgi yerine ince cyan tint zeminle ayrışır. */
+.staj-contact__card--primary {
+  background: rgba(124, 203, 238, 0.08);
+  border-color: rgba(124, 203, 238, 0.35);
+}
+.staj-contact__role {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--staj-navy);
+  margin-bottom: 0.45rem;
+}
+[data-md-color-scheme="slate"] .staj-contact__role { color: var(--staj-sky); }
+.staj-contact__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 0.1rem;
+  color: var(--md-default-fg-color);
+}
+.staj-contact__note {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 0.7rem;
+}
+.md-typeset .staj-contact__mail {
+  display: inline-flex;
+  align-items: center;
+  color: var(--staj-navy);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+/* Koyu modda e-posta linkleri navy kalıp okunmuyordu → sky. */
+.md-typeset a.staj-person__mail { color: var(--staj-navy); }
+[data-md-color-scheme="slate"] .md-typeset .staj-contact__mail,
+[data-md-color-scheme="slate"] .md-typeset a.staj-person__mail { color: var(--staj-cyan); }
+
+/* ── Kutu (admonition) markerları ─────────────────────────────────
+   Tüm tipler tek aile (MDI outline); anlam rengi Material'dan korunur.
+   tip ikonu artık gizlenmiyor → her kutuda işaret var. */
+:root {
+  --md-admonition-icon--tip:      url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M11,18H13V15.87C14.73,15.43 16,13.86 16,12A4,4 0 0,0 12,8A4,4 0 0,0 8,12C8,13.86 9.27,15.43 11,15.87V18Z'/></svg>");
+  --md-admonition-icon--note:     url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M15 3H5A2 2 0 0 0 3 5V19A2 2 0 0 0 5 21H19A2 2 0 0 0 21 19V9L15 3M19 19H5V5H14V10H19M17 14H7V12H17M14 17H7V15H14'/></svg>");
+  --md-admonition-icon--info:     url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z'/></svg>");
+  --md-admonition-icon--warning:  url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12,2L1,21H23M12,6L19.53,19H4.47M11,10V14H13V10M11,16V18H13V16'/></svg>");
+  --md-admonition-icon--danger:   url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8.27,3L3,8.27V15.73L8.27,21H15.73C17.5,19.24 21,15.73 21,15.73V8.27L15.73,3M9.1,5H14.9L19,9.1V14.9L14.9,19H9.1L5,14.9V9.1M11,15H13V17H11V15M11,7H13V13H11V7'/></svg>");
+  --md-admonition-icon--question: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z'/></svg>");
+}
+
+/* .staj-results KALDIRILDI — ortalanmış kart + ikon karosu + gölge sitenin
+   soldan hizalı editoryal düzeninden kopuktu. Sonuçlar sayfası artık anasayfa
+   açılışıyla aynı dili kullanıyor (.staj-lede__sub + birincil buton). */
+
+.md-typeset ul.staj-people {
+  list-style: none;
+  margin: 0.6rem 0 1.4rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.7rem;
+}
+.md-typeset ul.staj-people > li.staj-person {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 5px;
+}
+.staj-person__name { font-weight: 700; color: var(--md-default-fg-color); }
+.md-typeset a.staj-person__mail { font-size: 0.82rem; overflow-wrap: anywhere; }
+/* Mail linkleri gövde-link degrade çizgisinden hariç tutulduğundan kendi :focus-visible halkaları (router kartı deseniyle aynı) */
+.md-typeset .staj-contact__mail:focus-visible,
+.md-typeset a.staj-person__mail:focus-visible { outline: none; border-radius: 4px; box-shadow: 0 0 0 3px rgba(124, 203, 238, 0.55); }
+
+/* TESLİM DURUMU — tek blok. Önce üç ayrı sistem vardı (gold künye + renkli
+   faz şeridi + işaretli satırlar); üçü de aynı anda dikkat istiyordu. Şimdi
+   tek gold aksan, hiyerarşi iç ayraçlarla. Sınıf adı .staj-deadline__countdown
+   korunur: teslim.md'deki script ona --urgent/--late yazıyor. */
+.staj-status {
+  margin: .4rem 0 2.2rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--staj-gold);
+}
+.staj-status__label {
+  display: block;
+  font-size: var(--fs-sm);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--md-default-fg-color--light);
+}
+.staj-status__date {
+  display: block;
+  font-family: var(--staj-display);
+  font-size: clamp(1.6rem, 1.25rem + 1.5vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -.008em;
+  color: var(--md-default-fg-color);
+  font-variant-numeric: tabular-nums;
+  margin-top: .18rem;
+}
+/* Geç teslim kuralı — ayrı renkli şerit değil, blok içinde sakin bir satır. */
+.md-typeset .staj-status__rule {
+  margin: .9rem 0 0;
+  padding-top: .8rem;
+  border-top: 1px solid var(--box-border);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .staj-status__rule strong { color: var(--md-default-fg-color); }
+/* İstisnalar — aynı blokta, işaret simgesi yok; koşul kalın, sonuç sönük. */
+.md-typeset ul.staj-status__exceptions:not([hidden]) {
+  list-style: none;
+  margin: .55rem 0 0;
+  padding: .7rem 0 0;
+  border-top: 1px solid var(--box-border);
+  display: grid;
+  gap: .45rem;
+}
+/* [dir] ŞART: Material girintiyi `[dir="ltr"] .md-typeset ul li` ile veriyor,
+   yani 0,2,2 specificity. Sınıf tabanlı kuralımız 0,2,1'de kalıp eziliyordu ve
+   maddeler üstündeki paragraftan 21px içeride başlıyordu. */
+/* İki istisna arasında ayraç — blok içindeki diğer geçişlerle aynı saç teli. */
+[dir] .md-typeset ul.staj-status__exceptions > li + li {
+  padding-top: .5rem;
+  border-top: 1px solid var(--box-border);
+}
+[dir] .md-typeset ul.staj-status__exceptions > li {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+}
+.staj-status__if { font-weight: 700; color: var(--md-default-fg-color); }
+.staj-status__if::after { content: " —"; color: var(--md-default-fg-color--light); font-weight: 400; }
+.md-typeset .staj-status__exceptions strong { color: var(--md-default-fg-color); }
+[data-md-color-scheme="slate"] .staj-status { border-left-color: var(--staj-gold-dark); }
+
+
+/* ============================================================================
+   DIRECTION C — "SICAK DERINLIK" (Warm Depth)
+   Append-only enhancement block. Brand korunur: navy var(--staj-navy), acik mavi var(--staj-sky),
+   kritik/teslim aksani gold var(--staj-gold). Tum yeni renkler icin slate (koyu tema)
+   karsiligi tanimlidir. Logo/muhur ASLA dekor olarak kullanilmaz; tum hero
+   dekoru saf CSS gradient + soyut SVG data-uri desenidir.
+   Daha gec-in-file oldugu icin esit ozgulukteki onceki kurallari ezer.
+   NOT (palet): item (2) dort gercekten ayrisan hue ister; kategori renkleri
+   tabandan (extra.css) miras alinir — staj var(--staj-blue) (navy ailesi acik tonu) ve
+   tatil #5a9e6f (yesil) onceden tanimli, C bunlari surdurur. Gold KESINLIKLE
+   yalniz teslim/son-tarih semantigine ayrilmistir; dekoratif hicbir yerde yok.
+   ============================================================================ */
+
+/* (7) HOVER/TRANSITION POLISH — ortak yumusak gecis egrisi (~200ms cubic-bezier).
+   Mevcut 120ms gecisleri burada tek bir rafine micro-interaction diline tasiriz.
+   Not: kart kurali, mevcut yuksek-ozgulukteki selektoru birebir tekrarlar. */
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid.cards > :is(.card, li) {
+  transition: border-color 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.staj-step,
+.staj-contact__card,
+.staj-takvim__item {
+  transition: border-color 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* (1) Açılış artık tuval üzerinde tipografik — navy gradient blok, diyagonal
+   SVG dokusu ve dekoratif line-art görsel kaldırıldı. Kurallar .staj-lede
+   altında (yukarıda). Anasayfanın ilk görseli artık yıl şeridi: süs değil,
+   gerçek bilgi. */
+/* (3) Birincil buton cilasi — hover'da hafif kalkma + golge (motion-reduce disi). */
+@media (prefers-reduced-motion: no-preference) {
+  .staj-lede .md-button--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(14, 44, 82, 0.28);
+  }
+}
+
+/* Okuma genisligi. Eski notun itirazi hakliydi: YALNIZ paragrafi daraltmak,
+   yanindaki tam-genislik kutu/formla hizasini bozup "ortadan kayma" hissi
+   veriyordu. Cozum paragrafi degil SUTUNUN TAMAMINI daraltmak — kutular da
+   paragraflarla ayni kenardan hizalanir. Yalniz sag rayi olan prose
+   sayfalarina uygulanir; index'in yil seridi ve teslim'in formu genis kalir.
+   Olcum (1440px, Kurallar): 938px'de medyan 78 karakter → 860px'de 67. */
+/* Media query YOK: `hidden` özniteliği sayfaya bağlıdır, genişliğe değil, bu
+   yüzden seçici her genişlikte prose sayfalarını yakalar. 76.25em'e hapsedince
+   1220px'te içerik 860'a iniyordu ama 1219px'te (ray CSS ile gizli) ~1180'e
+   fırlıyordu. Dar ekranlarda 43rem zaten viewport'un üstünde → etkisiz. */
+.md-main__inner:has(> .md-sidebar--secondary:not([hidden])) .md-content__inner {
+  max-width: 43rem;
+}
+
+/* (6) TYPOGRAPHY RHYTHM — yalniz govde satir araligi. H2 alt cizgisi: ince, kisa, marka. */
+.md-typeset > p,
+.md-typeset > ul,
+.md-typeset > ol { line-height: 1.72; }
+.md-typeset h2 {
+  border-bottom: none;
+  box-shadow: none;
+  position: relative;
+  padding-bottom: 0.28rem;     /* metin ↔ alt çizgi arası kısaldı */
+  margin-bottom: 0.35rem;      /* başlık ↔ ilk metin arası daha da azaltıldı */
+}
+/* Başlıktan sonraki ilk öğenin üst boşluğunu da sıfırla (aksi halde onun büyük
+   margin-top'u araya girip boşluğu geri açıyordu). */
+.md-typeset h2 + * { margin-top: 0 !important; }
+/* Formlar: bir tablodan hemen sonra gelen kategori başlığının üst boşluğunu
+   kısalt (52px → ~28px) → belge kategorileri arası aşırı boşluk giderilir. */
+.md-typeset .md-typeset__scrollwrap + h2,
+.md-typeset table + h2 { margin-top: 1.5rem; }
+/* SITE GENELI BASLIK ALT VURGUSU (Aday C) — tek temiz navy bar + kisa cyan "uc".
+   Eski uc-segmentli cizgi yerine sade, guvenli bir isaret. */
+.md-typeset h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 2.6rem;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--staj-navy) 0%, var(--staj-sky) 100%);
+}
+[data-md-color-scheme="slate"] .md-typeset h2::after {
+  background: linear-gradient(90deg, var(--staj-cyan) 0%, #3f7fce 100%);
+}
+
+/* Eyebrow kicker — anasayfa bölüm başlıklarının üstünde küçük uppercase etiket.
+   Gövde/etiket dili Inter; renk açık zeminde AA için navy, koyu zeminde parlak cyan. */
+.md-typeset p.staj-kicker {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--staj-navy);
+  margin: 2.8rem 0 0.4rem;
+}
+.md-typeset p.staj-kicker + h2,
+.md-typeset p.staj-kicker + h2.staj-section { margin-top: 0; }
+[data-md-color-scheme="slate"] .md-typeset p.staj-kicker { color: var(--staj-cyan); }
+
+/* (4) VERTICAL RHYTHM — bölüm bantlarının tintli zemini KALDIRILDI. Kartlar
+   zaten kendi yüzeyine sahip; panel eklemek tuval > panel > kart diye üç
+   katman yapıyordu. Bölümü kicker + H2 + alt çizgi zaten ayırıyor. */
+
+/* Kartlar — yumusak katmanli golge + nazik hover lift (Warm Depth dokunusu). */
+.staj-step,
+.staj-contact__card {
+  box-shadow: 0 1px 2px rgba(22, 59, 110, 0.06),
+              0 6px 18px rgba(22, 59, 110, 0.07);
+}
+.staj-step:hover,
+.staj-contact__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(22, 59, 110, 0.10),
+              0 14px 30px rgba(22, 59, 110, 0.14);
+}
+[data-md-color-scheme="slate"] .staj-step,
+[data-md-color-scheme="slate"] .staj-contact__card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.30),
+              0 6px 18px rgba(0, 0, 0, 0.34);
+}
+[data-md-color-scheme="slate"] .staj-step:hover,
+[data-md-color-scheme="slate"] .staj-contact__card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.40),
+              0 14px 30px rgba(0, 0, 0, 0.48);
+}
+
+/* (2) TIMELINE — 4 kategori gercekten ayrisir: belirgin sol bar + satir basinda
+   kategori ikonu (mask-image, dosyadaki admonition idiomu). Renkler farkli
+   ton/aciklikta. Ikon, bar rengini miras alir. ::before'da box-shadow/border-radius
+   sifirlanir ki maskeli glifin etrafinda hayalet bir sekil kalmasin. */
+.staj-takvim__item {
+  position: relative;
+  padding-left: 2.35rem;
+  border-left-width: 3px;
+}
+.staj-takvim__item::before {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  top: 0.92rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 0;
+  box-shadow: none;
+  background-color: var(--staj-navy);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-size: contain; mask-size: contain;
+}
+.staj-takvim__item:hover {
+  box-shadow: 0 3px 14px rgba(29, 79, 145, 0.12);
+  transform: translateX(2px);
+}
+
+/* Kategori ikonlari — anlamli, tutarli MDI cizgi setine gecildi (eski jenerik
+   admonition glifleri yerine): akademik=TAKVIM, staj=EVRAK CANTASI, teslim=UYARI,
+   tatil=GUNES. Hepsi inline data-uri mask; renk background-color'dan gelir. */
+/* Kategori 1 — Akademik (navy): takvim ikonu. */
+.staj-takvim__item--akademik { border-left-color: var(--staj-navy); }
+.staj-takvim__item--akademik::before {
+  background-color: var(--staj-navy);
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m0 16H5V8h14z'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m0 16H5V8h14z'/></svg>");
+}
+/* Kategori 2 — Staj (acik mavi): evrak cantasi (calisma donemi). */
+.staj-takvim__item--staj { border-left-color: var(--staj-blue); }
+.staj-takvim__item--staj::before {
+  background-color: var(--staj-blue);
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M10 4h4v2h-4zm10 15H4V8h16z'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M10 4h4v2h-4zm10 15H4V8h16z'/></svg>");
+}
+/* Kategori 3 — Teslim (GOLD, kritik): uyari ikonu — item 5 (gold) ile anlamca hizali. */
+.staj-takvim__item--teslim { border-left-color: var(--staj-gold); }
+.staj-takvim__item--teslim::before {
+  background-color: var(--staj-gold);
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2 1 21h22M12 6l7.53 13H4.47M11 10v4h2v-4m-2 6v2h2v-2'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2 1 21h22M12 6l7.53 13H4.47M11 10v4h2v-4m-2 6v2h2v-2'/></svg>");
+}
+/* Kategori 4 — Tatil (yesil): gunes (tatil/dinlenme). */
+.staj-takvim__item--tatil { border-left-color: #5a9e6f; }
+.staj-takvim__item--tatil::before {
+  background-color: #5a9e6f;
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42zM3.34 7l4.16-.35C6.9 7.16 6.36 7.78 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77c.14.77.41 1.55.83 2.27.42.74.96 1.36 1.55 1.87zM20.65 7l-1.77 3.79c-.14-.79-.41-1.56-.83-2.29-.42-.72-.95-1.35-1.55-1.86zm-.01 10-4.14.36c.59-.51 1.12-1.13 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42zM3.34 7l4.16-.35C6.9 7.16 6.36 7.78 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77c.14.77.41 1.55.83 2.27.42.74.96 1.36 1.55 1.87zM20.65 7l-1.77 3.79c-.14-.79-.41-1.56-.83-2.29-.42-.72-.95-1.35-1.55-1.86zm-.01 10-4.14.36c.59-.51 1.12-1.13 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z'/></svg>");
+}
+/* Slate: ayni kategori hue'lari koyu zeminde okunur tonlara cekilir. */
+[data-md-color-scheme="slate"] .staj-takvim__item--akademik { border-left-color: #5b93d6; }
+[data-md-color-scheme="slate"] .staj-takvim__item--akademik::before { background-color: #5b93d6; }
+[data-md-color-scheme="slate"] .staj-takvim__item--staj { border-left-color: var(--staj-sky); }
+[data-md-color-scheme="slate"] .staj-takvim__item--staj::before { background-color: var(--staj-sky); }
+[data-md-color-scheme="slate"] .staj-takvim__item--teslim { border-left-color: var(--staj-gold-dark); }
+[data-md-color-scheme="slate"] .staj-takvim__item--teslim::before { background-color: var(--staj-gold-dark); }
+[data-md-color-scheme="slate"] .staj-takvim__item--tatil { border-left-color: #79bf90; }
+[data-md-color-scheme="slate"] .staj-takvim__item--tatil::before { background-color: #79bf90; }
+
+/* (5) GOLD = "kritik / son teslim" — tutarli semantik aksan. Teslim satiri ve
+   .staj-deadline gold tasir. Deadline'in navy zemini + altin parlamasi
+   kaldirildi: band artik tuval uzerinde duruyor, gold'u tek bir sol cizgi
+   tasiyor (kurallari .staj-deadline altinda). */
+.staj-takvim__item--teslim {
+  background:
+    linear-gradient(90deg, rgba(212, 160, 23, 0.07) 0%, rgba(212, 160, 23, 0) 60%),
+    var(--md-default-bg-color);
+}
+.staj-takvim__item--teslim:hover {
+  box-shadow: 0 3px 16px rgba(212, 160, 23, 0.22);
+}
+[data-md-color-scheme="slate"] .staj-takvim__item--teslim {
+  background:
+    linear-gradient(90deg, rgba(232, 181, 58, 0.10) 0%, rgba(232, 181, 58, 0) 60%),
+    var(--md-default-bg-color);
+}
+
+/* Erisilebilirlik: hareket azaltma tercihinde lift/transform sonlanir. */
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .grid.cards > ul > li,
+  .md-typeset .grid.cards > :is(.card, li),
+  .staj-step,
+  .staj-contact__card,
+  .staj-takvim__item {
+    transition: none;
+  }
+  .staj-step:hover,
+  .staj-contact__card:hover,
+  .staj-takvim__item:hover { transform: none; }
+}
+/* ===================== Direction C blok sonu ===================== */
+
+/* ============================================================================
+   TIKLANABILIR ADIM KARTLARI (anasayfa) — tum kart, "Detay" linkine yonlenir.
+   "Stretched-link" deseni: gorunur "Detay →" ipucu kalir; kart icindeki gercek
+   linkler (or. adim 3'teki "sonuc sayfasi") overlay'in ustunde tiklanir kalir.
+   ============================================================================ */
+.staj-step { cursor: pointer; }
+/* "Detay" linkinin ::after'i tum karti kaplar → karta her tiklayis o linke gider.
+   ONEMLI: link KENDISI position:relative OLMAMALI; aksi halde ::after linke gore
+   konumlanir (tum karti kaplamaz). .staj-step zaten position:relative → overlay ona
+   gore inset:0 ile tum karta yayilir. */
+.staj-step .staj-step__more::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+/* Kart icindeki diger gercek linkler overlay'in uzerinde → bagimsiz tiklanir. */
+.staj-step a:not(.staj-step__more) { position: relative; z-index: 2; }
+/* "Detay →" GORUNUR metni/oku kaldirildi (kullanici istegi). Link erisilebilirlik
+   icin DOM'da kalir; ::after overlay'i tum karti kaplamaya devam eder → kutu
+   tiklanabilir kalir. Sarmalayan paragraf da collapse edilir. */
+.staj-step p:has(> .staj-step__more) { margin: 0; height: 0; line-height: 0; overflow: hidden; }
+.staj-step .staj-step__more { font-size: 0; }
+/* Klavye erisilebilirligi: link odaktayken kart belirginlesir. */
+.staj-step:focus-within {
+  border-color: var(--staj-sky);
+  box-shadow: 0 4px 14px rgba(29, 79, 145, 0.12);
+}
+/* ============================================================================
+   404 — markali "sayfa bulunamadi" sayfasi (overrides/404.html).
+   ============================================================================ */
+.md-typeset .staj-404 { max-width: 34rem; margin: 3rem auto; text-align: center; }
+.staj-404__code {
+  font-size: 6rem; font-weight: 800; line-height: 1; letter-spacing: -2px; margin: 0;
+  color: var(--staj-navy);
+  background: linear-gradient(135deg, var(--staj-navy) 0%, var(--staj-sky) 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+[data-md-color-scheme="slate"] .staj-404__code { background: linear-gradient(135deg, var(--staj-sky) 0%, #2A6AA8 100%); -webkit-background-clip: text; background-clip: text; }
+.md-typeset .staj-404__title { margin: 0.2rem 0 0.6rem; }
+.md-typeset .staj-404__lead { color: var(--md-default-fg-color--light); }
+.staj-404__actions { margin: 1.4rem 0 0.6rem; }
+.md-typeset .staj-404__links {
+  list-style: none; margin: 1rem 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.3rem;
+}
+.md-typeset .staj-404__links li { margin: 0; }
+
+/* ============================================================================
+   ŞIKLIK TURU — degrade / renk-geçişi öncelikli rafine dokunuşlar.
+   Marka paleti içinde (navy var(--staj-navy) ↔ cyan var(--staj-sky); gold YALNIZ deadline),
+   slate (koyu) karşılıkları tanımlı, kurumsal/sade kalır.
+   ============================================================================ */
+
+/* #1 Kapanış künyesi — header ile AYNI navy. Daha koyu bir footer sayfayı
+   aşağı doğru "batırıyordu"; eşitlenince gövde iki eş bant arasında tek bir
+   kağıt gibi okunuyor. */
+.md-footer-meta {
+  background: var(--staj-chrome);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* #5 Degrade kenar hairline'ları (header altı / footer üstü / tabs altı) — "ince metal tel" */
+/* Kabuk ile gövde arasında tek saç teli. Eskiden header'da 3px, tabs'ta 2px
+   degrade border-image vardı; iki ayrı parlak şerit kabuğu gövdeden koparıyordu. */
+.md-tabs {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* #2 Degrade saç-teli <hr> — uçları şeffaf, ortası navy→cyan. (Şu an sayfalarda
+   `---` kullanılmıyor; ileride eklenirse otomatik devreye girer.) */
+.md-typeset hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(29,79,145,0) 0%, rgba(29,79,145,0.45) 50%, rgba(29,79,145,0) 100%);
+}
+[data-md-color-scheme="slate"] .md-typeset hr {
+  background: linear-gradient(90deg, rgba(124,203,238,0) 0%, rgba(124,203,238,0.45) 50%, rgba(124,203,238,0) 100%);
+}
+
+/* #3 Gövde linklerinde hover/odakta soldan dolan navy→cyan alt çizgi (özel linkler hariç) */
+.md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink) {
+  background-image: linear-gradient(90deg, var(--staj-navy) 0%, var(--staj-sky) 100%);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 200ms ease;
+}
+.md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink):hover,
+.md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink):focus-visible {
+  background-size: 100% 2px;
+}
+[data-md-color-scheme="slate"] .md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink) {
+  background-image: linear-gradient(90deg, var(--staj-sky) 0%, #2A6AA8 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink) { transition: none; }
+}
+
+/* #4 Kart üst-kenarı: dinlenmede düz lacivert, HOVER'da navy→cyan degrade (marka kimliği korunur) */
+.staj-step:hover, .staj-contact__card:hover {
+  border-image: linear-gradient(90deg, var(--staj-navy) 0%, var(--staj-sky) 100%) 1 / 4px 0 0 0;
+}
+[data-md-color-scheme="slate"] .staj-step:hover,
+[data-md-color-scheme="slate"] .staj-contact__card:hover {
+  border-image: linear-gradient(90deg, var(--staj-sky) 0%, #2A6AA8 100%) 1 / 4px 0 0 0;
+}
+
+/* #6 Kişi kartlarında (iletişim) solup giden degrade sol-ray; timeline çubukları ETKİLENMEZ */
+.md-typeset ul.staj-people > li.staj-person {
+  border-left: 3px solid transparent;
+  border-image: linear-gradient(180deg, var(--staj-sky) 0%, rgba(124,203,238,0.12) 100%) 1 / 0 0 0 3px;
+}
+[data-md-color-scheme="slate"] .md-typeset ul.staj-people > li.staj-person {
+  border-image: linear-gradient(180deg, var(--staj-sky) 0%, rgba(124,203,238,0.10) 100%) 1 / 0 0 0 3px;
+}
+
+/* #7 Bölüm bandı köşe ışıltıları da kaldırıldı (bantların kendisi kalktı). */
+
+/* #8 Dul/yetim satır kontrolü — başlıklar dengeli sarar, paragraflar düzgün (progressive) */
+.md-typeset h1, .md-typeset h2, .md-typeset h3,
+.staj-contact__name, .staj-deadline__date, .staj-lede__sub {
+  text-wrap: balance;
+}
+.md-typeset p, .md-typeset li { text-wrap: pretty; }
+
+/* #9 Butonlarda yumuşak iki-katmanlı degrade odak halkası (:focus-visible — klavye) */
+.md-typeset .md-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124,203,238,0.55), 0 0 0 6px rgba(29,79,145,0.18);
+}
+
+/* ============================================================================
+   GELİŞTİRME TURU 5 — iç sayfa yapısı + cila.
+   Durum-router, dikey süreç timeline, "Bir Bakışta" özet, anahtar-sayı blokları,
+   SSS marka rengi, okuma ölçüsü, masthead, "Sıradaki adım", a11y.
+   Marka içi: navy var(--staj-navy) / cyan var(--staj-sky); gold YALNIZ teslim. Tam slate paritesi.
+   ============================================================================ */
+
+/* (1) SSS "question" kutuları → marka navy/cyan (Material varsayılan lime-yeşil
+   "tatil" semantiğiyle çakışıyordu; en çok ziyaret edilen sayfa). */
+.md-typeset .admonition.question,
+.md-typeset details.question { border-color: rgba(124, 203, 238, 0.55); }
+.md-typeset .question > .admonition-title,
+.md-typeset .question > summary { background-color: rgba(29, 79, 145, 0.06); }
+.md-typeset .question > .admonition-title::before,
+.md-typeset .question > summary::before { background-color: var(--staj-navy); }
+[data-md-color-scheme="slate"] .md-typeset .question > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .question > summary { background-color: rgba(124, 203, 238, 0.10); }
+[data-md-color-scheme="slate"] .md-typeset .question > .admonition-title::before,
+[data-md-color-scheme="slate"] .md-typeset .question > summary::before { background-color: var(--staj-sky); }
+
+/* (2) [KALDIRILDI] Okuma ölçüsü (72ch) — metin sayfa genişliğini tam kullansın
+   diye geri alındı (paragraflar erken sarmıyor artık). */
+
+/* (3) Soluk notlar AA üstüne + dokunma hedefleri 44px. */
+:root { --staj-note: rgba(0, 0, 0, 0.62); }
+[data-md-color-scheme="slate"] { --staj-note: rgba(255, 255, 255, 0.62); }
+.staj-takvim__note, .staj-contact__note { color: var(--staj-note); }
+.md-typeset .staj-lede .md-button { min-height: 44px; }
+
+/* (4) Masthead kurallari kaldirildi: anasayfa H1 artik --fs-h1 olcegini
+   dogrudan kullaniyor, ayri bir hero olcegi yok. */
+
+/* (6) "Bir Bakışta" özet admonition — nötr navy.
+   Alarm tonuna (warning/danger) kaçmadan sakin özet. */
+:root {
+  --md-admonition-icon--ozet: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 5h2v2H3zm0 6h2v2H3zm0 6h2v2H3zM7 5h14v2H7zm0 6h14v2H7zm0 6h14v2H7z'/></svg>");
+}
+.md-typeset .admonition.ozet,
+.md-typeset details.ozet { border-color: var(--staj-navy); }
+.md-typeset .ozet > .admonition-title,
+.md-typeset .ozet > summary { background-color: rgba(29, 79, 145, 0.10); }
+.md-typeset .ozet > .admonition-title::before,
+.md-typeset .ozet > summary::before {
+  background-color: var(--staj-navy);
+  -webkit-mask-image: var(--md-admonition-icon--ozet);
+          mask-image: var(--md-admonition-icon--ozet);
+}
+[data-md-color-scheme="slate"] .md-typeset .admonition.ozet,
+[data-md-color-scheme="slate"] .md-typeset details.ozet { border-color: var(--staj-sky); }
+[data-md-color-scheme="slate"] .md-typeset .ozet > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .ozet > summary { background-color: rgba(124, 203, 238, 0.10); }
+[data-md-color-scheme="slate"] .md-typeset .ozet > .admonition-title::before,
+[data-md-color-scheme="slate"] .md-typeset .ozet > summary::before { background-color: var(--staj-sky); }
+
+/* (8) Süreç sayfası dikey adım-timeline (G1) — sol-ray idiomunun dikey uzantısı. */
+/* Süreç sayfası — dikey timeline çizgisi + noktalar kaldırıldı (kullanıcı isteği).
+   Faz ayrımı artık yalnız başlık altı renk-kodlu çizgiyle (Önce=mavi/Sırasında=
+   turkuaz/Sonra=yeşil). */
+.staj-flow { position: relative; }
+.staj-flow > h2 { position: relative; }
+
+/* (10) Yıl şeridi (G3) — SABİT Ocak–Aralık, gün-hassas zonlar. ≥720px; mobilde
+   gizli, .staj-takvim listesi kesin tarihleri taşır. Marka tonları: açık cyan =
+   staj yapılabilir; navy = ders dönemi; cyan/navy taralı = yaz okulu (koşullu);
+   gold YALNIZ teslim çizgisi. Etiketsiz — anlam legend + alttaki listede. */
+.staj-yearbar { display: none; }
+@media (min-width: 720px) {
+  .staj-yearbar { display: block; margin: 0.6rem 0 2rem; }
+}
+/* Önemli Tarihler altı not — sade: kutu yok, ince marka ikonu + okunur koyu metin. */
+.md-typeset p.staj-dates-note {
+  display: flex; align-items: center; gap: 0.45rem;
+  margin: 1rem 0 0; font-size: 0.8rem; color: var(--md-default-fg-color);
+}
+.md-typeset p.staj-dates-note::before {
+  content: ""; flex-shrink: 0; width: 0.95rem; height: 0.95rem; background-color: #2d5b96;
+  -webkit-mask: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z'/></svg>") center / contain no-repeat;
+}
+[data-md-color-scheme="slate"] .md-typeset p.staj-dates-note::before { background-color: var(--staj-sky); }
+
+/* Liste tarihleri (anasayfa) gantt ile aynı renge boyanır (staj_durum'a göre):
+   kapali=koyu mavi, kosullu=açık mavi; teslim zaten gold. İkon ŞEKLİ kategoriden gelir. */
+.staj-takvim__item--kapali { border-left-color: #2d5b96; }
+.staj-takvim__item--kapali::before { background-color: #2d5b96; }
+.staj-takvim__item--kosullu { border-left-color: #86c9ed; }
+.staj-takvim__item--kosullu::before { background-color: #86c9ed; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kapali { border-left-color: #5183ba; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kapali::before { background-color: #5183ba; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kosullu { border-left-color: #9fd0f0; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kosullu::before { background-color: #9fd0f0; }
+.staj-yearbar__axis { display: grid; grid-template-columns: repeat(12, 1fr); margin-bottom: 4px; }
+.staj-yearbar__month {
+  font-size: var(--fs-xs); text-align: center; color: var(--staj-note);
+  font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
+}
+.staj-yearbar__track {
+  position: relative; height: 2.9rem; border-radius: 7px; overflow: hidden;
+  background: #95c4e8; border: 1px solid var(--md-default-fg-color--lightest);
+}
+.staj-yearbar__seg { position: absolute; top: 0; bottom: 0; }
+.staj-yearbar__seg--block { background: #2d5b96; }
+.staj-yearbar__seg--cond { background: repeating-linear-gradient(45deg, #a8d4f0 0 6px, #cae5f9 6px 12px); }
+.staj-yearbar__mark {
+  position: absolute; top: -1px; bottom: -1px; width: 3px; z-index: 3;
+  background: var(--staj-gold); border-radius: 2px; box-shadow: 0 0 0 2px var(--md-default-bg-color);
+}
+.staj-yearbar__legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1.15rem; margin-top: 11px; font-size: var(--fs-xs); color: var(--staj-note); }
+.staj-yearbar__legend > span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.staj-yearbar__sw { width: 0.7rem; height: 0.7rem; border-radius: 50%; flex-shrink: 0; }
+.staj-yearbar__sw--ok { background: #95c4e8; }
+.staj-yearbar__sw--block { background: #2d5b96; }
+.staj-yearbar__sw--cond { background: repeating-linear-gradient(45deg, #a8d4f0 0 3px, #cae5f9 3px 6px); }
+.staj-yearbar__sw--mark { width: 3px; height: 0.85rem; background: var(--staj-gold); border-radius: 2px; }
+[data-md-color-scheme="slate"] .staj-yearbar__track { background: #6b9dcd; border-color: rgba(255, 255, 255, 0.12); }
+[data-md-color-scheme="slate"] .staj-yearbar__seg--block { background: #1e3a5a; }
+[data-md-color-scheme="slate"] .staj-yearbar__seg--cond { background: repeating-linear-gradient(45deg, #9fd0f0 0 6px, #c3e2f8 6px 12px); }
+[data-md-color-scheme="slate"] .staj-yearbar__mark,
+[data-md-color-scheme="slate"] .staj-yearbar__sw--mark { background: var(--staj-gold-dark); }
+[data-md-color-scheme="slate"] .staj-yearbar__sw--ok { background: #6b9dcd; }
+[data-md-color-scheme="slate"] .staj-yearbar__sw--block { background: #1e3a5a; }
+[data-md-color-scheme="slate"] .staj-yearbar__sw--cond { background: repeating-linear-gradient(45deg, #9fd0f0 0 3px, #c3e2f8 3px 6px); }
+/* ===================== Geliştirme Turu 5 blok sonu ===================== */
+
+/* ============================================================================
+   GELİŞTİRME TURU 6 — rapor outline kartları, sayfa-içi atlama, bölüm numaraları,
+   belge kontrol-listesi (+print), terim sözlüğü, Üretim↔Serbest karşılaştırma,
+   teslime kalan gün. Marka içi; gold YALNIZ deadline. Tam slate paritesi.
+   ============================================================================ */
+
+/* (1) Rapor outline → numaralı hayalet-rakam kart dizisi (G2). */
+.staj-outline { display: grid; gap: 0.8rem; margin: 1rem 0 1.6rem; }
+/* Rapor şablonu bölümleri — çizgi dili. Eskiden 8 bölüm 8 ayrı renkte dolu
+   kart olarak duruyordu; sekiz keyfi ton sayfayı en kalabalık yer yapıyordu.
+   Bunlar bir belgenin sıralı bölümleri, ayrı nesneler değil → çizgi. */
+.md-typeset .staj-outline__card {
+  --ch: var(--staj-navy);
+  position: relative;
+  background: transparent;
+  border: 0; border-left: 3px solid var(--box-border);
+  border-radius: 0; padding: 0 0 0 1rem;
+  /* Grid öğeleri min-width:auto ile gelir → içindeki geniş tablo kartı kendi
+     doğal genişliğine şişirip sayfayı yatay taşırıyordu (375px'te 152px).
+     Eski kart bunu overflow:hidden ile maskeliyordu; o tabloyu kırpardı.
+     min-width:0 küçülmeye izin verir, tablo kendi sarmalayıcısında kayar. */
+  min-width: 0;
+}
+.md-typeset .staj-outline__card > h3 { margin-top: 0.1rem; }
+
+
+/* (7) Teslime kalan gün — sade bilgilendirici (rozet/animasyon YOK).
+   Renkler AÇIK tuvale göre türetildi: eski değerler navy slab üstünde
+   çalışan açık tonlardı, tuval üzerinde okunmuyorlardı. Üç durum da
+   metin rengiyle taşınır, zemin yalnız destekler. */
+.staj-deadline__countdown {
+  display: inline-flex; align-items: baseline; gap: 0.4em;
+  margin-top: 0.9rem; padding: 0.32rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(23, 69, 127, 0.07);
+  border: 1px solid rgba(23, 69, 127, 0.20);
+  font-size: var(--fs-sm); font-weight: 600; color: #3f5a7a;
+}
+.staj-deadline__countdown b { color: var(--staj-navy); font-size: 1.25rem; font-weight: 800; line-height: 1; }
+.staj-deadline__countdown--urgent { background: rgba(201, 151, 26, 0.12); border-color: rgba(201, 151, 26, 0.42); color: #6e520c; }
+.staj-deadline__countdown--urgent b { color: #6b4f0b; }
+.staj-deadline__countdown--late { background: rgba(178, 42, 42, 0.10); border-color: rgba(178, 42, 42, 0.38); color: #9c2b2b; }
+.staj-deadline__countdown--late b { color: #a82a2a; }
+[data-md-color-scheme="slate"] .staj-deadline__countdown {
+  background: rgba(124, 203, 238, 0.12); border-color: rgba(124, 203, 238, 0.30); color: #a9c9e2;
+}
+[data-md-color-scheme="slate"] .staj-deadline__countdown b { color: var(--staj-cyan); }
+[data-md-color-scheme="slate"] .staj-deadline__countdown--urgent { background: rgba(232, 192, 74, 0.15); border-color: rgba(232, 192, 74, 0.42); color: #f0d78f; }
+[data-md-color-scheme="slate"] .staj-deadline__countdown--urgent b { color: #ffe28c; }
+[data-md-color-scheme="slate"] .staj-deadline__countdown--late { background: rgba(226, 75, 74, 0.18); border-color: rgba(240, 160, 160, 0.42); color: #ffb9b9; }
+[data-md-color-scheme="slate"] .staj-deadline__countdown--late b { color: #ffd9d9; }
+
+/* (8) Yazdırma: site iskeletini gizle (kontrol listesi/temiz çıktı). */
+@media print {
+  .md-header, .md-tabs, .md-footer, .md-sidebar, .staj-yearbar { display: none !important; }
+}
+/* ===================== Geliştirme Turu 6 blok sonu ===================== */
+
+/* ============================================================================
+   SEKME (tabbed) RAFINESI — aktif gösterge çubuğunu marka mavisine sabitle
+   (varsayılan koyu metin-rengi yerine), hover etiketini accent'e çek. Material'ın
+   JS-ile/JS-siz fallback rengi tutarsızlığını giderir → gösterge hep marka mavisi
+   ve aktif etiketin tam altında. Konu Rehberi + Yazım İpuçları (ve tüm sekmeler). */
+/* Sekmeler: kayan/hover MAVİ ÇİZGİ YOK (kullanıcı istemiyor). Material'ın ::before
+   VE ::after göstergeleri tamamen gizli; hover efekti yok. Aktif sekme yalnızca
+   hafif tonlu zeminle (çizgisiz) belli olur. */
+:root { --staj-tab-active: rgba(45, 91, 150, 0.10); }
+[data-md-color-scheme="slate"] { --staj-tab-active: rgba(124, 203, 238, 0.14); }
+.md-typeset .tabbed-alternate .tabbed-labels::before,
+.md-typeset .tabbed-alternate .tabbed-labels::after { display: none !important; }
+.md-typeset .tabbed-alternate .tabbed-labels > label { border-bottom: none; }
+.md-typeset .tabbed-set > input:nth-child(1):checked ~ .tabbed-labels > label:nth-child(1),
+.md-typeset .tabbed-set > input:nth-child(2):checked ~ .tabbed-labels > label:nth-child(2),
+.md-typeset .tabbed-set > input:nth-child(3):checked ~ .tabbed-labels > label:nth-child(3),
+.md-typeset .tabbed-set > input:nth-child(4):checked ~ .tabbed-labels > label:nth-child(4),
+.md-typeset .tabbed-set > input:nth-child(5):checked ~ .tabbed-labels > label:nth-child(5),
+.md-typeset .tabbed-set > input:nth-child(6):checked ~ .tabbed-labels > label:nth-child(6),
+.md-typeset .tabbed-set > input:nth-child(7):checked ~ .tabbed-labels > label:nth-child(7),
+.md-typeset .tabbed-set > input:nth-child(8):checked ~ .tabbed-labels > label:nth-child(8) {
+  background: var(--staj-tab-active); border-radius: 6px 6px 0 0;
+}
+
+/* ANA SAYFA bölüm başlıkları — site geneli TEK başlık diline birleştirildi.
+   Eski uppercase "eyebrow" varyant kaldırıldı; artık standart H2 gibi görünür
+   (iki-ton kısa alt vurgu). Yalnız section-arası nefes için margin korunur. */
+.md-typeset h2.staj-section {
+  margin-top: 2.8rem;
+}
+
+/* ============================================================================
+   YIL ŞERİDİ ETKİLEŞİMİ — takvim listesi ↔ şerit ↔ legend vurgusu (yearbar.js).
+   Bir öğe aktifken eşleşen bölge belirginleşir; diğerleri soluklaşır. Segmentler
+   overflow:hidden track içinde olduğu için DIŞ halka klipslenir → vurgu opaklık +
+   parlaklık + İÇ (inset) beyaz çerçeveyle verilir. Reduced-motion uyumlu. */
+.staj-yearbar__seg,
+.staj-yearbar__mark { transition: opacity 160ms ease, filter 160ms ease; }
+.staj-yearbar.is-focusing .staj-yearbar__seg:not(.is-active),
+.staj-yearbar.is-focusing .staj-yearbar__mark:not(.is-active) { opacity: 0.32; }
+.staj-yearbar__seg.is-active {
+  filter: saturate(1.12) brightness(1.08);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.75);
+  z-index: 4;
+}
+.staj-yearbar__mark.is-active { filter: brightness(1.12); z-index: 5; }
+.staj-yearbar__legend [data-cat] { cursor: default; }
+/* Liste satırı, şeritten tetiklendiğinde de :hover ile aynı belirginlik. */
+.staj-takvim__item.is-active {
+  border-color: var(--staj-sky);
+  box-shadow: 0 3px 14px rgba(29, 79, 145, 0.12);
+  transform: translateX(2px);
+}
+[data-md-color-scheme="slate"] .staj-yearbar__seg.is-active {
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.55);
+}
+@media (prefers-reduced-motion: reduce) {
+  .staj-yearbar__seg,
+  .staj-yearbar__mark { transition: none; }
+  .staj-takvim__item.is-active { transform: none; }
+}
+
+/* ── Yıl şeridi: hover tarih balonu + sabit teslim etiketi + geniş hover alanı ──
+   Balon (tip) yearbar'a göre konumlanır → yearbar position:relative.
+   Teslim çizgisi 3px görünür kalır; ::before ile ~19px görünmez hover hedefi kazanır.
+   Teslim günü ayrıca şeritte hep etiketli (marklabel), böylece hover'a gerek kalmaz. */
+/* Yıl şeridi KENDİ yığın bağlamını kurar. Aksi halde içindeki z-index'ler
+   (seg.is-active=4, mark.is-active=5, tip=20) kök yığın bağlamında yarışır ve
+   sticky header'ı (z-index:4) AŞAR: sayfa aşağı kaydırılmışken bir takvim
+   satırının üzerine gelince, şerit header'ın arkasında olmasına rağmen altın
+   teslim çizgisi header'ın üstünde görünürdü. isolation:isolate tüm iç
+   sıralamayı aynen korur, yalnız dışarı taşmayı engeller. */
+.staj-yearbar { position: relative; isolation: isolate; }
+
+.staj-yearbar__mark::before {
+  content: "";
+  position: absolute;
+  left: -8px; right: -8px; top: 0; bottom: 0;
+}
+
+.staj-yearbar__tip {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+  background: var(--staj-navy-dark);
+  color: #fff;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(18, 55, 99, 0.28);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+.staj-yearbar__tip.is-visible { opacity: 1; }
+.staj-yearbar__tip b { display: block; color: var(--staj-cyan); font-weight: 700; margin-bottom: 1px; }
+
+.staj-yearbar__labels { position: relative; height: 1.2rem; margin-top: 5px; }
+.staj-yearbar__marklabel {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: var(--staj-gold);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.staj-yearbar__marklabel::before {
+  content: "";
+  position: absolute;
+  top: -5px; left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-bottom-color: var(--staj-gold);
+}
+[data-md-color-scheme="slate"] .staj-yearbar__marklabel { color: var(--staj-gold-dark); }
+[data-md-color-scheme="slate"] .staj-yearbar__marklabel::before { border-bottom-color: var(--staj-gold-dark); }
+@media (prefers-reduced-motion: reduce) {
+  .staj-yearbar__tip { transition: none; }
+}
+
+/* ============================================================================
+   HEADER — tek sürekli navy blok (header + içindeki tabs). Degrade, diyagonal
+   doku, köşe ışıması, kaydırma durumu ve sekmelerdeki cyan pill kaldırıldı:
+   gövde editoryal tuvale dönünce bu efektler kabuğu siteden kopuk gösteriyordu.
+   Aktif sekme = ince alt çizgi; arama = yuvarlak pill.
+   ============================================================================ */
+
+/* (B1) Tek sürekli yüzey — tek düz marka navy'si. Degrade, diyagonal doku ve
+   köşe ışıması kaldırıldı: hero slab'i gidince kabuk gövdeden kopuk kaldı. */
+.md-header {
+  background: var(--staj-chrome);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+/* Kabuk rengi TEK yerde: header ve footer aynı bandı paylaşır. Koyu modda
+   --md-primary-fg-color (#2A6AA8) fazla açık kalıyor ve üstündeki sönük
+   metinler AA'nın altına düşüyordu → slate'te derin navy. */
+:root { --staj-chrome: var(--staj-navy); }
+[data-md-color-scheme="slate"] { --staj-chrome: #123763; }
+.md-header__inner,
+.md-header__option,
+.md-header .md-search,
+.md-tabs { position: relative; z-index: 1; }
+/* "Araçlar | arama" ayracı — iki grup görsel olarak ayrılır. */
+@media screen and (min-width: 60em) {
+  .md-header .md-search {
+    border-left: 1px solid rgba(255, 255, 255, .16);
+    margin-left: .5rem;
+    padding-left: .7rem;
+  }
+  .md-header .md-search__form { max-width: 11rem; }
+}
+
+/* Tabs kendi zeminini bırakır → header degradesi tek blok olarak görünür. */
+.md-tabs {
+  background: transparent;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Kabuk ile gövde tek sol kenarda. Ölçüm (1280px): logo görseli 44, içerik
+   başlığı 46, "Ana Sayfa" metni 58 — üç ayrı hiza. Sekme metni link kutusunun
+   kendi yatay dolgusu (12.4px) kadar içeride kalıyordu; liste o kadar sola
+   çekilir, logo da 2px sağa alınır. Sonuç: üçü de 46. */
+/* Girinti iki kaynaktan: li'nin 12px dolgusu + link'in 12.4px dolgusu.
+   .md-tabs__list'e margin vermek Material tarafından eziliyor; ilk sekmenin
+   sol dolgusunu kaldırmak metni 46'ya getirir, diğer sekmelerin ritmi bozulmaz. */
+/* Yalnız geniş ekranda: dar ekranda sekme şeridi yatay kaydırılabilir hâle
+   geliyor ve dolguyu kaldırmak ilk sekmeyi ekran kenarına yapıştırıyordu (0px). */
+@media screen and (min-width: 76.25em) {
+  [dir] .md-tabs__list > .md-tabs__item:first-child { padding-left: 0; }
+}
+.md-header__button.md-logo { margin-left: 0.3rem; }
+
+/* (B2) Sekmeler — sönük dinlenme, hover'da hafif zemin, aktif = cyan pill + alt vurgu. */
+.md-tabs__item { opacity: 1; }
+.md-tabs__link {
+  margin-top: 0.42rem;
+  margin-bottom: 0.42rem;
+  padding: 0.28rem 0.62rem;
+  border-radius: 8px;
+  font-weight: 500;
+  opacity: 0.82;
+  transition: background-color 180ms ease, color 180ms ease, opacity 180ms ease,
+              margin 240ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              padding 240ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+/* İngilizce sekme adları daha uzun; son sekmeyi kırpmadan aynı tek satırı koru. */
+html[lang="en"] .md-tabs__link {
+  font-size: .66rem;
+  padding-inline: .42rem;
+}
+.md-tabs__link:hover {
+  opacity: 1;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+.md-tabs__item--active .md-tabs__link {
+  position: relative;
+  opacity: 1;
+  color: #fff;
+  font-weight: 700;
+  background: transparent;   /* hap kaldırıldı: işaret alt çizgi */
+}
+.md-tabs__item--active .md-tabs__link::after {
+  content: "";
+  position: absolute;
+  left: 0.62rem;
+  right: 0.62rem;
+  bottom: -0.34rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--staj-cyan);
+}
+
+/* (B3) Arama — yuvarlak pill; header üstünde translucent, odakta Material beyaz overlay'i korunur. */
+[data-md-toggle="search"]:not(:checked) ~ * .md-search__form,
+.md-header .md-search__form {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+.md-header .md-search__form:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.34);
+}
+.md-search__input { color: #fff; }
+.md-search__input::placeholder { color: rgba(255, 255, 255, 0.72); }
+.md-search__icon { color: rgba(255, 255, 255, 0.85); }
+/* Odak/aktif arama: Material beyaz overlay'ine dön (koyu metin okunur kalsın). */
+[data-md-toggle="search"]:checked ~ .md-header .md-search__form,
+.md-search__form:focus-within {
+  background: var(--md-default-bg-color);
+  border-color: transparent;
+}
+[data-md-toggle="search"]:checked ~ .md-header .md-search__input,
+.md-search__form:focus-within .md-search__input { color: var(--md-default-fg-color); }
+.md-search__form:focus-within .md-search__input::placeholder { color: var(--md-default-fg-color--light); }
+.md-search__form:focus-within .md-search__icon { color: var(--md-default-fg-color--light); }
+
+/* (B4) Kaydırma durumu KALDIRILDI. Eskiden body[data-hdr-scrolled] header'ın
+   zeminini düz navy'den gradient'e çeviriyordu; header düzleşince bu takas
+   kaydırmada "header bir an kaybolup geliyor" gibi görünüyordu. Header artık
+   her durumda aynı düz navy → takas yok, scroll listener'a da gerek kalmadı
+   (assets/header.js kaldırıldı).
+
+/* ============================================================================
+   ZEMİN & KOYU MOD (Alan 4) — açık: hafif marka-tintli tuval, kartlar saf beyaz
+   (gölgeyle "kalkar"). Koyu: nötr slate yerine navy-marka. Yüzey/kart rengi
+   --md-default-bg-color; tuval ayrı (body/.md-main).
+   ============================================================================ */
+body[data-md-color-scheme="default"] { --staj-canvas: #f4f7fb; }
+body[data-md-color-scheme="default"],
+[data-md-color-scheme="default"] .md-main { background-color: var(--staj-canvas); }
+
+body[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #16273c;   /* yüzey / kart / admonition */
+  --staj-canvas: #0f1c2e;           /* tuval */
+}
+body[data-md-color-scheme="slate"],
+[data-md-color-scheme="slate"] .md-main { background-color: var(--staj-canvas); }
+
+/* Uçlarda (üst/alt) zıplatma (rubber-band/overscroll) sırasında sayfa
+   tuvalin dışına taşıp beyaz zemin göstermesin — sınırların dışına çıkma
+   tamamen kapatılır. html'in de tuval rengiyle boyalı olması, jest esnasında
+   (kısa an) görünebilecek şeridi de kapatır. */
+html, body { overscroll-behavior-y: none; }
+html { background-color: #f4f7fb; }
+html:has(body[data-md-color-scheme="slate"]) { background-color: #0f1c2e; }
+
+/* PERF: scroll-reveal (İmza Hareket) tamamen kaldırıldı — "aşağı indikçe içerik
+   geliyor" animasyonu + will-change kasmaya sebep oluyordu. İçerik anında görünür. */
+
+/* ============================================================================
+   İÇERİK DETAYLARI (Alan 6) — tablolar (yuvarlak kap + rafine başlık + satır
+   hover), callout'lar (Aday A: yuvarlak + yumuşak gölge + rafine sol-şerit),
+   footer copyright rötuşu. Kart diliyle uyumlu.
+   ============================================================================ */
+
+/* Tablolar — yuvarlak kap, hairline hücreler, uppercase marka başlığı, satır hover. */
+.md-typeset table:not([class]) {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 12px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(22, 59, 110, 0.06), 0 8px 20px rgba(22, 59, 110, 0.07);
+}
+.md-typeset table:not([class]) th {
+  background: rgba(23, 69, 127, 0.05);
+  color: var(--md-primary-fg-color);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  padding: 0.72rem 1rem;
+}
+.md-typeset table:not([class]) td {
+  border: none;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  padding: 0.72rem 1rem;
+}
+.md-typeset table:not([class]) tr:last-child td { border-bottom: none; }
+.md-typeset table:not([class]) tbody tr { transition: background-color 150ms ease; }
+.md-typeset table:not([class]) tbody tr:hover { background: rgba(23, 69, 127, 0.035); }
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background: rgba(124, 203, 238, 0.09);
+  color: var(--staj-cyan);
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tbody tr:hover {
+  background: rgba(124, 203, 238, 0.06);
+}
+
+/* Callout'lar (Aday A) — yuvarlak 12px + yumuşak gölge; şiddet işareti (sol şerit)
+   incelir ve korunur; başlık şeridi tonlu kalır. Site özel türleri de miras alır. */
+/* Admonition/details'in kart iskeleti (radius + gölge + overflow) kaldırıldı;
+   çizgi diline geçtiler. Kurallar aşağıda tek yerde. */
+
+.md-footer-meta__inner { align-items: center; }
+
+/* ============================================================================
+   MOBİL DRAWER (Alan 7) — markalı navy başlık (header ile aynı degrade + doku),
+   cyan sol-aksanlı aktif öğe, 44px dokunma hedefleri. YALNIZ mobil breakpoint'te
+   (drawer görünürken); masaüstü sol menüsü Material varsayılanı kalır.
+   ============================================================================ */
+@media screen and (max-width: 76.1875em) {
+.md-nav--primary > .md-nav__title {
+  position: relative;
+  color: #fff;
+  background: linear-gradient(135deg, var(--staj-navy-light) 0%, var(--staj-navy) 55%, #143f76 100%);
+  box-shadow: 0 4px 14px rgba(15, 40, 80, 0.22);
+}
+.md-nav--primary > .md-nav__title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'><path d='M-4 4L4 -4M0 44L44 0M40 48L48 40' stroke='%23ffffff' stroke-opacity='0.05' stroke-width='1.1' fill='none'/></svg>");
+}
+.md-nav--primary > .md-nav__title > * { position: relative; z-index: 1; }
+.md-nav--primary .md-nav__link {
+  min-height: 2.75rem;         /* dokunma hedefi ≥44px */
+  align-items: center;
+  border-radius: 8px;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.md-nav--primary .md-nav__item--active > .md-nav__link,
+.md-nav--primary .md-nav__link--active {
+  position: relative;
+  color: var(--md-primary-fg-color);
+  font-weight: 700;
+  background: rgba(23, 69, 127, 0.06);
+}
+.md-nav--primary .md-nav__item--active > .md-nav__link::before,
+.md-nav--primary .md-nav__link--active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--staj-sky);
+}
+[data-md-color-scheme="slate"] .md-nav--primary .md-nav__item--active > .md-nav__link,
+[data-md-color-scheme="slate"] .md-nav--primary .md-nav__link--active {
+  color: var(--staj-cyan);
+  background: rgba(124, 203, 238, 0.10);
+}
+} /* /mobil drawer @media */
+
+/* ============================================================================
+   ARAMA (Alan 7) — sonuç listesi + vurgu markaya çekilir (⌘K hissi). Arama
+   pill'i header bölümünde zaten stillendi.
+   ============================================================================ */
+.md-search-result__meta {
+  color: var(--md-primary-fg-color);
+  font-weight: 700;
+}
+.md-search-result__link { border-radius: 8px; transition: background-color 150ms ease; }
+.md-search-result__link:hover,
+.md-search-result__link[data-md-state="active"] { background: rgba(23, 69, 127, 0.06); }
+.md-search-result mark { color: var(--md-primary-fg-color); }
+[data-md-color-scheme="slate"] .md-search-result__meta,
+[data-md-color-scheme="slate"] .md-search-result mark { color: var(--staj-cyan); }
+[data-md-color-scheme="slate"] .md-search-result__link:hover,
+[data-md-color-scheme="slate"] .md-search-result__link[data-md-state="active"] { background: rgba(124, 203, 238, 0.08); }
+
+/* ============================================================================
+   404 CİLASI (Alan 7) — büyük kod + çizim + rafine düzen.
+   ============================================================================ */
+.staj-404__code {
+  font-family: var(--staj-display) !important;
+  font-size: clamp(5rem, 3rem + 9vw, 8rem) !important;
+  letter-spacing: -0.03em !important;
+}
+.staj-404__art {
+  width: 120px; height: 120px; margin: 0 auto 0.4rem; display: block; opacity: 0.9;
+}
+.staj-404__art svg { width: 100%; height: 100%; }
+/* 404: sol/sağ kenar çubuklarını gizle → içerik tam-genişlik, sayfada ortalanır. */
+.md-main__inner:has(.staj-404) .md-sidebar { display: none; }
+
+/* ============================================================
+   KUTU AİLESİ (kullanıcı beğenisi: SSS akordeonu + bildirim kutuları)
+   Canlının mavi paletine uyarlandı. Dosya sonunda → önceki kutu
+   kurallarını geçersiz kılar. Tek görsel dil: 1px kenarlık + yumuşak
+   dolgu + başlık ayırıcı çizgi + ikon + çok hafif gölge.
+   ============================================================ */
+:root{
+  --box-radius:.5rem;
+  --box-ease:cubic-bezier(.2,.6,.25,1);
+  --box-shadow:0 1px 2px rgba(16,42,93,.05),0 2px 6px rgba(16,42,93,.06);
+  --box-border:#d3e0eb; --box-border-strong:#adc2d4;
+  --box-info:var(--staj-navy);   --box-info-soft:#e3eefb; --box-info-line:#b6d3ef;
+  --box-warn:#8a5a10;   --box-warn-soft:#fbe8c0; --box-warn-line:#e9cd8f;
+  --box-danger:#a03f36; --box-danger-soft:#fbdbd3; --box-danger-line:#efb1a6;
+  --box-success:#2c6f4c; --box-success-soft:#d8eedd; --box-success-line:#a6d4b3;
+}
+[data-md-color-scheme="slate"]{
+  --box-shadow:0 1px 2px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.3);
+  --box-border:#2b4056; --box-border-strong:#3e5871;
+  --box-info:var(--staj-cyan);   --box-info-soft:#15304b; --box-info-line:#2f5c80;
+  --box-warn:#f2c573;   --box-warn-soft:#463619; --box-warn-line:#6d5730;
+  --box-danger:#ffaaa1; --box-danger-soft:#4a2b28; --box-danger-line:#71473f;
+  --box-success:#8bd6a6; --box-success-soft:#183a29; --box-success-line:#315e46;
+}
+/* Taban: her admonition/details → temiz kenarlıklı kutu + başlık ayırıcı */
+/* ÇİZGİ DİLİ — admonition'lar dolu renkli kutu değil, anlam renginde ince sol
+   çizgiyle vurgulanan metin. .staj-status ile aynı anatomi: zemin yok, çerçeve
+   yok, gölge yok; hiyerarşiyi çizgi + renkli başlık taşıyor. Sayfalar arası
+   dört ayrı kap dilini ikiye indiren değişikliğin yarısı bu. */
+.md-typeset .admonition,
+.md-typeset details{
+  --adm: var(--box-info);
+  margin:1.5rem 0; padding:.1rem 0 .1rem 1rem;
+  background:transparent;
+  border:0; border-left:3px solid var(--adm);
+  border-radius:0; box-shadow:none;
+  font-size:var(--fs-sm); line-height:1.65;
+}
+.md-typeset .admonition>.admonition-title,
+.md-typeset details>summary{
+  position:relative; min-height:0;
+  margin:0 0 .4rem; padding:0 0 0 1.7rem;
+  color:var(--adm); background:transparent;
+  border-bottom:0;
+  font-weight:800; line-height:1.4;
+  font-size:var(--fs-sm); letter-spacing:.01em;
+}
+.md-typeset .admonition>.admonition-title::before,
+.md-typeset details>summary::before{ background-color:var(--adm); top:.1rem; left:0; }
+.md-typeset .admonition>:last-child,
+.md-typeset details>:last-child{ margin-bottom:0; }
+/* Material :focus-within'de kutunun DIŞINA kendi aile renginde parıltı koyar
+   (question için rgba(100,221,23) — parlak lime). Açma tuşuna basınca kutunun
+   dışı yeşile dönüyordu. Parıltı kalkar; klavye odağı summary üzerinde net bir
+   outline ile korunur, yani erişilebilirlik kaybı yok.
+   Seçicide [class] var çünkü Material'ınki .admonition.question:focus-within
+   ile 0,4,0 specificity'de. */
+.md-typeset .admonition[class]:focus-within,
+.md-typeset details[class]:focus-within { box-shadow: none; }
+.md-typeset details > summary:focus-visible {
+  outline: 2px solid var(--staj-navy);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+[data-md-color-scheme="slate"] .md-typeset details > summary:focus-visible { outline-color: var(--staj-cyan); }
+
+/* Aile renkleri tek değişkenden (--adm) türer; başlık, çizgi ve ikon otomatik uyar. */
+.md-typeset :is(.warning,.caution,.attention){ --adm:var(--box-warn); }
+.md-typeset :is(.danger,.error,.failure,.bug){ --adm:var(--box-danger); }
+.md-typeset :is(.tip,.success,.hint,.check){ --adm:var(--box-success); }
+/* Material sol çizgiyi `.md-typeset .admonition.tip` gibi 0,3,0 seçicilerle
+   KENDİ doygun paletine boyuyor (#00bfa5, #ff1744…). Bizim 0,2,0 kuralımız
+   --adm'i tanımlıyor ama rengi geçiremiyordu: çizgi Material'ın, başlık bizim
+   paletimizdeydi. [class] ile specificity eşitlenir, extra.css sonra yüklendiği
+   için kazanır → çizgi ve başlık aynı renkten. */
+.md-typeset .admonition[class],
+.md-typeset details[class] { border-left-color: var(--adm); }
+/* SSS akordeonu — nötr liste. Sorular önce beş kategori rengine (navy/turkuaz/
+   mor/amber/yeşil) göre boyanıyordu; bu renkler okunabilir bir şey kodlamıyordu
+   ve bitişik satırların sol şeritleri birleşip liste boyunca kalın sürekli bir
+   çizgi çiziyordu. Ayırıcı olarak yalnız saç teli çizgi kaldı; işaret oku
+   soruyla aynı satırda. */
+.md-typeset details.question{
+  margin:0; padding:0; background:transparent;
+  border:0; border-bottom:1px solid var(--box-border); border-radius:0; box-shadow:none;
+}
+.md-typeset details.question:first-of-type{ border-top:1px solid var(--box-border); }
+.md-typeset details.question>summary{
+  min-height:0; margin:0; padding:.85rem 2.2rem .85rem 0;
+  background:transparent; border-bottom:0;
+  color:var(--md-default-fg-color); font-weight:600; font-size:var(--fs-sm); line-height:1.5;
+  transition:color 140ms var(--box-ease);
+}
+.md-typeset details.question>summary::before{ display:none; }
+.md-typeset details.question>summary::after{ color:var(--md-default-fg-color--light); }
+.md-typeset details.question:not([open])>summary:hover{ color:var(--staj-navy); }
+[data-md-color-scheme="slate"] .md-typeset details.question:not([open])>summary:hover{ color:var(--staj-cyan); }
+.md-typeset details.question[open]>summary{ color:var(--staj-navy); font-weight:700; }
+[data-md-color-scheme="slate"] .md-typeset details.question[open]>summary{ color:var(--staj-cyan); }
+.md-typeset details.question[open]{ padding-bottom:.55rem; }
+.md-typeset details.question>:not(summary){ margin-left:0; margin-right:0; font-size:var(--fs-sm); }
+.md-typeset details.question>:not(summary){ margin-left:.2rem; margin-right:.2rem; }
+
+/* ============================================================
+   KAPANIŞ KÜNYESİ — sade, header'dan KOYU derin ink şerit. Header'ın marka
+   lockup'ını TEKRAR ETMEZ (mühür / "Zorunlu Staj Kılavuzu" servis satırı yok).
+   Üst satır: kurum + iletişim + bölüm linki. Alt satır: hazırlayan + son güncelleme.
+   ============================================================ */
+.md-footer-meta__inner.staj-minfoot {
+  display: block;
+  padding: .9rem .8rem 1rem;
+}
+.staj-minfoot__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .3rem 1.5rem;
+}
+.staj-minfoot__id {
+  color: #dbe6f2;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .004em;
+}
+.staj-minfoot__links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .3rem .8rem;
+  font-size: .76rem;
+}
+.staj-minfoot__links a {
+  color: #9fc4e6;
+  font-weight: 600;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color 140ms ease;
+}
+.staj-minfoot__links a:hover { color: #cfe6f7; }
+.staj-minfoot__links a:focus-visible { outline: 3px solid #9BD9F2; outline-offset: 3px; border-radius: 3px; }
+.staj-minfoot__dot { color: #3a5678; }
+.staj-minfoot__sub {
+  margin-top: .55rem;
+  padding-top: .5rem;
+  border-top: 1px solid rgba(255, 255, 255, .06);
+  color: #b8c9dd;                    /* AA: #17457F üstünde ~5.5:1. Footer zemini
+                                        header navy'sine eşitlenince eski #8598b4
+                                        3.26:1'e düşüyordu. */
+  font-size: .7rem;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+@media screen and (max-width:44em) {
+  .md-footer-meta__inner.staj-minfoot { padding: .85rem .8rem .95rem; }
+  .staj-minfoot__row { flex-direction: column; align-items: flex-start; gap: .5rem; }
+  .staj-minfoot__links a { min-height: 2.2rem; display: inline-flex; align-items: center; }
+}
+
+/* ============================================================
+   SAĞ RAY (masaüstü) — sayfa içindekiler veya ilgili sayfa kısayolları.
+   Site navigasyonu üstteki sekmelerde olduğu için sol sidebar her sayfada
+   kapalı (front matter: hide.navigation); ray .md-sidebar--secondary'dir.
+   ============================================================ */
+@media screen and (min-width:76.25em){
+  .md-sidebar--secondary .md-nav__title {
+    color:var(--staj-navy); font-weight:700; font-size:var(--fs-xs); letter-spacing:.06em; text-transform:uppercase;
+  }
+  .md-sidebar--secondary .md-nav__list .md-nav__link {
+    padding:.3rem .55rem; border-radius:6px; color:#51677c; line-height:1.4;
+    transition:color 140ms ease, background-color 140ms ease;
+  }
+  .md-sidebar--secondary .md-nav__link:hover { color:var(--staj-navy); background:rgba(23,69,127,.06); }
+  .md-sidebar--secondary .md-nav__link--active {
+    color:var(--staj-navy); font-weight:700; background:transparent !important;
+  }
+  /* Aktif başlık işareti rayın İÇ kenarında (solda) durur: metin sütununa
+     bakan taraf burasıdır, sağ kenara koymak göstergeyi içerikten koparırdı. */
+  .md-sidebar--secondary .md-nav__link--active { box-shadow:inset 2px 0 0 var(--staj-navy); }
+  .md-sidebar--secondary .md-nav .md-nav { border-left:2px solid var(--box-border); }
+}
+
+/* Material, yapışkan ray başlığının ALTINDAN kayan içeriği maskelemek için
+   başlığa zemin + aynı renkte bir "hale" (box-shadow) verir:
+     .md-nav--secondary .md-nav__title { background/box-shadow: var(--md-default-bg-color) }
+   Ama o değişken KART/YÜZEY rengidir (açık modda #fff); ray ise tuvalin
+   (--staj-canvas, #f4f7fb) üstünde durur. İkisi farklı olduğu için hale
+   başlığın arkasında beyaz bir şerit olarak görünüyordu. Maskeleme işlevini
+   koruyup rengi tuvale eşitliyoruz — her iki şemada da doğru çalışır. */
+@media screen and (min-width:60em){
+  .md-nav--secondary .md-nav__title {
+    background: var(--staj-canvas);
+    box-shadow: 0 0 .4rem .4rem var(--staj-canvas);
+  }
+}
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__title { color:var(--staj-cyan); }
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link:hover,
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link--active { color:var(--staj-cyan); }
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link--active { background:transparent; box-shadow:inset 2px 0 0 var(--staj-cyan); }
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link:hover { background:rgba(124,203,238,.08); }
+
+/* ============================================================
+   PASTEL AŞAMA (PHASE) RENK DİLİ — Önce=mavi · Sırasında=turkuaz ·
+   Sonra=yeşil. Ana sayfa router/adımlar, Süreç fazları, Formlar
+   kategorileri anlamlı biçimde renklenir (dekorasyon değil).
+   ============================================================ */
+:root { --ph-blue:var(--staj-blue); --ph-teal:#2AA0A0; --ph-green:#33955E; --ph-amber:#B58A2A; }
+
+/* Ana sayfa 3 adım — Önce=mavi · Sırasında=turkuaz · Sonra=yeşil */
+/* Adım numaralarının sıraya göre renklendirmesi (mavi/turkuaz/yeşil)
+   KALDIRILDI — sitedeki diğer keyfi renk kodlamalarıyla aynı sorundu:
+   okunabilir bir şey kodlamıyor, yalnız sırayı tekrar ediyordu. Numara
+   zaten 1·2·3 yazıyor. Üçü de marka navy'si. */
+
+/* Süreç sayfası fazları — timeline noktası + h2 alt-çizgi renk kodlu */
+.staj-flow > h2:nth-of-type(1)::before { border-color:var(--staj-blue); }
+.staj-flow > h2:nth-of-type(2)::before { border-color:#2AA0A0; }
+.staj-flow > h2:nth-of-type(3)::before { border-color:#33955E; }
+.staj-flow > h2:nth-of-type(1)::after { background:var(--staj-blue); }
+.staj-flow > h2:nth-of-type(2)::after { background:#2AA0A0; }
+.staj-flow > h2:nth-of-type(3)::after { background:#33955E; }
+
+/* Tablo başlık satırı — TÜM tablolarda aynı. Formlar sayfasında bölümler
+   sırasına göre navy/mavi/turkuaz/yeşil tint alıyordu; bu renkler okunabilir
+   bir şey kodlamıyordu (yalnızca sıra) ve seçici h2:nth-of-type + :has ile
+   kırılgandı. Tek nötr başlık kaldı. */
+.md-typeset__scrollwrap th {
+  background: color-mix(in srgb, var(--staj-navy) 8%, var(--md-default-bg-color));
+  border-bottom: 2px solid color-mix(in srgb, var(--staj-navy) 30%, transparent);
+}
+
+/* ============================================================
+   DARK MODE İYİLEŞTİRME — pastel tint canlılığı, muted metin, yüzey ayrımı.
+   ============================================================ */
+[data-md-color-scheme="slate"] {
+  --md-default-fg-color--light: rgba(230, 240, 248, 0.74);  /* ikincil metin bir tık açıldı */
+}
+
+/* Aynı düzeltmenin AÇIK MOD karşılığı. Material'ın varsayılanı rgba(0,0,0,.54);
+   tint'li panel zemininde (#F4F7FB) bu 4.51:1 veriyordu — WCAG AA sınırı olan
+   4.5:1'in 0,01 üstünde. Etkilenen metinler ikincil ama önemsiz değil: geç
+   teslim cezasını anlatan .staj-status__rule, form etiketleri ve dosya
+   açıklamaları hep bu token'dan besleniyor. .62 ile oran 6,06:1'e çıkıyor
+   (ölçüldü); zemin tonu ileride bir tık koyulaşsa bile eşiğin altına düşmüyor.
+   Koyu moddaki karşılığı zaten yukarıda ayarlıydı (8,58:1) — dokunulmadı. */
+[data-md-color-scheme="default"] {
+  --md-default-fg-color--light: rgba(0, 0, 0, 0.62);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .staj-outline__card { border-left-color: var(--box-border); }
+/* Koyuda kart yüzeylerini canvas'tan ayır (daha belirgin derinlik) */
+[data-md-color-scheme="slate"] :is(.staj-yearbar, .md-typeset table:not([class]), .staj-contact) {
+  background: color-mix(in srgb, #ffffff 4%, var(--md-default-bg-color));
+}
+/* Footer köşe ışıması (header ile aynı dil) */
+.md-footer-meta { position: relative; overflow: hidden; }
+.md-footer-meta > .md-footer-meta__inner { position: relative; z-index: 1; }
+.md-footer-meta::after {
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background: radial-gradient(120% 220% at 100% 0%, rgba(124,203,238,0.10) 0%, rgba(124,203,238,0) 48%);
+}
+
+/* ============================================================================
+   TESLİM FORMU (.suf-*) — yalnız Teslim sayfasında kullanılır.
+   Daha önce docs/teslim.md içinde satır içi <style> bloğundaydı; bakım
+   kolaylığı için buraya taşındı. Sınıf adları benzersiz olduğu için ek bir
+   kapsam (scope) gerekmez. Sayfa sütun genişliği kuralı sayfada kaldı.
+   ============================================================================ */
+  .suf *{box-sizing:border-box}
+  /* Teslim sayfasını rahat okunur, hizalı tek sütuna sabitle — geniş ekranda
+     deadline kutusu + form aynı genişlikte hizalansın (yalnız bu sayfada). */
+  .suf-gate,.suf-closed,.suf-done{max-width:680px;margin:1.2rem 0}
+  .suf{max-width:none;margin:1.2rem auto}
+  .suf{border:1px solid var(--md-default-fg-color--lightest);border-radius:8px;overflow:hidden}
+  .suf-gate{padding:14px 16px;border:1px dashed var(--md-default-fg-color--lighter);border-radius:8px;color:var(--md-default-fg-color--light);font-size:.9rem}
+  .suf-closed{padding:18px 20px;border:1px solid #f0a0a0;background:rgba(226,75,74,.10);border-radius:8px;color:#a32d2d;font-size:.92rem;line-height:1.55}
+  .suf-done{padding:18px 20px;border:1px solid #9fe1cb;background:rgba(93,202,165,.12);border-radius:8px;color:#0f6e56;font-size:.92rem;line-height:1.6}
+  /* Geç teslim uyarısı (form içinde, grace penceresinde görünür) */
+  .suf-late{margin:0 0 16px;padding:13px 15px;border:1px solid #e6b800;background:rgba(255,203,0,.12);border-radius:8px;color:#7a5f00;font-size:.9rem;line-height:1.5}
+  .suf-late b{display:block;font-size:.98rem;margin-bottom:3px}
+  .suf-late p{margin:0 0 10px}
+  .suf-ack{display:flex;gap:9px;align-items:flex-start;font-size:.82rem;font-weight:600;color:#6b5400;cursor:pointer}
+  .suf-ack input{margin-top:2px;flex:none;width:18px;height:18px}
+  [data-md-color-scheme="slate"] .suf-late{background:rgba(255,203,0,.14);border-color:rgba(230,184,0,.55);color:#ffe08a}
+  [data-md-color-scheme="slate"] .suf-ack{color:#ffdf85}
+  /* Navy blok şerit yerine kart üstünde düz başlık — kabuktaki sadeleşmeyle aynı dil. */
+  .suf-bar{background:transparent;border-bottom:1px solid var(--box-border);color:var(--md-default-fg-color);padding:14px 18px 12px}
+  .suf-bar b{font-size:1rem;font-family:var(--staj-display);font-weight:700}
+  .suf-body{padding:16px 18px 20px}
+  .suf-sec{margin-bottom:16px}
+  .suf-sec h2{font-size:.74rem;font-weight:700;color:#16335c;text-transform:uppercase;letter-spacing:.04em;margin:0 0 .6rem;line-height:1.3;display:flex;align-items:center;gap:8px;border:0;padding:0}
+  .suf-sec h2::after{display:none}   /* genel H2 altı degrade çizgisini bu mini-etiketlerde gizle */
+  [data-md-color-scheme="slate"] .suf-sec h2{color:#9bc3ec}
+  .suf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:10px 14px}
+  .suf-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+  .suf-cols>*{min-width:0}
+  @media(max-width:720px){.suf-cols{grid-template-columns:1fr;gap:0}}
+  .suf-field{display:flex;flex-direction:column;gap:4px}
+  .suf-field.full{grid-column:1/-1}
+  .suf-field label{font-size:.78rem;color:var(--md-default-fg-color--light);font-weight:600}
+  .suf-field input[type=text],.suf-field input[type=email]{height:38px;border:1px solid var(--md-default-fg-color--lighter);border-radius:6px;padding:0 10px;font:inherit;font-size:.85rem;background:var(--md-default-bg-color);color:var(--md-default-fg-color)}
+  .suf-field input:focus{outline:none;border-color:var(--staj-navy);box-shadow:0 0 0 3px rgba(29,79,145,.14)}
+  .suf-field input.bad{border-color:#e2614a}
+  .suf-warn{font-size:.72rem;color:#a32d2d;margin-top:3px;display:none}
+  .suf-warn.show{display:block}
+  .suf-drop{position:relative;display:flex;align-items:center;gap:12px;border:1.5px dashed var(--md-default-fg-color--lighter);border-radius:8px;padding:11px 14px;margin-bottom:9px;background:var(--md-default-bg-color)}
+  /* Dosya input'u görünmez ama KLAVYEYLE ODAKLANABİLİR (display:none DEĞİL); odakta .suf-drop:focus-within halkası yanar. */
+  .suf-drop input[type=file]{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%)}
+  .suf-drop .m{flex:1;min-width:0}
+  .suf-drop .m b{font-size:.85rem;color:var(--md-default-fg-color);display:block}
+  .suf-drop .m span{font-size:.72rem;color:var(--md-default-fg-color--light);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .suf-drop .pick{font-size:.78rem;font-weight:600;color:var(--staj-navy);border:1px solid var(--staj-navy);border-radius:6px;padding:10px 14px;background:transparent;cursor:pointer;white-space:nowrap}
+  .suf-drop.ok{border-style:solid;border-color:#5dcaa5;background:rgba(93,202,165,.08)}
+  .suf-kvkk{display:flex;gap:9px;align-items:flex-start;font-size:.78rem;color:var(--md-default-fg-color--light);margin:4px 0 14px}
+  .suf-kvkk input{margin-top:3px}
+  .suf-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .suf-submit{width:100%;background:var(--staj-navy);color:#fff;font-size:.95rem;font-weight:700;border:none;border-radius:8px;padding:13px;cursor:pointer}
+  .suf-submit:disabled{opacity:.6;cursor:not-allowed}
+  .suf-retry{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:10px 0 0;padding:8px 13px;border:1px solid var(--staj-navy);border-radius:6px;background:transparent;color:var(--staj-navy);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
+  .suf-retry:focus-visible{outline:2px solid var(--staj-navy);outline-offset:2px}
+  .suf-msg{margin-top:12px;padding:11px 14px;border-radius:8px;font-size:.84rem;display:none}
+  .suf-msg.show{display:block}
+  .suf-msg.ok{background:rgba(93,202,165,.14);color:#0f6e56;border:1px solid #9fe1cb}
+  .suf-msg.err{background:rgba(226,75,74,.12);color:#a32d2d;border:1px solid #f0a0a0}
+  @media(max-width:720px){.suf-grid{grid-template-columns:1fr}}
+
+  /* Koyu mod (slate): sabit hex durum/uyarı ögeleri okunur kontrasta çekilir */
+  [data-md-color-scheme="slate"] .suf-closed,[data-md-color-scheme="slate"] .suf-msg.err{background:rgba(226,75,74,.18);color:#f3b0b0;border-color:rgba(240,160,160,.5)}
+  [data-md-color-scheme="slate"] .suf-done,[data-md-color-scheme="slate"] .suf-msg.ok{background:rgba(93,202,165,.18);color:#86e0c3;border-color:rgba(134,224,195,.5)}
+  [data-md-color-scheme="slate"] .suf-warn{color:#f3a3a3}
+  [data-md-color-scheme="slate"] .suf-drop .pick{color:var(--staj-sky);border-color:var(--staj-sky)}
+  [data-md-color-scheme="slate"] .suf-retry{color:var(--staj-sky);border-color:var(--staj-sky)}
+  [data-md-color-scheme="slate"] .suf-field input:focus{border-color:var(--staj-sky);box-shadow:0 0 0 3px rgba(124,203,238,.18)}
+
+  /* a11y: klavye odağı görünür (dosya-seç label'ı + Gönder); 44px dokunma hedefi */
+  .suf-drop .pick{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+  .suf-drop:focus-within{border-style:solid;border-color:var(--staj-navy);box-shadow:0 0 0 3px rgba(29,79,145,.18)}
+  .suf-submit:focus-visible{outline:2px solid var(--staj-navy);outline-offset:2px}
+  [data-md-color-scheme="slate"] .suf-drop:focus-within{border-color:var(--staj-sky);box-shadow:0 0 0 3px rgba(124,203,238,.22)}
+  [data-md-color-scheme="slate"] .suf-submit:focus-visible{outline-color:var(--staj-sky)}
+  [data-md-color-scheme="slate"] .suf-retry:focus-visible{outline-color:var(--staj-sky)}
+  @media (forced-colors:active){.suf-field input:focus,.suf-drop:focus-within{outline:2px solid Highlight}.suf-submit:focus-visible{outline:2px solid Highlight}}

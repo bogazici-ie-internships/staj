@@ -1,0 +1,27 @@
+{#-
+  Sağ ray = sayfa içindekiler. Site navigasyonu üstteki sekmelerde olduğu için
+  içerik sayfalarında sol sidebar front matter ile kapatılır (hide: navigation);
+  geriye Material'ın .md-sidebar--secondary'si kalır.
+
+  Başlığı az olan sayfalar (index, teslim, sonuclar, iletisim) `hide: toc` ile
+  tamamen ray'sız ve tam genişlikte kalır.
+-#}
+{% set title = "Table of contents" if i18n_page_locale == "en" else "Bu sayfada" %}
+<nav class="md-nav md-nav--secondary" aria-label="{{ title | e }}">
+  {% set toc = page.toc %}
+  {% set first = toc | first %}
+  {% if first and first.level == 1 %}
+    {% set toc = first.children %}
+  {% endif %}
+  {% if toc %}
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      {{ title }}
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      {% for toc_item in toc %}
+        {% include "partials/toc-item.html" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</nav>

@@ -1,0 +1,31 @@
+# MkDocs build output
+/site/
+
+# Internal design exploration / preview images (not part of the site, not needed in the public repo)
+/mockups/
+.impeccable/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# macOS
+.DS_Store
+._*
+
+# Apps Script submission-portal source. Kept out of the repo because it holds
+# FOLDER_ID — the Drive folder that receives every student submission.
+# NOTE: FORM_KEY in that file is NOT a secret. It is printed into the published
+# HTML of the submission page and anyone can read it with View Source; it is
+# rotatable friction, not authentication. The real controls (email domain,
+# student-ID format, PDF signature, size caps, rate limits) run server-side.
+# Real values live in the Apps Script editor and in a local working copy only.
+Code.gs
+*.gs
+
+# Isolated feature worktrees
+.worktrees/

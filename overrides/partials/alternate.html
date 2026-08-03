@@ -1,0 +1,14 @@
+{# Compact direct switch between the two contextual language alternates. #}
+{% for alt in config.extra.alternate %}
+  {% if alt.lang != i18n_page_locale %}
+    <div class="md-header__option">
+      <a
+        href="{{ alt.link | url }}"
+        hreflang="{{ alt.lang }}"
+        class="md-header__button staj-lang-toggle"
+        aria-label="{{ 'Switch to English' if alt.lang == 'en' else 'Türkçeye geç' }}"
+        title="{{ 'Switch to English' if alt.lang == 'en' else 'Türkçeye geç' }}"
+      >{{ alt.name }}</a>
+    </div>
+  {% endif %}
+{% endfor %}
