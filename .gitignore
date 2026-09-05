@@ -1,0 +1,28 @@
+# MkDocs build output
+/site/
+
+# Claude Code local preview setting (mkdocs serve)
+/.claude/
+
+# Internal design exploration / preview images (not part of the site, not needed in the public repo)
+/mockups/
+.impeccable/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# macOS
+.DS_Store
+._*
+
+# Maintainer-only operational files (Apps Script source, deploy docs).
+_maintainer/
+*.gs
+
+# Isolated feature worktrees
+.worktrees/

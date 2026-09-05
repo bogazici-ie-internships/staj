@@ -1,0 +1,156 @@
+site_name: Boğaziçi Üniversitesi — Endüstri Mühendisliği Zorunlu Staj
+site_description: >-
+  Boğaziçi Üniversitesi Endüstri Mühendisliği Bölümü zorunlu staj süreci:
+  adım adım rehber, formlar, kurallar, rapor hazırlama ve sık sorulan sorular.
+site_author: Boğaziçi Üniversitesi Endüstri Mühendisliği Bölümü
+
+# Publication URL (for absolute links / SEO / sitemap). Change it if you connect a custom domain.
+site_url: https://bogazici-ie-internships.github.io/staj/
+
+# Shown in the footer bottom bar. The "Last updated" date is automatically updated by deploy.yml on every deploy.
+copyright: "Boğaziçi Üniversitesi — Endüstri Mühendisliği<br>Hazırlayan: Berat Kubilay Güngez · Son güncelleme: 21 Haziran 2026"
+
+theme:
+  name: material
+  custom_dir: overrides     # overrides/main.html → short brand for the tab title
+  language: tr
+  logo: assets/bulogo.svg             # ORIGINAL full-color BU seal (not tinted); shown on a white background in the header
+  favicon: assets/bulogo.svg          # browser tab (same full-color seal)
+  palette:
+    # Light mode — when the operating system requests a light theme (or no preference is specified).
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Koyu moda geç
+    # Dark mode — automatically selected when the operating system requests a dark theme.
+    # Without media, this line never took effect: visitors using a dark theme
+    # had to manually switch the site to dark mode on every device.
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Açık moda geç
+  # PERF: external Google Fonts request disabled. Inter + Newsreader are self-hosted (extra.css
+  # @font-face), code font is system-mono. No render-blocking external request remains.
+  font: false
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.path
+    - navigation.top
+    - navigation.indexes
+    # navigation.instant WAS TRIED, ROLLED BACK: incompatible with mkdocs-static-i18n's
+    # language switcher "contextual link" feature — it breaks build --strict
+    # (the site is left completely offline in CI). submit.js/yearbar.js are already
+    # ready for instant-nav via document$.subscribe; the blocker is in the i18n plugin.
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.tooltips
+
+# Catch broken links/anchors during the build (turns into an error with --strict in CI).
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+plugins:
+  - i18n:
+      docs_structure: suffix
+      fallback_to_default: true
+      reconfigure_material: true
+      reconfigure_search: true
+      languages:
+        - locale: tr
+          name: TR
+          build: true
+          default: true
+        - locale: en
+          name: EN
+          build: true
+          site_name: Boğaziçi University — Industrial Engineering Compulsory Internship
+          site_description: >-
+            A step-by-step guide to the compulsory internship process for
+            Boğaziçi University Industrial Engineering students, including
+            forms, rules, report preparation, and frequently asked questions.
+          site_author: Boğaziçi University Department of Industrial Engineering
+          nav_translations:
+            Ana Sayfa: Home
+            Staj Süreci: Internship Process
+            Kurallar: Rules
+            Rapor Hazırlama: Report Preparation
+            Formlar & Belgeler: Forms & Documents
+            Teslim: Submission
+            Sık Sorulan Sorular: Frequently Asked Questions
+            Sonuçlar: Results
+            İletişim: Contact
+  - search:
+      lang: tr
+  # Reads ALL regularly changing values (term, dates, contact, links) from an
+  # external config file: {{ donem.etiket }}, {{ iletisim.* }} etc. inside docs.
+  # Single source → settings.yml
+  - macros:
+      include_yaml:
+        - settings.yml
+  # PERF: strips whitespace/comments from the generated HTML. Does not touch
+  # the ?v=N cache-busting query string belonging to extra.css/js — it only minifies the page output.
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - def_list
+  - toc:
+      permalink: false      # the ¶ permalink icon next to headings is disabled (site-wide)
+      title: Bu sayfada
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra_css:
+  # Increase the ?v number when the style changes → immediately breaks the old CSS cache in the student's browser.
+  - assets/extra.css?v=110
+
+extra_javascript:
+  # Increase the ?v number when the JS changes → the old cache is immediately broken.
+  - assets/yearbar.js?v=3
+  # ALL logic for the submission form (single source for TR + EN). Exits early
+  # outside the submission page since #sufForm is not found there; page-specific
+  # values come through the form's data-* attributes.
+  - assets/submit.js?v=5
+  # reveal.js REMOVED (PERF): the homepage scroll-reveal animations were causing
+  # jank; content is now instantly and fully visible.
+
+extra:
+  generator: false          # removes the "Made with Material for MkDocs" text at the bottom
+  bolum_sitesi: "https://ie.bogazici.edu.tr/"   # Boğaziçi IE Department official site (footer link)
+  social:
+    - icon: fontawesome/solid/envelope
+      link: mailto:ie.boun.internships@gmail.com
+      name: Staj asistanları — genel iletişim
+
+nav:
+  - Ana Sayfa: index.md
+  - Staj Süreci: surec/index.md
+  - Kurallar: kurallar.md
+  - Rapor Hazırlama: rapor.md
+  - Formlar & Belgeler: formlar.md
+  - Teslim: teslim.md
+  - Sık Sorulan Sorular: sss.md
+  - Sonuçlar: sonuclar.md
+  - İletişim: iletisim.md

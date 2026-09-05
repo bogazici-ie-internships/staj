@@ -1,0 +1,52 @@
+{#-
+  Closing colophon — a plain, deep-ink strip in the header's dark tone. Does NOT
+  repeat the header's brand lockup (no seal / no "Compulsory Internship Guide"
+  service line). Top row: institution + contact + department link. Bottom row:
+  prepared by + last updated. The identity/colophon is derived from copyright
+  (deploy automatically updates "Last updated") → single source.
+-#}
+{%- set _cp = config.copyright.split('<br>') if config.copyright else [] -%}
+{%- set _is_en = i18n_page_locale == 'en' -%}
+<footer class="md-footer" aria-label="{{ 'Site footer' if _is_en else 'Site alt bilgisi' }}">
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid staj-minfoot">
+
+      <div class="staj-minfoot__row">
+        {% if _cp | length > 0 %}<span class="staj-minfoot__id">{{ _cp[0] }}</span>{% endif %}
+        <span class="staj-minfoot__links">
+          {%- for social in config.extra.social %}
+            <a href="{{ social.link }}">{{ social.link | replace('mailto:', '') }}</a>
+          {%- endfor %}
+          {% if config.extra.bolum_sitesi %}
+            <span class="staj-minfoot__dot" aria-hidden="true">·</span>
+            <a href="{{ config.extra.bolum_sitesi }}" target="_blank" rel="noopener">{{ 'Department website' if _is_en else 'Bölüm sitesi' }} <span aria-hidden="true">↗</span></a>
+          {% endif %}
+        </span>
+      </div>
+
+      {% if _cp | length > 1 %}
+        {%- set _sub = _cp[1] -%}
+        {% if _is_en %}
+          {#- The date is written into mkdocs.yml as "21 Haziran 2026" (day month year).
+              The English version uses the same format as the rest of the site:
+              "June 21, 2026" — i.e. the month name is translated AND the day/month order is swapped. -#}
+          {%- set _AY_EN = {'Ocak':'January','Şubat':'February','Mart':'March','Nisan':'April','Mayıs':'May','Haziran':'June','Temmuz':'July','Ağustos':'August','Eylül':'September','Ekim':'October','Kasım':'November','Aralık':'December'} -%}
+          {%- set _parts = _sub.split('Son güncelleme:') -%}
+          {%- set _head = _parts[0] | replace('Hazırlayan:', 'Prepared by:') -%}
+          {%- if _parts | length > 1 -%}
+            {%- set _d = (_parts[1] | trim).split(' ') -%}
+            {%- if _d | length == 3 and _AY_EN.get(_d[1]) -%}
+              {%- set _sub = _head ~ 'Last updated: ' ~ _AY_EN[_d[1]] ~ ' ' ~ _d[0] ~ ', ' ~ _d[2] -%}
+            {%- else -%}
+              {%- set _sub = _head ~ 'Last updated: ' ~ (_parts[1] | trim) -%}
+            {%- endif -%}
+          {%- else -%}
+            {%- set _sub = _head -%}
+          {%- endif -%}
+        {% endif %}
+        <div class="staj-minfoot__sub">{{ _sub }}</div>
+      {% endif %}
+
+    </div>
+  </div>
+</footer>

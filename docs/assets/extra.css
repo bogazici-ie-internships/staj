@@ -1,0 +1,2044 @@
+/* ============================================================================
+   HEADING TYPEFACE — Newsreader (self-hosted, H1/H2/H3 only). Body stays Inter,
+   code stays system-mono. latin + latin-ext (for Turkish ğ/ş/İ).
+   Only weight 700 is shipped: adding 600 too would take the font payload from
+   38 KB to 76 KB, which would contradict the decision to drop Google Fonts for perf.
+   ============================================================================ */
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/newsreader-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/newsreader-700-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+/* BODY TYPEFACE — Inter self-hosted (PERF: removed the external Google Fonts
+   request). Variable woff2, 400–700, latin + latin-ext (Turkish). Metrics-matched
+   fallback → no layout shift while the font loads. */
+@font-face{
+  font-family:"Inter"; font-style:normal; font-weight:400 700; font-display:swap;
+  src:url("fonts/inter-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Inter"; font-style:normal; font-weight:400 700; font-display:swap;
+  src:url("fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face{
+  font-family:"Inter Fallback"; src:local("Segoe UI"),local("Arial");
+  ascent-override:90%; descent-override:22.43%; line-gap-override:0%; size-adjust:107%;
+}
+:root{
+  --staj-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --md-text-font: "Inter", "Inter Fallback", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --md-code-font: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  /* ── TYPE SCALE ──────────────────────────────────────────────────
+     The SINGLE source for heading and UI sizes (~1.28 ratio). If a new
+     size is needed it's added here; components don't write free-form rem.
+     H1/H2 are fluid: the full desktop size wrapped the heading onto 3 lines
+     on narrow screens and swallowed the viewport (in Material, 1rem = 20px). */
+  /* Homepage opening headline — a separate, larger step from page headings.
+     This carries the editorial opening; no free-form value goes outside the scale. */
+  --fs-display: clamp(2.2rem, 1.6rem + 2.4vw, 3.1rem);
+  --fs-h1: clamp(1.9rem, 1.4rem + 2.2vw, 2.60rem);
+  --fs-h2: clamp(1.4rem, 1.15rem + 1.1vw, 1.75rem);
+  --fs-h3: 1.20rem;
+  --fs-body: 1rem;
+  --fs-sm: 0.82rem;
+  --fs-xs: 0.72rem;
+  /* Reading rhythm for long rules/FAQ copy. */
+  --lh-body: 1.7;
+
+  /* ── BRAND PALETTE ────────────────────────────────────────────────
+     The SINGLE source for repeated color constants. If a value needs to
+     change, only this is edited. The meaning notes are binding: gold is
+     reserved ONLY for submission/deadline semantics. */
+  --staj-navy: #17457F;           /* institutional navy (BÜ) */
+  --staj-navy-dark: #123763;      /* dark navy (footer/tabs) */
+  --staj-navy-light: #225AA0;     /* light navy (gradient top stop) */
+  --staj-blue: #2C79B8;           /* mid blue */
+  --staj-sky: #5AA6D6;            /* sky blue (accent) */
+  --staj-cyan: #7CCBEE;           /* bright cyan (label on dark surfaces) */
+  --staj-gold: #C9971A;           /* gold — ONLY for submission/deadline */
+  --staj-gold-dark: #DCAA33;      /* gold, dark-mode counterpart */
+}
+
+[data-md-color-primary="indigo"] {
+  --md-primary-fg-color:        var(--staj-navy);
+  --md-primary-fg-color--light: #3a6cae;
+  --md-primary-fg-color--dark:  var(--staj-navy-dark);
+}
+[data-md-color-accent="indigo"] {
+  --md-accent-fg-color:              var(--staj-blue);
+  --md-accent-fg-color--transparent: rgba(124, 203, 238, 0.18);
+}
+[data-md-color-scheme="default"] { --md-typeset-a-color: var(--staj-navy); --md-footer-bg-color: var(--staj-navy); --md-footer-bg-color--dark: var(--staj-navy-dark); }
+[data-md-color-scheme="slate"]   { --md-primary-fg-color: #2A6AA8; --md-typeset-a-color: var(--staj-sky); --md-footer-bg-color: var(--staj-navy-dark); --md-footer-bg-color--dark: #11294d; }
+
+/* Page headings (H1): theme default is 300 (thin) — bolder, matching the site's voice.
+   The hero keeps its own rule (defined below; it wins because it comes later in source). */
+.md-typeset h1 {
+  font-family: var(--staj-display);
+  font-weight: 700;
+  font-size: var(--fs-h1);
+  line-height: 1.08;
+  /* Newsreader is a serif: the tight negative tracking Bricolage needed
+     would glue the letters together here. A slight negative is enough. */
+  letter-spacing: -0.012em;
+  color: var(--md-default-fg-color);
+  margin-bottom: 0.6rem;   /* gap between page heading and first text reduced (Material default was too wide) */
+}
+/* Also reset the large top margin of the first element after the page heading. */
+.md-typeset h1 + * { margin-top: 0 !important; }
+
+/* Section headings (H2): theme default is thin/muted — made more prominent
+   site-wide: large, bold, with a separating underline. */
+.md-typeset h2 {
+  font-family: var(--staj-display);
+  font-weight: 700;
+  font-size: var(--fs-h2);
+  line-height: 1.16;
+  letter-spacing: -0.008em;
+  margin-top: 2.6rem;
+}
+/* Subheadings (H3): bold + brand blue → stands out clearly from body text.
+   The homepage step cards' own rule (.staj-step h3) comes later in source so
+   it stays dominant there; that design is preserved. */
+.md-typeset h3 {
+  font-family: var(--staj-display);
+  font-weight: 700;
+  font-size: var(--fs-h3);
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: var(--md-primary-fg-color);
+}
+
+/* Body reading rhythm — a bit more open than Material's 1.6 default, for long
+   copy like the rules/FAQ pages. Tight components like cards/badges write
+   their own line-height so they're unaffected. */
+.md-typeset p,
+.md-typeset li { line-height: var(--lh-body); }
+
+/* Header/tabs/footer borders and backgrounds live in one place: the "POLISH PASS" section. */
+
+.md-header__button.md-logo {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 12px;                 /* soft square chip instead of a circle → more corporate */
+  padding: 0.28rem;
+  margin-right: 0.7rem;
+  box-shadow: 0 2px 8px rgba(8, 24, 45, 0.28), inset 0 0 0 1px rgba(23, 69, 127, 0.10);
+  cursor: default;                     /* static seal — no click/pointer affordance */
+}
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 1.7rem;
+  width: 1.7rem;
+}
+/* Two-line brand lockup (institution · department / service) — hierarchy instead of one flat line */
+/* Vertically center the header topics (brand lockup + scroll heading) — Material's
+   default pinned them to top:0 → they sat above the logo. */
+.md-header__title .md-header__topic { display: flex; align-items: center; height: 100%; }
+/* The page title that appears on scroll (e.g. "Rules") — instead of thin/faint
+   Inter, it now matches the brand weight: Newsreader 700, solid white. */
+.md-header__topic[data-md-component="header-topic"] .md-ellipsis {
+  color: #fff;
+  font-family: var(--staj-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+.md-header__title .staj-brand.md-ellipsis {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 1px; overflow: visible; white-space: normal; line-height: 1.12;
+}
+.staj-brand__inst { color: #cbdff1; font-size: .68rem; font-weight: 600; letter-spacing: .012em; white-space: nowrap; }
+.staj-brand__svc {
+  color: #fff; font-family: var(--staj-display);
+  font-size: .96rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.05; white-space: nowrap;
+}
+/* Header top/bottom breathing room — keeps content off the top edge (two-line lockup). */
+.md-header__inner { padding-top: .55rem; padding-bottom: .5rem; }
+/* Language switcher: same header rhythm as the palette toggle, a direct two-letter
+   switch. The selector is written together with .md-header__button: Material's
+   `.md-header__button:not([hidden]){display:inline-block}` rule overrides a
+   single-class selector and breaks the flex box → letters don't vertically center. */
+/* Header helpers — the palette and language toggles share ONE quiet button
+   language and are separated from search by a thin divider. Before, the two
+   were transparent 40px squares while search was a 234px filled pill, so the
+   three had mismatched weight and looked ungrouped. */
+.md-header__option .md-header__button.md-icon:not([hidden]),
+.md-header__button.staj-lang-toggle {
+  /* :not([hidden]) IS REQUIRED — Material hides the inactive palette icon with
+     `hidden`; writing display overrides that hiding and shows both icons at once. */
+  align-items: center;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  display: inline-flex;
+  height: 1.8rem;
+  width: 1.8rem;
+  justify-content: center;
+  margin: .2rem .1rem;
+  padding: 0;
+  opacity: .82;
+  transition: background-color 160ms ease, opacity 160ms ease;
+}
+.md-header__button.staj-lang-toggle {
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+.md-header__option .md-header__button.md-icon:not([hidden]) svg { width: 1.1rem; height: 1.1rem; }
+.md-header__option .md-header__button.md-icon:not([hidden]):hover,
+.staj-lang-toggle:hover {
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .md-header__option .md-header__button.md-icon:not([hidden]),
+  .md-header__button.staj-lang-toggle { transition: none; }
+}
+.staj-lang-toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+/* Header corner glow REMOVED — its source in the hero is gone too; gradient +
+   texture + glow stacked together made the chrome feel disconnected from the body. */
+@media screen and (max-width: 44em) {
+  .staj-brand__inst { font-size: .62rem; }
+  .staj-brand__svc { font-size: .82rem; }
+  /* On narrow screens the two-line institution·department text overflowed
+     onto the search/palette icons — it's clipped here and ends with "…", preventing overflow. */
+  .md-header__title .staj-brand.md-ellipsis { overflow: hidden; }
+  .staj-brand__inst, .staj-brand__svc { overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* ============================================================================
+   OPENING (homepage) — NOT a navy slab. The old hero header repeated the brand
+   line verbatim and stacked a third navy block on top of the navy header +
+   navy tab bar. The opening now sits on the same canvas as content pages:
+   Newsreader carries the heading, the one color accent is the gold in the
+   deadline chip (palette rule: gold is ONLY for submission semantics).
+   ============================================================================ */
+.staj-lede { margin: .4rem 0 2.8rem; }
+.md-typeset .staj-lede > h1 {
+  font-size: var(--fs-display);
+  line-height: 1.02;
+  letter-spacing: -.018em;
+  margin: 0 0 .7rem;
+  max-width: 18ch;          /* let the heading wrap to 2 lines → gives it a cover-page feel */
+}
+.md-typeset .staj-lede__sub {
+  color: var(--md-default-fg-color--light);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 36rem;
+  margin: 0 0 1.5rem;
+}
+/* Deadline chip: gold hairline + label + date. A line, not a box. */
+.md-typeset .staj-lede__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .1rem .6rem;
+  margin: 0 0 2rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--staj-gold);
+}
+.staj-lede__meta-label {
+  color: var(--md-default-fg-color--light);
+  font-size: var(--fs-sm);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.staj-lede__meta-value {
+  font-family: var(--staj-display);
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--md-default-fg-color);
+  font-variant-numeric: tabular-nums;
+}
+.md-typeset .staj-lede .md-button { margin: 0; }
+[data-md-color-scheme="slate"] .md-typeset .staj-lede__meta { border-left-color: var(--staj-gold-dark); }
+@media screen and (max-width: 44em) {
+  .md-typeset .staj-lede__sub { font-size: 1.02rem; }
+  .staj-lede__meta-value { font-size: 1.16rem; }
+}
+
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid.cards > :is(.card, li) {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.3rem;
+}
+.md-typeset .grid.cards > ul > li:hover {
+  border-color: var(--staj-sky);
+  box-shadow: 0 4px 14px rgba(29, 79, 145, 0.12);
+  transform: translateY(-2px);
+}
+
+/* ── Icon styles ────────────────────────────────────────────────
+   Card icons (.lg icons inside .grid.cards): brand color + "chip" background.
+   Targets only card icons carrying .lg → doesn't touch inline icons. */
+.md-typeset .grid.cards .twemoji.lg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-right: 0.5rem;
+  background: rgba(29, 79, 145, 0.08);
+  border-radius: 0.45rem;
+  vertical-align: middle;
+}
+.md-typeset .grid.cards .twemoji.lg svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: var(--staj-navy);
+}
+[data-md-color-scheme="slate"] .md-typeset .grid.cards .twemoji.lg {
+  background: rgba(124, 203, 238, 0.12);
+}
+[data-md-color-scheme="slate"] .md-typeset .grid.cards .twemoji.lg svg { fill: var(--staj-sky); }
+
+/* Inline file/form icons (table + download links + registration link):
+   NO chip; colored to match the link's brand color → removes the dark glyph glued to the text. */
+.md-typeset .twemoji.staj-fileicon svg { fill: var(--staj-navy); }
+[data-md-color-scheme="slate"] .md-typeset .twemoji.staj-fileicon svg { fill: var(--staj-sky); }
+
+.staj-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin: 0.6rem 0 2rem;
+  counter-reset: staj-stepc;
+}
+.staj-step {
+  position: relative;
+  overflow: hidden;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 14px;
+  padding: 1.2rem 1.3rem 0.7rem;
+}
+/* Giant faded digit REMOVED: the number already appeared in the .staj-step__pill
+   counter, so the same info showed twice on the card. The aria-hidden span in
+   the markup is harmless; it's hidden here. */
+.staj-step__num { display: none; }
+/* Step label (Direction A): instead of a navy "pill" → gradient numbered chip + uppercase eyebrow.
+   The number comes from the counter on .staj-steps → 1·2·3 without touching the markup. */
+.staj-step__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  color: var(--staj-navy);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0;
+  border-radius: 0;
+  margin-bottom: 0.7rem;
+}
+.staj-step__pill::before {
+  counter-increment: staj-stepc;
+  content: counter(staj-stepc);
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  color: #fff;
+  /* Flat navy — gradient and shadow removed, same language as the chrome's simplification. */
+  background: var(--staj-navy);
+}
+[data-md-color-scheme="slate"] .staj-step__pill::before { background: #2a5f9e; }
+[data-md-color-scheme="slate"] .staj-step__pill { color: #7fc4ec; }
+
+.staj-step ul { margin: 0 0 0.4rem; }
+
+/* The one-sentence summary above the calendar list. Since the strip is
+   display:none below 720px and the list doesn't produce an "available" row
+   (main.py), this is the ONLY place on mobile that TELLS the student which
+   internship windows are open — don't hide it. */
+.staj-takvim__lead {
+  margin: 0.2rem 0 1rem;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--staj-note);
+}
+
+.staj-takvim {
+  list-style: none;
+  margin: 0.4rem 0 2.2rem;
+  display: grid;
+  gap: 0.5rem;
+}
+.staj-takvim__item {
+  padding: 0.7rem 0.95rem;
+  line-height: 1.5;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 3px solid var(--staj-navy);
+  border-radius: 5px;
+}
+.staj-takvim__item:hover {
+  border-color: var(--staj-sky);
+  box-shadow: 0 3px 12px rgba(29, 79, 145, 0.10);
+}
+
+.staj-takvim__label { font-weight: 700; color: var(--md-default-fg-color); }
+.staj-takvim__date  { color: var(--staj-navy); font-variant-numeric: tabular-nums; }
+.staj-takvim__date::before {
+  content: "—";
+  margin: 0 0.45rem;
+  color: var(--md-default-fg-color--light);
+}
+/* Provisional/estimated-date footnote (set via the calendar entry's `notu:` in settings.yml) */
+.staj-takvim__note {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--md-default-fg-color--light);
+}
+[data-md-color-scheme="slate"] .staj-takvim__date { color: var(--staj-sky); }
+
+/* Category colors + icons are defined together below, in the "TIMELINE" section. */
+
+.staj-contact {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin: 0.7rem 0 1.4rem;
+}
+/* Short pointer text for the homepage Contact section. */
+.md-typeset p.staj-contact__lead {
+  margin: 0.2rem 0 1rem;
+  max-width: 60rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset p.staj-contact__lead strong { color: var(--md-default-fg-color); font-weight: 700; }
+.staj-contact__card {
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 14px;
+  padding: 1.2rem 1.3rem 1.3rem;
+}
+/* Only the primary card lights up on hover. It used to be every card, which
+   promoted the supervisor to primary the moment the cursor touched it. */
+.staj-contact__card--primary:hover {
+  border-color: rgba(124, 203, 238, 0.6);
+}
+/* Stacked variant: the assistant block is full width and the supervisor is a
+   quiet line beneath it, not a peer card. Two equal columns read as two equal
+   contacts however they are tinted — the hierarchy has to come from form. */
+.staj-contact--stack {
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+}
+/* Primary (assistants) card: distinguished by a subtle cyan tint background instead of a top rule. */
+.staj-contact__card--primary {
+  background: rgba(124, 203, 238, 0.08);
+  border-color: rgba(124, 203, 238, 0.35);
+}
+.staj-contact__role {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--staj-navy);
+  margin-bottom: 0.45rem;
+}
+[data-md-color-scheme="slate"] .staj-contact__role { color: var(--staj-sky); }
+.staj-contact__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 0.1rem;
+  color: var(--md-default-fg-color);
+}
+.staj-contact__note {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 0.7rem;
+}
+.md-typeset .staj-contact__mail {
+  display: inline-flex;
+  align-items: center;
+  color: var(--staj-navy);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+/* In dark mode, email links stayed navy and were unreadable → switched to sky. */
+.md-typeset a.staj-person__mail { color: var(--staj-navy); }
+[data-md-color-scheme="slate"] .md-typeset .staj-contact__mail,
+[data-md-color-scheme="slate"] .md-typeset a.staj-person__mail { color: var(--staj-cyan); }
+
+/* Supervisor line — deliberately card-less. No border, no tint, smaller type:
+   it reads as a footnote to the assistant block rather than an alternative to it. */
+.md-typeset p.staj-contact__secondary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.55rem;
+  margin: 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.staj-contact__secondary .staj-contact__role {
+  display: inline;
+  margin-bottom: 0;
+}
+.staj-contact__secondary-name {
+  font-weight: 700;
+  color: var(--md-default-fg-color);
+}
+/* The address keeps its accent colour so it still reads as a link, but drops the
+   600 weight — colour registers before size on a skim, and this line is meant
+   to be quiet. */
+.md-typeset .staj-contact__secondary .staj-contact__mail { font-weight: 500; }
+/* The condition takes the whole second line and is set bold: it is the one thing
+   on this line that must not be skimmed past. Full foreground colour, because
+   bold text in the muted colour just reads as muddy. */
+.staj-contact__secondary-note {
+  flex-basis: 100%;
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+}
+
+/* Assistant names live inside the primary card, so they drop the per-person
+   card chrome — a card inside a card just adds noise. */
+.staj-contact__card .md-typeset ul.staj-people,
+.md-typeset .staj-contact__card ul.staj-people {
+  margin: 0.9rem 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(124, 203, 238, 0.35);
+  gap: 0.5rem 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+.md-typeset .staj-contact__card ul.staj-people > li.staj-person {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+.md-typeset .staj-contact__card ul.staj-people > li.staj-person .staj-person__name {
+  font-size: 0.88rem;
+}
+
+/* ── Box (admonition) markers ─────────────────────────────────
+   All types share one family (MDI outline); the meaning color is kept from Material.
+   The tip icon is no longer hidden → every box now has a marker. */
+:root {
+  --md-admonition-icon--tip:      url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M11,18H13V15.87C14.73,15.43 16,13.86 16,12A4,4 0 0,0 12,8A4,4 0 0,0 8,12C8,13.86 9.27,15.43 11,15.87V18Z'/></svg>");
+  --md-admonition-icon--note:     url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M15 3H5A2 2 0 0 0 3 5V19A2 2 0 0 0 5 21H19A2 2 0 0 0 21 19V9L15 3M19 19H5V5H14V10H19M17 14H7V12H17M14 17H7V15H14'/></svg>");
+  --md-admonition-icon--info:     url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z'/></svg>");
+  --md-admonition-icon--warning:  url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12,2L1,21H23M12,6L19.53,19H4.47M11,10V14H13V10M11,16V18H13V16'/></svg>");
+  --md-admonition-icon--danger:   url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8.27,3L3,8.27V15.73L8.27,21H15.73C17.5,19.24 21,15.73 21,15.73V8.27L15.73,3M9.1,5H14.9L19,9.1V14.9L14.9,19H9.1L5,14.9V9.1M11,15H13V17H11V15M11,7H13V13H11V7'/></svg>");
+  --md-admonition-icon--question: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z'/></svg>");
+}
+
+/* .staj-results REMOVED — the centered card + icon tile + shadow was disconnected
+   from the site's left-aligned editorial layout. The results page now uses the
+   same language as the homepage opening (.staj-lede__sub + primary button). */
+
+.md-typeset ul.staj-people {
+  list-style: none;
+  margin: 0.6rem 0 1.4rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.7rem;
+}
+.md-typeset ul.staj-people > li.staj-person {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 5px;
+}
+.staj-person__name { font-weight: 700; color: var(--md-default-fg-color); }
+.md-typeset a.staj-person__mail { font-size: 0.82rem; overflow-wrap: anywhere; }
+/* Since mail links are excluded from the body-link gradient underline, they get their own :focus-visible ring (same pattern as the router card) */
+.md-typeset .staj-contact__mail:focus-visible,
+.md-typeset a.staj-person__mail:focus-visible { outline: none; border-radius: 4px; box-shadow: 0 0 0 3px rgba(124, 203, 238, 0.55); }
+
+/* SUBMISSION STATUS — a single block. There used to be three separate systems
+   (gold chip + colored phase strip + bulleted lines); all three competed for
+   attention at once. Now a single gold accent, with hierarchy from internal
+   dividers. The class name .staj-deadline__countdown is kept: the script in
+   teslim.md writes --urgent/--late to it. */
+.staj-status {
+  margin: .4rem 0 2.2rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--staj-gold);
+}
+.staj-status__label {
+  display: block;
+  font-size: var(--fs-sm);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--md-default-fg-color--light);
+}
+.staj-status__date {
+  display: block;
+  font-family: var(--staj-display);
+  font-size: clamp(1.6rem, 1.25rem + 1.5vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -.008em;
+  color: var(--md-default-fg-color);
+  font-variant-numeric: tabular-nums;
+  margin-top: .18rem;
+}
+/* Late-submission rule — a calm line within the block, not a separate colored strip. */
+.md-typeset .staj-status__rule {
+  margin: .9rem 0 0;
+  padding-top: .8rem;
+  border-top: 1px solid var(--box-border);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .staj-status__rule strong { color: var(--md-default-fg-color); }
+/* Exceptions — same block, no bullet marker; the condition is bold, the outcome is muted. */
+.md-typeset ul.staj-status__exceptions:not([hidden]) {
+  list-style: none;
+  margin: .55rem 0 0;
+  padding: .7rem 0 0;
+  border-top: 1px solid var(--box-border);
+  display: grid;
+  gap: .45rem;
+}
+/* [dir] IS REQUIRED: Material applies the indent via `[dir="ltr"] .md-typeset ul li`,
+   i.e. 0,2,2 specificity. Our class-based rule sat at 0,2,1 and got overridden,
+   starting 21px indented relative to the paragraph above the list items. */
+/* Divider between two exceptions — same hairline as the other transitions within the block. */
+[dir] .md-typeset ul.staj-status__exceptions > li + li {
+  padding-top: .5rem;
+  border-top: 1px solid var(--box-border);
+}
+[dir] .md-typeset ul.staj-status__exceptions > li {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+}
+.staj-status__if { font-weight: 700; color: var(--md-default-fg-color); }
+.staj-status__if::after { content: " —"; color: var(--md-default-fg-color--light); font-weight: 400; }
+.md-typeset .staj-status__exceptions strong { color: var(--md-default-fg-color); }
+[data-md-color-scheme="slate"] .staj-status { border-left-color: var(--staj-gold-dark); }
+
+
+/* ============================================================================
+   DIRECTION C — "WARM DEPTH"
+   Append-only enhancement block. Brand is preserved: navy var(--staj-navy), light blue var(--staj-sky),
+   critical/submission accent gold var(--staj-gold). Every new color has a slate
+   (dark theme) counterpart defined. The logo/seal is NEVER used as decoration; all
+   hero decoration is pure CSS gradient + an abstract SVG data-uri pattern.
+   Being later in the file, it overrides earlier rules of equal specificity.
+   NOTE (palette): item (2) needs four genuinely distinct hues; category colors
+   are inherited from the base (extra.css) — internship var(--staj-blue) (light tone
+   of the navy family) and holiday #5a9e6f (green) were already defined, C carries
+   them forward. Gold is STRICTLY reserved for submission/deadline semantics;
+   it appears nowhere as decoration.
+   ============================================================================ */
+
+/* (7) HOVER/TRANSITION POLISH — a shared, soft easing curve (~200ms cubic-bezier).
+   We move the existing 120ms transitions here into a single refined micro-interaction language.
+   Note: the card rule repeats the existing high-specificity selector verbatim. */
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid.cards > :is(.card, li) {
+  transition: border-color 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.staj-step,
+.staj-contact__card,
+.staj-takvim__item {
+  transition: border-color 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* (1) The opening is now typographic on the canvas — the navy gradient block,
+   diagonal SVG texture, and decorative line-art visual were removed. The rules
+   live under .staj-lede (above). The homepage's first visual is now the year
+   strip: not decoration, real information. */
+/* (3) Primary button polish — a slight lift + shadow on hover (outside prefers-reduced-motion). */
+@media (prefers-reduced-motion: no-preference) {
+  .staj-lede .md-button--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(14, 44, 82, 0.28);
+  }
+}
+
+/* Reading width. The old note's objection was fair: narrowing ONLY the paragraph
+   threw off its alignment with the adjacent full-width box/form, giving an
+   "shifted off-center" feel. The fix narrows the WHOLE COLUMN, not the paragraph
+   — boxes now align with paragraphs on the same edge. Applies only to prose pages
+   that have the secondary rail; the index's year strip and the submission form
+   stay wide. Measurement (1440px, Rules): median 78 characters at 938px → 67 at 860px. */
+/* NO media query: the `hidden` attribute is page-dependent, not width-dependent,
+   so the selector catches prose pages at every width. Locking it to 76.25em made
+   content drop to 860 at 1220px but jump to ~1180 at 1219px (where the rail is
+   hidden via CSS). On narrow screens 43rem is already above the viewport → no effect. */
+.md-main__inner:has(> .md-sidebar--secondary:not([hidden])) .md-content__inner {
+  max-width: 43rem;
+}
+
+/* (6) TYPOGRAPHY RHYTHM — body line spacing only. H2 underline: thin, short, on-brand. */
+.md-typeset > p,
+.md-typeset > ul,
+.md-typeset > ol { line-height: 1.72; }
+.md-typeset h2 {
+  border-bottom: none;
+  box-shadow: none;
+  position: relative;
+  padding-bottom: 0.28rem;     /* gap between text and underline shortened */
+  margin-bottom: 0.35rem;      /* gap between heading and first text reduced further */
+}
+/* Also reset the top margin of the first element after the heading (otherwise
+   its large margin-top would step in and reopen the gap). */
+.md-typeset h2 + * { margin-top: 0 !important; }
+/* Forms: shorten the top margin of a category heading that comes right after
+   a table (52px → ~28px) → removes the excessive gap between document categories. */
+.md-typeset .md-typeset__scrollwrap + h2,
+.md-typeset table + h2 { margin-top: 1.5rem; }
+/* SITE-WIDE HEADING UNDERLINE (Candidate C) — a single clean navy bar + short cyan "tip".
+   A plain, safe marker instead of the old three-segment line. */
+.md-typeset h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 2.6rem;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--staj-navy) 0%, var(--staj-sky) 100%);
+}
+[data-md-color-scheme="slate"] .md-typeset h2::after {
+  background: linear-gradient(90deg, var(--staj-cyan) 0%, #3f7fce 100%);
+}
+
+/* Eyebrow kicker — a small uppercase label above homepage section headings.
+   Body/label typeface is Inter; color is navy for AA on light surfaces, bright cyan on dark. */
+.md-typeset p.staj-kicker {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--staj-navy);
+  margin: 2.8rem 0 0.4rem;
+}
+.md-typeset p.staj-kicker + h2,
+.md-typeset p.staj-kicker + h2.staj-section { margin-top: 0; }
+[data-md-color-scheme="slate"] .md-typeset p.staj-kicker { color: var(--staj-cyan); }
+
+/* (4) VERTICAL RHYTHM — the tinted background of section bands was REMOVED.
+   Cards already have their own surface; adding a panel created three layers:
+   canvas > panel > card. The kicker + H2 + underline already separate the section. */
+
+/* Cards — soft layered shadow + gentle hover lift (a Warm Depth touch). */
+.staj-step,
+.staj-contact__card {
+  box-shadow: 0 1px 2px rgba(22, 59, 110, 0.06),
+              0 6px 18px rgba(22, 59, 110, 0.07);
+}
+.staj-step:hover,
+.staj-contact__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(22, 59, 110, 0.10),
+              0 14px 30px rgba(22, 59, 110, 0.14);
+}
+[data-md-color-scheme="slate"] .staj-step,
+[data-md-color-scheme="slate"] .staj-contact__card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.30),
+              0 6px 18px rgba(0, 0, 0, 0.34);
+}
+[data-md-color-scheme="slate"] .staj-step:hover,
+[data-md-color-scheme="slate"] .staj-contact__card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.40),
+              0 14px 30px rgba(0, 0, 0, 0.48);
+}
+
+/* (2) TIMELINE — the 4 categories are genuinely distinct: a bold left bar +
+   a category icon at the start of the line (mask-image, the same admonition idiom
+   used elsewhere in this file). Colors differ in hue/lightness. The icon inherits
+   the bar's color. box-shadow/border-radius are zeroed on ::before so no ghost
+   shape is left around the masked glyph. */
+.staj-takvim__item {
+  position: relative;
+  padding-left: 2.35rem;
+  border-left-width: 3px;
+}
+.staj-takvim__item::before {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  top: 0.92rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 0;
+  box-shadow: none;
+  background-color: var(--staj-navy);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-size: contain; mask-size: contain;
+}
+.staj-takvim__item:hover {
+  box-shadow: 0 3px 14px rgba(29, 79, 145, 0.12);
+  transform: translateX(2px);
+}
+
+/* Category icons — switched to a meaningful, consistent MDI icon set (instead
+   of the old generic admonition glyphs): academic=CALENDAR, internship=BRIEFCASE,
+   submission=WARNING, holiday=SUN. All are inline data-uri masks; color comes
+   from background-color. */
+/* Category 1 — Academic (navy): calendar icon. */
+.staj-takvim__item--akademik { border-left-color: var(--staj-navy); }
+.staj-takvim__item--akademik::before {
+  background-color: var(--staj-navy);
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m0 16H5V8h14z'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m0 16H5V8h14z'/></svg>");
+}
+/* Category 2 — Internship (light blue): briefcase (work period). */
+.staj-takvim__item--staj { border-left-color: var(--staj-blue); }
+.staj-takvim__item--staj::before {
+  background-color: var(--staj-blue);
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M10 4h4v2h-4zm10 15H4V8h16z'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M10 4h4v2h-4zm10 15H4V8h16z'/></svg>");
+}
+/* Category 3 — Submission (GOLD, critical): warning icon — semantically aligned with item 5 (gold). */
+.staj-takvim__item--teslim { border-left-color: var(--staj-gold); }
+.staj-takvim__item--teslim::before {
+  background-color: var(--staj-gold);
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2 1 21h22M12 6l7.53 13H4.47M11 10v4h2v-4m-2 6v2h2v-2'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2 1 21h22M12 6l7.53 13H4.47M11 10v4h2v-4m-2 6v2h2v-2'/></svg>");
+}
+/* Category 4 — Holiday (green): sun (holiday/rest). */
+.staj-takvim__item--tatil { border-left-color: #5a9e6f; }
+.staj-takvim__item--tatil::before {
+  background-color: #5a9e6f;
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42zM3.34 7l4.16-.35C6.9 7.16 6.36 7.78 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77c.14.77.41 1.55.83 2.27.42.74.96 1.36 1.55 1.87zM20.65 7l-1.77 3.79c-.14-.79-.41-1.56-.83-2.29-.42-.72-.95-1.35-1.55-1.86zm-.01 10-4.14.36c.59-.51 1.12-1.13 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42zM3.34 7l4.16-.35C6.9 7.16 6.36 7.78 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77c.14.77.41 1.55.83 2.27.42.74.96 1.36 1.55 1.87zM20.65 7l-1.77 3.79c-.14-.79-.41-1.56-.83-2.29-.42-.72-.95-1.35-1.55-1.86zm-.01 10-4.14.36c.59-.51 1.12-1.13 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z'/></svg>");
+}
+/* Slate: the same category hues are shifted to tones readable on a dark surface. */
+[data-md-color-scheme="slate"] .staj-takvim__item--akademik { border-left-color: #5b93d6; }
+[data-md-color-scheme="slate"] .staj-takvim__item--akademik::before { background-color: #5b93d6; }
+[data-md-color-scheme="slate"] .staj-takvim__item--staj { border-left-color: var(--staj-sky); }
+[data-md-color-scheme="slate"] .staj-takvim__item--staj::before { background-color: var(--staj-sky); }
+[data-md-color-scheme="slate"] .staj-takvim__item--teslim { border-left-color: var(--staj-gold-dark); }
+[data-md-color-scheme="slate"] .staj-takvim__item--teslim::before { background-color: var(--staj-gold-dark); }
+[data-md-color-scheme="slate"] .staj-takvim__item--tatil { border-left-color: #79bf90; }
+[data-md-color-scheme="slate"] .staj-takvim__item--tatil::before { background-color: #79bf90; }
+
+/* (5) GOLD = "critical / final submission" — a consistent semantic accent. The
+   submission row and .staj-deadline carry gold. The deadline's navy background
+   + gold glow were removed: the band now sits directly on the canvas, with gold
+   carried by a single left rule (rules are under .staj-deadline). */
+.staj-takvim__item--teslim {
+  background:
+    linear-gradient(90deg, rgba(212, 160, 23, 0.07) 0%, rgba(212, 160, 23, 0) 60%),
+    var(--md-default-bg-color);
+}
+.staj-takvim__item--teslim:hover {
+  box-shadow: 0 3px 16px rgba(212, 160, 23, 0.22);
+}
+[data-md-color-scheme="slate"] .staj-takvim__item--teslim {
+  background:
+    linear-gradient(90deg, rgba(232, 181, 58, 0.10) 0%, rgba(232, 181, 58, 0) 60%),
+    var(--md-default-bg-color);
+}
+
+/* Accessibility: lift/transform is disabled under the reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .grid.cards > ul > li,
+  .md-typeset .grid.cards > :is(.card, li),
+  .staj-step,
+  .staj-contact__card,
+  .staj-takvim__item {
+    transition: none;
+  }
+  .staj-step:hover,
+  .staj-contact__card:hover,
+  .staj-takvim__item:hover { transform: none; }
+}
+/* ===================== End of Direction C block ===================== */
+
+/* ============================================================================
+   CLICKABLE STEP CARDS (homepage) — the whole card routes to the "Detail" link.
+   "Stretched-link" pattern: the visible "Detail →" hint stays; real links inside
+   the card (e.g. the "results page" link in step 3) remain clickable above the overlay.
+   ============================================================================ */
+.staj-step { cursor: pointer; }
+/* The "Detail" link's ::after covers the whole card → every click on the card
+   goes to that link. IMPORTANT: the link ITSELF must NOT be position:relative;
+   otherwise ::after positions relative to the link (and won't cover the whole
+   card). .staj-step is already position:relative → the overlay spans the whole
+   card via inset:0 relative to it. */
+.staj-step .staj-step__more::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+/* Other real links inside the card sit above the overlay → clickable independently. */
+.staj-step a:not(.staj-step__more) { position: relative; z-index: 2; }
+/* The VISIBLE "Detail →" text/arrow was removed (per user request). The link
+   stays in the DOM for accessibility; the ::after overlay still covers the
+   whole card → the box remains clickable. The wrapping paragraph is also collapsed. */
+.staj-step p:has(> .staj-step__more) { margin: 0; height: 0; line-height: 0; overflow: hidden; }
+.staj-step .staj-step__more { font-size: 0; }
+/* Keyboard accessibility: the card is highlighted while the link has focus. */
+.staj-step:focus-within {
+  border-color: var(--staj-sky);
+  box-shadow: 0 4px 14px rgba(29, 79, 145, 0.12);
+}
+/* ============================================================================
+   404 — the branded "page not found" page (overrides/404.html).
+   ============================================================================ */
+.md-typeset .staj-404 { max-width: 34rem; margin: 3rem auto; text-align: center; }
+.staj-404__code {
+  font-size: 6rem; font-weight: 800; line-height: 1; letter-spacing: -2px; margin: 0;
+  color: var(--staj-navy);
+  background: linear-gradient(135deg, var(--staj-navy) 0%, var(--staj-sky) 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+[data-md-color-scheme="slate"] .staj-404__code { background: linear-gradient(135deg, var(--staj-sky) 0%, #2A6AA8 100%); -webkit-background-clip: text; background-clip: text; }
+.md-typeset .staj-404__title { margin: 0.2rem 0 0.6rem; }
+.md-typeset .staj-404__lead { color: var(--md-default-fg-color--light); }
+.staj-404__actions { margin: 1.4rem 0 0.6rem; }
+.md-typeset .staj-404__links {
+  list-style: none; margin: 1rem 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.3rem;
+}
+.md-typeset .staj-404__links li { margin: 0; }
+
+/* ============================================================================
+   POLISH PASS — refined touches focused on gradients / color transitions.
+   Within the brand palette (navy var(--staj-navy) ↔ cyan var(--staj-sky); gold ONLY for deadline),
+   slate (dark) counterparts are defined, and it stays corporate/plain.
+   ============================================================================ */
+
+/* #1 Footer credit strip — the SAME navy as the header. A darker footer made
+   the page feel like it was "sinking" downward; once matched, the body reads
+   like a single sheet of paper between two equal bands. */
+.md-footer-meta {
+  background: var(--staj-chrome);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* #5 Gradient edge hairlines (below header / above footer / below tabs) — "thin metal wire" */
+/* A single hairline between chrome and body. There used to be a 3px gradient
+   border-image on the header and a 2px one on tabs; two separate bright strips
+   made the chrome feel disconnected from the body. */
+.md-tabs {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* #2 Gradient hairline <hr> — transparent ends, navy→cyan in the middle. (No page
+   currently uses `---`; this kicks in automatically if one is added later.) */
+.md-typeset hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(29,79,145,0) 0%, rgba(29,79,145,0.45) 50%, rgba(29,79,145,0) 100%);
+}
+[data-md-color-scheme="slate"] .md-typeset hr {
+  background: linear-gradient(90deg, rgba(124,203,238,0) 0%, rgba(124,203,238,0.45) 50%, rgba(124,203,238,0) 100%);
+}
+
+/* #3 Body links get a navy→cyan underline that fills in from the left on hover/focus (excluding special links) */
+.md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink) {
+  background-image: linear-gradient(90deg, var(--staj-navy) 0%, var(--staj-sky) 100%);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 200ms ease;
+}
+.md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink):hover,
+.md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink):focus-visible {
+  background-size: 100% 2px;
+}
+[data-md-color-scheme="slate"] .md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink) {
+  background-image: linear-gradient(90deg, var(--staj-sky) 0%, #2A6AA8 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset a:not(.md-button):not(.staj-step__more):not(.staj-contact__mail):not(.staj-person__mail):not(.headerlink) { transition: none; }
+}
+
+/* #4 Card top edge: flat navy at rest, navy→cyan gradient on HOVER (brand identity preserved) */
+.staj-step:hover, .staj-contact__card:hover {
+  border-image: linear-gradient(90deg, var(--staj-navy) 0%, var(--staj-sky) 100%) 1 / 4px 0 0 0;
+}
+[data-md-color-scheme="slate"] .staj-step:hover,
+[data-md-color-scheme="slate"] .staj-contact__card:hover {
+  border-image: linear-gradient(90deg, var(--staj-sky) 0%, #2A6AA8 100%) 1 / 4px 0 0 0;
+}
+
+/* #6 On contact person cards, a fading gradient left rail; timeline bars are UNAFFECTED */
+.md-typeset ul.staj-people > li.staj-person {
+  border-left: 3px solid transparent;
+  border-image: linear-gradient(180deg, var(--staj-sky) 0%, rgba(124,203,238,0.12) 100%) 1 / 0 0 0 3px;
+}
+[data-md-color-scheme="slate"] .md-typeset ul.staj-people > li.staj-person {
+  border-image: linear-gradient(180deg, var(--staj-sky) 0%, rgba(124,203,238,0.10) 100%) 1 / 0 0 0 3px;
+}
+
+/* #7 Section band corner glints were also removed (the bands themselves are gone). */
+
+/* #8 Widow/orphan line control — headings wrap in balance, paragraphs wrap cleanly (progressive) */
+.md-typeset h1, .md-typeset h2, .md-typeset h3,
+.staj-contact__name, .staj-deadline__date, .staj-lede__sub {
+  text-wrap: balance;
+}
+.md-typeset p, .md-typeset li { text-wrap: pretty; }
+
+/* #9 A soft two-layer gradient focus ring on buttons (:focus-visible — keyboard) */
+.md-typeset .md-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124,203,238,0.55), 0 0 0 6px rgba(29,79,145,0.18);
+}
+
+/* ============================================================================
+   DEVELOPMENT PASS 5 — inner-page structure + polish.
+   Status router, vertical process timeline, "At a Glance" summary, key-figure
+   blocks, brand-colored FAQ, reading measure, masthead, "Next step", a11y.
+   Within brand: navy var(--staj-navy) / cyan var(--staj-sky); gold ONLY for submission. Full slate parity.
+   ============================================================================ */
+
+/* (1) FAQ "question" boxes → brand navy/cyan (Material's default lime-green
+   clashed with the "holiday" semantic; this is the most-visited page). */
+.md-typeset .admonition.question,
+.md-typeset details.question { border-color: rgba(124, 203, 238, 0.55); }
+.md-typeset .question > .admonition-title,
+.md-typeset .question > summary { background-color: rgba(29, 79, 145, 0.06); }
+.md-typeset .question > .admonition-title::before,
+.md-typeset .question > summary::before { background-color: var(--staj-navy); }
+[data-md-color-scheme="slate"] .md-typeset .question > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .question > summary { background-color: rgba(124, 203, 238, 0.10); }
+[data-md-color-scheme="slate"] .md-typeset .question > .admonition-title::before,
+[data-md-color-scheme="slate"] .md-typeset .question > summary::before { background-color: var(--staj-sky); }
+
+/* (2) [REMOVED] Reading measure (72ch) — reverted so text uses the full page
+   width (paragraphs no longer wrap early). */
+
+/* (3) Faded notes brought above AA + touch targets to 44px. */
+:root { --staj-note: rgba(0, 0, 0, 0.62); }
+[data-md-color-scheme="slate"] { --staj-note: rgba(255, 255, 255, 0.62); }
+.staj-takvim__note, .staj-contact__note { color: var(--staj-note); }
+.md-typeset .staj-lede .md-button { min-height: 44px; }
+
+/* (4) Masthead rules removed: the homepage H1 now uses the --fs-h1 scale
+   directly, there's no separate hero scale. */
+
+/* (6) "At a Glance" summary admonition — neutral navy.
+   A calm summary that doesn't drift into an alarm tone (warning/danger). */
+:root {
+  --md-admonition-icon--ozet: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 5h2v2H3zm0 6h2v2H3zm0 6h2v2H3zM7 5h14v2H7zm0 6h14v2H7zm0 6h14v2H7z'/></svg>");
+}
+.md-typeset .admonition.ozet,
+.md-typeset details.ozet { border-color: var(--staj-navy); }
+.md-typeset .ozet > .admonition-title,
+.md-typeset .ozet > summary { background-color: rgba(29, 79, 145, 0.10); }
+.md-typeset .ozet > .admonition-title::before,
+.md-typeset .ozet > summary::before {
+  background-color: var(--staj-navy);
+  -webkit-mask-image: var(--md-admonition-icon--ozet);
+          mask-image: var(--md-admonition-icon--ozet);
+}
+[data-md-color-scheme="slate"] .md-typeset .admonition.ozet,
+[data-md-color-scheme="slate"] .md-typeset details.ozet { border-color: var(--staj-sky); }
+[data-md-color-scheme="slate"] .md-typeset .ozet > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .ozet > summary { background-color: rgba(124, 203, 238, 0.10); }
+[data-md-color-scheme="slate"] .md-typeset .ozet > .admonition-title::before,
+[data-md-color-scheme="slate"] .md-typeset .ozet > summary::before { background-color: var(--staj-sky); }
+
+/* (8) Process page vertical step-timeline (G1) — the vertical extension of the left-rail idiom. */
+/* Process page — the vertical timeline line + dots were removed (per user request).
+   Phase separation is now conveyed only by the color-coded underline (Before=blue/
+   During=teal/After=green). */
+.staj-flow { position: relative; }
+.staj-flow > h2 { position: relative; }
+
+/* (10) Year strip (G3) — FIXED January–December, day-precise zones. ≥720px;
+   hidden on mobile, the .staj-takvim list carries the exact dates. Brand tones:
+   light cyan = internship allowed; navy = term time; cyan/navy hatched = summer
+   school (conditional); gold ONLY the submission line. Unlabeled — the meaning
+   lives in the legend + the list below. */
+.staj-yearbar { display: none; }
+@media (min-width: 720px) {
+  .staj-yearbar { display: block; margin: 0.6rem 0 2rem; }
+}
+/* Footnote under Important Dates — plain: no box, a thin brand icon + readable dark text. */
+
+/* List dates (homepage) are colored to match the gantt (based on staj_durum):
+   closed=dark blue, conditional=light blue; submission is already gold. The icon
+   SHAPE comes from the category. */
+.staj-takvim__item--kapali { border-left-color: #2d5b96; }
+.staj-takvim__item--kapali::before { background-color: #2d5b96; }
+.staj-takvim__item--kosullu { border-left-color: #86c9ed; }
+.staj-takvim__item--kosullu::before { background-color: #86c9ed; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kapali { border-left-color: #5183ba; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kapali::before { background-color: #5183ba; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kosullu { border-left-color: #9fd0f0; }
+[data-md-color-scheme="slate"] .staj-takvim__item--kosullu::before { background-color: #9fd0f0; }
+
+/* --- Calendar list -----------------------------------------------------
+   Rows STATE the verdict (Not allowed / Conditional / Final submission); without
+   a badge, the phrase "term time" didn't directly tell the student whether they
+   could do their internship.
+   Colors are IDENTICAL to the strip: conditional = hatched summer school,
+   closed = dark term time, submission = gold. The internship windows in between
+   are NOT listed; they show up on the strip's background. */
+.staj-takvim__item--kapali::before {
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m0 16H5V8h14z'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m0 16H5V8h14z'/></svg>");
+}
+.staj-takvim__item--kosullu::before {
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M10 4h4v2h-4zm10 15H4V8h16z'/></svg>");
+          mask-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M10 4h4v2h-4zm10 15H4V8h16z'/></svg>");
+}
+
+/* Verdict badge — at the end of the row, a one-word answer. */
+.md-typeset .staj-takvim__verdict {
+  display: inline-block;
+  margin-left: 0.55rem;
+  padding: 0.02rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+  vertical-align: 0.06rem;
+}
+.staj-takvim__item--kosullu .staj-takvim__verdict { color: #1d4f78; background: rgba(134, 201, 237, 0.26); }
+.staj-takvim__item--kapali  .staj-takvim__verdict { color: #24507f; background: rgba(45, 91, 150, 0.12); }
+.staj-takvim__item--teslim  .staj-takvim__verdict { color: #7a5300; background: rgba(214, 158, 0, 0.16); }
+[data-md-color-scheme="slate"] .staj-takvim__item--kosullu .staj-takvim__verdict { color: #bfe3f8; background: rgba(159, 208, 240, 0.18); }
+[data-md-color-scheme="slate"] .staj-takvim__item--kapali  .staj-takvim__verdict { color: #b3cbe6; background: rgba(81, 131, 186, 0.20); }
+[data-md-color-scheme="slate"] .staj-takvim__item--teslim  .staj-takvim__verdict { color: #ffd98a; background: rgba(214, 158, 0, 0.20); }
+/* The axis is no longer a FIXED 12 columns: since the strip shows an arbitrary
+   date range, month labels are also positioned day-precisely (first/last month
+   can be partial). Positions come from main.py; months left too narrow are
+   already filtered out there. */
+.staj-yearbar__axis { position: relative; height: 1.05rem; margin-bottom: 4px; }
+.staj-yearbar__month {
+  position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap;
+  font-size: var(--fs-xs); text-align: center; color: var(--staj-note);
+  font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
+}
+.staj-yearbar__track {
+  position: relative; height: 2.9rem; border-radius: 7px; overflow: hidden;
+  background: #95c4e8; border: 1px solid var(--md-default-fg-color--lightest);
+}
+.staj-yearbar__seg { position: absolute; top: 0; bottom: 0; }
+.staj-yearbar__seg--block { background: #2d5b96; }
+.staj-yearbar__seg--cond { background: repeating-linear-gradient(45deg, #a8d4f0 0 6px, #cae5f9 6px 12px); }
+.staj-yearbar__mark {
+  position: absolute; top: -1px; bottom: -1px; width: 3px; z-index: 3;
+  background: var(--staj-gold); border-radius: 2px; box-shadow: 0 0 0 2px var(--md-default-bg-color);
+}
+.staj-yearbar__legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1.15rem; margin-top: 11px; font-size: var(--fs-xs); color: var(--staj-note); }
+.staj-yearbar__legend > span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.staj-yearbar__sw { width: 0.7rem; height: 0.7rem; border-radius: 50%; flex-shrink: 0; }
+.staj-yearbar__sw--ok { background: #95c4e8; }
+.staj-yearbar__sw--block { background: #2d5b96; }
+.staj-yearbar__sw--cond { background: repeating-linear-gradient(45deg, #a8d4f0 0 3px, #cae5f9 3px 6px); }
+.staj-yearbar__sw--mark { width: 3px; height: 0.85rem; background: var(--staj-gold); border-radius: 2px; }
+[data-md-color-scheme="slate"] .staj-yearbar__track { background: #6b9dcd; border-color: rgba(255, 255, 255, 0.12); }
+[data-md-color-scheme="slate"] .staj-yearbar__seg--block { background: #1e3a5a; }
+[data-md-color-scheme="slate"] .staj-yearbar__seg--cond { background: repeating-linear-gradient(45deg, #9fd0f0 0 6px, #c3e2f8 6px 12px); }
+[data-md-color-scheme="slate"] .staj-yearbar__mark,
+[data-md-color-scheme="slate"] .staj-yearbar__sw--mark { background: var(--staj-gold-dark); }
+[data-md-color-scheme="slate"] .staj-yearbar__sw--ok { background: #6b9dcd; }
+[data-md-color-scheme="slate"] .staj-yearbar__sw--block { background: #1e3a5a; }
+[data-md-color-scheme="slate"] .staj-yearbar__sw--cond { background: repeating-linear-gradient(45deg, #9fd0f0 0 3px, #c3e2f8 3px 6px); }
+/* ===================== End of Development Pass 5 block ===================== */
+
+/* ============================================================================
+   DEVELOPMENT PASS 6 — report outline cards, in-page jump links, section numbers,
+   document checklist (+print), glossary, Production↔Freelance comparison,
+   days-remaining-to-submit. Within brand; gold ONLY for deadline. Full slate parity.
+   ============================================================================ */
+
+/* (1) Report outline → a series of numbered ghost-digit cards (G2). */
+.staj-outline { display: grid; gap: 0.8rem; margin: 1rem 0 1.6rem; }
+/* Report template sections — a line-based language. There used to be 8 sections
+   as 8 differently-colored filled cards; eight arbitrary tones made this the
+   busiest spot on the page. These are the ordered sections of one document, not
+   separate objects → a line instead. */
+.md-typeset .staj-outline__card {
+  --ch: var(--staj-navy);
+  position: relative;
+  background: transparent;
+  border: 0; border-left: 3px solid var(--box-border);
+  border-radius: 0; padding: 0 0 0 1rem;
+  /* Grid items come with min-width:auto → a wide table card inside would inflate
+     to its natural width and overflow the page horizontally (152px at 375px).
+     The old card masked this with overflow:hidden, which clipped the table.
+     min-width:0 allows shrinking, so the table scrolls within its own wrapper. */
+  min-width: 0;
+}
+.md-typeset .staj-outline__card > h3 { margin-top: 0.1rem; }
+
+
+/* (7) Days remaining to submit — plainly informational (NO badge/animation).
+   Colors were derived for the LIGHT canvas: the old values were light tones that
+   worked on the navy slab, but weren't readable on the canvas. All three states
+   are carried by text color; the background only supports it. */
+.staj-deadline__countdown {
+  display: inline-flex; align-items: baseline; gap: 0.4em;
+  margin-top: 0.9rem; padding: 0.32rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(23, 69, 127, 0.07);
+  border: 1px solid rgba(23, 69, 127, 0.20);
+  font-size: var(--fs-sm); font-weight: 600; color: #3f5a7a;
+}
+.staj-deadline__countdown b { color: var(--staj-navy); font-size: 1.25rem; font-weight: 800; line-height: 1; }
+.staj-deadline__countdown--urgent { background: rgba(201, 151, 26, 0.12); border-color: rgba(201, 151, 26, 0.42); color: #6e520c; }
+.staj-deadline__countdown--urgent b { color: #6b4f0b; }
+.staj-deadline__countdown--late { background: rgba(178, 42, 42, 0.10); border-color: rgba(178, 42, 42, 0.38); color: #9c2b2b; }
+.staj-deadline__countdown--late b { color: #a82a2a; }
+[data-md-color-scheme="slate"] .staj-deadline__countdown {
+  background: rgba(124, 203, 238, 0.12); border-color: rgba(124, 203, 238, 0.30); color: #a9c9e2;
+}
+[data-md-color-scheme="slate"] .staj-deadline__countdown b { color: var(--staj-cyan); }
+[data-md-color-scheme="slate"] .staj-deadline__countdown--urgent { background: rgba(232, 192, 74, 0.15); border-color: rgba(232, 192, 74, 0.42); color: #f0d78f; }
+[data-md-color-scheme="slate"] .staj-deadline__countdown--urgent b { color: #ffe28c; }
+[data-md-color-scheme="slate"] .staj-deadline__countdown--late { background: rgba(226, 75, 74, 0.18); border-color: rgba(240, 160, 160, 0.42); color: #ffb9b9; }
+[data-md-color-scheme="slate"] .staj-deadline__countdown--late b { color: #ffd9d9; }
+
+/* (8) Print: hide the site chrome (checklist / clean output). */
+@media print {
+  .md-header, .md-tabs, .md-footer, .md-sidebar, .staj-yearbar { display: none !important; }
+}
+/* ===================== End of Development Pass 6 block ===================== */
+
+/* ============================================================================
+   TABBED CONTENT REFINEMENT — pin the active indicator bar to brand blue
+   (instead of the default dark text color), pull the hover label toward the
+   accent. Fixes Material's inconsistency between the JS/no-JS fallback color →
+   the indicator is always brand blue and sits exactly under the active label.
+   Topic Guide + Writing Tips (and all tabs). */
+/* Tabs: NO sliding/hover BLUE LINE (user doesn't want it). Material's ::before
+   AND ::after indicators are fully hidden; no hover effect. The active tab is
+   only shown by a lightly tinted background (no line). */
+:root { --staj-tab-active: rgba(45, 91, 150, 0.10); }
+[data-md-color-scheme="slate"] { --staj-tab-active: rgba(124, 203, 238, 0.14); }
+.md-typeset .tabbed-alternate .tabbed-labels::before,
+.md-typeset .tabbed-alternate .tabbed-labels::after { display: none !important; }
+.md-typeset .tabbed-alternate .tabbed-labels > label { border-bottom: none; }
+.md-typeset .tabbed-set > input:nth-child(1):checked ~ .tabbed-labels > label:nth-child(1),
+.md-typeset .tabbed-set > input:nth-child(2):checked ~ .tabbed-labels > label:nth-child(2),
+.md-typeset .tabbed-set > input:nth-child(3):checked ~ .tabbed-labels > label:nth-child(3),
+.md-typeset .tabbed-set > input:nth-child(4):checked ~ .tabbed-labels > label:nth-child(4),
+.md-typeset .tabbed-set > input:nth-child(5):checked ~ .tabbed-labels > label:nth-child(5),
+.md-typeset .tabbed-set > input:nth-child(6):checked ~ .tabbed-labels > label:nth-child(6),
+.md-typeset .tabbed-set > input:nth-child(7):checked ~ .tabbed-labels > label:nth-child(7),
+.md-typeset .tabbed-set > input:nth-child(8):checked ~ .tabbed-labels > label:nth-child(8) {
+  background: var(--staj-tab-active); border-radius: 6px 6px 0 0;
+}
+
+/* HOMEPAGE section headings — merged into the site-wide SINGLE heading language.
+   The old uppercase "eyebrow" variant was removed; it now looks like a standard
+   H2 (short two-tone underline). Only the margin is kept, for breathing room
+   between sections. */
+.md-typeset h2.staj-section {
+  margin-top: 2.8rem;
+}
+
+/* ============================================================================
+   YEAR STRIP INTERACTION — calendar list ↔ strip ↔ legend highlighting (yearbar.js).
+   When one item is active, its matching region is highlighted; the others fade.
+   Because segments sit inside an overflow:hidden track, an OUTER ring gets clipped
+   → the highlight is given via opacity + brightness + an INNER (inset) white
+   border instead. Respects reduced motion. */
+.staj-yearbar__seg,
+.staj-yearbar__mark { transition: opacity 160ms ease, filter 160ms ease; }
+.staj-yearbar.is-focusing .staj-yearbar__seg:not(.is-active),
+.staj-yearbar.is-focusing .staj-yearbar__mark:not(.is-active) { opacity: 0.32; }
+.staj-yearbar__seg.is-active {
+  filter: saturate(1.12) brightness(1.08);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.75);
+  z-index: 4;
+}
+.staj-yearbar__mark.is-active { filter: brightness(1.12); z-index: 5; }
+.staj-yearbar__legend [data-cat] { cursor: default; }
+/* When triggered from the strip, a list row gets the same highlight as :hover. */
+.staj-takvim__item.is-active {
+  border-color: var(--staj-sky);
+  box-shadow: 0 3px 14px rgba(29, 79, 145, 0.12);
+  transform: translateX(2px);
+}
+[data-md-color-scheme="slate"] .staj-yearbar__seg.is-active {
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.55);
+}
+@media (prefers-reduced-motion: reduce) {
+  .staj-yearbar__seg,
+  .staj-yearbar__mark { transition: none; }
+  .staj-takvim__item.is-active { transform: none; }
+}
+
+/* ── Year strip: hover date tooltip + fixed submission label + wide hover area ──
+   The tooltip is positioned relative to yearbar → yearbar is position:relative.
+   The submission line stays visibly 3px; ::before gives it a ~19px invisible
+   hover target. The submission day is also always labeled on the strip
+   (marklabel), so hovering isn't required. */
+/* The year strip establishes its OWN stacking context. Otherwise its inner
+   z-indexes (seg.is-active=4, mark.is-active=5, tip=20) would compete in the
+   root stacking context and OUTRANK the sticky header (z-index:4): when the
+   page was scrolled down and you hovered a calendar row, the gold submission
+   line would appear above the header even though the strip was behind it.
+   isolation:isolate preserves all internal ordering exactly, it only prevents
+   it from leaking outward. */
+.staj-yearbar { position: relative; isolation: isolate; }
+
+.staj-yearbar__mark::before {
+  content: "";
+  position: absolute;
+  left: -8px; right: -8px; top: 0; bottom: 0;
+}
+
+.staj-yearbar__tip {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+  background: var(--staj-navy-dark);
+  color: #fff;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(18, 55, 99, 0.28);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+.staj-yearbar__tip.is-visible { opacity: 1; }
+.staj-yearbar__tip b { display: block; color: var(--staj-cyan); font-weight: 700; margin-bottom: 1px; }
+
+.staj-yearbar__labels { position: relative; height: 1.2rem; margin-top: 5px; }
+.staj-yearbar__marklabel {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: var(--staj-gold);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.staj-yearbar__marklabel::before {
+  content: "";
+  position: absolute;
+  top: -5px; left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-bottom-color: var(--staj-gold);
+}
+[data-md-color-scheme="slate"] .staj-yearbar__marklabel { color: var(--staj-gold-dark); }
+[data-md-color-scheme="slate"] .staj-yearbar__marklabel::before { border-bottom-color: var(--staj-gold-dark); }
+@media (prefers-reduced-motion: reduce) {
+  .staj-yearbar__tip { transition: none; }
+}
+
+/* ============================================================================
+   HEADER — a single continuous navy block (header + its tabs). The gradient,
+   diagonal texture, corner glow, scroll state, and the cyan pill on tabs were
+   removed: once the body became an editorial canvas, these effects made the
+   chrome look disconnected from the site. Active tab = thin underline; search = round pill.
+   ============================================================================ */
+
+/* (B1) A single continuous surface — one flat brand navy. Gradient, diagonal
+   texture, and corner glow removed: once the hero slab was gone, the chrome
+   was left feeling disconnected from the body. */
+.md-header {
+  background: var(--staj-chrome);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+/* Chrome color lives in ONE place: header and footer share the same band. In
+   dark mode --md-primary-fg-color (#2A6AA8) stayed too light and the muted
+   text on top of it fell below AA → deep navy on slate. */
+:root { --staj-chrome: var(--staj-navy); }
+[data-md-color-scheme="slate"] { --staj-chrome: #123763; }
+.md-header__inner,
+.md-header__option,
+.md-header .md-search,
+.md-tabs { position: relative; z-index: 1; }
+/* "Tools | search" divider — visually separates the two groups. */
+@media screen and (min-width: 60em) {
+  .md-header .md-search {
+    border-left: 1px solid rgba(255, 255, 255, .16);
+    margin-left: .5rem;
+    padding-left: .7rem;
+  }
+  .md-header .md-search__form { max-width: 11rem; }
+}
+
+/* Tabs drop their own background → the header gradient reads as a single block. */
+.md-tabs {
+  background: transparent;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Chrome and body share one left edge. Measurement (1280px): logo graphic 44,
+   content heading 46, "Home" text 58 — three different alignments. The tab text
+   sat inset by the link box's own horizontal padding (12.4px); the list is
+   pulled left by that much, and the logo is shifted 2px right. Result: all three at 46. */
+/* The indent comes from two sources: the li's 12px padding + the link's 12.4px
+   padding. Setting a margin on .md-tabs__list gets overridden by Material;
+   removing the left padding of the first tab brings the text to 46 without
+   disturbing the rhythm of the other tabs. */
+/* Wide screens only: on narrow screens the tab strip becomes horizontally
+   scrollable, and removing the padding would glue the first tab to the screen edge (0px). */
+@media screen and (min-width: 76.25em) {
+  [dir] .md-tabs__list > .md-tabs__item:first-child { padding-left: 0; }
+}
+.md-header__button.md-logo { margin-left: 0.3rem; }
+
+/* (B2) Tabs — muted at rest, a light background on hover, active = cyan pill + underline. */
+.md-tabs__item { opacity: 1; }
+.md-tabs__link {
+  margin-top: 0.42rem;
+  margin-bottom: 0.42rem;
+  padding: 0.28rem 0.62rem;
+  border-radius: 8px;
+  font-weight: 500;
+  opacity: 0.82;
+  transition: background-color 180ms ease, color 180ms ease, opacity 180ms ease,
+              margin 240ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              padding 240ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+/* English tab names are longer; keeps the same single line without clipping the last tab. */
+html[lang="en"] .md-tabs__link {
+  font-size: .66rem;
+  padding-inline: .42rem;
+}
+.md-tabs__link:hover {
+  opacity: 1;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+.md-tabs__item--active .md-tabs__link {
+  position: relative;
+  opacity: 1;
+  color: #fff;
+  font-weight: 700;
+  background: transparent;   /* pill removed: the marker is now an underline */
+}
+.md-tabs__item--active .md-tabs__link::after {
+  content: "";
+  position: absolute;
+  left: 0.62rem;
+  right: 0.62rem;
+  bottom: -0.34rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--staj-cyan);
+}
+
+/* (B3) Search — a round pill; translucent over the header, Material's white overlay is kept on focus. */
+[data-md-toggle="search"]:not(:checked) ~ * .md-search__form,
+.md-header .md-search__form {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+.md-header .md-search__form:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.34);
+}
+.md-search__input { color: #fff; }
+.md-search__input::placeholder { color: rgba(255, 255, 255, 0.72); }
+.md-search__icon { color: rgba(255, 255, 255, 0.85); }
+/* Focused/active search: revert to Material's white overlay (so dark text stays readable). */
+[data-md-toggle="search"]:checked ~ .md-header .md-search__form,
+.md-search__form:focus-within {
+  background: var(--md-default-bg-color);
+  border-color: transparent;
+}
+[data-md-toggle="search"]:checked ~ .md-header .md-search__input,
+.md-search__form:focus-within .md-search__input { color: var(--md-default-fg-color); }
+.md-search__form:focus-within .md-search__input::placeholder { color: var(--md-default-fg-color--light); }
+.md-search__form:focus-within .md-search__icon { color: var(--md-default-fg-color--light); }
+
+/* (B4) Scroll state REMOVED. body[data-hdr-scrolled] used to switch the header's
+   background from flat navy to a gradient; once the header was flattened this
+   swap made it look like "the header briefly vanishes and comes back" while
+   scrolling. The header is now the same flat navy in every state → no swap,
+   and the scroll listener is no longer needed (assets/header.js was removed).
+
+/* ============================================================================
+   CANVAS & DARK MODE (Area 4) — light: a lightly brand-tinted canvas, cards pure
+   white (they "lift" via shadow). Dark: navy-brand instead of neutral slate.
+   Surface/card color is --md-default-bg-color; the canvas is separate (body/.md-main).
+   ============================================================================ */
+body[data-md-color-scheme="default"] { --staj-canvas: #f4f7fb; }
+body[data-md-color-scheme="default"],
+[data-md-color-scheme="default"] .md-main { background-color: var(--staj-canvas); }
+
+body[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #16273c;   /* surface / card / admonition */
+  --staj-canvas: #0f1c2e;           /* canvas */
+}
+body[data-md-color-scheme="slate"],
+[data-md-color-scheme="slate"] .md-main { background-color: var(--staj-canvas); }
+
+/* During rubber-band/overscroll bounce at the edges (top/bottom), the page
+   shouldn't spill past the canvas and show a white background — overscroll is
+   disabled entirely. Painting html with the canvas color too closes off the
+   brief strip that could otherwise flash during the gesture. */
+html, body { overscroll-behavior-y: none; }
+html { background-color: #f4f7fb; }
+html:has(body[data-md-color-scheme="slate"]) { background-color: #0f1c2e; }
+
+/* PERF: scroll-reveal (Signature Motion) removed entirely — the "content
+   arrives as you scroll down" animation + will-change was causing jank. Content
+   is now visible immediately. */
+
+/* ============================================================================
+   CONTENT DETAILS (Area 6) — tables (rounded container + refined header + row
+   hover), callouts (Candidate A: rounded + soft shadow + refined left rail),
+   footer copyright touch-up. Consistent with the card language.
+   ============================================================================ */
+
+/* Tables — rounded container, hairline cells, uppercase brand header, row hover. */
+.md-typeset table:not([class]) {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 12px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(22, 59, 110, 0.06), 0 8px 20px rgba(22, 59, 110, 0.07);
+}
+.md-typeset table:not([class]) th {
+  background: rgba(23, 69, 127, 0.05);
+  color: var(--md-primary-fg-color);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  padding: 0.72rem 1rem;
+}
+.md-typeset table:not([class]) td {
+  border: none;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  padding: 0.72rem 1rem;
+}
+.md-typeset table:not([class]) tr:last-child td { border-bottom: none; }
+.md-typeset table:not([class]) tbody tr { transition: background-color 150ms ease; }
+.md-typeset table:not([class]) tbody tr:hover { background: rgba(23, 69, 127, 0.035); }
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background: rgba(124, 203, 238, 0.09);
+  color: var(--staj-cyan);
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tbody tr:hover {
+  background: rgba(124, 203, 238, 0.06);
+}
+
+/* Callouts (Candidate A) — rounded 12px + soft shadow; the severity marker (left
+   rail) is thinned but kept; the title strip stays tinted. Site-specific types
+   inherit this too. */
+/* The card skeleton (radius + shadow + overflow) of admonitions/details was
+   removed; they moved to the line-based language. Rules live in one place below. */
+
+.md-footer-meta__inner { align-items: center; }
+
+/* ============================================================================
+   MOBILE DRAWER (Area 7) — a branded navy heading (same gradient + texture as
+   the header), cyan left-accent for the active item, 44px touch targets. ONLY
+   at the mobile breakpoint (while the drawer is visible); the desktop left menu
+   keeps Material's default.
+   ============================================================================ */
+@media screen and (max-width: 76.1875em) {
+.md-nav--primary > .md-nav__title {
+  position: relative;
+  color: #fff;
+  background: linear-gradient(135deg, var(--staj-navy-light) 0%, var(--staj-navy) 55%, #143f76 100%);
+  box-shadow: 0 4px 14px rgba(15, 40, 80, 0.22);
+}
+.md-nav--primary > .md-nav__title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'><path d='M-4 4L4 -4M0 44L44 0M40 48L48 40' stroke='%23ffffff' stroke-opacity='0.05' stroke-width='1.1' fill='none'/></svg>");
+}
+.md-nav--primary > .md-nav__title > * { position: relative; z-index: 1; }
+.md-nav--primary .md-nav__link {
+  min-height: 2.75rem;         /* dokunma hedefi ≥44px */
+  align-items: center;
+  border-radius: 8px;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.md-nav--primary .md-nav__item--active > .md-nav__link,
+.md-nav--primary .md-nav__link--active {
+  position: relative;
+  color: var(--md-primary-fg-color);
+  font-weight: 700;
+  background: rgba(23, 69, 127, 0.06);
+}
+.md-nav--primary .md-nav__item--active > .md-nav__link::before,
+.md-nav--primary .md-nav__link--active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--staj-sky);
+}
+[data-md-color-scheme="slate"] .md-nav--primary .md-nav__item--active > .md-nav__link,
+[data-md-color-scheme="slate"] .md-nav--primary .md-nav__link--active {
+  color: var(--staj-cyan);
+  background: rgba(124, 203, 238, 0.10);
+}
+} /* /mobil drawer @media */
+
+/* ============================================================================
+   SEARCH (Area 7) — the result list + highlight are pulled to the brand (a ⌘K
+   feel). The search pill was already styled in the header section.
+   ============================================================================ */
+.md-search-result__meta {
+  color: var(--md-primary-fg-color);
+  font-weight: 700;
+}
+.md-search-result__link { border-radius: 8px; transition: background-color 150ms ease; }
+.md-search-result__link:hover,
+.md-search-result__link[data-md-state="active"] { background: rgba(23, 69, 127, 0.06); }
+.md-search-result mark { color: var(--md-primary-fg-color); }
+[data-md-color-scheme="slate"] .md-search-result__meta,
+[data-md-color-scheme="slate"] .md-search-result mark { color: var(--staj-cyan); }
+[data-md-color-scheme="slate"] .md-search-result__link:hover,
+[data-md-color-scheme="slate"] .md-search-result__link[data-md-state="active"] { background: rgba(124, 203, 238, 0.08); }
+
+/* ============================================================================
+   404 POLISH (Area 7) — large code + illustration + refined layout.
+   ============================================================================ */
+.staj-404__code {
+  font-family: var(--staj-display) !important;
+  font-size: clamp(5rem, 3rem + 9vw, 8rem) !important;
+  letter-spacing: -0.03em !important;
+}
+.staj-404__art {
+  width: 120px; height: 120px; margin: 0 auto 0.4rem; display: block; opacity: 0.9;
+}
+.staj-404__art svg { width: 100%; height: 100%; }
+/* 404: hide the left/right sidebars → content goes full-width, centered on the page. */
+.md-main__inner:has(.staj-404) .md-sidebar { display: none; }
+
+/* ============================================================
+   BOX FAMILY (per user preference: FAQ accordion + notice boxes)
+   Adapted to the live blue palette. Placed at the end of the file → overrides
+   earlier box rules. One visual language: 1px border + soft padding + title
+   divider line + icon + a very light shadow.
+   ============================================================ */
+:root{
+  --box-radius:.5rem;
+  --box-ease:cubic-bezier(.2,.6,.25,1);
+  --box-shadow:0 1px 2px rgba(16,42,93,.05),0 2px 6px rgba(16,42,93,.06);
+  --box-border:#d3e0eb; --box-border-strong:#adc2d4;
+  --box-info:var(--staj-navy);   --box-info-soft:#e3eefb; --box-info-line:#b6d3ef;
+  --box-warn:#8a5a10;   --box-warn-soft:#fbe8c0; --box-warn-line:#e9cd8f;
+  --box-danger:#a03f36; --box-danger-soft:#fbdbd3; --box-danger-line:#efb1a6;
+  --box-success:#2c6f4c; --box-success-soft:#d8eedd; --box-success-line:#a6d4b3;
+}
+[data-md-color-scheme="slate"]{
+  --box-shadow:0 1px 2px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.3);
+  --box-border:#2b4056; --box-border-strong:#3e5871;
+  --box-info:var(--staj-cyan);   --box-info-soft:#15304b; --box-info-line:#2f5c80;
+  --box-warn:#f2c573;   --box-warn-soft:#463619; --box-warn-line:#6d5730;
+  --box-danger:#ffaaa1; --box-danger-soft:#4a2b28; --box-danger-line:#71473f;
+  --box-success:#8bd6a6; --box-success-soft:#183a29; --box-success-line:#315e46;
+}
+/* Base: every admonition/details → a clean-bordered box + title divider */
+/* LINE LANGUAGE — admonitions are not solid colored boxes, but text highlighted
+   by a thin left line in the meaning color. Same anatomy as .staj-status: no
+   background, no border, no shadow; hierarchy is carried by the line + colored
+   title. This is half of the change that reduced four separate container
+   languages across pages down to two. */
+.md-typeset .admonition,
+.md-typeset details{
+  --adm: var(--box-info);
+  --adm-soft: var(--box-info-soft);
+  --adm-line: var(--box-info-line);
+  margin:1.5rem 0; padding:.1rem 0 .1rem 1rem;
+  background:transparent;
+  border:0; border-left:3px solid var(--adm);
+  border-radius:0; box-shadow:none;
+  font-size:var(--fs-sm); line-height:1.65;
+}
+.md-typeset .admonition>.admonition-title,
+.md-typeset details>summary{
+  position:relative; min-height:0;
+  margin:0 0 .4rem; padding:0 0 0 1.7rem;
+  color:var(--adm); background:transparent;
+  border-bottom:0;
+  font-weight:800; line-height:1.4;
+  font-size:var(--fs-sm); letter-spacing:.01em;
+}
+.md-typeset .admonition>.admonition-title::before,
+.md-typeset details>summary::before{ background-color:var(--adm); top:.1rem; left:0; }
+.md-typeset .admonition>:last-child,
+.md-typeset details>:last-child{ margin-bottom:0; }
+/* Material puts a glow OUTSIDE the box in :focus-within, in its own family
+   color (rgba(100,221,23) — bright lime for question). Pressing the toggle
+   turned the outside of the box green. The glow is removed; keyboard focus is
+   preserved with a clear outline on summary instead, so there's no loss of
+   accessibility.
+   The selector has [class] because Material's is .admonition.question:focus-within
+   at 0,4,0 specificity. */
+.md-typeset .admonition[class]:focus-within,
+.md-typeset details[class]:focus-within { box-shadow: none; }
+.md-typeset details > summary:focus-visible {
+  outline: 2px solid var(--staj-navy);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+[data-md-color-scheme="slate"] .md-typeset details > summary:focus-visible { outline-color: var(--staj-cyan); }
+
+/* Family colors derive from a single variable (--adm); title, line, and icon adjust automatically. */
+.md-typeset :is(.warning,.caution,.attention){
+  --adm:var(--box-warn); --adm-soft:var(--box-warn-soft); --adm-line:var(--box-warn-line);
+}
+.md-typeset :is(.danger,.error,.failure,.bug){
+  --adm:var(--box-danger); --adm-soft:var(--box-danger-soft); --adm-line:var(--box-danger-line);
+}
+.md-typeset :is(.tip,.success,.hint,.check){
+  --adm:var(--box-success); --adm-soft:var(--box-success-soft); --adm-line:var(--box-success-line);
+}
+/* Material paints the left line with its OWN saturated palette (#00bfa5, #ff1744…)
+   via 0,3,0 selectors like `.md-typeset .admonition.tip`. Our 0,2,0 rule defines
+   --adm but couldn't pass the color through: the line stayed Material's, the
+   title stayed ours. Adding [class] matches the specificity, and extra.css wins
+   because it loads later → line and title end up the same color. */
+.md-typeset .admonition[class],
+.md-typeset details[class] { border-left-color: var(--adm); }
+
+/* SEVERITY TIER — the line language is the baseline, but the blocks that must
+   not be skimmed past (deadlines, penalties, EK-1 timing) get their weight back
+   as a filled box: soft tint + hairline + the severity rail, on the SAME family
+   tokens. Only warning and danger; note/info/tip stay lines, so the page still
+   has two container languages, not four.
+   `[class]` + `:is()` puts this at 0,4,0 — Material's `.md-typeset .admonition.danger`
+   is 0,3,0 and would otherwise repaint the border in its own #ff1744. */
+.md-typeset .admonition[class]:is(.warning,.caution,.attention,.danger,.error,.failure,.bug),
+.md-typeset details[class]:is(.warning,.caution,.attention,.danger,.error,.failure,.bug){
+  padding:.9rem 1.1rem;
+  background:var(--adm-soft);
+  border:1px solid var(--adm-line);
+  border-left:4px solid var(--adm);
+  border-radius:6px;
+  box-shadow:var(--box-shadow);
+}
+/* The :focus-within rule above zeroes the shadow to kill Material's colored
+   glow; for the boxed tier that would also erase the card's own shadow, so it
+   is restored at 0,5,0. */
+.md-typeset .admonition[class]:is(.warning,.caution,.attention,.danger,.error,.failure,.bug):focus-within,
+.md-typeset details[class]:is(.warning,.caution,.attention,.danger,.error,.failure,.bug):focus-within{
+  box-shadow:var(--box-shadow);
+}
+/* FAQ accordion — a neutral list. Questions used to be colored by one of five
+   category colors (navy/teal/purple/amber/green); these colors didn't encode
+   anything readable, and adjacent rows' left rails merged into one thick
+   continuous line down the list. Only a hairline divider remains; the disclosure
+   arrow sits on the same line as the question. */
+.md-typeset details.question{
+  margin:0; padding:0; background:transparent;
+  border:0; border-bottom:1px solid var(--box-border); border-radius:0; box-shadow:none;
+}
+.md-typeset details.question:first-of-type{ border-top:1px solid var(--box-border); }
+.md-typeset details.question>summary{
+  min-height:0; margin:0; padding:.85rem 2.2rem .85rem 0;
+  background:transparent; border-bottom:0;
+  color:var(--md-default-fg-color); font-weight:600; font-size:var(--fs-sm); line-height:1.5;
+  transition:color 140ms var(--box-ease);
+}
+.md-typeset details.question>summary::before{ display:none; }
+.md-typeset details.question>summary::after{ color:var(--md-default-fg-color--light); }
+.md-typeset details.question:not([open])>summary:hover{ color:var(--staj-navy); }
+[data-md-color-scheme="slate"] .md-typeset details.question:not([open])>summary:hover{ color:var(--staj-cyan); }
+.md-typeset details.question[open]>summary{ color:var(--staj-navy); font-weight:700; }
+[data-md-color-scheme="slate"] .md-typeset details.question[open]>summary{ color:var(--staj-cyan); }
+.md-typeset details.question[open]{ padding-bottom:.55rem; }
+.md-typeset details.question>:not(summary){ margin-left:0; margin-right:0; font-size:var(--fs-sm); }
+.md-typeset details.question>:not(summary){ margin-left:.2rem; margin-right:.2rem; }
+
+/* ============================================================
+   FOOTER CREDIT STRIP — a plain, DARKER deep-ink strip than the header. Does
+   NOT repeat the header's brand lockup (no seal / "Mandatory Internship Guide"
+   service line). Top row: institution + contact + department link. Bottom row:
+   prepared-by + last updated.
+   ============================================================ */
+.md-footer-meta__inner.staj-minfoot {
+  display: block;
+  padding: .9rem .8rem 1rem;
+}
+.staj-minfoot__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .3rem 1.5rem;
+}
+.staj-minfoot__id {
+  color: #dbe6f2;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .004em;
+}
+.staj-minfoot__links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .3rem .8rem;
+  font-size: .76rem;
+}
+.staj-minfoot__links a {
+  color: #9fc4e6;
+  font-weight: 600;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color 140ms ease;
+}
+.staj-minfoot__links a:hover { color: #cfe6f7; }
+.staj-minfoot__links a:focus-visible { outline: 3px solid #9BD9F2; outline-offset: 3px; border-radius: 3px; }
+.staj-minfoot__dot { color: #3a5678; }
+.staj-minfoot__sub {
+  margin-top: .55rem;
+  padding-top: .5rem;
+  border-top: 1px solid rgba(255, 255, 255, .06);
+  color: #b8c9dd;                    /* AA: ~5.5:1 over #17457F. Once the footer
+                                        background was matched to the header navy,
+                                        the old #8598b4 dropped to 3.26:1. */
+  font-size: .7rem;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+@media screen and (max-width:44em) {
+  .md-footer-meta__inner.staj-minfoot { padding: .85rem .8rem .95rem; }
+  .staj-minfoot__row { flex-direction: column; align-items: flex-start; gap: .5rem; }
+  .staj-minfoot__links a { min-height: 2.2rem; display: inline-flex; align-items: center; }
+}
+
+/* ============================================================
+   RIGHT RAIL (desktop) — page table of contents or related-page shortcuts.
+   Since site navigation lives in the tabs above, the left sidebar is closed on
+   every page (front matter: hide.navigation); the rail is .md-sidebar--secondary.
+   ============================================================ */
+@media screen and (min-width:76.25em){
+  .md-sidebar--secondary .md-nav__title {
+    color:var(--staj-navy); font-weight:700; font-size:var(--fs-xs); letter-spacing:.06em; text-transform:uppercase;
+  }
+  .md-sidebar--secondary .md-nav__list .md-nav__link {
+    padding:.3rem .55rem; border-radius:6px; color:#51677c; line-height:1.4;
+    transition:color 140ms ease, background-color 140ms ease;
+  }
+  .md-sidebar--secondary .md-nav__link:hover { color:var(--staj-navy); background:rgba(23,69,127,.06); }
+  .md-sidebar--secondary .md-nav__link--active {
+    color:var(--staj-navy); font-weight:700; background:transparent !important;
+  }
+  /* The active heading marker sits on the INNER edge of the rail (left side):
+     that's the side facing the text column; putting it on the right edge would
+     disconnect the indicator from the content. */
+  .md-sidebar--secondary .md-nav__link--active { box-shadow:inset 2px 0 0 var(--staj-navy); }
+  .md-sidebar--secondary .md-nav .md-nav { border-left:2px solid var(--box-border); }
+}
+
+/* To mask content scrolling UNDER the sticky rail heading, Material gives the
+   heading a background + a same-color "halo" (box-shadow):
+     .md-nav--secondary .md-nav__title { background/box-shadow: var(--md-default-bg-color) }
+   But that variable is the CARD/SURFACE color (#fff in light mode); the rail
+   instead sits on the canvas (--staj-canvas, #f4f7fb). Because the two differ,
+   the halo showed up as a white strip behind the heading. We keep the masking
+   function but match the color to the canvas — this works correctly in both schemes. */
+@media screen and (min-width:60em){
+  .md-nav--secondary .md-nav__title {
+    background: var(--staj-canvas);
+    box-shadow: 0 0 .4rem .4rem var(--staj-canvas);
+  }
+}
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__title { color:var(--staj-cyan); }
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link:hover,
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link--active { color:var(--staj-cyan); }
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link--active { background:transparent; box-shadow:inset 2px 0 0 var(--staj-cyan); }
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link:hover { background:rgba(124,203,238,.08); }
+
+/* ============================================================
+   PASTEL PHASE COLOR LANGUAGE — REMOVED. Before/During/After used to be
+   color-coded (blue/teal/green); this didn't encode anything readable,
+   it just repeated the ordering, and it broke the site-wide rule that
+   every h2 underline is the same navy→sky gradient. Process page phase
+   headings (.staj-flow > h2) now fall through to that shared underline,
+   same as every other h2 on the site.
+   ============================================================ */
+
+/* Homepage 3 steps — Before=blue · During=teal · After=green */
+/* Coloring step numbers by their order (blue/teal/green) was REMOVED — the
+   same problem as the site's other arbitrary color coding: it didn't encode
+   anything readable, it just repeated the ordering. The number already reads
+   1·2·3. All three are now brand navy. */
+
+/* Table header row — the same on ALL tables. On the Forms page, sections used
+   to get a navy/blue/teal/green tint by order; these colors didn't encode
+   anything readable (just order) and the h2:nth-of-type + :has selector was
+   brittle. A single neutral header remains. */
+.md-typeset__scrollwrap th {
+  background: color-mix(in srgb, var(--staj-navy) 8%, var(--md-default-bg-color));
+  border-bottom: 2px solid color-mix(in srgb, var(--staj-navy) 30%, transparent);
+}
+
+/* ============================================================
+   DARK MODE IMPROVEMENT — pastel tint vibrancy, muted text, surface separation.
+   ============================================================ */
+[data-md-color-scheme="slate"] {
+  --md-default-fg-color--light: rgba(230, 240, 248, 0.74);  /* secondary text lightened a notch */
+}
+
+/* The LIGHT MODE counterpart of the same fix. Material's default is
+   rgba(0,0,0,.54); on the tinted panel background (#F4F7FB) this gave 4.51:1 —
+   just 0.01 above the WCAG AA threshold of 4.5:1. The affected text is
+   secondary but not unimportant: .staj-status__rule (explains the late-submission
+   penalty), form labels, and file descriptions all draw from this token. At .62
+   the ratio rises to 6.06:1 (measured); it won't drop below the threshold even
+   if the background tone darkens a notch later. The dark-mode counterpart was
+   already tuned above (8.58:1) — untouched. */
+[data-md-color-scheme="default"] {
+  --md-default-fg-color--light: rgba(0, 0, 0, 0.62);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .staj-outline__card { border-left-color: var(--box-border); }
+/* In dark mode, separate card surfaces from the canvas (more distinct depth) */
+[data-md-color-scheme="slate"] :is(.staj-yearbar, .md-typeset table:not([class]), .staj-contact) {
+  background: color-mix(in srgb, #ffffff 4%, var(--md-default-bg-color));
+}
+/* Footer corner glow (same language as the header) */
+.md-footer-meta { position: relative; overflow: hidden; }
+.md-footer-meta > .md-footer-meta__inner { position: relative; z-index: 1; }
+.md-footer-meta::after {
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background: radial-gradient(120% 220% at 100% 0%, rgba(124,203,238,0.10) 0%, rgba(124,203,238,0) 48%);
+}
+
+/* ============================================================================
+   SUBMISSION FORM (.suf-*) — used only on the Submission page.
+   It used to live in an inline <style> block inside docs/teslim.md; moved here
+   for ease of maintenance. No extra scope is needed since the class names are
+   unique. The page's column-width rule stayed on the page.
+   ============================================================================ */
+  .suf *{box-sizing:border-box}
+  /* Pin the submission page to a single, comfortably readable, aligned column
+     — on wide screens the deadline box + form line up at the same width
+     (only on this page). */
+  .suf-gate,.suf-closed,.suf-done{max-width:680px;margin:1.2rem 0}
+  .suf{max-width:none;margin:1.2rem auto}
+  .suf{border:1px solid var(--md-default-fg-color--lightest);border-radius:8px;overflow:hidden}
+  .suf-gate{padding:14px 16px;border:1px dashed var(--md-default-fg-color--lighter);border-radius:8px;color:var(--md-default-fg-color--light);font-size:.9rem}
+  .suf-closed{padding:18px 20px;border:1px solid #f0a0a0;background:rgba(226,75,74,.10);border-radius:8px;color:#a32d2d;font-size:.92rem;line-height:1.55}
+  .suf-done{padding:18px 20px;border:1px solid #9fe1cb;background:rgba(93,202,165,.12);border-radius:8px;color:#0f6e56;font-size:.92rem;line-height:1.6}
+  /* Late-submission notice (inside the form, shown during the grace window) */
+  .suf-late{margin:0 0 16px;padding:13px 15px;border:1px solid #e6b800;background:rgba(255,203,0,.12);border-radius:8px;color:#7a5f00;font-size:.9rem;line-height:1.5}
+  .suf-late b{display:block;font-size:.98rem;margin-bottom:3px}
+  .suf-late p{margin:0 0 10px}
+  .suf-ack{display:flex;gap:9px;align-items:flex-start;font-size:.82rem;font-weight:600;color:#6b5400;cursor:pointer}
+  .suf-ack input{margin-top:2px;flex:none;width:18px;height:18px}
+  [data-md-color-scheme="slate"] .suf-late{background:rgba(255,203,0,.14);border-color:rgba(230,184,0,.55);color:#ffe08a}
+  [data-md-color-scheme="slate"] .suf-ack{color:#ffdf85}
+  /* A plain heading on top of the card instead of a navy block strip — same language as the chrome's simplification. */
+  .suf-bar{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;background:transparent;border-bottom:1px solid var(--box-border);color:var(--md-default-fg-color);padding:14px 18px 12px}
+  .suf-bar b{font-size:1rem;font-family:var(--staj-display);font-weight:700}
+  .suf-term{font-size:.78rem;font-weight:600;color:var(--md-default-fg-color--light);white-space:nowrap}
+  .suf-hint{margin:8px 0 0;font-size:.78rem;color:var(--md-default-fg-color--light);text-align:center}
+  .suf-hint[hidden]{display:none}
+  .suf-body{padding:16px 18px 20px}
+  .suf-sec{margin-bottom:16px}
+  .suf-sec h2{font-size:.74rem;font-weight:700;color:#16335c;text-transform:uppercase;letter-spacing:.04em;margin:0 0 .6rem;line-height:1.3;display:flex;align-items:center;gap:8px;border:0;padding:0}
+  .suf-sec h2::after{display:none}   /* hide the site-wide H2 gradient underline on these mini-labels */
+  [data-md-color-scheme="slate"] .suf-sec h2{color:#9bc3ec}
+  .suf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:10px 14px}
+  .suf-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+  .suf-cols>*{min-width:0}
+  @media(max-width:720px){.suf-cols{grid-template-columns:1fr;gap:0}}
+  .suf-field{display:flex;flex-direction:column;gap:4px}
+  .suf-field.full{grid-column:1/-1}
+  .suf-field label{font-size:.78rem;color:var(--md-default-fg-color--light);font-weight:600}
+  .suf-field input[type=text],.suf-field input[type=email]{height:38px;border:1px solid var(--md-default-fg-color--lighter);border-radius:6px;padding:0 10px;font:inherit;font-size:.85rem;background:var(--md-default-bg-color);color:var(--md-default-fg-color)}
+  .suf-field input:focus{outline:none;border-color:var(--staj-navy);box-shadow:0 0 0 3px rgba(29,79,145,.14)}
+  .suf-field input.bad{border-color:#e2614a}
+  .suf-warn{font-size:.72rem;color:#a32d2d;margin-top:3px;display:none}
+  .suf-warn.show{display:block}
+  .suf-drop{position:relative;display:flex;align-items:center;gap:12px;border:1.5px dashed var(--md-default-fg-color--lighter);border-radius:8px;padding:11px 14px;margin-bottom:9px;background:var(--md-default-bg-color)}
+  /* The file input is invisible but STILL KEYBOARD-FOCUSABLE (NOT display:none); on focus the .suf-drop:focus-within ring lights up. */
+  .suf-drop input[type=file]{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%)}
+  .suf-drop .m{flex:1;min-width:0}
+  .suf-drop .m b{font-size:.85rem;color:var(--md-default-fg-color);display:block}
+  .suf-drop .m span{font-size:.72rem;color:var(--md-default-fg-color--light);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .suf-drop .pick{font-size:.78rem;font-weight:600;color:var(--staj-navy);border:1px solid var(--staj-navy);border-radius:6px;padding:10px 14px;background:transparent;cursor:pointer;white-space:nowrap}
+  .suf-drop.ok{border-style:solid;border-color:#5dcaa5;background:rgba(93,202,165,.08)}
+  .suf-kvkk{display:flex;gap:9px;align-items:flex-start;font-size:.78rem;color:var(--md-default-fg-color--light);margin:4px 0 14px}
+  .suf-kvkk input{margin-top:3px}
+  .suf-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .suf-submit{width:100%;background:var(--staj-navy);color:#fff;font-size:.95rem;font-weight:700;border:none;border-radius:8px;padding:13px;cursor:pointer}
+  .suf-submit:disabled{opacity:.6;cursor:not-allowed}
+  .suf-retry{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:10px 0 0;padding:8px 13px;border:1px solid var(--staj-navy);border-radius:6px;background:transparent;color:var(--staj-navy);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
+  .suf-retry:focus-visible{outline:2px solid var(--staj-navy);outline-offset:2px}
+  .suf-msg{margin-top:12px;padding:11px 14px;border-radius:8px;font-size:.84rem;display:none}
+  .suf-msg.show{display:block}
+  .suf-msg.ok{background:rgba(93,202,165,.14);color:#0f6e56;border:1px solid #9fe1cb}
+  .suf-msg.err{background:rgba(226,75,74,.12);color:#a32d2d;border:1px solid #f0a0a0}
+  @media(max-width:720px){.suf-grid{grid-template-columns:1fr}}
+
+  /* Dark mode (slate): fixed-hex status/warning elements are brought to readable contrast */
+  [data-md-color-scheme="slate"] .suf-closed,[data-md-color-scheme="slate"] .suf-msg.err{background:rgba(226,75,74,.18);color:#f3b0b0;border-color:rgba(240,160,160,.5)}
+  [data-md-color-scheme="slate"] .suf-done,[data-md-color-scheme="slate"] .suf-msg.ok{background:rgba(93,202,165,.18);color:#86e0c3;border-color:rgba(134,224,195,.5)}
+  [data-md-color-scheme="slate"] .suf-warn{color:#f3a3a3}
+  [data-md-color-scheme="slate"] .suf-drop .pick{color:var(--staj-sky);border-color:var(--staj-sky)}
+  [data-md-color-scheme="slate"] .suf-retry{color:var(--staj-sky);border-color:var(--staj-sky)}
+  [data-md-color-scheme="slate"] .suf-field input:focus{border-color:var(--staj-sky);box-shadow:0 0 0 3px rgba(124,203,238,.18)}
+
+  /* a11y: visible keyboard focus (file-select label + Submit); 44px touch target */
+  .suf-drop .pick{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+  .suf-drop:focus-within{border-style:solid;border-color:var(--staj-navy);box-shadow:0 0 0 3px rgba(29,79,145,.18)}
+  .suf-submit:focus-visible{outline:2px solid var(--staj-navy);outline-offset:2px}
+  [data-md-color-scheme="slate"] .suf-drop:focus-within{border-color:var(--staj-sky);box-shadow:0 0 0 3px rgba(124,203,238,.22)}
+  [data-md-color-scheme="slate"] .suf-submit:focus-visible{outline-color:var(--staj-sky)}
+  [data-md-color-scheme="slate"] .suf-retry:focus-visible{outline-color:var(--staj-sky)}
+  @media (forced-colors:active){.suf-field input:focus,.suf-drop:focus-within{outline:2px solid Highlight}.suf-submit:focus-visible{outline:2px solid Highlight}}

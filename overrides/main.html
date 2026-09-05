@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block htmltitle %}
+  {%- set _is_en = i18n_page_locale == 'en' -%}
+  {%- set _service = 'Compulsory Internship Guide' if _is_en else 'Zorunlu Staj Kılavuzu' -%}
+  {%- set _home_title = 'Compulsory Internship Guide · Boğaziçi University Industrial Engineering' if _is_en else 'Zorunlu Staj Kılavuzu · Boğaziçi Üniversitesi Endüstri Mühendisliği' -%}
+  <title>{% if page.title and not page.is_homepage %}{{ page.title | striptags }} · {{ _service }}{% else %}{{ _home_title }}{% endif %}</title>
+{% endblock %}
+
+{% block extrahead %}
+  {%- set _is_en = i18n_page_locale == 'en' -%}
+  {# --- PERF: preload self-hosted Inter (external Google Fonts request removed) --- #}
+  <link rel="preload" href="{{ 'assets/fonts/inter-latin.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ 'assets/fonts/inter-latin-ext.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+  {# --- Open Graph / Twitter share card (static 1200×630 image) --- #}
+  {%- set _brand_title = 'Boğaziçi IE — Compulsory Internship Guide' if _is_en else 'Boğaziçi EM — Zorunlu Staj Kılavuzu' -%}
+  {%- set _image_alt = 'Boğaziçi University Industrial Engineering — Compulsory Internship Guide' if _is_en else 'Boğaziçi Üniversitesi Endüstri Mühendisliği — Zorunlu Staj Kılavuzu' -%}
+  {%- set _title = (page.title ~ ' · ' if page and page.title and not page.is_homepage else '') ~ _brand_title -%}
+  {%- set _desc = page.meta.description if page and page.meta and page.meta.description else config.site_description -%}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ config.site_name }}">
+  <meta property="og:locale" content="{{ 'en_US' if _is_en else 'tr_TR' }}">
+  <meta property="og:title" content="{{ _title }}">
+  <meta property="og:description" content="{{ _desc | striptags | trim }}">
+  <meta property="og:image" content="{{ config.site_url }}assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ _image_alt }}">
+  {% if page and page.canonical_url %}<meta property="og:url" content="{{ page.canonical_url }}">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ _title }}">
+  <meta name="twitter:description" content="{{ _desc | striptags | trim }}">
+  <meta name="twitter:image" content="{{ config.site_url }}assets/og-image.png">
+{% endblock %}

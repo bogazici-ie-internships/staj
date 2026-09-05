@@ -1,0 +1,136 @@
+# ============================================================================
+#  SITE SETTINGS — contact, links, and calendar content are here.
+#  The campaign fields under donem must match Code.gs (CONFIG) and
+#  Grader/config/campaign.yaml exactly; validate_campaign_contract.py checks the first
+#  pair. See _maintainer/DEPLOYMENT.md for the safe deployment order.
+# ============================================================================
+
+# --- Generated current term & dates ------------------------------------
+# SINGLE submission term. The portal accepts only one campaign at a time; the Submission
+# page has NO term selection. The 9 fields below must match Code.gs -> CONFIG
+# exactly:
+#   python3 scripts/validate_campaign_contract.py --settings settings.yml --code _maintainer/Code.gs
+donem:
+  # Contract identifier that remains unchanged across portal → evaluation → database.
+  contract_version: 1
+  campaign_id: "2026-summer"
+  etiket: "2026 Yaz" # current term (visible on the site)
+  etiket_en: "Summer 2026"
+  year_done: 2026
+  semester: "Summer"
+  staj_baslangic: "2026-06-16"
+  staj_bitis: "2026-09-12"
+
+  # FINAL DEADLINE (on-time) — date + TIME (+03:00). Format: "YYYY-MM-DD HH:MM"
+  # The form does NOT close after this date; it stays open as a
+  # "late submission" for as many additional days as gec_teslim_gun below (warning + penalty). Empty ("") = lock disabled.
+  teslim_kilit: "2026-10-12 10:00"
+
+  # LATE SUBMISSION WINDOW — how many additional DAYS uploads are accepted after the final deadline.
+  # Every 24 hours that begins counts as 1 late day; each late day
+  # deducts 1 business day from the internship duration. Online upload closes at the end of this period. 0 = no late submission.
+  gec_teslim_gun: 10
+
+# --- Contact (update here when the person/unit changes) ------------------
+iletisim:
+  genel_eposta: "ie.boun.internships@gmail.com"
+
+  staj_sorumlusu: # faculty member (professor)
+    ad: "Prof. Dr. Refik Güllü"
+    eposta: "refik.gullu@bogazici.edu.tr"
+
+  staj_asistanlari: # may change every year (keep in alphabetical order)
+    - { ad: "Ayşe Sevde Edizer", eposta: "ayse.edizer@bogazici.edu.tr" }
+    - { ad: "Berat Kubilay Güngez", eposta: "berat.gungez@bogazici.edu.tr" }
+    - { ad: "Ebrar Baştan", eposta: "ebrar.bastan@bogazici.edu.tr" }
+
+# --- Links ----------------------------------------------------------
+baglantilar:
+  kayit_formu: "https://forms.gle/SzyvatVjATsLY7ZR7" # internship registration / announcement form
+  portal_url: "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec" # Submission form upload address
+  # THIS IS A PUBLIC VALUE — NOT SECRET. It is printed into the published HTML
+  # of the Submission page; anyone who clicks "View source" can read it. It is NOT
+  # authentication: it is a friction layer placed to filter crude traffic reaching the portal address,
+  # one that can be changed whenever desired.
+  # The real controls (email domain, student number format, PDF signature byte,
+  # size limits, rate limiting) run SERVER-SIDE in Code.gs —
+  # do not relax any of them by relying on this key.
+  # The only reason it is kept as a repo secret is so it
+  # can be changed without a commit. It is filled in during the build; it stays empty in the repo.
+  form_key: ""
+  # Results folder — sharing must be RESTRICTED (authorized people/students), NOT "public".
+  sonuclar_klasoru: "https://drive.google.com/drive/folders/16EzmFYGdXy477NIv4Z49AkiJIRAOdIdi"
+
+# --- Homepage "Important Dates" (from BU's academic calendar) ----------------
+# Each row can be EITHER a single day OR a date range:
+#   single day -> { tarih: "12 Ekim 2026", baslik: "...", kategori: ... }
+#   range  -> { baslangic: "21 Eylül 2026", bitis: "22 Aralık 2026", ... }
+# kategori (the row's left color stripe): akademik (navy) | staj (blue) |
+#                                     teslim (amber) | tatil (green)
+# The order here is how it appears on the page → write it chronologically.
+# If the date is not yet known: { tarih: "Güncellenecektir", ... }
+# Small footnote for a temporary/estimated date: { ..., notu: "..." }
+#
+# --- Strip range (homepage visual timeline) ---------------------
+# The strip shows the span between these two dates and generates the month labels itself.
+# CURRENTLY: a plain calendar year (January–December 2026). The range can be
+# extended as much as desired (main.py positions partial months correctly too), but spanning two academic years
+# makes the list longer and harder to read — deliberately kept to a single year.
+# Calendar rows OUTSIDE this range NEVER appear.
+# Geometry is calculated in main.py (test: python3 main.py).
+serit_baslangic: "1 Ocak 2026"
+serit_bitis: "31 Aralık 2026"
+# staj_durum (colors both the strip AND the list below):
+#   kapali  -> academic term, internship CANNOT be done (Spring, Fall)     → dark blue
+#   kosullu -> Summer School; internship can be done if you are not taking courses  → light blue (hatched)
+# If the field is absent altogether, the row is not a TERM (e.g. a submission marker).
+#
+# The list below rows ONLY academic terms and the submission marker. No separate row is
+# opened for "internship possible" windows (a deliberate choice in main.py);
+# that information lives in the strip and the .staj-takvim__lead sentence on the homepage.
+#
+# Term end dates are the LAST DAY OF FINAL EXAMS (not the last day of classes
+# ): students are still busy during exam week.
+#   Fall 2026: classes end Dec 11, exams Dec 13–22 → December 22, 2026
+# baslik values must be UNIQUE — yearbar.js matches the highlight via baslik (data-key)
+# ; two rows with the same name will highlight each other incorrectly.
+takvim:
+  - {
+      baslangic: "9 Şubat 2026",
+      bitis: "15 Mayıs 2026",
+      baslik: "Bahar Dönemi",
+      baslangic_en: "February 9, 2026",
+      bitis_en: "May 15, 2026",
+      baslik_en: "Spring Semester",
+      kategori: "akademik",
+      staj_durum: "kapali",
+    }
+  - {
+      baslangic: "24 Haziran 2026",
+      bitis: "12 Ağustos 2026",
+      baslik: "Yaz Okulu",
+      baslangic_en: "June 24, 2026",
+      bitis_en: "August 12, 2026",
+      baslik_en: "Summer School",
+      kategori: "akademik",
+      staj_durum: "kosullu",
+      notu: "Ders almıyorsanız bu dönemde staj yapabilirsiniz.",
+      notu_en: "You may complete an internship in this period if you are not taking courses.",
+    }
+  - {
+      baslangic: "21 Eylül 2026",
+      bitis: "22 Aralık 2026",
+      baslik: "Güz Dönemi",
+      baslangic_en: "September 21, 2026",
+      bitis_en: "December 22, 2026",
+      baslik_en: "Fall Semester",
+      kategori: "akademik",
+      staj_durum: "kapali",
+    }
+  - {
+      tarih: "12 Ekim 2026",
+      baslik: "Yaz Stajı Teslimi",
+      tarih_en: "October 12, 2026",
+      baslik_en: "Summer Internship Deadline",
+      kategori: "teslim",
+    }
