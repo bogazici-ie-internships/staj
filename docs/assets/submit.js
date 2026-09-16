@@ -86,6 +86,8 @@
       errEmailDomain: "Lütfen @std.bogazici.edu.tr uzantılı öğrenci e-postanızı kullanın.",
       errAllRequired: "Tüm zorunlu belgeleri yüklemeniz gerekir.",
       errSitRequired: "Seçtiğiniz durumlar için gerekli belgeleri yükleyin.",
+      errCaptcha: "Robot doğrulaması tamamlanamadı. Sayfayı yenileyip tekrar deneyin.",
+      errCaptchaLoad: "Robot doğrulaması yüklenemedi. Sayfayı yenileyip tekrar deneyin.",
       errTotalSize: function (mb) { return "Toplam boyut çok büyük (>" + mb + " MB)."; },
       errRequestId: "Tarayıcı güvenli bir gönderim kimliği oluşturamadı. Sayfayı güncelleyip tekrar deneyin.",
       msgUploading: "Belgeler yükleniyor — bu sayfayı KAPATMAYIN. Onay ekranı görünene kadar bekleyin; büyük dosyalarda bu bir dakikayı bulabilir.",
@@ -158,6 +160,8 @@
       errEmailDomain: "Use your student email address ending in @std.bogazici.edu.tr.",
       errAllRequired: "Upload all required documents.",
       errSitRequired: "Upload the documents required for the situations you selected.",
+      errCaptcha: "The robot check could not complete. Refresh the page and try again.",
+      errCaptchaLoad: "The robot check could not load. Refresh the page and try again.",
       errTotalSize: function (mb) { return "The combined file size is too large (maximum " + mb + " MB)."; },
       errRequestId: "The browser could not create a secure submission ID. Refresh the page and try again.",
       msgUploading: "Uploading documents — DO NOT close this page. Wait until the confirmation screen appears; with large files this can take up to a minute.",
@@ -198,6 +202,7 @@
 
     var WEB_APP_URL      = d.portalUrl || "";
     var FORM_KEY         = d.formKey || "";
+    var RECAPTCHA_SITE_KEY = (d.recaptchaSiteKey || "").trim();
     var DEADLINE         = d.deadline || "";
     var DEADLINE_DISPLAY = d.deadlineDisplay || "";
     var TERM             = d.term || "";                 // used for contract comparison (not translated)
@@ -389,6 +394,20 @@
       if (pickEl) pickEl.textContent = T.pickChoose;
     }
 
+    function getRecaptchaToken() {
+      if (!RECAPTCHA_SITE_KEY) return Promise.resolve("");
+      if (typeof window.grecaptcha === "undefined" || typeof window.grecaptcha.execute !== "function") {
+        return Promise.reject(new Error(T.errCaptchaLoad));
+      }
+      return new Promise(function (resolve, reject) {
+        window.grecaptcha.ready(function () {
+          window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "submit" }).then(resolve, function () {
+            reject(new Error(T.errCaptcha));
+          });
+        });
+      });
+    }
+
     function syncSubmit() {
       var filesOk = REQUIRED_KEYS.every(function (k) { return picked[k]; });
       var sitOk = sitRequiredKeys().every(function (k) { return picked[k]; });
@@ -564,13 +583,19 @@
       // it won't cut off large-but-progressing uploads, only genuinely stuck ones.
       var ctrl = new AbortController();
       var uploadTimer = setTimeout(function () { ctrl.abort(); }, 180000);
-      Promise.all(keys.map(function (k) { return readB64(picked[k]); })).then(function (b64s) {
+      Promise.all([
+        Promise.all(keys.map(function (k) { return readB64(picked[k]); })),
+        getRecaptchaToken()
+      ]).then(function (parts) {
+        var b64s = parts[0];
+        var recaptchaToken = parts[1];
         var files = {};
         keys.forEach(function (k, i) {
           files[k] = { filename: picked[k].name, mimeType: "application/pdf", dataB64: b64s[i] };
         });
         var payload = { token: FORM_KEY, contractVersion: CONTRACT_VERSION,
           campaignId: CAMPAIGN_ID, requestId: requestId,
+          recaptchaToken: recaptchaToken,
           name: name, studentId: sid, email: email,
           flags: flags,
           hp: document.getElementById("suf-hp").value, files: files };
@@ -670,12 +695,27 @@
       contractFailure(T.errUnavailable, false);
       return;
     }
+    function loadRecaptcha() {
+      if (!RECAPTCHA_SITE_KEY) return;
+      var note = document.getElementById("suf-captcha-note");
+      if (note) note.hidden = false;
+      if (document.getElementById("suf-recaptcha-script")) return;
+      var s = document.createElement("script");
+      s.id = "suf-recaptcha-script";
+      s.src = "https://www.google.com/recaptcha/api.js?render=" + encodeURIComponent(RECAPTCHA_SITE_KEY);
+      s.async = true;
+      s.defer = true;
+      s.onerror = function () { showMsg(T.errCaptchaLoad, "err"); };
+      document.head.appendChild(s);
+    }
+
     var cachedContract = readContractCache();
     if (cachedContract) {
       contractReady = true;
       gate.style.display = "none";
       syncSubmit();
     }
+    loadRecaptcha();
     checkContract();
   }
 

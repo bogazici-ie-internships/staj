@@ -126,7 +126,7 @@ markdown_extensions:
 
 extra_css:
   # Increase the ?v number when the style changes → immediately breaks the old CSS cache in the student's browser.
-  - assets/extra.css?v=119
+  - assets/extra.css?v=121
 
 extra_javascript:
   # Increase the ?v number when the JS changes → the old cache is immediately broken.
@@ -134,7 +134,7 @@ extra_javascript:
   # ALL logic for the submission form (single source for TR + EN). Exits early
   # outside the submission page since #sufForm is not found there; page-specific
   # values come through the form's data-* attributes.
-  - assets/submit.js?v=10
+  - assets/submit.js?v=12
   # reveal.js REMOVED (PERF): the homepage scroll-reveal animations were causing
   # jank; content is now instantly and fully visible.
 

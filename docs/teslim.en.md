@@ -54,6 +54,7 @@ hide:
   data-locale="en"
   data-portal-url="{{ baglantilar.portal_url }}"
   data-form-key="{{ baglantilar.form_key }}"
+  data-recaptcha-site-key="{{ baglantilar.recaptcha_site_key }}"
   data-deadline="{{ donem.teslim_kilit }}"
   data-deadline-display="{{ deadline_en }}"
   data-term="{{ donem.etiket }}"
@@ -128,6 +129,11 @@ hide:
       </div>
     </div>
 
+    <p class="suf-captcha-note" id="suf-captcha-note" hidden>
+      This form is protected by reCAPTCHA.
+      The Google <a href="https://policies.google.com/privacy" rel="noopener">Privacy Policy</a>
+      and <a href="https://policies.google.com/terms" rel="noopener">Terms of Service</a> apply.
+    </p>
     <button type="submit" class="suf-submit" id="suf-submit" disabled>Checking server…</button>
     <p class="suf-hint" id="suf-hint" hidden></p>
     <div class="suf-msg" id="suf-msg" role="alert" aria-live="assertive"></div>

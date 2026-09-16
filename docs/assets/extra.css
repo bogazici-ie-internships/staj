@@ -2228,6 +2228,10 @@ html:has(body[data-md-color-scheme="slate"]) { background-color: #0b1422; }
   .suf-kvkk{display:flex;gap:9px;align-items:flex-start;font-size:.8rem;color:var(--md-default-fg-color);margin:4px 0 14px;opacity:.88;line-height:1.45}
   .suf-kvkk input{margin-top:3px}
   .suf-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .grecaptcha-badge{visibility:hidden}
+  .suf-captcha-note{margin:0 0 14px;font-size:.72rem;line-height:1.45;opacity:.78}
+  .suf-captcha-note[hidden]{display:none}
+  .suf-captcha-note a{color:inherit;text-decoration:underline;text-underline-offset:2px}
   .suf-submit{width:100%;background:var(--staj-navy);color:#fff;font-size:.95rem;font-weight:700;border:none;border-radius:8px;padding:13px;cursor:pointer}
   .suf-submit:disabled{opacity:.6;cursor:not-allowed}
   .suf-retry{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:10px 0 0;padding:8px 13px;border:1px solid var(--staj-navy);border-radius:6px;background:transparent;color:var(--staj-navy);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}

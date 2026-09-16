@@ -55,6 +55,7 @@ hide:
   data-locale="tr"
   data-portal-url="{{ baglantilar.portal_url }}"
   data-form-key="{{ baglantilar.form_key }}"
+  data-recaptcha-site-key="{{ baglantilar.recaptcha_site_key }}"
   data-deadline="{{ donem.teslim_kilit }}"
   data-deadline-display="{{ teslim_tr }}"
   data-term="{{ donem.etiket }}"
@@ -128,6 +129,11 @@ hide:
       </div>
     </div>
 
+    <p class="suf-captcha-note" id="suf-captcha-note" hidden>
+      Bu form reCAPTCHA ile korunur.
+      Google <a href="https://policies.google.com/privacy" rel="noopener">Gizlilik Politikası</a>
+      ve <a href="https://policies.google.com/terms" rel="noopener">Hizmet Şartları</a> geçerlidir.
+    </p>
     <button type="submit" class="suf-submit" id="suf-submit" disabled>Sunucu kontrol ediliyor…</button>
     <p class="suf-hint" id="suf-hint" hidden></p>
     <div class="suf-msg" id="suf-msg" role="alert" aria-live="assertive"></div>

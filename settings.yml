@@ -61,6 +61,10 @@ baglantilar:
   # The only reason it is kept as a repo secret is so it
   # can be changed without a commit. It is filled in during the build; it stays empty in the repo.
   form_key: ""
+  # reCAPTCHA v3 (invisible score) — PUBLIC site key. Empty = script not loaded;
+  # the portal also skips verification until RECAPTCHA_SECRET is set in Apps
+  # Script Script Properties. Never put the secret here. See DEPLOYMENT.md.
+  recaptcha_site_key: "6LdtE78tAAAAANYycOhRc8c8r-Fzda6wlHO2ErGJ"
   # Results folder — sharing must be RESTRICTED (authorized people/students), NOT "public".
   sonuclar_klasoru: "https://drive.google.com/drive/folders/16EzmFYGdXy477NIv4Z49AkiJIRAOdIdi"
 
