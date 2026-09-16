@@ -8,7 +8,7 @@ site_author: Boğaziçi Üniversitesi Endüstri Mühendisliği Bölümü
 site_url: https://bogazici-ie-internships.github.io/staj/
 
 # Shown in the footer bottom bar. The "Last updated" date is automatically updated by deploy.yml on every deploy.
-copyright: "Boğaziçi Üniversitesi — Endüstri Mühendisliği<br>Hazırlayan: Berat Kubilay Güngez · Son güncelleme: 21 Haziran 2026"
+copyright: "Boğaziçi Üniversitesi — Endüstri Mühendisliği<br>Berat Kubilay Güngez · Son güncelleme: 21 Haziran 2026"
 
 theme:
   name: material

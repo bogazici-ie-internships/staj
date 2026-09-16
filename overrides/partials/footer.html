@@ -32,7 +32,7 @@
               "June 21, 2026" — i.e. the month name is translated AND the day/month order is swapped. -#}
           {%- set _AY_EN = {'Ocak':'January','Şubat':'February','Mart':'March','Nisan':'April','Mayıs':'May','Haziran':'June','Temmuz':'July','Ağustos':'August','Eylül':'September','Ekim':'October','Kasım':'November','Aralık':'December'} -%}
           {%- set _parts = _sub.split('Son güncelleme:') -%}
-          {%- set _head = _parts[0] | replace('Hazırlayan:', 'Prepared by:') -%}
+          {%- set _head = _parts[0] -%}
           {%- if _parts | length > 1 -%}
             {%- set _d = (_parts[1] | trim).split(' ') -%}
             {%- if _d | length == 3 and _AY_EN.get(_d[1]) -%}
