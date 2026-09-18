@@ -221,14 +221,18 @@ corner or visit the [Contact](iletisim.md) page.
 
 ??? question q-belge "What is the Trainee Evaluation Form, and how do I submit it?"
     It is the official internship evaluation completed by your workplace. The
-    blank form is available on the [Forms & Documents](formlar.md) page. It must
-    be **both signed and stamped**; it will not be accepted if either is missing.
-    Submit it with the report. It is a required document, so submission remains
-    incomplete and the late penalty continues until the form is provided. See
+    blank form is available on the [Forms & Documents](formlar.md) page. We ask
+    for **both a signature and a stamp** on the form. Submit it with the report.
+    It is a required document, so submission remains incomplete and the late
+    penalty continues until the form is provided. See
     [After the Internship](surec/index.md#sonrasi).
 
-??? question q-belge "May I submit documents signed with an electronic signature?"
-    **Yes.** Documents signed with a valid electronic signature are accepted.
+??? question q-belge "May the form be signed and stamped digitally?"
+    **Yes.** Documents signed with an electronic signature are accepted, and a
+    **digital stamp** is equally valid. Wet-ink signatures and stamps are not
+    required for the Trainee Evaluation Form — the company may sign and stamp it
+    digitally. Submission is online and in **PDF** form, so the signature and
+    stamp only need to be legible in the document.
 
 ## Submission & Results
 

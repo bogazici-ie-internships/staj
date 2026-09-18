@@ -201,13 +201,17 @@ Aradığınızı bulamazsanız sağ üstteki **arama** kutusunu kullanın veya
 
 ??? question q-belge "Staj Sicil Formu nedir, nasıl ve ne zaman teslim edilir?"
     İşyeriniz tarafından doldurulan resmî staj değerlendirme formudur; boş formu
-    [Formlar](formlar.md) sayfasından indirebilirsiniz. **Hem imzalı hem kaşeli**
-    olmalıdır — biri eksikse kabul edilmez. **Raporla birlikte** teslim edilir ve
-    rapor eklerinin **zorunlu** parçasıdır; eksikse teslim tamamlanmış sayılmaz ve
-    geç teslim cezası işlemeye devam eder. Süreç: [Stajdan Sonra](surec/index.md#sonrasi).
+    [Formlar](formlar.md) sayfasından indirebilirsiniz. Formda **hem imza hem kaşe**
+    bulunmasını istiyoruz. **Raporla birlikte** teslim edilir ve rapor eklerinin
+    **zorunlu** parçasıdır; eksikse teslim tamamlanmış sayılmaz ve geç teslim
+    cezası işlemeye devam eder. Süreç: [Stajdan Sonra](surec/index.md#sonrasi).
 
-??? question q-belge "Belgeleri e-imza (elektronik imza) ile teslim edebilir miyim?"
-    **Evet** — e-imza ile imzalanmış belgeler kabul edilir.
+??? question q-belge "Belgeleri dijital olarak imzalatıp kaşeletebilir miyim?"
+    **Evet.** E-imza (elektronik imza) ile imzalanmış belgeler kabul edilir;
+    **dijital kaşe** de aynı şekilde geçerlidir. Staj Sicil Formu dahil, imza ve
+    kaşenin ıslak olması gerekmez — şirket formu dijital olarak imzalayıp
+    kaşeleyebilir. Teslim zaten online ve **PDF** üzerinden yapılır; imza ve
+    kaşenin belgede **okunaklı** görünmesi yeterli.
 
 ## Teslim & Sonuç
 
