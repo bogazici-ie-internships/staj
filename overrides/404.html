@@ -1,0 +1,46 @@
+{% extends "main.html" %}
+
+{# GitHub Pages serves ONE /404.html for every missing path, in either
+   language, and the i18n plugin builds it last (EN). The page therefore
+   speaks both languages instead of guessing: Turkish first (the default
+   site language), English below, each block with its own lang. #}
+{% block htmltitle %}
+  <title>Sayfa bulunamadı · Page not found · Zorunlu Staj Kılavuzu</title>
+{% endblock %}
+
+{% block content %}
+{%- set tr = config.site_url or '/' -%}
+{%- set en = tr ~ 'en/' -%}
+<div class="staj-404" markdown>
+  <span class="staj-404__art" aria-hidden="true">
+    <svg viewBox="0 0 120 120" fill="none" stroke="#5AA6D6" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><rect x="26" y="16" width="56" height="74" rx="8" stroke-opacity=".85"/><line x1="38" y1="34" x2="70" y2="34" stroke-opacity=".5"/><line x1="38" y1="46" x2="70" y2="46" stroke-opacity=".5"/><line x1="38" y1="58" x2="58" y2="58" stroke-opacity=".5"/><circle cx="78" cy="80" r="20" fill="none" stroke="#17457F" stroke-width="4"/><line x1="92" y1="94" x2="104" y2="106" stroke="#17457F" stroke-width="5"/><line x1="71" y1="80" x2="85" y2="80" stroke="#5AA6D6"/></svg>
+  </span>
+  <p class="staj-404__code" aria-hidden="true">404</p>
+  <div lang="tr">
+    <h1 class="staj-404__title">Sayfa bulunamadı</h1>
+    <p class="staj-404__lead">Aradığınız sayfa taşınmış, adı değişmiş ya da kaldırılmış olabilir.
+    Aşağıdaki bağlantılardan devam edebilirsiniz.</p>
+    <p class="staj-404__actions">
+      <a class="md-button md-button--primary" href="{{ tr }}">Ana sayfaya dön</a>
+      <a class="md-button" href="{{ tr }}surec/">Staj Süreci</a>
+    </p>
+    <ul class="staj-404__links">
+      <li><a href="{{ tr }}formlar/">Formlar &amp; Belgeler</a></li>
+      <li><a href="{{ tr }}teslim/">Teslim</a></li>
+      <li><a href="{{ tr }}sss/">Sık Sorulan Sorular</a></li>
+      <li><a href="{{ tr }}iletisim/">İletişim</a></li>
+    </ul>
+  </div>
+  <div class="staj-404__alt" lang="en">
+    <p class="staj-404__alt-title">Page not found</p>
+    <p class="staj-404__lead">The page may have moved, been renamed, or been removed.</p>
+    <ul class="staj-404__links">
+      <li><a href="{{ en }}">Home</a></li>
+      <li><a href="{{ en }}surec/">Internship Process</a></li>
+      <li><a href="{{ en }}teslim/">Submission</a></li>
+      <li><a href="{{ en }}sss/">FAQ</a></li>
+      <li><a href="{{ en }}iletisim/">Contact</a></li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
