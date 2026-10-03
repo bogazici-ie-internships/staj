@@ -1,0 +1,12 @@
+{
+  "name": "staj-site-e2e",
+  "private": true,
+  "description": "Browser tests for the built site (run against ../../site, see README in this folder).",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "yaml": "^2.5.0"
+  }
+}
