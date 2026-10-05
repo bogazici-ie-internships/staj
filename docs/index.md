@@ -1,5 +1,5 @@
 ---
-description: "Boğaziçi Endüstri Mühendisliği zorunlu staj kılavuzu: staj yapılabilecek tarihler, üç adımda süreç, rapor teslim son günü ve iletişim."
+description: "Boğaziçi Üniversitesi Endüstri Mühendisliği zorunlu staj kılavuzu: staj tarihleri, sigorta (EK-1), rapor hazırlama, belge teslimi ve sık sorulan sorular."
 hide:
   - navigation
   - toc
@@ -37,7 +37,7 @@ hide:
 {# role="img" yalnız şeridin kendisinde: kaydırma kutusu klavyeyle odaklanabilir
    (adlı bir bölge), lejant da ekran okuyucuya açık kalır. data-start/end →
    yearbar.js dar ekranda şeridi bugüne kaydırır. #}
-<div class="staj-yearbar" data-start="{{ S.bas_iso }}" data-end="{{ S.bit_iso }}">
+<div class="staj-yearbar" data-nosnippet data-start="{{ S.bas_iso }}" data-end="{{ S.bit_iso }}">
 <div class="staj-yearbar__scroll" tabindex="0" role="region" aria-label="Staj takvimi şeridi, yatay kaydırılabilir">
 <div class="staj-yearbar__scroll-inner" role="img" aria-label="{{ S.bas_yil }}–{{ S.bit_yil }} arasında staj yapılabilen dönemler; kesin tarihler aşağıdaki listede">
 <div class="staj-yearbar__axis">{%- for a in S.aylar %}<span class="staj-yearbar__month" style="left:{{ a.orta }}%">{{ a.etiket }}</span>{%- endfor %}</div>
@@ -58,7 +58,7 @@ hide:
 </div>
 </div>
 
-<ol class="staj-takvim">
+<ol class="staj-takvim" data-nosnippet>
 {%- for e in S.liste %}
 <li class="staj-takvim__item staj-takvim__item--{{ e.tur }}"{% if e.anahtar %} data-key="{{ e.anahtar }}"{% endif %}><span class="staj-takvim__label">{{ e.ad }}</span><span class="staj-takvim__date">{{ e.aralik }}</span><span class="staj-takvim__verdict">{{ e.hukum }}</span>{% if e.notu %}<span class="staj-takvim__note">{{ e.notu }}</span>{% endif %}</li>
 {%- endfor %}

@@ -1,5 +1,5 @@
 ---
-description: "Boğaziçi Industrial Engineering compulsory internship guide: when you can intern, the process in three steps, the report deadline and contacts."
+description: "Boğaziçi University Industrial Engineering compulsory internship guide: dates, insurance (EK-1), report writing, document submission and FAQ."
 hide:
   - navigation
   - toc
@@ -33,7 +33,7 @@ hide:
    kalır. Lead cümlesi kuralı pekiştirir — silmeyin. #}
 {% set S = serit(true) %}
 <p class="staj-takvim__lead">You may complete an internship on any date <strong>outside the academic terms listed below</strong>; Summer School is also available if you are not enrolled in courses.</p>
-<div class="staj-yearbar" data-start="{{ S.bas_iso }}" data-end="{{ S.bit_iso }}">
+<div class="staj-yearbar" data-nosnippet data-start="{{ S.bas_iso }}" data-end="{{ S.bit_iso }}">
 <div class="staj-yearbar__scroll" tabindex="0" role="region" aria-label="Internship calendar strip, scrolls horizontally">
 <div class="staj-yearbar__scroll-inner" role="img" aria-label="Periods when internships may be completed between {{ S.bas_yil }} and {{ S.bit_yil }}; exact dates are listed below">
 <div class="staj-yearbar__axis">{%- for a in S.aylar %}<span class="staj-yearbar__month" style="left:{{ a.orta }}%">{{ a.etiket }}</span>{%- endfor %}</div>
@@ -54,7 +54,7 @@ hide:
 </div>
 </div>
 
-<ol class="staj-takvim">
+<ol class="staj-takvim" data-nosnippet>
 {%- for e in S.liste %}
 <li class="staj-takvim__item staj-takvim__item--{{ e.tur }}"{% if e.anahtar %} data-key="{{ e.anahtar }}"{% endif %}><span class="staj-takvim__label">{{ e.ad }}</span><span class="staj-takvim__date">{{ e.aralik }}</span><span class="staj-takvim__verdict">{{ e.hukum }}</span>{% if e.notu %}<span class="staj-takvim__note">{{ e.notu }}</span>{% endif %}</li>
 {%- endfor %}
