@@ -224,14 +224,10 @@ def _serit_geometrisi(takvim, bas, bit, ingilizce=False, kilit=None):
 
 def define_env(env):
     # Umami (overrides/main.html): the theme template can't see settings.yml
-    # variables, so hand it the campaign fields via config.extra. Single source
-    # stays settings.yml; `phase` is computed in the browser (track.js), since
-    # the site is only rebuilt on push.
+    # variables, so hand it the campaign id (data-tag) via config.extra.
     donem = env.variables.get("donem") or {}
     env.conf["extra"]["umami_campaign"] = {
         "id": str(donem.get("campaign_id") or ""),
-        "deadline": str(donem.get("teslim_kilit") or ""),
-        "grace_days": int(donem.get("gec_teslim_gun") or 0),
     }
 
     @env.macro

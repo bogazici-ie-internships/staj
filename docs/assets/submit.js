@@ -225,32 +225,34 @@
   // page its known messages are translated here; anything unknown passes
   // through unchanged. Keep in step with the `error:` strings in Code.gs doPost.
   var SERVER_EN = [
-    [/^Geçersiz form anahtarı\.$/, "Invalid form key. Refresh the page and try again."],
-    [/^Robot doğrulaması başarısız/, "The robot check failed. Refresh the page and try again."],
-    [/^Geçersiz gönderim anahtarı/, "Invalid submission ID. Refresh the page and try again."],
-    [/^Teslim süresi doldu/, "The submission period has ended. Uploads are closed."],
-    [/^Ad Soyad, Öğrenci No ve E-posta zorunludur\.$/, "Full Name, Student ID, and Email are required."],
-    [/^Ad Soyad çok uzun \(en fazla (\d+) karakter\)\.$/, "The name is too long (maximum $1 characters)."],
-    [/^Ad Soyad alanında geçersiz kontrol karakteri var\.$/, "The name contains an invalid control character."],
-    [/^E-posta adresi çok uzun\.$/, "The email address is too long."],
-    [/^Geçersiz e-posta\.$/, "Invalid email address."],
-    [/^Lütfen @std\.bogazici\.edu\.tr/, "Use your student email address ending in @std.bogazici.edu.tr."],
-    [/^Geçersiz öğrenci numarası/, "Invalid student ID (10 digits beginning with 20)."],
-    [/^Az önce bir gönderim aldık/, "We just received a submission. Try again in a few seconds."],
-    [/^Belge paketi geçersiz\.$/, "The document package is invalid."],
-    [/^Tanınmayan belge alanı gönderildi\.$/, "An unrecognised document field was sent."],
-    [/^Eksik zorunlu belge: (.+)$/, "Missing required document: $1"],
-    [/^Cumartesi çalışması için/, "The Saturday Work Letter is required for Saturday work."],
-    [/^Geri ödeme için Ödeme Dekontu/, "A payment receipt or payslip is required for the government contribution."],
-    [/^Geri ödeme için EK-1/, "The EK-1 form is required for the government contribution."],
-    [/^(.+) içeriği geçersiz\.$/, "$1: the file content is invalid."],
-    [/^(.+) çok büyük \(>(\d+) MB\)\.$/, "$1 is too large (maximum $2 MB)."],
-    [/^Toplam boyut çok büyük \(>(\d+) MB\)\.$/, "The combined file size is too large (maximum $1 MB)."],
-    [/^(.+) geçerli bir PDF değil\.$/, "$1 is not a valid PDF."],
-    [/^Teslim sunucusu önceki bir isteği tamamlıyor/, "The server is finishing a previous request. Select the same button again in a few seconds."],
-    [/^Bu teslim isteği hâlâ işleniyor/, "This submission is still being processed. Select the same button again in a few seconds."],
-    [/^Teslim tamamlanamadı/, "The submission could not be completed and the temporary file was rolled back. Try again."],
-    [/^Sunucu hatası, lütfen tekrar deneyin\.$/, "Server error. Please try again."]
+    [/^Geçersiz form anahtarı\.$/, "Invalid form key. Refresh the page and try again.", "invalid_key"],
+    [/^Robot doğrulaması başarısız/, "The robot check failed. Refresh the page and try again.", "captcha_failed"],
+    [/^Geçersiz gönderim anahtarı/, "Invalid submission ID. Refresh the page and try again.", "invalid_request_id"],
+    [/^Teslim süresi doldu/, "The submission period has ended. Uploads are closed.", "closed"],
+    [/^Ad Soyad, Öğrenci No ve E-posta zorunludur\.$/, "Full Name, Student ID, and Email are required.", "required_fields"],
+    [/^Ad Soyad çok uzun \(en fazla (\d+) karakter\)\.$/, "The name is too long (maximum $1 characters).", "name_too_long"],
+    [/^Ad Soyad alanında geçersiz kontrol karakteri var\.$/, "The name contains an invalid control character.", "name_invalid"],
+    [/^E-posta adresi çok uzun\.$/, "The email address is too long.", "email_too_long"],
+    [/^Geçersiz e-posta\.$/, "Invalid email address.", "email_invalid"],
+    [/^Lütfen @std\.bogazici\.edu\.tr/, "Use your student email address ending in @std.bogazici.edu.tr.", "email_domain"],
+    [/^Geçersiz öğrenci numarası/, "Invalid student ID (10 digits beginning with 20).", "sid_format"],
+    [/^Az önce bir gönderim aldık/, "We just received a submission. Try again in a few seconds.", "rate_limited"],
+    [/^Belge paketi geçersiz\.$/, "The document package is invalid.", "bad_package"],
+    [/^Tanınmayan belge alanı gönderildi\.$/, "An unrecognised document field was sent.", "unknown_field"],
+    [/^Eksik zorunlu belge: (.+)$/, "Missing required document: $1", "missing_doc"],
+    [/^Cumartesi çalışması için/, "The Saturday Work Letter is required for Saturday work.", "missing_doc", "cumartesi"],
+    [/^Geri ödeme için Ödeme Dekontu/, "A payment receipt or payslip is required for the government contribution.", "missing_doc", "dekont"],
+    [/^Geri ödeme için EK-1/, "The EK-1 form is required for the government contribution.", "missing_doc", "ek1"],
+    [/^(.+) içeriği geçersiz\.$/, "$1: the file content is invalid.", "bad_content"],
+    // Before the generic "(.+) çok büyük" pattern, which would also match it.
+    [/^Toplam boyut çok büyük \(>(\d+) MB\)\.$/, "The combined file size is too large (maximum $1 MB).", "total_size"],
+    [/^(.+) çok büyük \(>(\d+) MB\)\.$/, "$1 is too large (maximum $2 MB).", "too_large"],
+    [/^(.+) geçerli bir PDF değil\.$/, "$1 is not a valid PDF.", "not_pdf"],
+    [/^Teslim sunucusu önceki bir isteği tamamlıyor/, "The server is finishing a previous request. Select the same button again in a few seconds.", "busy"],
+    [/^Bu teslim isteği hâlâ işleniyor/, "This submission is still being processed. Select the same button again in a few seconds.", "in_progress"],
+    [/^Teslim tamamlanamadı/, "The submission could not be completed and the temporary file was rolled back. Try again.", "rollback"],
+    [/^Teslim dönemi yapılandırması uyuşmuyor/, "The submission-term configuration does not match. Refresh the page.", "contract_mismatch"],
+    [/^Sunucu hatası, lütfen tekrar deneyin\.$/, "Server error. Please try again.", "server_error"]
   ];
   function serverMessage(m, locale) {
     if (locale !== "en") return m;
@@ -260,10 +262,32 @@
     }
     return m;
   }
+  // Server file names (Code.gs FILE_MAP) → the form's slot keys, so `doc` reads the same
+  // for client- and server-side errors.
+  var SERVER_DOC = { rapor: "rapor", staj_sicil_formu: "sicil", staj_anketi: "anketi",
+    cumartesi_yazisi: "cumartesi", dekont: "dekont", ek1: "ek1" };
+  // Turkish server message → { code, doc } for Umami. Never sends the message itself.
+  function serverCode(m) {
+    for (var i = 0; i < SERVER_EN.length; i++) {
+      var hit = String(m || "").match(SERVER_EN[i][0]);
+      if (!hit) continue;
+      var doc = SERVER_EN[i][3] || "";
+      if (!doc && hit[1]) doc = SERVER_DOC[hit[1].replace(/\.pdf$/i, "")] || "";
+      return { code: SERVER_EN[i][2], doc: doc };
+    }
+    return { code: "unknown", doc: "" };
+  }
 
-  // Umami funnel events (track.js). Categorical data only — never name / ID / e-mail / file names.
+  // Umami events (track.js). Categorical data only — never name / ID / e-mail / file names.
   function track(name, data) {
     try { if (typeof window.stajTrack === "function") window.stajTrack(name, data); } catch (_) {}
+  }
+  // Every way a submission can fail lands in ONE event → Umami: submit_error → code.
+  // stage: closed | gate | validation | file | upload | server.
+  function fail(stage, code, doc) {
+    var data = { stage: stage, code: code };
+    if (doc) data.doc = doc;
+    track("submit_error", data);
   }
 
   function init() {
@@ -331,7 +355,7 @@
       form.style.display = "none";
       closed.style.display = "block";
       closed.innerHTML = T.closedHtml(TERM_DISPLAY);
-      track("submit_closed", { term: TERM, lang: d.locale || "tr" });
+      fail("closed", "closed");
     }
     if (isClosed) { showClosed(); return; }
 
@@ -380,9 +404,7 @@
     }
 
     function contractFailure(message, retryable) {
-      track("submit_gate_fail", {
-        reason: message === T.gateMismatch ? "mismatch" : message === T.gateUnreachable ? "unreachable" : "unavailable"
-      });
+      fail("gate", message === T.gateMismatch ? "mismatch" : message === T.gateUnreachable ? "unreachable" : "unavailable");
       contractReady = false;
       contractChecking = false;
       clearContractCache();
@@ -460,15 +482,8 @@
     }
 
     function showMsg(text, kind) { msg.textContent = text; msg.className = "suf-msg show " + kind; }
-    var FUNNEL = { term: TERM, late: !!isLate, lang: d.locale || "tr" };
-    function funnel(name, extra) {
-      var data = {};
-      Object.keys(FUNNEL).forEach(function (k) { data[k] = FUNNEL[k]; });
-      Object.keys(extra || {}).forEach(function (k) { data[k] = extra[k]; });
-      track(name, data);
-    }
     // Validation stop before upload: show the message AND record which check blocked the student.
-    function block(reason, text) { funnel("submit_blocked", { reason: reason }); showMsg(text, "err"); }
+    function block(reason, text) { fail("validation", reason); showMsg(text, "err"); }
     var started = false;
     function escHtml(s) {
       return String(s).replace(/[&<>"']/g, function (c) {
@@ -611,17 +626,17 @@
         // The reason is shown ON the slot as well: the shared message box sits
         // far below the fields on a phone.
         if (!isPdf) {
-          funnel("submit_file_rejected", { slot: key, reason: "not_pdf" });
+          fail("file", "not_pdf", key);
           showMsg(T.notPdf(f.name), "err"); input.value = ""; clearSlot();
           setSlotError(key, T.notPdf(f.name)); return;
         }
         var lim = MAX_MB[key] || 10;
         if (f.size > lim * 1024 * 1024) {
-          funnel("submit_file_rejected", { slot: key, reason: "too_large", mb: Math.round(f.size / 1048576) });
+          fail("file", "too_large", key);
           showMsg(T.tooLarge(f.name, lim), "err"); input.value = ""; clearSlot();
           setSlotError(key, T.tooLarge(f.name, lim)); return;
         }
-        if (!started) { started = true; funnel("submit_start", { first_slot: key }); }
+        if (!started) { started = true; track("submit_start", { term: TERM, late: !!isLate }); }
         picked[key] = f;
         markChanged();
         setSlotError(key, "");
@@ -765,11 +780,11 @@
       var wasLate = isLate;
       computePhase(Date.now());
       if (isClosed) { block("closed", T.errClosed); return; }
-      if (isLate && !wasLate) { FUNNEL.late = true; renderLate(); renderCountdown(Date.now()); syncSubmit(); }
+      if (isLate && !wasLate) { renderLate(); renderCountdown(Date.now()); syncSubmit(); }
       if (isLate && ackEl && !ackEl.checked) { block("late_ack", T.errAck); ackEl.focus(); return; }
       if (!WEB_APP_URL || !FORM_KEY) { block("unavailable", T.errUnavailable); return; }
       if (!contractReady) { block("not_verified", T.errNotVerified); return; }
-      if (document.getElementById("suf-hp").value) { funnel("submit_blocked", { reason: "honeypot" }); return; }
+      if (document.getElementById("suf-hp").value) { fail("validation", "honeypot"); return; }
 
       var name = titleCaseName(nameEl.value);
       var sid = sidEl.value.trim();
@@ -791,7 +806,7 @@
         if (!picked[k]) flag("missing_situational", setSlotError(k, T.errFileMissing));
       });
       if (problems.length) {
-        funnel("submit_blocked", { reason: problems[0].reason });
+        fail("validation", problems[0].reason);
         showMsg(T.errSummary(problems.length), "err");
         if (problems[0].el) problems[0].el.focus();
         return;
@@ -808,10 +823,7 @@
       var keys = Object.keys(picked);
       var flags = sitFlags();
       var uploadStart = Date.now();
-      funnel("submit_attempt", {
-        files: keys.length, total_mb: Math.round(total / 1048576),
-        saturday: flags.saturday, reimbursement: flags.reimbursement
-      });
+      track("submit_attempt", { files: keys.length, total_mb: Math.round(total / 1048576) });
       // Safety net against an upload that silently hangs (neither a response nor an error comes back):
       // abort after 180s so the button doesn't stay locked on "Gönderiliyor…" forever. A generous timeout →
       // it won't cut off large-but-progressing uploads, only genuinely stuck ones.
@@ -841,16 +853,16 @@
       }).then(function (out) {
         if (!out || out.ok !== true) {
           var re = new Error(serverMessage((out && out.error) || T.errUnverified, d.locale));
-          re.trackReason = "rejected";
+          var sc = serverCode(out && out.error);
+          re.trackStage = "server"; re.trackReason = sc.code; re.trackDoc = sc.doc;
           throw re;
         }
         // Submission complete: the beforeunload warning MUST fall silent. Otherwise the
         // student gets a needless warning when closing the tab after seeing the confirmation.
         isUploading = false;
-        funnel("submit_success", {
-          late_days: daysLate, files: keys.length,
-          saturday: flags.saturday, reimbursement: flags.reimbursement,
-          seconds: Math.round((Date.now() - uploadStart) / 1000)
+        track("submit_success", {
+          seconds: Math.round((Date.now() - uploadStart) / 1000),
+          late_days: typeof out.lateDays === "number" ? out.lateDays : daysLate
         });
         var items = doneItems(keys, function (k) { return picked[k].name; }, function (k) { return picked[k]; });
         // Receipt time and on-time/late come ONLY from the server (it decides
@@ -870,7 +882,7 @@
           (err && err.name === "AbortError" ? "timeout" :
            m === T.errCaptcha || m === T.errCaptchaLoad ? "captcha" :
            /fetch|load failed|network|networkerror/i.test(m) ? "network" : "other");
-        funnel("submit_error", { reason: reason, seconds: Math.round((Date.now() - uploadStart) / 1000) });
+        fail((err && err.trackStage) || "upload", reason, err && err.trackDoc);
         if ((err && err.name === "AbortError") || /fetch|load failed|network|networkerror/i.test(m)) {
           showMsg(T.errNetwork, "err");
         } else {
@@ -926,7 +938,7 @@
         if (!isUploading) { clearInterval(phaseTimer); phaseTimer = null; showClosed(); }
         return;
       }
-      if (isLate && !wasLate) { FUNNEL.late = true; renderLate(); }
+      if (isLate && !wasLate) { renderLate(); }
       renderCountdown(now);
       syncSubmit();
     }

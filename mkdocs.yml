@@ -133,13 +133,13 @@ extra_css:
 extra_javascript:
   # Increase the ?v number when the JS changes → the old cache is immediately broken.
   - assets/yearbar.js?v=7
-  # Umami custom events (downloads, outbound, FAQ, search, 404) + window.stajTrack
-  # used by submit.js. MUST stay before submit.js.
-  - assets/track.js?v=3
+  # Umami: window.stajTrack used by submit.js (submit_* events) + js_error.
+  # MUST stay before submit.js.
+  - assets/track.js?v=4
   # ALL logic for the submission form (single source for TR + EN). Exits early
   # outside the submission page since #sufForm is not found there; page-specific
   # values come through the form's data-* attributes.
-  - assets/submit.js?v=21
+  - assets/submit.js?v=22
   # reveal.js REMOVED (PERF): the homepage scroll-reveal animations were causing
   # jank; content is now instantly and fully visible.
 

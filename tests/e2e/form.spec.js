@@ -221,4 +221,20 @@ test.describe("gönderim ve onay ekranı", () => {
     await expect(page.locator("#suf-name")).toHaveValue("ayşe yılmaz");
     await expect(page.locator("#suf-submit")).toBeEnabled();
   });
+
+  test("Umami: sunucu reddi submit_error'a kodla düşer, mesaj gönderilmez", async ({ page }) => {
+    // Stub Umami; track.js forwards window.stajTrack calls to it.
+    await page.addInitScript(() => {
+      window.__events = [];
+      window.umami = { track: (name, data) => window.__events.push([name, data]) };
+    });
+    await open(page, "teslim/", { reply: () => ({ ok: false, error: "rapor.pdf geçerli bir PDF değil." }) });
+    await waitReady(page);
+    await fillValid(page);
+    await page.click("#suf-submit");
+    await expect(page.locator("#suf-msg")).toContainText("geçerli bir PDF değil");
+    const events = await page.evaluate(() => window.__events);
+    expect(events.map((e) => e[0])).toEqual(["submit_start", "submit_attempt", "submit_error"]);
+    expect(events[2][1]).toEqual({ stage: "server", code: "not_pdf", doc: "rapor" });
+  });
 });

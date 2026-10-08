@@ -61,15 +61,12 @@
   {# Umami: page path + hourly pageviews in cloud dashboard. ID is public; empty = disabled.
      data-domains: only the live host counts (from site_url — follows a custom domain).
      data-tag: campaign_id from settings.yml → filter/compare terms in the dashboard.
-     data-staj-*: read by track.js for the `phase` session property.
      No data-performance: an extra billed event on every pageview (Umami Hobby = 100K/month). #}
   {%- if config.extra.umami_website_id %}
   {%- set _uc = config.extra.umami_campaign or {} %}
   <script defer src="https://cloud.umami.is/script.js"
     data-website-id="{{ config.extra.umami_website_id }}"
     data-domains="{{ config.site_url.split('/')[2] }}"
-    {%- if _uc.id %} data-tag="{{ _uc.id }}"{% endif %}
-    data-staj-deadline="{{ _uc.deadline }}"
-    data-staj-grace-days="{{ _uc.grace_days }}"></script>
+    {%- if _uc.id %} data-tag="{{ _uc.id }}"{% endif %}></script>
   {%- endif %}
 {% endblock %}
