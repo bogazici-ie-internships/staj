@@ -1,4 +1,4 @@
-// REVIEW-05: the independent content audit (redesign-brief/audit/CONTENT-AUDIT.md, B-01…B-22) and the maintainer's
+// REVIEW-05: the independent content audit (B-01…B-22) and the maintainer's
 // Addition (H-01: one report and one submission per internship). One regression test per finding, on the built site.
 import { readFileSync } from "node:fs";
 import { join } from "node:path";

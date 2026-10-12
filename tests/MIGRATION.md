@@ -38,8 +38,8 @@ recorded `submit.js` scenarios (`tests/baseline/contract-golden.json`) byte-for-
 | home: `.staj-lede__meta` date+time, link to `teslim/`, no registration button in the opening | strip date `dd.mm.yyyy · hh:mm TSİ` links to Teslim; board rows show date + time; hero CTA → Teslim; exactly one primary button in the hero (registration is a tertiary link) | new markup |
 | — | new: board/strip live states (open, late) and the Bugün marker position | — |
 | contrast ≥ 4.5:1 for 11 selectors, light + dark | same measurement for 15 selectors of the new pages | selectors changed with the markup |
-| — | new: parity (titles, descriptions, canonical, hreflang, OG, anchors, `/belgeler/*`, sitemap) | REDESIGN_PROMPT URL parity |
-| — | new: axe on all built pages × light/dark × TR/EN, Teslim screens, phone menu, keyboard-only flow, reduced motion | REDESIGN_PROMPT quality gates |
+| — | new: parity (titles, descriptions, canonical, hreflang, OG, anchors, `/belgeler/*`, sitemap) | redesign requirement: URL parity |
+| — | new: axe on all built pages × light/dark × TR/EN, Teslim screens, phone menu, keyboard-only flow, reduced motion | redesign requirement: quality gates |
 
 `test.fixme` (deferred, not deleted): old content anchors on the six Phase 2 placeholder pages
 (`surec`, `rapor`, `formlar`, `sss`, `sonuclar`, `iletisim`, TR + EN = 10 tests). They return with

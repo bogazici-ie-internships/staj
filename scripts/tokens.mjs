@@ -7,7 +7,7 @@
 // design.md exporter (format "alpha") carries the colours; the non-colour
 // scales it does not export yet (radius, borders, shadow, motion) are read from
 // the same front matter here. Colours a theme does not define in DESIGN.md are
-// derived in DERIVED below and listed in design/DECISIONS.md.
+// derived in DERIVED below.
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import YAML from "yaml";
@@ -34,7 +34,7 @@ for (const [key, tok] of Object.entries(dtcg.color || {})) {
   themes[theme][name] = front.colors?.[theme]?.[name] ?? tok.$value.hex;
 }
 
-// Pairs DESIGN.md leaves to the mockups (reference/Main.dc.html) — see DECISIONS.md D-03.
+// Pairs DESIGN.md leaves open, taken from the design mockups.
 const DERIVED = {
   light: { "rule-strong": "var(--ink)", "accent-text": "var(--primary)", "on-signal": "#FFFFFF",
            "hatch": "var(--primary)", "live": "#1F7A4D", "focus": "var(--ink)", "scrim": "rgb(14 23 38 / 0.45)", "contour": "rgb(14 23 38 / 0.07)",

@@ -1,4 +1,4 @@
-// FINAL-CHECK (redesign-brief/audit/FINAL-CHECK.md, F-01 … F-18) with the maintainer's decisions: F-04 the duration
+// FINAL-CHECK (the pre-release content check, F-01 … F-18) with the maintainer's decisions: F-04 the duration
 // sentence is removed; F-11 "Formlar ve Belgeler" / "Forms and Documents" everywhere (D-177 – D-179). One test per
 // finding or group, on the built site.
 import { readFileSync } from "node:fs";

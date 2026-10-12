@@ -29,11 +29,6 @@ _maintainer/*
 # Isolated feature worktrees
 .worktrees/
 
-# Browser tests (tests/e2e)
-tests/e2e/node_modules/
-tests/e2e/test-results/
-tests/e2e/playwright-report/
-
 # Design-tool context (impeccable) — local only, not part of the site
 /PRODUCT.md
 
@@ -48,7 +43,7 @@ tests/e2e/playwright-report/
 /tests/visual/__screenshots__/
 
 # Review images and reports are generated, not committed (UPDATE-07, D-142): the public repo keeps the text
-# reports only. Regenerate: npm run shots / grid / states / receipts, scripts/lighthouse.sh.
+# reports only. Regenerate: npm run grid / states / receipts, scripts/lighthouse.sh.
 /design/polish/**/*.jpg
 /design/polish/**/*.png
 /design/screenshots/**/*.jpg

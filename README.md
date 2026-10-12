@@ -58,13 +58,13 @@ Document limits (MB) are NOT content: they must match `Code.gs` and live in `src
 
 ## Review pages (local, generated, not committed)
 
-The review images are regenerated on demand and kept out of the public repo (UPDATE-07, D-142):
+The review pages and images are regenerated on demand into `design/`, which is local only (ignored; only
+`design/RELEASE.md` is tracked):
 
 | Page | Regenerate |
 |---|---|
 | `design/reviews/teslim-states.html` — every Teslim step and state | `npm run review`, then `npm run states` |
 | `design/reviews/makbuz/*.pdf` — sample printed receipts | `npm run receipts` |
-| `design/polish/index.html` — before/after frames | `SHOTS_SET=<set> SHOTS_PHASE=after npm run shots`, then `node scripts/polish-index.mjs` |
 | `design/screenshots/index.html` — the visual grid | `npm run test:visual -- -u && npm run grid` |
 | Linux visual baselines | GitHub → Actions → "Görsel temel görüntüler (Linux)" → Run workflow; download the artifact |
 

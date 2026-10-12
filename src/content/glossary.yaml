@@ -1,5 +1,5 @@
 # Terms defined where they appear (margin notes on Gazete pages, <dfn> in flows).
-# PRODUCT.md principle 4: define EK-1, Sicil Formu, SGK where they appear.
+# Principle: define EK-1, Sicil Formu, SGK where they appear.
 - id: ek1
   term: { tr: "EK-1", en: "EK-1" }
   definition:
