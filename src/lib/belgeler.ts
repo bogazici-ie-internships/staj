@@ -6,8 +6,12 @@ import type { Lang } from "./dates";
 export function fileInfo(name: string, lang: Lang): { format: string; size: string; kind: "pdf" | "docx" } {
   const bytes = statSync(resolve(process.cwd(), "public/belgeler", name)).size;
   const kind = name.toLowerCase().endsWith(".pdf") ? "pdf" : "docx";
+  return { format: kind === "pdf" ? "PDF" : "Word (DOCX)", size: sizeLabel(bytes, lang), kind };
+}
+
+/** "70 KB" / "1,2 MB" (TR) · "1.2 MB" (EN). Also used for the results PDF (RESULTS-01). */
+export function sizeLabel(bytes: number, lang: Lang): string {
   const kb = bytes / 1024;
   const fmt = (n: number, d = 0) => n.toLocaleString(lang === "en" ? "en-GB" : "tr-TR", { maximumFractionDigits: d });
-  const size = kb >= 1024 ? `${fmt(kb / 1024, 1)} MB` : `${fmt(kb)} KB`;
-  return { format: kind === "pdf" ? "PDF" : "Word (DOCX)", size, kind };
+  return kb >= 1024 ? `${fmt(kb / 1024, 1)} MB` : `${fmt(Math.max(1, kb))} KB`;
 }

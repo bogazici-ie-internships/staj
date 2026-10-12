@@ -15,9 +15,8 @@ shown in the repository's **Actions** tab.
 
 To fix a text, edit the YAML file in the GitHub web editor and commit to `main`. That's all.
 
-> **Term rollover, form-key rotation, reCAPTCHA and results-folder permissions are different.** They must be
-> coordinated with the Apps Script submission portal and, done wrong, close the submission form. Read
-> **DEPLOYMENT.md** first.
+> **Term rollover, form-key rotation and reCAPTCHA are different.** They must be coordinated with the Apps Script
+> submission portal and, done wrong, close the submission form. Read **DEPLOYMENT.md** first.
 
 ---
 
@@ -55,8 +54,8 @@ Add this block at the end of `settings.yml` (both languages, end time in Türkiy
 
 ```yaml
 duyuru:
-  mesaj: "Sonuçlar klasörü güncellendi. [Sonuçlar](page:sonuclar) sayfasına bakınız."
-  mesaj_en: "The results folder has been updated. See the [Results](page:sonuclar) page."
+  mesaj: "Sonuç listesi güncellendi. [Sonuçlar](page:sonuclar) sayfasına bakınız."
+  mesaj_en: "The results list has been updated. See the [Results](page:sonuclar) page."
   bitis: "2026-12-31 23:59"
   # kapatilamaz: true      # urgent: students cannot close it
 ```
@@ -64,6 +63,25 @@ duyuru:
 It appears above the deadline strip on every page until `bitis`, then hides itself. Students can close it
 (remembered in their browser) unless `kapatilamaz: true`. Changing the text shows it again to everyone. Remove the
 block when it is no longer needed.
+
+### Publish the results list
+
+The Sonuçlar page shows the term's results PDF from `public/internships/` (`New_Internships_<campaign>.pdf`), with
+an embedded viewer on desktop and an "open" button. "Son güncelleme" is the time the file was committed. The file
+of `settings.yml › donem.campaign_id` is shown first (or the newest one); other terms' files are listed under it.
+On a `main` checkout that is up to date with GitHub, with `../Data Store` next to this folder:
+
+```bash
+npm run results:publish -- 2026-summer     # Data Store generates the PDF, the script checks it and commits it
+git push origin main                       # publishes it (about 5 minutes)
+```
+
+The script runs `reports/generate_report.py --campaign <id> --out public/internships/New_Internships_<id>.pdf` in
+Data Store (with its `.venv`; set `DATA_STORE_DIR` if Data Store is elsewhere), checks the PDF, prints its size
+and page count and commits only that file; it never pushes. `--no-commit` generates and checks only.
+**Manual alternative:** copy the PDF into `public/internships/` under the same name, commit it and push.
+For a one-line remark under the file (e.g. that late submissions follow), fill `settings.yml › sonuclar.not` and
+`not_en`. A published file stays in the repository's history; publish only the final list.
 
 ### Set the next campaign
 

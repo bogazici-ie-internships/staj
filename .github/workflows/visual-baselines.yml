@@ -25,6 +25,8 @@ jobs:
       STAJ_BUILD_DATE: "2026-10-09"
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0   # Sonuçlar "son güncelleme" = the results PDF's commit time (RESULTS-01)
       - uses: actions/download-artifact@v8
         if: ${{ !inputs.update }}
         continue-on-error: true

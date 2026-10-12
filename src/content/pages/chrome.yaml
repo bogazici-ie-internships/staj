@@ -25,7 +25,7 @@ pages:
   - { key: sss, path: sss/, title: { tr: Sık Sorulan Sorular, en: Frequently Asked Questions }, short: { tr: SSS, en: FAQ },
       description: { tr: "Zorunlu staj hakkında sık sorulan sorular: uygunluk ve zamanlama, süre ve gün sayımı, staj türü, belgeler, teslim ve sonuç.", en: "Frequently asked questions about the compulsory internship: eligibility and timing, duration and day counting, internship type, documents, submission and results." } }
   - { key: sonuclar, path: sonuclar/, title: { tr: Sonuçlar, en: Results }, short: { tr: Sonuçlar, en: Results },
-      description: { tr: "Zorunlu staj değerlendirme sonuçlarının ilan edildiği sayfa ve sonuç klasörüne erişim.", en: "Where compulsory internship evaluation results are announced, with access to the results folder." } }
+      description: { tr: "Zorunlu staj değerlendirme sonuçlarının ilan edildiği sayfa ve güncel sonuç listesi (PDF).", en: "Where compulsory internship evaluation results are announced, with the current results list (PDF)." } }
   - { key: iletisim, path: iletisim/, title: { tr: İletişim, en: Contact }, short: { tr: İletişim, en: Contact },
       description: { tr: "Staj asistanları ve staj koordinatörünün iletişim bilgileri ile hangi konularda kime başvurulacağı.", en: "Contact details for the internship assistants and the internship coordinator, and whom to contact about which matters." } }
   - { key: teslim, path: teslim/, title: { tr: Belge Teslimi, en: Document Submission }, short: { tr: Belgeleri gönder, en: Submit documents },

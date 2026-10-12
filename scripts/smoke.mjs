@@ -8,6 +8,7 @@
 //   - the documents and public assets answer 200; sitemap.xml lists every old page; robots.txt points to it;
 //   - each page has its OG image, and the image answers 200;
 //   - the search index loads and a search returns results;
+//   - Sonuçlar: the results PDF answers 200 as application/pdf at its ?v= URL (or the page says none is out yet);
 //   - Teslim shows the expected phase (closed after the late window);
 //   - no console errors (requests to Google — portal, reCAPTCHA — are blocked here and not counted).
 // Nothing is submitted: the Apps Script portal is never contacted.
@@ -47,7 +48,10 @@ await page.clock.install({ time: new Date(at) });
 const consoleErrors = [];
 page.on("console", (m) => { if (m.type() === "error" && !blocked.test(m.text()) && !blocked.test(m.location()?.url || "")) consoleErrors.push(`${page.url()}: ${m.text()}`); });
 page.on("pageerror", (e) => consoleErrors.push(`${page.url()}: ${e.message}`));
-page.on("requestfailed", (r) => { if (!blocked.test(r.url())) consoleErrors.push(`${page.url()}: request failed ${r.url()}`); });
+// The embedded results PDF (RESULTS-01) is handed to the PDF viewer, which headless Chromium cancels; the file itself
+// is checked below (200, application/pdf).
+const embeddedPdf = /\/staj\/internships\/[^/?]+\.pdf(\?|$)/;
+page.on("requestfailed", (r) => { if (!blocked.test(r.url()) && !embeddedPdf.test(r.url())) consoleErrors.push(`${page.url()}: request failed ${r.url()}`); });
 
 // Pages, anchors, OG.
 for (const [rel, old] of Object.entries(INV.pages)) {
@@ -76,6 +80,18 @@ for (const lang of ["tr", "en"]) {
   await page.click("[data-search-open]");
   await page.locator(".srch__input").fill("EK-1");
   ok(await page.locator(".srch__item").first().waitFor({ timeout: 8000 }).then(() => true, () => false), `search (${lang}): no results for "EK-1"`);
+}
+// Sonuçlar (RESULTS-01): the results file answers 200 as a PDF at its versioned URL, or the page says none is out yet.
+for (const lang of ["tr", "en"]) {
+  await page.goto(base + (lang === "en" ? "en/" : "") + "sonuclar/");
+  const state = await page.locator("[data-results]").getAttribute("data-results");
+  ok(state === "file" || state === "empty", `sonuclar (${lang}): no results card`);
+  if (state === "file") {
+    const href = await page.locator("[data-results-open]").getAttribute("href");
+    ok(/^\/staj\/internships\/New_Internships_[\w-]+\.pdf\?v=\d+$/.test(href || ""), `sonuclar (${lang}): unexpected results link ${href}`);
+    const r = await ctx.request.get(base + (href || "").replace(/^\/staj\//, ""));
+    ok(r.status() === 200 && /^application\/pdf/.test(r.headers()["content-type"] || ""), `sonuclar (${lang}): ${href} HTTP ${r.status()} ${r.headers()["content-type"]}`);
+  } else ok(await page.locator(".results__empty").isVisible(), `sonuclar (${lang}): empty state not shown`);
 }
 // Teslim phase.
 for (const lang of ["tr", "en"]) {

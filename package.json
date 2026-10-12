@@ -28,6 +28,7 @@
     "states": "playwright test -c playwright.states.config.ts",
     "receipts": "STAJ_BUILD_DATE=2026-10-09 STAJ_OUT=dist-receipts astro build && playwright test -c playwright.receipts.config.ts",
     "smoke": "node scripts/smoke.mjs",
+    "results:publish": "node scripts/publish-results.mjs",
     "review": "scripts/review-servers.sh"
   },
   "dependencies": {

@@ -4,7 +4,7 @@ Live site: <https://bogazici-ie-internships.github.io/staj/> · Astro 7 static s
 online document submission (Teslim) talking to an Apps Script portal.
 
 - **Teaching assistants:** day-to-day edits → [`_maintainer/QUICKSTART.md`](_maintainer/QUICKSTART.md).
-- **Risky operations** (term rollover, form key, reCAPTCHA, results folder, rollback) → [`_maintainer/DEPLOYMENT.md`](_maintainer/DEPLOYMENT.md).
+- **Risky operations** (term rollover, form key, reCAPTCHA, publishing results, rollback) → [`_maintainer/DEPLOYMENT.md`](_maintainer/DEPLOYMENT.md).
 - **Release runbook** → [`design/RELEASE.md`](design/RELEASE.md).
 
 ## Local commands

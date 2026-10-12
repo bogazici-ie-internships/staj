@@ -43,8 +43,10 @@ const SettingsSchema = z.object({
     portal_url: z.string().url(),
     form_key: z.string(),
     recaptcha_site_key: z.string(),
-    sonuclar_klasoru: z.string().url(),
   }),
+  /** Optional one-line remark under the results file on Sonuçlar (RESULTS-01), e.g. that late submissions follow. */
+  sonuclar: z.object({ not: z.string().default(""), not_en: z.string().default("") }).strict()
+    .refine((o) => !o.not === !o.not_en, "sonuclar.not ve not_en birlikte doldurulmalı").default({ not: "", not_en: "" }),
   serit_baslangic: z.string(),
   serit_bitis: z.string(),
   takvim: z.array(TakvimSchema),

@@ -137,10 +137,10 @@
     "en": "./"
    },
    "meta": {
-    "description": "Where compulsory internship evaluation results are announced, with access to the results folder.",
+    "description": "Where compulsory internship evaluation results are announced, with the current results list (PDF).",
     "og:locale": "en_US",
     "og:title": "Results · Boğaziçi IE — Compulsory Internship Guide",
-    "og:description": "Where compulsory internship evaluation results are announced, with access to the results folder.",
+    "og:description": "Where compulsory internship evaluation results are announced, with the current results list (PDF).",
     "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
     "og:url": "https://bogazici-ie-internships.github.io/staj/en/sonuclar/",
     "twitter:card": "summary_large_image"
@@ -391,10 +391,10 @@
     "en": "../en/sonuclar/"
    },
    "meta": {
-    "description": "Zorunlu staj değerlendirme sonuçlarının ilan edildiği sayfa ve sonuç klasörüne erişim.",
+    "description": "Zorunlu staj değerlendirme sonuçlarının ilan edildiği sayfa ve güncel sonuç listesi (PDF).",
     "og:locale": "tr_TR",
     "og:title": "Sonuçlar · Boğaziçi EM — Zorunlu Staj Kılavuzu",
-    "og:description": "Zorunlu staj değerlendirme sonuçlarının ilan edildiği sayfa ve sonuç klasörüne erişim.",
+    "og:description": "Zorunlu staj değerlendirme sonuçlarının ilan edildiği sayfa ve güncel sonuç listesi (PDF).",
     "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
     "og:url": "https://bogazici-ie-internships.github.io/staj/sonuclar/",
     "twitter:card": "summary_large_image"

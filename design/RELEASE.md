@@ -88,7 +88,6 @@ git push origin main          # deploy.yml of the MkDocs site runs again and rep
   - the row in "Teslim Listesi".
 - [ ] Delete that ZIP and that row afterwards, so the Grader never sees them.
 - [ ] Umami → Events: `submit_start`, `submit_attempt`, `submit_success` arrived for that submission.
-- [ ] Results folder sharing is still restricted (DEPLOYMENT.md §5).
 
 ## PR description (template)
 

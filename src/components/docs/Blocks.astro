@@ -9,6 +9,7 @@ import { docPath } from "../../lib/paths";
 import { docRowId } from "../../lib/search/ids";
 import { settings } from "../../lib/settings";
 import { fileInfo } from "../../lib/belgeler";
+import Results from "./Results.astro";
 import type { Lang } from "../../lib/dates";
 interface Props { blocks: Block[]; lang: Lang; qaBase?: string }
 const { blocks, lang, qaBase } = Astro.props;
@@ -93,6 +94,7 @@ const i = settings.iletisim;
     ))}</div>
   ) :
   b.kind === "action" ? <p><a class="btn btn--primary" href={href(b.href)} rel={b.href.startsWith("link:") ? "noopener" : undefined}>{t(b.label, lang)}<Icon name="arrow-up-right" size={18} /></a></p> :
+  b.kind === "results" ? <Results labels={b} lang={lang} /> :
   b.kind === "contacts" ? (
     <div class="contacts">
       <section class="contact contact--primary" aria-labelledby="ct-primary">

@@ -24,7 +24,7 @@ let a: string, b: string, urgent: string;
 test.describe.configure({ mode: "serial" });
 test.beforeAll(async () => {
   test.setTimeout(240_000);
-  a = build("a", '  mesaj: "Sonuçlar klasörü güncellendi."\n  mesaj_en: "The results folder has been updated."\n  bitis: "2026-10-20 23:59"\n');
+  a = build("a", '  mesaj: "Sonuç listesi güncellendi."\n  mesaj_en: "The results list has been updated."\n  bitis: "2026-10-20 23:59"\n');
   b = build("b", '  mesaj: "Geç teslim süresi uzatıldı."\n  mesaj_en: "The late window has been extended."\n  bitis: "2026-10-20 23:59"\n');
   urgent = build("u", '  mesaj: "Portal bakımda."\n  mesaj_en: "The portal is under maintenance."\n  bitis: "2026-10-20 23:59"\n  kapatilamaz: true\n');
 });
@@ -33,7 +33,7 @@ const band = (p: Page) => p.locator(".duyuru");
 test("duyuru: kapatılır, hatırlanır; yeni duyuru yeniden görünür", async ({ page }) => {
   await open(page, "", { site: a, at: AT });
   await expect(band(page)).toBeVisible();
-  await expect(band(page)).toContainText("Sonuçlar klasörü güncellendi.");
+  await expect(band(page)).toContainText("Sonuç listesi güncellendi.");
   await band(page).getByRole("button", { name: "Duyuruyu kapat" }).click();
   await expect(band(page)).toBeHidden();
   await expect(page.locator("#main")).toBeFocused();

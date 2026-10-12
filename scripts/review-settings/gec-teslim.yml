@@ -69,8 +69,15 @@ baglantilar:
   # the portal also skips verification until RECAPTCHA_SECRET is set in Apps
   # Script Script Properties. Never put the secret here. See DEPLOYMENT.md.
   recaptcha_site_key: "6LdtE78tAAAAANYycOhRc8c8r-Fzda6wlHO2ErGJ"
-  # Results folder — sharing must be RESTRICTED (authorized people/students), NOT "public".
-  sonuclar_klasoru: "https://drive.google.com/drive/folders/16EzmFYGdXy477NIv4Z49AkiJIRAOdIdi"
+
+# --- Sonuçlar (RESULTS-01) ----------------------------------------------------
+# The results list is the PDF in public/internships/ (npm run results:publish -- <campaign>; see QUICKSTART.md).
+# Optional one-line remark shown under it, both languages or neither, e.g.
+#   not: "Geç teslimlerin sonuçları ayrıca eklenecek."
+#   not_en: "Results for late submissions will be added separately."
+sonuclar:
+  not: ""
+  not_en: ""
 
 # --- Homepage "Important Dates" (from BU's academic calendar) ----------------
 # Each row can be EITHER a single day OR a date range:
@@ -153,7 +160,7 @@ takvim:
 # Leave it commented out when there is nothing to announce. Inline Markdown links are allowed.
 # Students can close the band (remembered in their browser); add `kapatilamaz: true` for urgent notices.
 # duyuru:
-#   mesaj: "Sonuçlar klasörü güncellendi."
-#   mesaj_en: "The results folder has been updated."
+#   mesaj: "Sonuç listesi güncellendi."
+#   mesaj_en: "The results list has been updated."
 #   bitis: "2026-10-20 23:59"
 #   kapatilamaz: false

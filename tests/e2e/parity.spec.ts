@@ -23,6 +23,9 @@ const shipped = (rel: string) => {
   return CHROME.pages.find((p: any) => p.key === key).description[rel.startsWith("en/") ? "en" : "tr"];
 };
 
+// RESULTS-01: the Sonuçlar description named the old external results link, which is gone; it was changed in
+// tests/baseline/url-inventory.json too (on purpose), so Sonuçlar is compared like an unchanged page.
+
 // UPDATE-04 §6: these <title>s now follow the new page headings (URLs unchanged); all others match MkDocs.
 const TITLE_CHANGED: Record<string, string> = {
   "en/": "Compulsory Internship Guide · Boğaziçi University Industrial Engineering",

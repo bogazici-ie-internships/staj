@@ -1,0 +1,62 @@
+---
+// Sonuçlar › Sonuç Listesi (RESULTS-01): the results PDF of the current term from public/internships, its last
+// update (git commit time, Türkiye time), an "open" button (no download button, maintainer's choice) and, on
+// desktop only, an embedded viewer. The
+// viewer sits in a <template> and is inserted by the script below, so phones never load the PDF with the page.
+// Earlier terms' files are listed under it. No file → one line, no empty viewer.
+import Icon from "../../icons/Icon.astro";
+import { t } from "../../lib/content";
+import type { Lang } from "../../lib/dates";
+import { pickResults, readResults, resultsHref, resultsSize, termLabel, updatedText } from "../../lib/results";
+import { settings } from "../../lib/settings";
+interface Labels { open: { tr: string; en: string }; newTab: { tr: string; en: string };
+  updated: { tr: string; en: string }; viewer: { tr: string; en: string }; empty: { tr: string; en: string }; earlier: { tr: string; en: string } }
+interface Props { labels: Labels; lang: Lang }
+const { labels: L, lang } = Astro.props;
+const { current, earlier } = pickResults(readResults(), settings.donem.campaign_id);
+const note = lang === "en" ? settings.sonuclar.not_en : settings.sonuclar.not;
+const fill = (s: { tr: string; en: string }, k: string, v: string) => t(s, lang).replace(`{${k}}`, v);
+const [updPre, updPost = ""] = t(L.updated, lang).split("{time}");
+---
+<div class="results" data-results={current ? "file" : "empty"}>
+  {current ? (
+    <>
+      <div class="results__card">
+        <p class="results__term"><Icon name="file-text" size={20} /><span>{termLabel(current.campaign, lang)}</span><span class="results__size mono">PDF · {resultsSize(current, lang)}</span></p>
+        <p class="results__updated">{updPre}<time datetime={new Date(current.updatedMs).toISOString()}>{updatedText(current, lang)}</time>{updPost}</p>
+        {note && <p class="results__note">{note}</p>}
+        <p class="results__actions">
+          <a class="btn btn--primary" href={resultsHref(current)} target="_blank" rel="noopener" data-results-open>{t(L.open, lang)}<span class="visually-hidden"> ({t(L.newTab, lang)})</span><Icon name="arrow-up-right" size={18} /></a>
+        </p>
+      </div>
+      <div class="results__viewer" data-results-viewer hidden>
+        <template><iframe src={resultsHref(current)} title={fill(L.viewer, "term", termLabel(current.campaign, lang))}></iframe></template>
+      </div>
+      {earlier.length > 0 && (
+        <div class="results__earlier">
+          <h3 class="results__earlier-title">{t(L.earlier, lang)}</h3>
+          <ul class="files" role="list">{earlier.map((f) => (
+            <li><a class="files__a" href={resultsHref(f)} target="_blank" rel="noopener"><Icon name="file-text" size={20} /><span class="files__name">{termLabel(f.campaign, lang)}<span class="visually-hidden"> ({t(L.newTab, lang)})</span></span><span class="files__meta mono">PDF · {resultsSize(f, lang)} · <time datetime={new Date(f.updatedMs).toISOString()}>{updatedText(f, lang)}</time></span></a></li>
+          ))}</ul>
+        </div>
+      )}
+    </>
+  ) : (
+    <p class="results__empty">{t(L.empty, lang)}</p>
+  )}
+</div>
+
+<script>
+  // Desktop with a mouse: embed the PDF. Phones and tablets keep the buttons only (iOS shows one page of an
+  // embedded PDF, and the file should not load with the page there).
+  const wide = matchMedia("(min-width: 961px) and (pointer: fine)");
+  const mount = () => {
+    if (!wide.matches) return;
+    for (const v of document.querySelectorAll<HTMLElement>("[data-results-viewer][hidden]")) {
+      const tpl = v.querySelector("template");
+      if (tpl) { v.append(tpl.content.cloneNode(true)); v.hidden = false; }
+    }
+  };
+  mount();
+  wide.addEventListener("change", mount);
+</script>

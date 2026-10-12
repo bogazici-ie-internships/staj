@@ -1,7 +1,7 @@
 # sonuclar — migrated from main docs/sonuclar.md (+ .en.md) by scripts/migrate/convert.mjs,
 # then reviewed by hand (UPDATE-06 Phase 2a; voice UPDATE-03, terms UPDATE-05). `src` = source
 # lines on main, used by the coverage report. The results lookup panel was cancelled (D-79):
-# this page keeps the live content — announcement timing and the restricted results folder.
+# this page keeps the live content — announcement timing — and, since RESULTS-01, shows the results PDF itself.
 page: sonuclar
 anchor: { tr: sonuclar, en: results }
 title: { tr: Sonuçlar, en: Results }
@@ -16,16 +16,20 @@ lead:
       en: Accepted workdays, missing items and notes appear in the results list, which is published periodically.
     src: sonuclar.md:10 · sonuclar.en.md:10
 sections:
-  # REVIEW-06 Note 3: the left column (results folder button + announcement timing) gets a heading with the same
-  # rule as the right column, so the two tops line up.
+  # REVIEW-06 Note 3: the left column (results file + announcement timing) gets a heading with the same rule as the
+  # right column, so the two tops line up. RESULTS-01: the file is shown here (no external folder link).
   - anchor: { tr: sonuc-listesi, en: results-list }
     title: { tr: "Sonuç Listesi", en: "Results List" }
-    src: new — REVIEW-06 Note 3, heading for the results-folder button and the announcement timing
+    src: new — REVIEW-06 Note 3, heading for the results file and the announcement timing
     blocks:
-      - kind: action
-        label: { tr: "Sonuç klasörünü aç", en: "Open the results folder" }
-        href: link:sonuclar_klasoru
-        src: sonuclar.md:12 · sonuclar.en.md:12
+      - kind: results
+        src: new — RESULTS-01, the results PDF on the page
+        open: { tr: "Sonuç dosyasını aç", en: "Open the results file" }
+        newTab: { tr: "yeni sekmede açılır", en: "opens in a new tab" }
+        updated: { tr: "Son güncelleme: {time}", en: "Last updated: {time}" }
+        viewer: { tr: "{term} sonuç listesi (PDF)", en: "{term} results list (PDF)" }
+        empty: { tr: "Sonuçlar henüz yayımlanmadı.", en: "Results have not been published yet." }
+        earlier: { tr: "Önceki Dönemler", en: "Earlier Terms" }
       - kind: callout
         tone: note
         title: { tr: "İlan Zamanı", en: "Announcement Timing" }

@@ -89,8 +89,11 @@ test("İletişim: kişiler settings.yml'den, koordinatör rolü, Site Hakkında 
   await expect(page.locator(".contact").nth(1)).toContainText("Staj koordinatörü");
   await expect(page.locator(".contact").nth(1)).toContainText("Prof. Dr. Refik Güllü");
   await expect(page.locator(".doc__main > :last-child")).toHaveAttribute("id", "site-hakkinda"); // last in the page body (REVIEW-01 wraps the body in .doc__main)
+  // RESULTS-01: Sonuçlar shows the results file (or says none is out yet); no external folder link. The file itself
+  // is tested in results.spec.ts, so this holds whether or not public/internships has a PDF.
   await open(page, "sonuclar/");
-  await expect(page.locator("a.btn--primary", { hasText: "Sonuç klasörünü aç" })).toHaveAttribute("href", /drive\.google\.com/);
+  await expect(page.locator("[data-results]")).toHaveAttribute("data-results", /^(file|empty)$/);
+  await expect(page.locator('main a[href*="//drive."]')).toHaveCount(0);
 });
 
 test("arama: ilk açılışta palet yüklenirken yazılanlar kaybolmaz; düğmeye hover önceden yükler", async ({ page }) => {

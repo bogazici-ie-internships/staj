@@ -10,6 +10,7 @@ import { plain } from "../inline-md";
 import { pagePath } from "../paths";
 import { settings, site } from "../settings";
 import { longDateTime, type Lang } from "../dates";
+import { pickResults, readResults, termLabel, updatedText } from "../results";
 import { ui } from "../../i18n/ui";
 import { fold } from "./fold";
 import { docRowId, termId } from "./ids";
@@ -42,6 +43,11 @@ function blockText(blocks: Block[], lang: Lang): string {
     else if (b.kind === "files") for (const it of b.items) out.push(t(it.label, lang));
     else if (b.kind === "table") for (const r of b.rows) out.push(r.cells.map((c) => t(c, lang)).join(" "));
     else if (b.kind === "action") out.push(t(b.label, lang));
+    else if (b.kind === "results") {
+      // The card's text, never the PDF's contents (RESULTS-01).
+      const { current } = pickResults(readResults(), settings.donem.campaign_id);
+      out.push(current ? `${termLabel(current.campaign, lang)} ${t(b.open, lang)} ${t(b.updated, lang).replace("{time}", updatedText(current, lang))}` : t(b.empty, lang));
+    }
   }
   return out.map(clean).filter(Boolean).join(" ");
 }
