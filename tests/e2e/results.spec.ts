@@ -76,6 +76,19 @@ test("kart: EN metinler ve tarih biçimi", async ({ page }) => {
   await expect(page.locator(".results__earlier li .files__name")).toHaveText([/^Spring 2026/, /^Fall 2025/]);
 });
 
+test("yerleşim: dosya varken tek sütun ve tam genişlik görüntüleyici; yokken iki başlık yan yana (1440 px)", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const heads = () => page.locator(".doc__main > .ds > h2").evaluateAll((hs) => hs.map((h) => Math.round(h.getBoundingClientRect().top)));
+  await open(page, "sonuclar/", { site: file });
+  const [a, b] = await heads();
+  expect(b).toBeGreaterThan(a);
+  const w = await page.evaluate(() => [document.querySelector(".results__viewer")!.getBoundingClientRect().width, document.querySelector(".doc__main")!.getBoundingClientRect().width]);
+  expect(Math.round(w[0])).toBe(Math.round(w[1]));
+  await open(page, "sonuclar/", { site: empty });
+  const [c, d] = await heads();
+  expect(c).toBe(d);
+});
+
 test("telefonda görüntüleyici yok ve PDF sayfayla birlikte yüklenmez", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   const pdfs: string[] = [];

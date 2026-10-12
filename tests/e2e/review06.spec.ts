@@ -62,7 +62,10 @@ test("Note 3: Süreç rail sentence, Kurallar without the 1.1 pull quote and wit
   await open(page, "sonuclar/");
   const tops = await page.locator(".doc__main > .ds > h2").evaluateAll((hs) => hs.map((h) => Math.round(h.getBoundingClientRect().top)));
   expect(tops.length).toBe(2);
-  expect(tops[0]).toBe(tops[1]);
+  // RESULTS-01: with a results file the page is one column so the embedded PDF gets the full width (the heads
+  // then stack); without one the two heads line up as before. Both layouts are pinned in results.spec.ts.
+  if (await page.locator('[data-results="file"]').count()) expect(tops[1]).toBeGreaterThan(tops[0]);
+  else expect(tops[0]).toBe(tops[1]);
   await expect(page.locator(".doc__main > .ds > h2").first()).toHaveText(/Sonuç Listesi/);
   await open(page, "iletisim/");
   await expect(page.locator(".callout")).toHaveCount(0);
