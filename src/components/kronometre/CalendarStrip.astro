@@ -53,7 +53,8 @@ const segs = S.bloklar.map((b, i) => {
   return { ...b, id: `cal-pop-${i}`, range, verdict: row ? (row.notu || row.verdict) : "" };
 });
 ---
-<div class="cal">
+{/* data-nosnippet (MkDocs b36bbaa): Google shows the meta description, not these dates run together. */}
+<div class="cal" data-nosnippet>
   <div class="cal__scroll" data-strip-scroll tabindex="0" role="region" aria-label={t(text.scrollHint, lang)}>
     <div class="cal__inner" data-today-track data-start={S.bas_iso} data-end={S.bit_iso}>
       <p class="visually-hidden">{aria}</p>

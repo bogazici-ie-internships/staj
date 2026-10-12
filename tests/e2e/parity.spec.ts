@@ -68,6 +68,18 @@ for (const [rel, old] of Object.entries<any>(INV.pages)) {
   }
 }
 
+// The calendar stays out of Google snippets (its spans run together there, e.g. "Bahar Dönemi09.02…"), so the
+// result shows the meta description instead. Google honours data-nosnippet only on span/div/section — MkDocs
+// b36bbaa put it on the <ol>, which Google ignored — hence the element type in the selector.
+for (const rel of ["", "en/"]) {
+  test(`/${rel}: takvim Google snippet'ine girmez (data-nosnippet)`, async ({ page }) => {
+    await open(page, rel);
+    await expect(page.locator("div.cal[data-nosnippet]")).toHaveCount(1);
+    await expect(page.locator(".cal__list")).toHaveCount(1);
+    await expect(page.locator("div.cal[data-nosnippet] .cal__list")).toHaveCount(1);
+  });
+}
+
 test("sitemap.xml aynı adreste ve 18 sayfanın hepsini listeler", async () => {
   const xml = readFileSync(join(SITE, "sitemap.xml"), "utf8");
   for (const url of INV.sitemap) expect(xml).toContain(`<loc>${url}</loc>`);
