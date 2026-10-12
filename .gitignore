@@ -1,7 +1,7 @@
-# MkDocs build output
+# Old MkDocs build output (the MkDocs site was replaced in 2026-10): it must not come back.
 /site/
 
-# Claude Code local preview setting (mkdocs serve)
+# Claude Code local settings and preview servers (.claude/launch.json)
 /.claude/
 
 # Internal design exploration / preview images (not part of the site, not needed in the public repo)
@@ -36,3 +36,30 @@ tests/e2e/playwright-report/
 
 # Design-tool context (impeccable) — local only, not part of the site
 /PRODUCT.md
+
+# Astro (redesign)
+/dist/
+/node_modules/
+/.astro/
+/test-results/
+/playwright-report/
+/.lighthouseci/
+/dist-*/
+/tests/visual/__screenshots__/
+
+# Review images and reports are generated, not committed (UPDATE-07, D-142): the public repo keeps the text
+# reports only. Regenerate: npm run shots / grid / states / receipts, scripts/lighthouse.sh.
+/design/polish/**/*.jpg
+/design/polish/**/*.png
+/design/screenshots/**/*.jpg
+/design/reviews/teslim-states/
+/design/reviews/makbuz/
+/design/lighthouse/*.json
+
+# Review server logs (scripts/review-servers.sh)
+/.review-logs/
+
+# Internal process material (reviews, decisions log, briefs, review and comparison pages) stays local; only the
+# release runbook is public. Review build settings live in scripts/review-settings/.
+/design/*
+!/design/RELEASE.md

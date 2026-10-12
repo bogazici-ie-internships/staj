@@ -1,0 +1,52 @@
+---
+// Sonuçlar › Sonuç Listesi (RESULTS-01): the "All Internships" results PDF from public/internships, its last update
+// (git commit time, Türkiye time), an "open" button (no download button, maintainer's choice) and, on desktop only,
+// an embedded viewer that replaces the button (the file is already on the page there). The viewer sits in a
+// <template> and is inserted by the script below, so phones never load the PDF with the page. No file → one line.
+import Icon from "../../icons/Icon.astro";
+import { t } from "../../lib/content";
+import type { Lang } from "../../lib/dates";
+import { readResults, resultsHref, resultsSize, updatedText } from "../../lib/results";
+import { settings } from "../../lib/settings";
+type L2 = { tr: string; en: string };
+interface Labels { scope: L2; open: L2; newTab: L2; updated: L2; viewer: L2; empty: L2 }
+interface Props { labels: Labels; lang: Lang }
+const { labels: L, lang } = Astro.props;
+const current = readResults();
+const note = lang === "en" ? settings.sonuclar.not_en : settings.sonuclar.not;
+const [updPre, updPost = ""] = t(L.updated, lang).split("{time}");
+---
+<div class="results" data-results={current ? "file" : "empty"}>
+  {current ? (
+    <>
+      <div class="results__card">
+        <p class="results__term"><Icon name="file-text" size={20} /><span>{t(L.scope, lang)}</span><span class="results__size mono">PDF · {resultsSize(current, lang)}</span></p>
+        <p class="results__updated">{updPre}<time datetime={new Date(current.updatedMs).toISOString()}>{updatedText(current, lang)}</time>{updPost}</p>
+        {note && <p class="results__note">{note}</p>}
+        <p class="results__actions">
+          <a class="btn btn--primary" href={resultsHref(current)} target="_blank" rel="noopener" data-results-open>{t(L.open, lang)}<span class="visually-hidden"> ({t(L.newTab, lang)})</span><Icon name="arrow-up-right" size={18} /></a>
+        </p>
+      </div>
+      <div class="results__viewer" data-results-viewer hidden>
+        <template><iframe src={resultsHref(current)} title={t(L.viewer, lang)}></iframe></template>
+      </div>
+    </>
+  ) : (
+    <p class="results__empty">{t(L.empty, lang)}</p>
+  )}
+</div>
+
+<script>
+  // Desktop with a mouse: embed the PDF and drop the "open" button. Phones and tablets keep the button only (iOS
+  // shows one page of an embedded PDF, and the file should not load with the page there).
+  const wide = matchMedia("(min-width: 961px) and (pointer: fine)");
+  const mount = () => {
+    if (!wide.matches) return;
+    for (const v of document.querySelectorAll<HTMLElement>("[data-results-viewer][hidden]")) {
+      const tpl = v.querySelector("template");
+      if (tpl) { v.append(tpl.content.cloneNode(true)); v.hidden = false; v.closest<HTMLElement>("[data-results]")?.setAttribute("data-embedded", ""); }
+    }
+  };
+  mount();
+  wide.addEventListener("change", mount);
+</script>

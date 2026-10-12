@@ -1,0 +1,27 @@
+---
+// One section of a migrated page: heading (with the live anchor), its blocks, nested sections.
+import type { Section } from "../../content/schemas/docs";
+import Blocks from "./Blocks.astro";
+import { t } from "../../lib/content";
+import { md } from "../../lib/inline-md";
+import type { Lang } from "../../lib/dates";
+interface Props { section: Section; lang: Lang; level: 2 | 3 | 4; n?: string; qaBase?: string }
+const { section: s, lang, level, n, qaBase } = Astro.props;
+const H = `h${level}` as "h2" | "h3" | "h4";
+// REVIEW-01 Note 4 (D-114): a heading that starts with its own number ("1. Cover Page") shows it in the shared
+// number column; SSS topics get theirs from the page (`n`). The title text in the content is unchanged.
+const raw = t(s.title, lang);
+const m = raw.match(/^(\d+(?:\.\d+)*)\.\s+(.*)$/s);
+const num = n ?? m?.[1];
+const title = m ? m[2] : raw;
+---
+<section class={`ds ds--${level}`} aria-labelledby={t(s.anchor, lang)}>
+  {s.alias && <span class="ds__alias" id={t(s.alias, lang)} aria-hidden="true" />}
+  {num ? (
+    <H class={`ds__title ds__title--${level} numbered${level === 2 ? " draw draw--double" : ""}`} id={t(s.anchor, lang)}><span class="num" aria-hidden="true">{num}</span><span><span class="visually-hidden">{num}. </span><Fragment set:html={md(title, lang)} /></span></H>
+  ) : (
+    <H class={`ds__title ds__title--${level}${level === 2 ? " draw draw--double" : ""}`} id={t(s.anchor, lang)} set:html={md(raw, lang)} />
+  )}
+  <Blocks blocks={s.blocks} lang={lang} qaBase={qaBase} />
+  {s.sections?.map((c) => <Astro.self section={c} lang={lang} level={(Math.min(level + 1, 4)) as 3 | 4} />)}
+</section>

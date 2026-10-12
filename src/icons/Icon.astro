@@ -1,0 +1,9 @@
+---
+// One stroke icon system (D-44): Lucide paths, 1.75 px stroke, square caps and
+// mitred joins to match the 0–2 px radius world. Always next to text; aria-hidden.
+import { ICONS, type IconName } from "./set";
+interface Props { name: IconName; size?: number; class?: string }
+const { name, size = 20, class: cls } = Astro.props;
+---
+<svg class:list={["icon", cls]} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+  stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false" set:html={ICONS[name]} />
