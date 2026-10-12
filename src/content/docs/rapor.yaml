@@ -1,0 +1,369 @@
+# rapor — migrated from main docs/rapor.md (+ .en.md) by scripts/migrate/convert.mjs,
+# then reviewed by hand (UPDATE-06 Phase 2a; voice UPDATE-03, terms UPDATE-05). Section names of the
+# report stay in English, as on the live site (the report itself is written in English).
+# `src` = source lines on main, used by the coverage report.
+page: rapor
+anchor:
+  tr: rapor-hazrlama
+  en: report-preparation
+title:
+  tr: Rapor Hazırlama
+  en: Report Preparation
+src: rapor.md:6 · rapor.en.md:6
+meta:
+  src: rapor.md:2 · rapor.en.md:2
+  note: → chrome.yaml pages.description (already migrated, UPDATE-03)
+lead:
+  - kind: p
+    text:
+      tr: Staj raporu **İngilizce** yazılır ve **ekler hariç en fazla 20 sayfadır**. Rapor aşağıdaki şablona uyar; kuralların tam metni için **[Internship Handbook](doc:Revised-Handbook-of-Internship.pdf)**'a bakınız.
+      en: The internship report is written in **English**, is at most **20 pages excluding appendices** and follows the outline below. The full rules are in the **[Internship Handbook](doc:Revised-Handbook-of-Internship.pdf)**.
+    src: rapor.md:8 · rapor.en.md:8
+  - kind: callout
+    tone: summary
+    title:
+      tr: Bir Bakışta
+      en: At a Glance
+    src: rapor.md:12 · rapor.en.md:13
+    blocks:
+      - kind: list
+        items:
+          - text:
+              tr: Rapor **İngilizce** yazılır; alt sorular soru-cevap biçiminde değil, **akıcı paragraflar** hâlinde ele alınır.
+              en: The report is written in **English**; the prompts are addressed in **coherent paragraphs**, not in a question-and-answer format.
+            src: rapor.md:13 · rapor.en.md:14
+          - text:
+              tr: "Rapor **ekler hariç en fazla 20 sayfa** olmalıdır."
+              en: The report must not exceed **20 pages excluding appendices**.
+            src: rapor.md:14 · rapor.en.md:16
+          - text:
+              tr: "Rapor **8 zorunlu bölümden** oluşur: Cover Page, Executive Summary, Table of Contents, Timetable, Company/Organization Introduction, ana bölüm olan Internship Activities, Assessment ve Conclusions."
+              en: "The report has **8 required sections**: Cover Page, Executive Summary, Table of Contents, Timetable, Company/Organization Introduction, Internship Activities (the main body), Assessment and Conclusions."
+            src: rapor.md:15 · rapor.en.md:17
+          - text:
+              tr: "**Appendices** ve **References** duruma göre eklenir: yalnızca ek materyal veya kaynak kullandıysanız gereklidir ve 20 sayfa sınırına sayılmaz."
+              en: "**Appendices** and **References** are added when needed: they are required only if you use supplementary material or outside sources, and they do not count towards the 20-page limit."
+            src: rapor.md:16 · rapor.en.md:20
+          - text:
+              tr: Raporun ana bölümü olan **Internship Activities**, **EM bakış açısıyla** yazılır; [Konu Rehberi](page:kurallar#konu-rehberi)'nden yararlanabilirsiniz.
+              en: "**Internship Activities**, the main body, must be written from an **industrial engineering perspective**; you may use the [Topic Guide](page:kurallar#konu-rehberi)."
+            src: rapor.md:17 · rapor.en.md:23
+          - text:
+              tr: "Zorunlu bir bölüm eksikse, 20 sayfa sınırı aşılırsa veya bölümler soru-cevap biçiminde yazılırsa değerlendirmede kabul edilen staj gününden kesinti yapılabilir."
+              en: "Missing required sections, exceeding the 20-page limit or writing sections in a question-and-answer format may lead to a deduction from the accepted internship days."
+            src: new — report format rule (missing sections, page limit, question-and-answer format)
+          - text:
+              tr: "Her staj için ayrı bir rapor hazırlanır; aynı şirkette yapılan farklı stajlar da ayrı raporlarla teslim edilir."
+              en: "A separate report must be prepared for each internship; different internships completed at the same company are also submitted with separate reports."
+            src: new — REVIEW-05 Addition (H-01), one report per internship
+sections:
+  - anchor:
+      tr: rapor-sablonu
+      en: report-outline
+    title:
+      tr: Rapor Şablonu
+      en: Report Outline
+    src: rapor.md:19 · rapor.en.md:26
+    blocks:
+      - kind: p
+        text:
+          tr: "Rapor aşağıdaki **8 zorunlu bölümden** oluşur:"
+          en: "The report consists of the following **8 required sections**:"
+        src: rapor.md:21 · rapor.en.md:28
+    sections:
+      - anchor:
+          tr: 1-cover-page
+          en: 1-cover-page
+        title:
+          tr: 1. Cover Page
+          en: 1. Cover Page
+        src: rapor.md:26 · rapor.en.md:33
+        blocks:
+          - kind: p
+            text:
+              tr: "Kapak sayfasında şunlar yer almalıdır:"
+              en: "The cover page must show:"
+            src: rapor.md:27 · rapor.en.md:34
+          - kind: list
+            items:
+              - text:
+                  tr: "**Öğrenci adı ve numarası**"
+                  en: "**Student name and ID**"
+                src: rapor.md:29 · rapor.en.md:36
+              - text:
+                  tr: "**Staj başlangıç ve bitiş tarihleri**"
+                  en: "**Internship start and end dates**"
+                src: rapor.md:30 · rapor.en.md:37
+              - text:
+                  tr: "**Toplam staj günü**"
+                  en: "**Total number of internship days**"
+                src: rapor.md:31 · rapor.en.md:38
+              - text:
+                  tr: "**Staj türü:** Production veya General"
+                  en: "**Internship type:** Production or General"
+                src: rapor.md:32 · rapor.en.md:39
+              - text:
+                  tr: "**Şirket/kurum adı**"
+                  en: "**Company or institution name**"
+                src: rapor.md:33 · rapor.en.md:40
+      - anchor:
+          tr: 2-executive-summary
+          en: 2-executive-summary
+        title:
+          tr: 2. Executive Summary
+          en: 2. Executive Summary
+        src: rapor.md:37 · rapor.en.md:44
+        blocks:
+          - kind: p
+            text:
+              tr: "Yaklaşık **1 sayfa** uzunluğunda olmalı ve şu iki kısa kısımdan oluşmalıdır:"
+              en: "Approximately **1 page**, in these two short parts:"
+            src: rapor.md:38 · rapor.en.md:45
+          - kind: list
+            items:
+              - text:
+                  tr: Şirketin/kurumun kısa tanıtımı
+                  en: A brief introduction to the company or institution
+                src: rapor.md:40 · rapor.en.md:47
+              - text:
+                  tr: Staj döneminde yapılan başlıca faaliyetlerin kısa özeti
+                  en: A concise summary of the main activities completed during the internship
+                src: rapor.md:41 · rapor.en.md:48
+      - anchor:
+          tr: 3-table-of-contents
+          en: 3-table-of-contents
+        title:
+          tr: 3. Table of Contents
+          en: 3. Table of Contents
+        src: rapor.md:45 · rapor.en.md:52
+        blocks:
+          - kind: p
+            text:
+              tr: Bölüm başlıkları **sayfa numaralarıyla** birlikte listelenir.
+              en: Section headings are listed with their **page numbers**.
+            src: rapor.md:46 · rapor.en.md:53
+      - anchor:
+          tr: 4-timetable
+          en: 4-timetable
+        title:
+          tr: 4. Timetable
+          en: 4. Timetable
+        src: rapor.md:50 · rapor.en.md:57
+        blocks:
+          - kind: p
+            text:
+              tr: "Her satır staj dönemindeki bir **güne** karşılık gelir. Şablonda **4 sütun** bulunur:"
+              en: "Each row represents one **day** of the internship. The template has **4 columns**:"
+            src: rapor.md:51 · rapor.en.md:58
+          - kind: list
+            items:
+              - text:
+                  tr: "**Day:** Haftanın günü; şablonda Pazartesi–Cumartesi olarak hazır yazılıdır (tarih girilmez; sayfanın başındaki haftalık tarih aralığı yeterlidir)."
+                  en: "**Day:** The day of the week; the template already lists Monday–Saturday (no date is entered; the weekly date range at the top of the page is sufficient)."
+                src: rapor.md:53 · rapor.en.md:60
+              - text:
+                  tr: "**Work Accomplished:** O gün yapılan işler; Internship Activities bölümüyle ilişkili olmalıdır."
+                  en: "**Work Accomplished:** The work done that day; it must relate to the Internship Activities section."
+                src: rapor.md:54 · rapor.en.md:61
+              - text:
+                  tr: "**Page Nr.:** Rapordaki ilgili sayfa."
+                  en: "**Page Nr.:** The corresponding page in the report."
+                src: rapor.md:55 · rapor.en.md:62
+              - text:
+                  tr: "**Working Hours:** O gün çalışılan saat."
+                  en: "**Working Hours:** The hours worked that day."
+                src: rapor.md:56 · rapor.en.md:63
+          - kind: p
+            text:
+              tr: "Örnek satır (İngilizce, raporda olduğu gibi):"
+              en: "Example row:"
+            src: rapor.md:58 · rapor.en.md:65
+          - kind: table
+            src: rapor.md:62 · rapor.en.md:67
+            lang: en   # the example row is English in both languages, as in the report (live: <div lang="en">)
+            head:
+              - tr: Day
+                en: Day
+              - tr: Work Accomplished
+                en: Work Accomplished
+              - tr: Page Nr.
+                en: Page Nr.
+              - tr: Working Hours
+                en: Working Hours
+            rows:
+              - src: rapor.md:64 · rapor.en.md:69
+                cells:
+                  - tr: Tuesday
+                    en: Tuesday
+                  - tr: Applied moving-average forecasting to sales data; measured error with MAD
+                    en: Applied moving-average forecasting to sales data; measured error with MAD
+                  - tr: "14"
+                    en: "14"
+                  - tr: "8"
+                    en: "8"
+          - kind: p
+            text:
+              tr: "[Staj Timetable Şablonu](doc:Internship-Timetable.docx)"
+              en: "[Internship Timetable Template](doc:Internship-Timetable.docx)"
+            src: rapor.md:68 · rapor.en.md:71
+      - anchor:
+          tr: 5-companyorganization-introduction
+          en: 5-companyorganization-introduction
+        title:
+          tr: 5. Company/Organization Introduction
+          en: 5. Company/Organization Introduction
+        src: rapor.md:72 · rapor.en.md:75
+        blocks:
+          - kind: p
+            text:
+              tr: "Aşağıdaki **6 başlığın tümü** soru-cevap biçiminde değil, akıcı paragraflar hâlinde yazılır:"
+              en: "Write about **all 6 topics** below in coherent paragraphs, not in a question-and-answer format:"
+            src: rapor.md:73 · rapor.en.md:76
+          - kind: list
+            items:
+              - text:
+                  tr: Şirketin tam adı, kısa tarihçesi, adresi ve web sitesi
+                  en: Full name, brief history, address and website
+                src: rapor.md:76 · rapor.en.md:79
+              - text:
+                  tr: Sahiplik yapısı, başlıca hissedarlar ve payları
+                  en: Ownership structure, principal shareholders and their shares
+                src: rapor.md:77 · rapor.en.md:80
+              - text:
+                  tr: Faaliyet sektörü ile üretilen veya sunulan ürün ve hizmetler
+                  en: Industry and the products or services provided
+                src: rapor.md:78 · rapor.en.md:81
+              - text:
+                  tr: Son kullanıcılar, perakendeciler, diğer üreticiler ve çalışanlar dâhil müşteriler
+                  en: Customers, including end users, retailers, other manufacturers and employees
+                src: rapor.md:79 · rapor.en.md:82
+              - text:
+                  tr: Organizasyon şeması ve çalışan sayısı
+                  en: Organisation chart and number of employees
+                src: rapor.md:80 · rapor.en.md:83
+              - text:
+                  tr: Kurumdaki endüstri mühendislerinin yürüttüğü fonksiyonlar
+                  en: Functions performed by industrial engineers in the organisation
+                src: rapor.md:81 · rapor.en.md:84
+      - anchor:
+          tr: 6-internship-activities-main-body
+          en: 6-internship-activities-main-body
+        title:
+          tr: 6. Internship Activities (Main Body)
+          en: 6. Internship Activities (Main Body)
+        src: rapor.md:85 · rapor.en.md:88
+        blocks:
+          - kind: p
+            text:
+              tr: Bu bölüm raporun **ana bölümüdür**. Staj döneminde yaptığınız faaliyetleri **endüstri mühendisliği bakış açısıyla** anlatmanız beklenir. Beklenen analiz ve sorgulamalar için **[Konu Rehberi](page:kurallar#konu-rehberi)**'nden yararlanabilirsiniz.
+              en: This is the **main body of the report**. You are expected to describe the work you did during the internship from an **industrial engineering perspective**. For the expected analyses and questions, you may use the **[Topic Guide](page:kurallar#konu-rehberi)**.
+            src: rapor.md:86 · rapor.en.md:89
+      - anchor:
+          tr: 7-assessment
+          en: 7-assessment
+        title:
+          tr: 7. Assessment
+          en: 7. Assessment
+        src: rapor.md:92 · rapor.en.md:96
+        blocks:
+          - kind: p
+            text:
+              tr: "Aşağıdaki **4 konu** akıcı paragraflar hâlinde ele alınır:"
+              en: "The following **4 topics** are addressed in coherent paragraphs:"
+            src: rapor.md:93 · rapor.en.md:97
+          - kind: list
+            items:
+              - text:
+                  tr: Kazandığınız beceri ve nitelikler
+                  en: Skills and qualifications you gained
+                src: rapor.md:95 · rapor.en.md:99
+              - text:
+                  tr: Üstlendiğiniz sorumluluklar
+                  en: Responsibilities you assumed
+                src: rapor.md:96 · rapor.en.md:100
+              - text:
+                  tr: Stajın gelecekteki kariyer planınıza etkisi
+                  en: How the internship affected your future career plans
+                src: rapor.md:97 · rapor.en.md:101
+              - text:
+                  tr: Staj faaliyetlerinin ders bilgilerinizle ilişkisi
+                  en: How your internship activities related to your coursework
+                src: rapor.md:98 · rapor.en.md:102
+      - anchor:
+          tr: 8-conclusions
+          en: 8-conclusions
+        title:
+          tr: 8. Conclusions
+          en: 8. Conclusions
+        src: rapor.md:102 · rapor.en.md:106
+        blocks:
+          - kind: p
+            text:
+              tr: "Aşağıdaki **2 konu** akıcı paragraflar hâlinde ele alınır:"
+              en: "The following **2 topics** are addressed in coherent paragraphs:"
+            src: rapor.md:103 · rapor.en.md:107
+          - kind: list
+            items:
+              - text:
+                  tr: Stajdan çıkardığınız temel sonuçlar
+                  en: Your main conclusions from the internship
+                src: rapor.md:105 · rapor.en.md:109
+              - text:
+                  tr: Sektöre dair gözlemler
+                  en: Your observations about the industry
+                src: rapor.md:106 · rapor.en.md:110
+  - anchor:
+      tr: duruma-gore-eklenen-bolumler
+      en: sections-added-when-needed
+    title:
+      tr: Duruma Göre Eklenen Bölümler
+      en: Sections Added When Needed
+    src: rapor.md:111 · rapor.en.md:115
+    blocks:
+      - kind: p
+        text:
+          tr: Aşağıdaki iki bölüm **her raporda zorunlu değildir**; yalnızca içerikleri varsa raporun sonuna, bu sırayla eklenir. **20 sayfa sınırına sayılmazlar.** Gerekmediğinde bu bölümlerin eklenmemesi **gün kesintisine yol açmaz.**
+          en: The following two sections are **not required in every report**; they are added at the end of the report, in this order, only when there is content for them. **They do not count towards the 20-page limit.** Leaving them out when they are not needed **does not lead to a deduction of days.**
+        src: rapor.md:113 · rapor.en.md:117
+    sections:
+      - anchor:
+          tr: 9-appendices-and-supplementary-material
+          en: 9-appendices-and-supplementary-material
+        title:
+          tr: 9. Appendices and Supplementary Material
+          en: 9. Appendices and Supplementary Material
+        src: rapor.md:119 · rapor.en.md:125
+        blocks:
+          - kind: p
+            text:
+              tr: "Ana metni destekleyen, ancak metnin akışını bölecek materyaller:"
+              en: "Material that supports the main text but would interrupt its flow:"
+            src: rapor.md:120 · rapor.en.md:126
+          - kind: list
+            items:
+              - text:
+                  tr: Grafikler, tablolar, fotoğraflar
+                  en: Charts, tables and pictures
+                src: rapor.md:122 · rapor.en.md:128
+              - text:
+                  tr: Bilgisayar kodları, hesaplama ayrıntıları, ham veriler
+                  en: Computer code, calculation details and raw data
+                src: rapor.md:123 · rapor.en.md:129
+          - kind: p
+            text:
+              tr: Ana metinde **atıf yaptığınız** ekleri numaralandırınız (Appendix A, B…).
+              en: Number the appendices you **refer to** in the main text (Appendix A, B…).
+            src: rapor.md:125 · rapor.en.md:131
+      - anchor:
+          tr: 10-references
+          en: 10-references
+        title:
+          tr: 10. References
+          en: 10. References
+        src: rapor.md:129 · rapor.en.md:135
+        blocks:
+          - kind: p
+            text:
+              tr: "Raporda **başka bir kaynaktan** yararlandıysanız gereklidir: kitap, makale, şirket dokümanı, web sitesi, veri kaynağı vb. Metin içinde atıf yapınız ve kaynakları tutarlı bir biçimde (ör. APA) listeleyiniz."
+              en: "Required if you used **any outside source** in the report: books, articles, company documents, websites, data sources and so on. Cite them in the text and list them in a consistent style (e.g. APA)."
+            src: rapor.md:130 · rapor.en.md:136

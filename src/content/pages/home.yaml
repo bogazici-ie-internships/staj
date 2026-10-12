@@ -1,0 +1,95 @@
+# Ana sayfa / Home copy. Dates never live here: they come from settings.yml.
+# Voice: UPDATE-03 (official department voice; TR "siz" + -iniz, EN formal British).
+hero:
+  index: { tr: "01 — Genel Bakış", en: "01 — Overview" }
+  title: { tr: "Zorunlu Staj|Kılavuzu", en: "Compulsory|Internship Guide" }   # "|" = line break; size capped by the longest line (D-67)
+  lead:
+    tr: "Zorunlu stajın tüm süreci: ne zaman, hangi belgeyle, nereye."
+    en: "The whole compulsory internship process: when, with which documents, and where to send them."
+  process: { tr: "Staj Sürecini İnceleyin", en: "View the internship process" }
+board:
+  caption: { tr: "Rapor ve belge teslimine kalan süre", en: "Time remaining until the report and document deadline" }
+  captionLate: { tr: "Geç teslim süresinin bitimine kalan süre", en: "Time remaining until late submission closes" }
+  closed: { tr: "Bu dönemin teslim süresi sona erdi.", en: "The submission period for this term has ended." }
+  unlocked: { tr: "Son teslim tarihi daha sonra duyurulacaktır.", en: "The deadline will be announced later." }
+  zone: { tr: "TSİ", en: "GMT+3" }
+  units:
+    d: { tr: "gün", en: "days" }
+    h: { tr: "saat", en: "hours" }
+    m: { tr: "dakika", en: "minutes" }
+  label: { tr: "Yaklaşan Tarihler", en: "Upcoming Dates" }
+  cols:
+    date: { tr: "Tarih", en: "Date" }
+    event: { tr: "Açıklama", en: "Description" }
+    status: { tr: "Durum", en: "Status" }
+  rows:
+    lateClose: { tr: "Geç teslim süresinin sonu", en: "End of late submission" }
+    # Board cell; the full sentence is in details.deadline (UPDATE-03 §3).
+    latePenalty: { tr: "1 iş günü/gün kesinti", en: "1 workday/day deducted" }
+    termEnds: { tr: "{term} · derslerin sonu", en: "{term} · end of classes" }
+    termEndsStatus: { tr: "Ertesi gün staj yapılabilir", en: "Internships possible from the next day" }   # FINAL-CHECK F-09
+  details:   # shown under the board, always visible (REVIEW-01 Note 3; were popovers, B6)
+    # One note for the deadline and the late window (maintainer request, D-184); the late-close row has no note of its own.
+    deadline: { tr: "{date}. Bu tarihten sonra {grace} gün süreyle, {closes} tarihine kadar geç teslim kabul edilir. Her geç gün için toplam staj süresinden 1 iş günü düşülür. Son teslimden sonra başlayan her 24 saat 1 geç gün sayılır; birkaç dakika geç kalan bir teslim de 1 gün geç sayılır. Geç teslim süresi bitince online teslim kapanır; sonrasında belgelerinizi zip dosyası olarak, durumunuzu açıklayan bir e-posta ile staj asistanlarına iletebilirsiniz.", en: "{date}. After this date, late submissions are accepted for {grace} days, until {closes}. Each late day deducts 1 workday from the total internship period. Every 24 hours that begin after the deadline count as 1 late day, so a submission even a few minutes late counts as 1 day late. When the late window ends, online submission closes; after that, you may send your documents as a zip file to the internship assistants, with an email explaining your circumstances." }
+    termEnds: { tr: "{date}. Derslerin son günüdür; staj ertesi gün başlayabilir.", en: "{date}. Last day of classes; an internship may begin on the following day." }
+  status:
+    open: { tr: "Açık", en: "Open" }
+    passed: { tr: "Sona erdi", en: "Ended" }
+    late: { tr: "Geç teslim", en: "Late submission" }
+    closed: { tr: "Kapandı", en: "Closed" }
+  cta: { tr: "Belgeleri gönder", en: "Submit documents" }
+calendar:
+  index: { tr: "02 — Takvim", en: "02 — Calendar" }
+  title: { tr: "Staj Yapılabilecek Dönemler", en: "Permitted Internship Periods" }
+  lead:
+    tr: "Staj, ders dönemlerinin **dışında** yapılır. Yaz Okulunda ders almıyorsanız bu dönemde de staj yapabilirsiniz."
+    en: "Internships take place **outside** the academic terms. If you are not taking courses at Summer School, you may also complete an internship during that period."
+  aria: { tr: "Staj takvimi", en: "Internship calendar" }
+  legend:
+    ok: { tr: "Staj yapılabilir", en: "Internship permitted" }
+    block: { tr: "Ders dönemi", en: "Academic term" }
+    cond: { tr: "Yaz Okulu (koşullu)", en: "Summer School (conditional)" }
+    mark: { tr: "Son teslim", en: "Deadline" }
+    late: { tr: "Geç teslim", en: "Late submission" }
+  today: { tr: "Bugün", en: "Today" }
+  deadlineChip: { tr: "Son teslim", en: "Deadline" }
+  # The late-submission window on the strip and in the list (maintainer request, D-184).
+  lateChip: { tr: "Geç teslim sonu", en: "Late window ends" }
+  lateRow: { tr: "Geç teslim süresi", en: "Late-submission window" }
+  lateVerdict: { tr: "Her geç gün için 1 iş günü düşülür", en: "1 workday deducted for each late day" }
+  scrollHint: { tr: "Şeridi yana kaydırabilirsiniz; kesin tarihler aşağıdadır.", en: "You can scroll the strip sideways; the exact dates are listed below." }
+  verdict:
+    kapali: { tr: "Staj yapılamaz", en: "Internship not permitted" }
+    kosullu: { tr: "Ders almıyorsanız staj yapılabilir", en: "Permitted if you are not taking courses" }
+    teslim: { tr: "Son teslim", en: "Deadline" }
+process:
+  index: { tr: "03 — Süreç", en: "03 — Process" }
+  title: { tr: "Staj Süreci", en: "Internship Process" }
+  phases:
+    - n: "01"
+      name: { tr: "Stajdan Önce", en: "Before the Internship" }
+      title: { tr: "Belgeler ve Sigorta", en: "Documents and Insurance" }
+      anchor: oncesi
+      icon: file-pen-line
+      items:
+        - { tr: "Şirket talep ederse **Staj Zorunluluk Belgesi**'ni şirkete iletiniz.", en: "If the company requests it, provide the **Compulsory Internship Letter**." }
+        - { tr: "**Sigorta:** **EK-1**'i doldurup şirkete imzalatınız ve staj koordinatörüne iletiniz: stajdan **en erken 1 hafta, en geç 2 gün önce**. En geç gün iş günü değilse formu bir önceki iş gününe kadar gönderiniz.", en: "**Insurance:** complete the **EK-1**, have the company sign it and send it to the internship coordinator, **no earlier than one week and no later than two days** before the internship begins. If that latest day is not a workday, send the form by the previous workday." }
+    - n: "02"
+      name: { tr: "Staj Sırasında", en: "During the Internship" }
+      title: { tr: "Çizelge ve Notlar", en: "Timetable and Notes" }
+      anchor: sirasinda
+      icon: calendar-clock
+      items:
+        - { tr: "Çizelgeyi her iş günü doldurunuz; sonradan toplu doldurmak çok daha zordur.", en: "Fill in the timetable every workday; reconstructing it later is far harder." }
+        - { tr: "Yaptığınız işleri EM bakış açısıyla not ediniz; raporun ana bölümü bu notlardan çıkar.", en: "Note your work from an Industrial Engineering perspective; the main section of the report grows out of these notes." }
+        - { tr: "Cumartesi çalıştıysanız şirketten imzalı veya kaşeli bir **Cumartesi Yazısı** alınız; bu yazı olmadan o günler sayılmaz.", en: "If you work on Saturdays, get a signed or stamped **Saturday Work Letter** from the company; without it, those days do not count." }
+    - n: "03"
+      name: { tr: "Stajdan Sonra", en: "After the Internship" }
+      title: { tr: "Teslim ve Sonuç", en: "Submission and Results" }
+      anchor: sonrasi
+      icon: upload
+      items:
+        - { tr: "**Staj Raporu**, **Staj Sicil Formu**, **Öğrenci Staj Anketi** ve varsa **Cumartesi Yazısı** ile ödeme dekontu veya bordro ve **EK-1**'i son teslim tarihine kadar online olarak yükleyiniz.", en: "Upload the **Internship Report**, the **Trainee Evaluation Form**, the **Student Internship Survey** and, if applicable, the **Saturday Work Letter** and the payment receipt or payslip with the **EK-1** online by the deadline." }
+        - { tr: "Sigortanız EK-1 ile başlatıldıysa, şirketten alacağınız tamamlama belgesini {accounting}'ne ({accountingEmail}) iletiniz.", en: "If your insurance was started with the EK-1, submit the completion document from the company to {accounting} ({accountingEmail})." }
+        - { tr: "Sonuçlar için duyuruları ve Sonuçlar sayfasını takip ediniz; sonuçlar periyodik olarak ilan edilir.", en: "Follow the announcements and the Results page for your result; results are announced periodically." }
+  more: { tr: "Tüm adımlar", en: "All steps" }

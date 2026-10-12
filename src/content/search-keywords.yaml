@@ -1,0 +1,34 @@
+# Search keyword groups (REVIEW-02 Note 3, D-125). A document that contains any phrase of a group (folded:
+# case and Turkish diacritics ignored) gets every phrase of that group as keywords, so a search for one finds
+# the others. Phrases may be TR or EN; keep them short. Not copy: never shown on the site.
+groups:
+  - [EK-1, ek1, ek 1, sigorta girişi, sigorta, insurance registration, insurance]
+  - [Staj Sicil Formu, sicil formu, sicil, değerlendirme formu, trainee evaluation form, trainee evaluation, evaluation form]
+  - [Cumartesi Yazısı, cumartesi, hafta sonu, saturday work letter, saturday, weekend]
+  - [dekont, bordro, ödeme, ödeme dekontu, payment receipt, payslip, payment]
+  - [geç teslim, gecikme, gecikmeli, late submission, late, delay]
+  - [Staj Zorunluluk Belgesi, zorunluluk belgesi, zorunlu staj yazısı, compulsory internship letter]
+  - [çizelge, timetable, günlük çizelge, daily timetable]
+  - [ÇAP, çift anadal, double major, double-major]
+  - [yandal, minor]
+  - [Hesap İşleri, muhasebe, accounting affairs, accounting]
+  # REVIEW-05 B-13: term-time exchange (3-week email rule) and internships abroad are different cases.
+  - [Erasmus, değişim programı, exchange programme, exchange]
+  - [yurt dışı, yurt dışında staj, abroad, internship abroad]
+  - [sonuç, sonuçlar, sonuç klasörü, results, result, results folder]
+  - [iş günü, kaç gün, workday, workdays]
+  - [sayfa sınırı, sayfa, 20 sayfa, page limit, pages]
+  - [Öğrenci Staj Anketi, anket, survey, student internship survey]
+  - [üretim stajı, üretim, production internship, production]
+  - [serbest staj, genel staj, general ie internship, general internship]
+  - [staj koordinatörü, koordinatör, internship coordinator, coordinator]
+  - [staj asistanları, asistan, internship assistants, assistant]
+  - [son teslim, teslim tarihi, deadline, son tarih]
+  # REVIEW-05 Addition (H-01): one report and one submission per internship.
+  - [ayrı rapor, iki staj, ikinci staj, birden fazla staj, aynı şirket, separate report, two internships, second internship, more than one internship, same company]
+
+# Phrases removed before the groups above are matched, because they use a group's word in another sense
+# (REVIEW-05 B-18: the EK-1 latest sending day on a weekend is not weekend work). Search still finds their words.
+ignore:
+  - hafta sonuna veya resmî tatile
+  - falls on a weekend or a public holiday

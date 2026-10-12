@@ -1,0 +1,2 @@
+# Python tools used by CI (UPDATE-07): the campaign-contract and workflow-action validators.
+pyyaml==6.0.3

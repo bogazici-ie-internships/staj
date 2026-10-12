@@ -1,0 +1,370 @@
+# surec — migrated from main docs/surec/index.md (+ .en.md) by scripts/migrate/convert.mjs, then
+# reviewed by hand (UPDATE-06 Phase 2a; voice UPDATE-03, terms UPDATE-05: live site wins, except
+# "staj koordinatörü" / "internship coordinator" and {accounting}). Anchors are the live ones.
+# `src` = source lines on main, used by the coverage report (scripts/migrate/coverage.mjs).
+page: surec
+anchor: { tr: staj-sureci, en: internship-process }
+title: { tr: Staj Süreci, en: Internship Process }
+src: surec/index.md:6 · surec/index.en.md:6
+meta:
+  src: surec/index.md:2 · surec/index.en.md:2
+  note: → chrome.yaml pages.description (already migrated, UPDATE-03)
+lead:
+  - kind: p
+    text:
+      tr: "Staj süreci üç aşamadan oluşur: **stajdan önce** hazırlık, **staj sırasında** çalışma ve **stajdan sonra** teslim. Aşamalar aşağıda sırasıyla açıklanır."
+      en: "The internship process has three stages: preparation **before the internship**, work **during the internship** and submission **after the internship**. Each stage is explained below in order."
+    src: surec/index.md:8 · surec/index.en.md:8
+sections:
+  - anchor: { tr: oncesi, en: oncesi }
+    title: { tr: Stajdan Önce, en: Before the Internship }
+    src: surec/index.md:13 · surec/index.en.md:14
+    blocks:
+      - kind: p
+        text:
+          tr: Staja başlamadan önce tamamlamanız gereken adımlar aşağıdadır. Hepsini **staj başlangıç tarihinden önce** tamamlayınız; aksi hâlde sigortanız başlamaz ve staja başlayamazsınız.
+          en: Complete all of the steps below **before your internship starts**. Otherwise, your insurance will not begin and you cannot start the internship.
+        src: surec/index.md:15 · surec/index.en.md:16
+      - kind: p
+        text:
+          tr: "Bu adımlar, **staj yerinizi kendiniz bulduktan sonra** izlenir; bölüm doğrudan yerleştirme yapmaz."
+          en: "These steps begin **after you have found an internship position yourself**; the department does not place students directly."
+        src: surec/index.md:19 · surec/index.en.md:19
+    sections:
+      - anchor: { tr: 1-dogru-staj-secin-sure-tur-donem, en: 1-choose-an-eligible-internship }
+        title: { tr: "1. Doğru Stajı Seçin (Süre, Tür, Dönem)", en: "1. Choose an Eligible Internship (Duration, Type, Period)" }
+        src: surec/index.md:26 · surec/index.en.md:27
+        blocks:
+          - kind: p
+            text:
+              tr: "Staj aramaya başlamadan önce, stajınızın **geçerli sayılması için** taşıması gereken koşulları bilmeniz gerekir:"
+              en: "Before you start looking for an internship, you need to know the conditions it must meet **to be accepted**:"
+            src: surec/index.md:28 · surec/index.en.md:29
+          - kind: list
+            items:
+              - text:
+                  tr: Bir stajın kabul edilmesi için **en az 15 iş günü** sürmesi gerekir.
+                  en: An internship must last **at least 15 workdays** to be accepted.
+                src: surec/index.md:31 · surec/index.en.md:31
+              - text:
+                  tr: Mezuniyet için toplam **40 iş günü** staj gerekir. **Tek tür şartı**, bunun **en az 15 iş gününün Üretim stajı** olmasıdır. Kalan günler için tür kısıtı yoktur; bu günler **serbest/genel** staj ya da üretim stajı olabilir.
+                  en: A total of **40 workdays** of internship is required for graduation. The **only type requirement** is that **at least 15 workdays must be Production Internship**. The remaining days carry no type restriction; they may be completed as **General IE Internship** or as further Production Internship.
+                src: surec/index.md:32 · surec/index.en.md:32
+              - text:
+                  tr: "Staj **türü staja başlamadan önce** belirlenir ve rapor buna göre hazırlanır. Staj türünüzden emin değilseniz staj asistanlarına danışabilirsiniz; nihai onay **staj koordinatörüne** aittir."
+                  en: "The internship **type is determined before the internship begins**, and the report is prepared accordingly. If you are unsure of your internship type, you may consult the internship assistants; final approval rests with the **internship coordinator**."
+                src: surec/index.md:35 · surec/index.en.md:36
+              - text:
+                  tr: Staj süresince **işyeri, departman veya staj türü değiştirilemez**; bu yüzden baştan doğru tercihi yapınız.
+                  en: The **workplace, department and internship type cannot be changed** during the internship, so choose correctly from the start.
+                src: surec/index.md:38 · surec/index.en.md:39
+          - kind: callout
+            tone: warning
+            title: { tr: Ders Dönemleriyle Çakışma, en: Overlap with Courses }
+            src: surec/index.md:41 · surec/index.en.md:42
+            blocks:
+              - kind: p
+                text:
+                  tr: "Staj döneminiz **kayıtlı olduğunuz derslerle çakışamaz**; bu kural Güz, Bahar ve **Yaz Okulu** için aynıdır. Stajlar **yaz** veya **dönem arası tatilinde**, ders almadığınız zamanlarda yapılır. **Final sınavları dönemi** bu kuralın **istisnasıdır**: dersler sona erdiği için final haftasında (final sınavlarıyla örtüşse bile) staja başlayabilirsiniz. Çakışma yasağı **ders işleme dönemi** için geçerlidir, final dönemi için geçerli değildir."
+                  en: "Your internship **cannot overlap with courses you are enrolled in**; this applies equally to Fall, Spring and **Summer School**. Internships take place during **summer** or **semester breaks**, when you are not taking courses. The **final exam period** is an **exception**: because classes have ended, you may start an internship during finals week (even if it overlaps with exams). The overlap rule applies to the **instruction period**, not to the final exam period."
+                src: surec/index.md:42 · surec/index.en.md:43
+          - kind: callout
+            tone: note
+            title: { tr: ÇAP ve Yandal Öğrencileri, en: Double-Major (ÇAP) and Minor (Yandal) Students }
+            src: surec/index.md:49 · surec/index.en.md:51
+            blocks:
+              - kind: p
+                text:
+                  tr: "Yukarıdaki 40 iş günü şartı **EM ana bölüm öğrencileri** içindir. Ana bölümü EM olmayan **ÇAP** öğrencileri için EM tarafında yalnızca **en az 15 iş günü üretim stajı** yeterlidir; **Yandal** öğrencileri için EM tarafında **herhangi bir staj zorunluluğu yoktur**. Ayrıntılar için [Kurallar](page:kurallar) sayfasına bakınız."
+                  en: "The 40-workday requirement above applies to **IE primary-major students**. For **double-major (ÇAP)** students whose primary major is not IE, **at least 15 workdays of Production Internship** are sufficient on the IE side; **minor (Yandal)** students have **no internship requirement** on the IE side. See the [Rules](page:kurallar) page for details."
+                src: surec/index.md:50 · surec/index.en.md:52
+      - anchor: { tr: 2-staj-zorunluluk-belgesi, en: 2-compulsory-internship-letter }
+        title: { tr: 2. Staj Zorunluluk Belgesi, en: 2. Compulsory Internship Letter }
+        src: surec/index.md:56 · surec/index.en.md:58
+        blocks:
+          - kind: p
+            text:
+              tr: "Staj yapacağınız **şirket isterse**, şirkete vermek üzere **Staj Zorunluluk Belgesi**'ne ihtiyacınız olabilir. Türkçe ve İngilizce sürümlerini indirebilirsiniz:"
+              en: "If **the company requests it**, you may need to provide a **Compulsory Internship Letter**. Turkish and English versions are available:"
+            src: surec/index.md:58 · surec/index.en.md:60
+          - kind: files
+            items:
+              - doc: Compulsory-Internship-Letter-TR.pdf
+                label: { tr: Staj Zorunluluk Belgesi — Türkçe, en: Compulsory Internship Letter — Turkish }
+                src: surec/index.md:61 · surec/index.en.md:63
+              - doc: Compulsory-Internship-Letter-EN.pdf
+                label: { tr: Staj Zorunluluk Belgesi — İngilizce, en: Compulsory Internship Letter — English }
+                src: surec/index.md:62 · surec/index.en.md:64
+      - anchor: { tr: 3-sigorta-ve-devlet-katks-ek-1, en: 3-insurance-and-government-contribution-ek-1 }
+        title: { tr: 3. Sigorta ve Devlet Katkısı (EK-1), en: 3. Insurance and Government Contribution (EK-1) }
+        src: surec/index.md:64 · surec/index.en.md:66
+        blocks:
+          - kind: p
+            text:
+              tr: "Kanun gereği tüm stajyerler, staj süresince iş kazası ve meslek hastalıklarına karşı **Boğaziçi Üniversitesi tarafından sigortalanır**. **Sigorta girişiniz EK-1 ile yapılır**; şirket **staj ücretine devlet katkısı** talep ediyorsa aynı form bu süreci de kapsar."
+              en: "By law, all interns are **insured by Boğaziçi University** against occupational accidents and occupational diseases during the internship. **Your insurance registration is made with the EK-1**; if the company claims a **government contribution towards your internship pay**, the same form covers that process as well."
+            src: surec/index.md:66 · surec/index.en.md:68
+          - kind: files
+            items:
+              - doc: EK-1-Form.docx
+                label: { tr: EK-1 Formu, en: EK-1 Form }
+                src: surec/index.md:71 · surec/index.en.md:74
+              - doc: State-Contribution-Guide.pdf
+                label: { tr: Devlet Katkısında İzlenecek Yol, en: Government Contribution Guide }
+                src: surec/index.md:72 · surec/index.en.md:75
+          - kind: list
+            ordered: true
+            items:
+              - text:
+                  tr: "**EK-1**'i indirip doldurunuz ve **işveren firmaya imzalatınız**."
+                  en: "Download and complete the **EK-1**, and have it **signed by the employer**."
+                src: surec/index.md:74 · surec/index.en.md:77
+              - text:
+                  tr: "Eksiksiz formu **e-posta ile staj koordinatörüne** iletiniz: **[{coordinatorName} — {coordinatorEmail}](mailto:{coordinatorEmail})**"
+                  en: "Send the completed form **by email to the internship coordinator**: **[{coordinatorName} — {coordinatorEmail}](mailto:{coordinatorEmail})**"
+                src: surec/index.md:75 · surec/index.en.md:78
+              - text:
+                  tr: "Bölüm formu onaylayıp **{accounting}'ne** iletir ve **sigorta prim işlemleriniz başlar**."
+                  en: "The department approves the form and forwards it to **{accounting}**, and **your insurance premium procedure is started**."
+                src: surec/index.md:77 · surec/index.en.md:80
+              - text:
+                  tr: "{accounting}, **sigorta başlangıç onay belgesini** size e-posta ile gönderir. Bu onay geldikten sonra **staja başlayabilirsiniz**."
+                  en: "{accounting} sends you the **insurance start confirmation** by email. **You may start the internship** once this confirmation has arrived."
+                src: surec/index.md:79 · surec/index.en.md:82
+          - kind: callout
+            tone: danger
+            title: { tr: EK-1 Gönderim Zamanı, en: EK-1 Submission Window }
+            src: surec/index.md:83 · surec/index.en.md:85
+            blocks:
+              - kind: p
+                text:
+                  tr: Eksiksiz doldurduğunuz formu, staj başlangıç tarihinden **en erken 1 hafta, en geç 2 gün önce** e-posta ile gönderiniz.
+                  en: Send the fully completed form by email **no earlier than 1 week and no later than 2 days** before the internship start date.
+                src: surec/index.md:84 · surec/index.en.md:86
+              - kind: list
+                items:
+                  - text:
+                      tr: EK-1 **PDF biçiminde** ve **1 MB'tan küçük** olmalıdır.
+                      en: The EK-1 must be **in PDF format** and **smaller than 1 MB**.
+                    src: surec/index.md:87 · surec/index.en.md:89
+                  - text:
+                      tr: EK-1 iletildikten sonra, **ciddi sağlık sorunları dışında** staj tarihlerinde **değişiklik yapılamaz**.
+                      en: Once the EK-1 has been sent, the internship dates **cannot be changed**, **except for serious health reasons**.
+                    src: surec/index.md:88 · surec/index.en.md:90
+                  - text:
+                      tr: "En geç gönderim günü hafta sonuna veya resmî tatile denk gelirse formu bu günden önceki son iş gününe kadar gönderiniz."
+                      en: "If the latest sending day falls on a weekend or a public holiday, send the form by the last workday before it."
+                    src: new — REVIEW-05 B-18, maintainer-confirmed previous-workday rule (D-99)
+          - kind: callout
+            tone: note
+            title: { tr: Şirketin Kendi Sigortası, en: Company Insurance }
+            src: surec/index.md:91 · surec/index.en.md:93
+            blocks:
+              - kind: p
+                text:
+                  tr: Şirket kendi staj sigortasını sağlıyorsa EK-1 gerekmez ve bu adımı atlayabilirsiniz; ancak **EK-1'i yine de doldurmanızı öneririz**.
+                  en: If the company provides its own internship insurance, the EK-1 is not required and you may skip this step; **we nevertheless recommend completing the EK-1**.
+                src: surec/index.md:92 · surec/index.en.md:94
+  - anchor: { tr: sirasinda, en: sirasinda }
+    title: { tr: Staj Sırasında, en: During the Internship }
+    src: surec/index.md:95 · surec/index.en.md:97
+    blocks:
+      - kind: p
+        text:
+          tr: "Staj sırasında dikkat etmeniz gereken noktalar aşağıdadır. Bunlar **bizim önerilerimizdir**; uygularsanız hem staj hem de sonraki **rapor süreci** çok daha kolay olur. Bağlayıcı kurallar için **[Kurallar](page:kurallar)** sayfasına bakınız."
+          en: "The points below are worth following during the internship. They are **our recommendations**; if you follow them, both the internship and the **report** that follows become much easier. For the binding requirements, see the **[Rules](page:kurallar)** page."
+        src: surec/index.md:97 · surec/index.en.md:99
+      - kind: cards
+        cards:
+          - icon: calendar-clock
+            title: { tr: "1. Çizelgeyi Her Gün Doldurun", en: "1. Fill In the Timetable Every Day" }
+            src: surec/index.md:104 · surec/index.en.md:105
+            blocks:
+              - kind: p
+                text:
+                  tr: Raporun zorunlu bir bölümü olan **staj çizelgesini** her gün doldurmak, sonradan toplu doldurmaktan çok daha kolaydır.
+                  en: Completing the **internship timetable**, a required part of the report, every day is much easier than filling it in all at once later.
+                src: surec/index.md:108 · surec/index.en.md:109
+              - kind: list
+                items:
+                  - text:
+                      tr: Her **iş günü için bir satır** (Pazartesi–Cumartesi)
+                      en: One **row for each workday** (Monday–Saturday)
+                    src: surec/index.md:111 · surec/index.en.md:112
+                  - text:
+                      tr: "4 sütun: **Gün · Yapılan İş · Sayfa No · Çalışma Saati**"
+                      en: "4 columns: **Day · Work Accomplished · Page Nr. · Working Hours**"
+                    src: surec/index.md:112 · surec/index.en.md:113
+                  - text:
+                      tr: Haftalık sayfanın başına **tarih aralığını** yazınız.
+                      en: Write the **date range** at the top of each weekly page.
+                    src: surec/index.md:113 · surec/index.en.md:114
+                  - text:
+                      tr: "“Sayfa No”, o işin raporun **6. bölümünde** anlatıldığı sayfadır."
+                      en: "“Page Nr.” is the page in **Section 6** of the report where that work is discussed."
+                    src: surec/index.md:114 · surec/index.en.md:115
+              - kind: p
+                text:
+                  tr: "[Staj Timetable Şablonu](doc:Internship-Timetable.docx) · [Rapor Hazırlama](page:rapor)"
+                  en: "[Internship Timetable Template](doc:Internship-Timetable.docx) · [Report Preparation](page:rapor)"
+                src: surec/index.md:116 · surec/index.en.md:117
+          - icon: file-pen-line
+            title: { tr: "2. Rapor İçeriğini Baştan Biriktirin", en: "2. Collect Report Material Early" }
+            src: surec/index.md:118 · surec/index.en.md:119
+            blocks:
+              - kind: p
+                text:
+                  tr: Raporun ana bölümünü oluşturan 6. bölüm, **EM bakış açısıyla** yaptığınız analizleri içerir. Staj sırasında aldığınız **süreç notları, veriler ve gözlemler** ile uyguladığınız **EM araçları**, raporu yazarken işinizi çok kolaylaştırır.
+                  en: Section 6, the main body of the report, presents your analyses from an **IE perspective**. The **process notes, data and observations** you collect during the internship and the **IE tools** you apply make the report much easier to prepare.
+                src: surec/index.md:122 · surec/index.en.md:123
+              - kind: p
+                text:
+                  tr: "[Beklenen konular: Konu Rehberi](page:kurallar#konu-rehberi)"
+                  en: "[Expected topics: Topic Guide](page:kurallar#konu-rehberi)"
+                src: surec/index.md:126 · surec/index.en.md:127
+          - icon: calendar-days
+            title: { tr: "3. Cumartesi Çalışmasını Belgeleyin", en: "3. Document Saturday Work" }
+            src: surec/index.md:128 · surec/index.en.md:129
+            blocks:
+              - kind: p
+                text:
+                  tr: Cumartesi günleri çalıştıysanız, bu günlerin **sayılabilmesi için** şirketten **imzalı veya kaşeli bir yazı** almanız gerekir. Bu yazıyı **stajdan sonra** teslim edersiniz.
+                  en: If you work on Saturdays, you need a **signed or stamped letter** from the company **so that those days can be counted**. You submit the letter **after the internship**.
+                src: surec/index.md:132 · surec/index.en.md:133
+              - kind: p
+                text:
+                  tr: "[Teslim adımları](#sonrasi)"
+                  en: "[Submission steps](#sonrasi)"
+                src: surec/index.md:135 · surec/index.en.md:137
+          - icon: shield-check
+            title: { tr: "4. Tamamlama Belgesini Önceden İsteyin", en: "4. Request the Completion Document Early" }
+            src: surec/index.md:137 · surec/index.en.md:139
+            blocks:
+              - kind: p
+                text:
+                  # FINAL-CHECK F-14: a short reminder; the format and the insurance consequence are in "Stajdan Sonra 1", linked below.
+                  tr: Sigortanız EK-1 ile açıldıysa, staj bitince şirketten **staj tamamlama belgesini** (sigortanızı kapatan belge) istemeniz gerekir. Belgeyi şirketten ayrılmadan önce istemek, sonradan ulaşmaya çalışmaktan çok daha kolaydır.
+                  en: If your insurance was started with the EK-1, you will need a **completion document** from the company when the internship ends (it closes your insurance). Requesting it before you leave the company is much easier than trying to obtain it later.
+                src: surec/index.md:141 · surec/index.en.md:143
+              - kind: p
+                text:
+                  tr: "[Ayrıntılar](#1-hesap-islerine-teslim-edilecekler)"
+                  en: "[Details](#1-documents-for-the-department-of-accounting-affairs)"
+                src: surec/index.md:149 · surec/index.en.md:153
+  - anchor: { tr: sonrasi, en: sonrasi }
+    title: { tr: Stajdan Sonra, en: After the Internship }
+    src: surec/index.md:153 · surec/index.en.md:157
+    blocks:
+      - kind: p
+        text:
+          tr: "Staj bittikten sonra iki ayrı yere teslim yapılır: **{accounting}** ve **staj asistanları**."
+          en: "After the internship, documents are submitted to two separate places: **{accounting}** and **the internship assistants**."
+        src: surec/index.md:155 · surec/index.en.md:159
+    sections:
+      - anchor: { tr: 1-hesap-islerine-teslim-edilecekler, en: 1-documents-for-the-department-of-accounting-affairs }
+        title: { tr: "1. {accounting}'ne Teslim Edilecek Belge", en: "1. Document for {accounting}" }
+        src: surec/index.md:158 · surec/index.en.md:162
+        blocks:
+          - kind: p
+            text:
+              tr: "Stajınızı **{accounting}'ne önceden bildirilen tarih aralığında** tamamladığınızı gösteren, **şirket tarafından onaylanmış bir belge (staj tamamlama belgesi)**. Bu belgeyi **şirketinizden talep ederek doğrudan {accounting}'ne** ([{accountingEmail}](mailto:{accountingEmail})) **iletmeniz gerekir**."
+              en: "A **document approved by the company (the completion document)** confirming that you completed the internship **within the dates previously reported to {accounting}**. **Request this document from the company** and **send it directly to {accounting}** ([{accountingEmail}](mailto:{accountingEmail}))."
+            src: surec/index.md:160 · surec/index.en.md:164
+          - kind: list
+            items:
+              - text:
+                  tr: Bu belge, Staj Sicil Formu'ndan **farklı** bir belgedir.
+                  en: This document is **different** from the Trainee Evaluation Form.
+                src: surec/index.md:166 · surec/index.en.md:170
+              - text:
+                  tr: Taranmış belgeyi **e-posta ile** gönderebilirsiniz.
+                  en: You may send a scanned copy **by email**.
+                src: surec/index.md:167 · surec/index.en.md:171
+          - kind: callout
+            tone: danger
+            title: { tr: EK-1 ile Başlayan Sigortayı Kapatın, en: Close the Insurance Started with the EK-1 }
+            src: surec/index.md:169 · surec/index.en.md:173
+            blocks:
+              - kind: p
+                text:
+                  tr: "Bu belge, stajdan önce gönderdiğiniz **EK-1 ile Üniversitenin başlattığı sigorta sürecini kapatır**: {accounting}, stajı bildirilen tarihlerde tamamladığınızı bu belgeyle teyit eder."
+                  en: "This document **closes the insurance process that the University started with the EK-1** you sent before the internship: {accounting} confirms with it that you completed the internship on the reported dates."
+                src: surec/index.md:170 · surec/index.en.md:174
+              - kind: list
+                items:
+                  - text:
+                      tr: "**Bu belge {accounting}'ne** ([{accountingEmail}](mailto:{accountingEmail})) **ulaşmadan stajınızın sigortası kapanmaz**; belgeyi göndermezseniz başka bir zorunlu staj yapamazsınız."
+                      en: "**Until this document reaches {accounting}** ([{accountingEmail}](mailto:{accountingEmail})), **your internship insurance is not closed**; if you do not send it, you cannot do another compulsory internship."
+                    src: surec/index.md:174 · surec/index.en.md:178
+                  - text:
+                      tr: Belgede **özel bir biçim aranmaz**; şirketin **staj başlangıç ve bitiş tarihlerinizi** ve **kimlik bilgilerinizi** gösteren, imzalı veya kaşeli bir yazısı yeterlidir.
+                      en: "**No specific format is required**; a signed or stamped letter from the company showing **your internship start and end dates** and **your identifying information** is sufficient."
+                    src: surec/index.md:178 · surec/index.en.md:182
+                  - text:
+                      tr: Şirket kendi sigortasını yaptıysa bu adım sizin için geçerli olmayabilir.
+                      en: If the company provided its own insurance, this step may not apply to you.
+                    src: surec/index.md:181 · surec/index.en.md:185
+      - anchor: { tr: 2-staj-asistanlarna-teslim-edilecekler, en: 2-documents-for-the-internship-assistants }
+        title: { tr: 2. Staj Asistanlarına Teslim Edilecek Belgeler, en: 2. Documents for the Internship Assistants }
+        src: surec/index.md:183 · surec/index.en.md:187
+        blocks:
+          - kind: callout
+            tone: danger
+            title: { tr: Teslim Zamanı, en: Submission Deadline }
+            src: surec/index.md:185 · surec/index.en.md:189
+            blocks:
+              - kind: p
+                text:
+                  tr: Bu belgeler, **yeni dönemin derslerinin başlamasından itibaren en geç 3 hafta (21 gün) içinde** **online** olarak teslim edilir. Geç teslim cezası için [Kurallar](page:kurallar) sayfasına bakınız.
+                  en: These documents are submitted **online** **within 3 weeks (21 days) of the start of classes in the following semester**. See the [Rules](page:kurallar) page for the late-submission penalty.
+                src: surec/index.md:186 · surec/index.en.md:190
+              - kind: p
+                text:
+                  tr: Teslimin nasıl ve nereye yapılacağı **[Belge Teslimi](page:teslim)** sayfasında anlatılır.
+                  en: How and where to submit is explained on the **[Document Submission](page:teslim)** page.
+                src: surec/index.md:190 · surec/index.en.md:194
+        sections:
+          - anchor: { tr: zorunlu-belgeler, en: required-documents }
+            title: { tr: Zorunlu Belgeler, en: Required Documents }
+            src: surec/index.md:192 · surec/index.en.md:196
+            blocks:
+              - kind: list
+                ordered: true
+                items:
+                  - text:
+                      tr: "**İmzalı ve kaşeli Staj Sicil Formu.** Şirketiniz imza ve kaşeden yalnızca birini sağlayabiliyorsa bu da kabul edilir. Form online teslim edildiği için zarf gerekmez. Boş form: [Staj Sicil Formu](doc:Trainee-Evaluation-Form.pdf)"
+                      en: "**The signed and stamped Trainee Evaluation Form.** If the company can provide only a signature or only a stamp, that is also accepted. Because the form is submitted online, no envelope is needed. Blank form: [Trainee Evaluation Form](doc:Trainee-Evaluation-Form.pdf)"
+                    src: surec/index.md:194 · surec/index.en.md:198
+                  - text:
+                      tr: "**Öğrenci Staj Anketi.** Boş form: [Öğrenci Staj Anketi](doc:Student-Internship-Survey.pdf)"
+                      en: "**The Student Internship Survey.** Blank form: [Student Internship Survey](doc:Student-Internship-Survey.pdf)"
+                    src: surec/index.md:199 · surec/index.en.md:203
+                  - text:
+                      tr: "**Kurallara uygun hazırlanmış staj raporu.** Ayrıntılar için [Internship Handbook](doc:Revised-Handbook-of-Internship.pdf) ve [Rapor Hazırlama](page:rapor) sayfasına bakınız."
+                      en: "**An internship report prepared according to the rules.** For details, see the [Internship Handbook](doc:Revised-Handbook-of-Internship.pdf) and the [Report Preparation](page:rapor) page."
+                    src: surec/index.md:202 · surec/index.en.md:206
+          - anchor: { tr: opsiyonel-belgeler-duruma-gore, en: optional-documents }
+            title: { tr: Duruma Göre Gerekli Belgeler, en: Documents Required Depending on Your Situation }
+            src: surec/index.md:206 · surec/index.en.md:210
+            blocks:
+              - kind: list
+                ordered: true
+                items:
+                  - text:
+                      tr: "**Ödeme dekontu veya bordro** ve **EK-1**: şirket stajyere ödeme yaptıysa **ve** bu ücret için **devlet katkısı** talep ediyorsa, dekont veya bordrodan **biri** ile staj başındaki **aynı EK-1** birlikte yüklenir."
+                      en: "**Payment receipt or payslip** and **EK-1**: if the company paid the intern **and** claims the **government contribution** for that pay, **one** of the receipt or payslip is uploaded together with **the same EK-1** used at the start of the internship."
+                    src: surec/index.md:208 · surec/index.en.md:212
+                  - text:
+                      tr: "**Cumartesi Yazısı**: cumartesi günleri çalışıldıysa, şirketin bu günlerde de çalışıldığını gösteren **imzalı veya kaşeli yazısı**."
+                      en: "**Saturday Work Letter**: if you worked on Saturdays, a **signed or stamped letter** from the company confirming work on those days."
+                    src: surec/index.md:212 · surec/index.en.md:216
+              - kind: callout
+                tone: note
+                title: { tr: Teslimin Tamamlanması, en: Completing the Submission }
+                src: surec/index.md:215 · surec/index.en.md:219
+                blocks:
+                  - kind: p
+                    text:
+                      tr: "Teslimin son adımında, yüklediğiniz belgelerin size ait, eksiksiz ve doğru olduğunu onaylarsınız; teslim tamamlandığında referans numaralı bir makbuz görüntülenir. **Eksik belge varsa teslim tamamlanmış sayılmaz**; eksikler tamamlanana kadar süre işler ve geç teslim kuralları uygulanabilir. Teslimden sonra eksik veya hatalı bir belgeyi tamamlamak üzere aynı stajın formunu yeniden göndermeyiniz; belgeyi referans numaranızı belirterek e-posta ile [staj asistanlarına](page:iletisim) iletiniz. Eksik belge staj asistanlarına ulaştığında teslim tamamlanmış sayılır."
+                      en: "At the final step of the submission, you confirm that the documents you have uploaded are your own, complete and accurate; when the submission is complete, a receipt with a reference number is shown. **A submission with missing documents is not complete**; time continues to run until the missing documents are provided, and the late-submission rules may apply. To complete a missing or incorrect document after submission, do not submit the form again for the same internship; email the document to the [internship assistants](page:iletisim) and quote your reference number. The submission is complete once the missing document reaches the internship assistants."
+                    src: surec/index.md:216 · surec/index.en.md:220

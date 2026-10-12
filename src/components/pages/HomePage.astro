@@ -1,0 +1,245 @@
+---
+// Ana sayfa — Kronometre (reference/Main.dc.html). Order is a timeline, which
+// is why this page (only) carries the 01–04 section indices (DESIGN.md §3.4).
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Board, { type BoardRow } from "../../islands/Board";
+import CalendarStrip from "../kronometre/CalendarStrip.astro";
+import Contours from "../art/Contours.astro";
+import Icon from "../../icons/Icon.astro";
+import "../../styles/board.css";
+import { copy, t } from "../../lib/content";
+import { md } from "../../lib/inline-md";
+import { settings, site } from "../../lib/settings";
+import { ui } from "../../i18n/ui";
+import { longDate, longDateTime, shortDate, trClock, trYmd, ymdKey, type Lang } from "../../lib/dates";
+import { pagePath } from "../../lib/paths";
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const home = await copy("home");
+const H = home.board;
+/** The live site's "Staj Süreci" anchor is the process heading id (REVIEW-05 B-14). */
+const processId = lang === "en" ? "internship-process" : "staj-sureci";
+
+// Board rows — derived from settings.yml only (no invented dates).
+const rows: BoardRow[] = [];
+const deadlineRow = settings.takvim.find((r) => r.kategori === "teslim");
+if (site.deadlineMs != null) {
+  rows.push({ kind: "deadline", date: `${shortDate(lang, trYmd(site.deadlineMs))} ${trClock(site.deadlineMs)}`, dateTime: new Date(site.deadlineMs).toISOString(),
+    event: (lang === "en" ? deadlineRow?.baslik_en : deadlineRow?.baslik) || t(home.board.cta, lang),
+    detail: t(H.details.deadline, lang).replace("{date}", longDateTime(lang, site.deadlineMs)).replace("{grace}", String(site.graceDays))
+      .replace("{closes}", site.closesMs != null ? longDateTime(lang, site.closesMs) : "") });
+  if (site.graceDays > 0 && site.closesMs != null) {
+    rows.push({ kind: "lateClose", date: `${shortDate(lang, trYmd(site.closesMs))} ${trClock(site.closesMs)}`, dateTime: new Date(site.closesMs).toISOString(),
+      event: t(H.rows.lateClose, lang), info: t(H.rows.latePenalty, lang) });   // its note is part of the deadline's (D-184)
+  }
+}
+// The teaching term that is running when the deadline falls ("Güz · dersler biter").
+const ref = site.lock?.date;
+const running = ref && site.terms.find((x) => x.row.staj_durum === "kapali" && x.start && x.end && ymdKey(x.start) <= ymdKey(ref) && ymdKey(ref) <= ymdKey(x.end));
+if (running?.end) {
+  const name = (lang === "en" ? running.row.baslik_en : running.row.baslik) || running.row.baslik;
+  rows.push({ kind: "info", date: shortDate(lang, running.end), event: t(H.rows.termEnds, lang).replace("{term}", name), info: t(H.rows.termEndsStatus, lang),
+    detail: t(H.details.termEnds, lang).replace("{date}", longDate(lang, running.end)) });
+}
+
+// The deadline in words for the phone board head (the digits are visual only).
+const deadlineLine = site.deadlineMs == null ? undefined : `${ui[lang].strip.deadline}: ${longDateTime(lang, site.deadlineMs)}`;
+const boardText = {
+  caption: t(H.caption, lang), captionLate: t(H.captionLate, lang), closed: t(H.closed, lang), unlocked: t(H.unlocked, lang),
+  zone: t(H.zone, lang), label: t(H.label, lang),
+  units: { d: t(H.units.d, lang), h: t(H.units.h, lang), m: t(H.units.m, lang) },
+  cols: { date: t(H.cols.date, lang), event: t(H.cols.event, lang), status: t(H.cols.status, lang) },
+  status: { open: t(H.status.open, lang), passed: t(H.status.passed, lang), late: t(H.status.late, lang), closed: t(H.status.closed, lang) },
+};
+const [l1, l2] = t(home.hero.title, lang).split("|");
+---
+<BaseLayout lang={lang} page="home">
+  <section class="hero" aria-labelledby="hero-title">
+    <Contours variant="hero" />
+    <div class="wrap hero__in">
+      <div class="hero__text">
+        <span class="index">{t(home.hero.index, lang)}</span>
+        <h1 id="hero-title" class="hero__title" style={`--chars:${Math.max(l1.length, (l2 ?? "").length)}`}>{l1}{" "}<br /><span class="hero__accent">{l2}</span></h1>
+        <div class="hero__lede">
+          <p>{t(home.hero.lead, lang)}</p>
+          <div class="hero__actions">
+            <a class="btn btn--secondary" href="#surec">{t(home.hero.process, lang)}</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero__board">
+        <Board client:paint deadlineMs={site.deadlineMs} graceDays={site.graceDays} rows={rows} text={boardText} deadlineLine={deadlineLine} notes={false} />
+        <a class="btn btn--primary hero__cta" href={pagePath(lang, "teslim")} data-astro-reload>{t(H.cta, lang)}<Icon name="arrow-right" size={20} /></a>
+        {/* REVIEW-06 Note 3 (D-167): the row details follow the button (still shown, no disclosure), so the button is on
+            the first screen at 1440 × 900. Phones show them under the hero (board-below), as before. */}
+        <dl class="board__notes hero__notes">
+          {rows.filter((r) => r.detail).map((r) => <div><dt>{r.event}</dt><dd>{r.detail}</dd></div>)}
+        </dl>
+      </div>
+    </div>
+  </section>
+  {/* REVIEW-01 answer 4 (D-121): on phones the board's dated rows and their details sit right below the hero,
+      so the first screen keeps only the deadline, the countdown and "Belgeleri gönder". Phones only (CSS);
+      it hydrates when visible, so desktop never loads it. */}
+  <section class="board-below wrap" aria-label={t(H.label, lang)}>
+    <Board client:visible part="rows" deadlineMs={site.deadlineMs} graceDays={site.graceDays} rows={rows} text={boardText} />
+  </section>
+
+  <section class="sec" id={lang === "en" ? "important-dates" : "onemli-tarihler"} aria-labelledby="takvim">{/* live anchor (REVIEW-05 B-14) */}
+    <div class="wrap sec__in">
+      <div class="sec__head">
+        <div class="sec__title"><span class="index">{t(home.calendar.index, lang)}</span><h2 id="takvim" class="h2">{t(home.calendar.title, lang)}</h2></div>
+        <p class="sec__lead" set:html={md(t(home.calendar.lead, lang), lang)} />
+      </div>
+      <CalendarStrip lang={lang} text={home.calendar} />
+    </div>
+  </section>
+
+  <section class="sec band band--phases" id="surec" aria-labelledby={processId}>
+    <div class="wrap sec__in">
+      <div class="sec__title"><span class="index">{t(home.process.index, lang)}</span><h2 id={processId} class="h2">{t(home.process.title, lang)}</h2></div>
+      <ol role="list" class="phases">
+        {home.process.phases.map((ph) => (
+          <li class="phase draw">
+            <span class="phase__n mono">{ph.n} / {t(ph.name, lang)}</span>
+            <h3 class="phase__title"><Icon name={ph.icon} size={30} class="phase__icon" />{t(ph.title, lang)}</h3>
+            <ul class="phase__items">{ph.items.map((it) => <li set:html={md(t(it, lang), lang)} />)}</ul>
+            <a class="phase__more" href={pagePath(lang, "surec", ph.anchor)}>{t(home.process.more, lang)}<Icon name="arrow-right" size={18} /><span class="visually-hidden"> — {t(ph.name, lang)}</span></a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- B10 phone action dock: slides up once the hero has scrolled away (script below); fixed, so it never shifts layout. -->
+  <div slot="end" class="dock" id="dock" data-deadline={site.deadlineMs ?? ""} data-grace={site.graceDays} data-lang={lang}
+    data-late={t(H.status.late, lang)} data-closed={t(H.status.closed, lang)} inert>
+    <p class="dock__left mono" id="dock-left"></p>
+    <a class="btn btn--primary dock__cta" href={pagePath(lang, "teslim")} data-astro-reload>{t(H.cta, lang)}<Icon name="arrow-right" size={20} /></a>
+  </div>
+  <div slot="end" class="dock-spacer" aria-hidden="true"></div>
+</BaseLayout>
+<script>
+  import { left, leftText, phaseAt } from "../../lib/phase";
+  import type { Lang } from "../../lib/dates";
+  const dock = document.getElementById("dock");
+  const hero = document.querySelector(".hero");
+  const out = document.getElementById("dock-left");
+  if (dock && hero && out) {
+    const d = dock.dataset;
+    const deadline = d.deadline ? Number(d.deadline) : null;
+    const lang = d.lang as Lang;
+    const tick = () => {
+      if (deadline == null) { out.textContent = ""; return; }
+      const p = phaseAt(Date.now(), deadline, Number(d.grace));
+      out.textContent = p.name === "open" ? leftText(lang, left(Date.now(), deadline))
+        : p.name === "late" && p.closesMs != null ? `${d.late} · ${leftText(lang, left(Date.now(), p.closesMs))}`
+        : d.closed ?? "";
+    };
+    tick(); setInterval(tick, 30_000);
+    const show = (on: boolean) => { dock.classList.toggle("is-on", on); dock.inert = !on; };
+    new IntersectionObserver(([e]) => show(!e.isIntersecting && e.boundingClientRect.top < 0)).observe(hero);
+    // WCAG 2.4.11: a focused element must not end up under the dock.
+    document.addEventListener("focusin", (ev) => {
+      if (!dock.classList.contains("is-on") || dock.contains(ev.target as Node)) return;
+      const r = (ev.target as Element).getBoundingClientRect();
+      const top = dock.getBoundingClientRect().top;
+      if (r.bottom > top - 8) window.scrollBy({ top: r.bottom - top + 16 });
+    });
+  }
+</script>
+<style>
+  .hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--rule-strong); background-image: repeating-linear-gradient(90deg, var(--rule) 0 1px, transparent 1px 100%), linear-gradient(180deg, var(--hero-top), var(--hero-bottom)); background-size: calc(100% / 12) 100%, 100% 100%; }
+  .hero__in { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 48px; padding-block: 64px 72px; align-items: stretch; }
+  /* FINAL-CHECK F-06: the title, lead and links follow the index label (they sat at the bottom of the tall board column). */
+  .hero__text { flex: 7 1 520px; min-width: 0; display: flex; flex-direction: column; justify-content: flex-start; gap: 32px; container-type: inline-size; }
+  .hero__title { font-family: var(--font-display); font-stretch: 75%; font-weight: 800; font-size: var(--display-hero); line-height: 0.86; letter-spacing: -0.035em; overflow-wrap: anywhere; text-wrap: balance; }
+  /* D-67: on wide screens each "|" line stays on one line in either language. The cap comes from the
+     longest line's character count (--chars, set in the markup) and the face's measured ~0.36 em per
+     character; pure CSS, so nothing moves after load. Phones wrap naturally. */
+  @media (min-width: 1024px) {
+    .hero__title { font-size: min(var(--display-hero), calc(100cqi / (var(--chars, 12) * 0.38))); }
+  }
+  .hero__accent { color: var(--accent-text); }
+  .hero__lede { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; max-width: 560px; }   /* the lead never grows past the container (D-172) */
+  .hero__lede p { font-size: var(--step-1); line-height: 1.45; color: var(--ink-2); }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero__board { flex: 5 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+  .hero__cta { align-self: stretch; }
+  .sec { border-bottom: 1px solid var(--rule-strong); }
+  .sec__in { padding-block: 56px 64px; display: grid; gap: 28px; }
+  .sec__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 32px; }
+  .sec__title { display: grid; gap: 10px; }
+  .sec__lead { font-size: 18px; color: var(--ink-2); max-width: 440px; }
+  .sec__lead :global(strong) { color: var(--ink); }
+  /* Three phases: three columns from 961 px, one below (auto-fit left 2 + 1 at tablet widths, REVIEW-01 Note 5). */
+  .phases { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .phase { display: flex; flex-direction: column; gap: 14px; padding: 24px 0; }
+  .phase + .phase { border-top: 1px solid var(--rule); }
+  @media (min-width: 961px) {
+    .phases { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .phase { padding: 24px 28px 24px 0; }
+    .phase + .phase { padding-left: 28px; border-top: 0; border-left: 1px solid var(--rule); }
+  }
+  .phase__n { font-size: 14px; font-weight: 700; color: var(--accent-text); display: inline-flex; align-items: center; gap: 10px; }
+  .phase__n::before { content: ""; width: 18px; height: 3px; background: var(--band-teal, var(--conditional)); }
+  .band--phases .h2 { color: var(--band-ink); }
+  .phase__title { font-family: var(--font-display); font-stretch: 85%; font-weight: 700; font-size: 30px; line-height: 1.05; display: grid; gap: 14px; justify-items: start; }
+  .phase__title :global(.phase__icon) { color: var(--band-teal, var(--accent-text)); }
+  /* REVIEW-06 Note 3: each column flows on its own (the list no longer stretches to the tallest column, which spread its
+     rows apart); one spacing value; the link sits at the bottom of its column. */
+  .phase__items { padding-left: 18px; display: grid; align-content: start; gap: 10px; font-size: 17px; line-height: 1.55; color: var(--ink-2); }
+  .phase__items :global(strong) { color: var(--ink); }
+  /* 761–960 px (phases stacked): number and title on the left, the list and link on the right, so a list line stays
+     near 70 characters instead of running across the container (FINAL-CHECK F-02, D-178). */
+  @media (min-width: 761px) and (max-width: 960px) {
+    .phase { display: grid; grid-template-columns: 13rem minmax(0, 1fr); column-gap: 28px; row-gap: 14px; align-items: start; }
+    .phase > :global(*) { grid-column: 2; }
+    .phase > .phase__n { grid-column: 1; grid-row: 1; }
+    .phase > .phase__title { grid-column: 1; grid-row: 2 / span 3; }
+    .phase > .phase__items { grid-row: 1 / span 2; }
+  }
+  .phase__more { font-weight: 700; min-height: 44px; display: inline-flex; align-items: center; gap: 0.3em; align-self: flex-start; margin-top: auto; }
+  .hero__notes { border: var(--border-strong); background: var(--surface); }
+  @media (max-width: 760px) {
+    .hero__in { padding-block: 40px 48px; gap: 32px; }
+    .phase, .phase + .phase { padding: 24px 0; border-left: 0; }
+  }
+  /* Phones (REVIEW-01 answer 4, D-121): a compact hero, so the countdown, the deadline and "Belgeleri gönder"
+     reach the first screen; the board's rows follow right below the hero. */
+  @media (max-width: 600px) {
+    .hero__in { padding-block: 24px 28px; gap: 20px; }
+    .hero__lede { gap: 14px; }
+    .hero__lede p { font-size: 17px; line-height: 1.45; }
+    .hero__actions { align-items: center; gap: 8px 14px; }   /* the second link wraps when both do not fit (D-172) */
+    .hero__actions .btn { padding-inline: 14px; white-space: nowrap; }
+    /* First screen: title, then the countdown, the deadline in words and "Belgeleri gönder"; the lead and the
+       two links follow. Visual order only (the DOM stays title → lead → board, which reads in order). */
+    .hero__in { flex-direction: column; flex-wrap: nowrap; }
+    .hero__text { display: contents; }
+    .hero__text > .index { order: 1; }
+    .hero__title { order: 2; }
+    .hero__board { order: 3; flex: none; }
+    .hero__lede { order: 4; }
+  }
+  /* B10 dock: phones only; safe-area aware; the spacer (after the footer) keeps the footer clear of it. */
+  .dock, .dock-spacer { display: none; }
+  @media (max-width: 760px) {
+    .dock {
+      position: fixed; inset: auto 0 0; z-index: 30;
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px max(16px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      background: var(--paper); border-top: var(--border-strong);
+      transform: translateY(110%); visibility: hidden;
+    }
+    .dock.is-on { transform: none; visibility: visible; }
+    .dock__left { flex: 1 1 auto; min-width: 0; font-size: 13px; font-weight: 700; line-height: 1.2; color: var(--ink); }
+    .dock__cta { flex: none; min-height: 48px; }
+    .dock-spacer { display: block; height: calc(72px + env(safe-area-inset-bottom)); }
+    html:has(.dock.is-on) { scroll-padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
+  }
+  @media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+    .dock { transition: transform 200ms var(--ease), visibility 0s linear 200ms; }
+    .dock.is-on { transition: transform 200ms var(--ease), visibility 0s; }
+  }
+</style>

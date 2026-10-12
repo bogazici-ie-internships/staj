@@ -1,0 +1,550 @@
+{
+ "pages": {
+  "en/formlar/": {
+   "lang": "en",
+   "title": "Forms and Documents · Compulsory Internship Guide",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/en/formlar/",
+   "alternates": {
+    "tr": "../../formlar/",
+    "en": "./"
+   },
+   "meta": {
+    "description": "Compulsory internship forms and documents: the internship letter, EK-1, Trainee Evaluation Form, Student Internship Survey and timetable template.",
+    "og:locale": "en_US",
+    "og:title": "Forms and Documents · Boğaziçi IE — Compulsory Internship Guide",
+    "og:description": "Compulsory internship forms and documents: the internship letter, EK-1, Trainee Evaluation Form, Student Internship Survey and timetable template.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/en/formlar/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "after-the-internship",
+    "before-the-internship",
+    "during-the-internship",
+    "forms-documents",
+    "guide-and-rules"
+   ]
+  },
+  "en/iletisim/": {
+   "lang": "en",
+   "title": "Contact · Compulsory Internship Guide",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/en/iletisim/",
+   "alternates": {
+    "tr": "../../iletisim/",
+    "en": "./"
+   },
+   "meta": {
+    "description": "Contact details for the internship assistants and the internship advisor: who to write to about what.",
+    "og:locale": "en_US",
+    "og:title": "Contact · Boğaziçi IE — Compulsory Internship Guide",
+    "og:description": "Contact details for the internship assistants and the internship advisor: who to write to about what.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/en/iletisim/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "contact"
+   ]
+  },
+  "en/": {
+   "lang": "en",
+   "title": "Home · Compulsory Internship Guide",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/en/",
+   "alternates": {
+    "tr": "/staj/",
+    "en": "/staj/en/"
+   },
+   "meta": {
+    "description": "Boğaziçi University Industrial Engineering compulsory internship guide: dates, insurance (EK-1), report writing, document submission and FAQ.",
+    "og:locale": "en_US",
+    "og:title": "Home · Boğaziçi IE — Compulsory Internship Guide",
+    "og:description": "Boğaziçi University Industrial Engineering compulsory internship guide: dates, insurance (EK-1), report writing, document submission and FAQ.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/en/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "compulsory-internship-guide",
+    "contact",
+    "important-dates",
+    "internship-process"
+   ]
+  },
+  "en/kurallar/": {
+   "lang": "en",
+   "title": "Rules · Compulsory Internship Guide",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/en/kurallar/",
+   "alternates": {
+    "tr": "../../kurallar/",
+    "en": "./"
+   },
+   "meta": {
+    "description": "Compulsory internship rules: the 40-workday and 15-day production requirement, internship rules, report and submission rules, and the topic guide.",
+    "og:locale": "en_US",
+    "og:title": "Rules · Boğaziçi IE — Compulsory Internship Guide",
+    "og:description": "Compulsory internship rules: the 40-workday and 15-day production requirement, internship rules, report and submission rules, and the topic guide.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/en/kurallar/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "general-information",
+    "internship-rules",
+    "konu-rehberi",
+    "report-and-submission-rules",
+    "rules"
+   ]
+  },
+  "en/rapor/": {
+   "lang": "en",
+   "title": "Report Preparation · Compulsory Internship Guide",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/en/rapor/",
+   "alternates": {
+    "tr": "../../rapor/",
+    "en": "./"
+   },
+   "meta": {
+    "description": "How to prepare the internship report: the eight required sections of the report template, the Appendices and References sections added when needed, and what each section should cover.",
+    "og:locale": "en_US",
+    "og:title": "Report Preparation · Boğaziçi IE — Compulsory Internship Guide",
+    "og:description": "How to prepare the internship report: the eight required sections of the report template, the Appendices and References sections added when needed, and what each section should cover.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/en/rapor/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "1-cover-page",
+    "10-references",
+    "2-executive-summary",
+    "3-table-of-contents",
+    "4-timetable",
+    "5-companyorganization-introduction",
+    "6-internship-activities-main-body",
+    "7-assessment",
+    "8-conclusions",
+    "9-appendices-and-supplementary-material",
+    "report-outline",
+    "report-preparation",
+    "sections-added-when-needed"
+   ]
+  },
+  "en/sonuclar/": {
+   "lang": "en",
+   "title": "Results · Compulsory Internship Guide",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/en/sonuclar/",
+   "alternates": {
+    "tr": "../../sonuclar/",
+    "en": "./"
+   },
+   "meta": {
+    "description": "Where compulsory internship evaluation results are announced, with access to the results folder.",
+    "og:locale": "en_US",
+    "og:title": "Results · Boğaziçi IE — Compulsory Internship Guide",
+    "og:description": "Where compulsory internship evaluation results are announced, with access to the results folder.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/en/sonuclar/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "results",
+    "something-wrong-with-your-result"
+   ]
+  },
+  "en/sss/": {
+   "lang": "en",
+   "title": "Frequently Asked Questions · Compulsory Internship Guide",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/en/sss/",
+   "alternates": {
+    "tr": "../../sss/",
+    "en": "./"
+   },
+   "meta": {
+    "description": "Frequently asked questions about the compulsory internship: eligibility and timing, duration and day counting, internship type, documents, submission and results.",
+    "og:locale": "en_US",
+    "og:title": "Frequently Asked Questions · Boğaziçi IE — Compulsory Internship Guide",
+    "og:description": "Frequently asked questions about the compulsory internship: eligibility and timing, duration and day counting, internship type, documents, submission and results.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/en/sss/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "documents",
+    "duration-workday-counting",
+    "frequently-asked-questions",
+    "internship-type",
+    "submission-results",
+    "uygunluk-zamanlama"
+   ]
+  },
+  "en/surec/": {
+   "lang": "en",
+   "title": "Internship Process · Compulsory Internship Guide",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/en/surec/",
+   "alternates": {
+    "tr": "../../surec/",
+    "en": "./"
+   },
+   "meta": {
+    "description": "What to do before, during and after the internship: registration, EK-1 insurance, the timetable, the Saturday letter and document submission.",
+    "og:locale": "en_US",
+    "og:title": "Internship Process · Boğaziçi IE — Compulsory Internship Guide",
+    "og:description": "What to do before, during and after the internship: registration, EK-1 insurance, the timetable, the Saturday letter and document submission.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/en/surec/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "1-choose-an-eligible-internship",
+    "1-documents-for-the-department-of-accounting-affairs",
+    "2-compulsory-internship-letter",
+    "2-documents-for-the-internship-assistants",
+    "3-insurance-and-government-contribution-ek-1",
+    "internship-process",
+    "oncesi",
+    "optional-documents",
+    "required-documents",
+    "sirasinda",
+    "sonrasi"
+   ]
+  },
+  "en/teslim/": {
+   "lang": "en",
+   "title": "Submission · Compulsory Internship Guide",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/en/teslim/",
+   "alternates": {
+    "tr": "../../teslim/",
+    "en": "./"
+   },
+   "meta": {
+    "description": "Submit the internship report and documents online: deadline and time, the late-submission rule, the upload form and what to do if it fails.",
+    "og:locale": "en_US",
+    "og:title": "Submission · Boğaziçi IE — Compulsory Internship Guide",
+    "og:description": "Submit the internship report and documents online: deadline and time, the late-submission rule, the upload form and what to do if it fails.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/en/teslim/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "if-you-cannot-submit",
+    "submission",
+    "suf-ack",
+    "suf-captcha-note",
+    "suf-closed",
+    "suf-countdown",
+    "suf-done",
+    "suf-email",
+    "suf-email-warn",
+    "suf-gate",
+    "suf-gate-text",
+    "suf-hp",
+    "suf-late",
+    "suf-late-head",
+    "suf-late-text",
+    "suf-msg",
+    "suf-name",
+    "suf-name-warn",
+    "suf-retry",
+    "suf-rev-pay",
+    "suf-rev-sat",
+    "suf-sid",
+    "suf-sid-warn",
+    "suf-sit-pay",
+    "suf-sit-sat",
+    "suf-submit",
+    "sufForm"
+   ]
+  },
+  "formlar/": {
+   "lang": "tr",
+   "title": "Formlar ve Belgeler · Zorunlu Staj Kılavuzu",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/formlar/",
+   "alternates": {
+    "tr": "./",
+    "en": "../en/formlar/"
+   },
+   "meta": {
+    "description": "Zorunlu staj formları ve belgeleri: Staj Zorunluluk Belgesi, EK-1, Staj Sicil Formu, Öğrenci Staj Anketi ve çizelge şablonu.",
+    "og:locale": "tr_TR",
+    "og:title": "Formlar ve Belgeler · Boğaziçi EM — Zorunlu Staj Kılavuzu",
+    "og:description": "Zorunlu staj formları ve belgeleri: Staj Zorunluluk Belgesi, EK-1, Staj Sicil Formu, Öğrenci Staj Anketi ve çizelge şablonu.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/formlar/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "formlar-belgeler",
+    "rehber-kurallar",
+    "staj-srasnda",
+    "stajdan-once",
+    "stajdan-sonra"
+   ]
+  },
+  "iletisim/": {
+   "lang": "tr",
+   "title": "İletişim · Zorunlu Staj Kılavuzu",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/iletisim/",
+   "alternates": {
+    "tr": "./",
+    "en": "../en/iletisim/"
+   },
+   "meta": {
+    "description": "Staj asistanları ve staj danışmanı iletişim bilgileri: hangi konuda kime yazmalı.",
+    "og:locale": "tr_TR",
+    "og:title": "İletişim · Boğaziçi EM — Zorunlu Staj Kılavuzu",
+    "og:description": "Staj asistanları ve staj danışmanı iletişim bilgileri: hangi konuda kime yazmalı.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/iletisim/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "iletisim"
+   ]
+  },
+  "": {
+   "lang": "tr",
+   "title": "Zorunlu Staj Kılavuzu · Boğaziçi Üniversitesi Endüstri Mühendisliği",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/",
+   "alternates": {
+    "tr": "/staj/",
+    "en": "/staj/en/"
+   },
+   "meta": {
+    "description": "Boğaziçi Üniversitesi Endüstri Mühendisliği zorunlu staj kılavuzu: staj tarihleri, sigorta (EK-1), rapor hazırlama, belge teslimi ve sık sorulan sorular.",
+    "og:locale": "tr_TR",
+    "og:title": "Boğaziçi EM — Zorunlu Staj Kılavuzu",
+    "og:description": "Boğaziçi Üniversitesi Endüstri Mühendisliği zorunlu staj kılavuzu: staj tarihleri, sigorta (EK-1), rapor hazırlama, belge teslimi ve sık sorulan sorular.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "iletisim",
+    "onemli-tarihler",
+    "staj-sureci",
+    "zorunlu-staj-klavuzu"
+   ]
+  },
+  "kurallar/": {
+   "lang": "tr",
+   "title": "Kurallar · Zorunlu Staj Kılavuzu",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/kurallar/",
+   "alternates": {
+    "tr": "./",
+    "en": "../en/kurallar/"
+   },
+   "meta": {
+    "description": "Zorunlu stajın kuralları: 40 iş günü ve 15 gün üretim şartı, staj kuralları, rapor ve teslim kuralları ile rapor konu rehberi.",
+    "og:locale": "tr_TR",
+    "og:title": "Kurallar · Boğaziçi EM — Zorunlu Staj Kılavuzu",
+    "og:description": "Zorunlu stajın kuralları: 40 iş günü ve 15 gün üretim şartı, staj kuralları, rapor ve teslim kuralları ile rapor konu rehberi.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/kurallar/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "genel-bilgiler",
+    "konu-rehberi",
+    "kurallar",
+    "rapor-ve-teslim-kurallar",
+    "staj-kurallar"
+   ]
+  },
+  "rapor/": {
+   "lang": "tr",
+   "title": "Rapor Hazırlama · Zorunlu Staj Kılavuzu",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/rapor/",
+   "alternates": {
+    "tr": "./",
+    "en": "../en/rapor/"
+   },
+   "meta": {
+    "description": "Staj raporu nasıl hazırlanır: rapor şablonunun sekiz zorunlu bölümü, duruma göre eklenen Appendices ve References bölümleri ve her bölümde neyin yazılacağı.",
+    "og:locale": "tr_TR",
+    "og:title": "Rapor Hazırlama · Boğaziçi EM — Zorunlu Staj Kılavuzu",
+    "og:description": "Staj raporu nasıl hazırlanır: rapor şablonunun sekiz zorunlu bölümü, duruma göre eklenen Appendices ve References bölümleri ve her bölümde neyin yazılacağı.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/rapor/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "1-cover-page",
+    "10-references",
+    "2-executive-summary",
+    "3-table-of-contents",
+    "4-timetable",
+    "5-companyorganization-introduction",
+    "6-internship-activities-main-body",
+    "7-assessment",
+    "8-conclusions",
+    "9-appendices-and-supplementary-material",
+    "duruma-gore-eklenen-bolumler",
+    "rapor-hazrlama",
+    "rapor-sablonu"
+   ]
+  },
+  "sonuclar/": {
+   "lang": "tr",
+   "title": "Sonuçlar · Zorunlu Staj Kılavuzu",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/sonuclar/",
+   "alternates": {
+    "tr": "./",
+    "en": "../en/sonuclar/"
+   },
+   "meta": {
+    "description": "Zorunlu staj değerlendirme sonuçlarının ilan edildiği sayfa ve sonuç klasörüne erişim.",
+    "og:locale": "tr_TR",
+    "og:title": "Sonuçlar · Boğaziçi EM — Zorunlu Staj Kılavuzu",
+    "og:description": "Zorunlu staj değerlendirme sonuçlarının ilan edildiği sayfa ve sonuç klasörüne erişim.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/sonuclar/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "sonuclar",
+    "sonucunuzda-bir-sorun-mu-var"
+   ]
+  },
+  "sss/": {
+   "lang": "tr",
+   "title": "Sık Sorulan Sorular · Zorunlu Staj Kılavuzu",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/sss/",
+   "alternates": {
+    "tr": "./",
+    "en": "../en/sss/"
+   },
+   "meta": {
+    "description": "Zorunlu staj hakkında sık sorulan sorular: uygunluk ve zamanlama, süre ve gün sayımı, staj türü, belgeler, teslim ve sonuç.",
+    "og:locale": "tr_TR",
+    "og:title": "Sık Sorulan Sorular · Boğaziçi EM — Zorunlu Staj Kılavuzu",
+    "og:description": "Zorunlu staj hakkında sık sorulan sorular: uygunluk ve zamanlama, süre ve gün sayımı, staj türü, belgeler, teslim ve sonuç.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/sss/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "belgeler",
+    "sk-sorulan-sorular",
+    "staj-turu",
+    "sure-gun-saym",
+    "teslim-sonuc",
+    "uygunluk-zamanlama"
+   ]
+  },
+  "surec/": {
+   "lang": "tr",
+   "title": "Staj Süreci · Zorunlu Staj Kılavuzu",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/surec/",
+   "alternates": {
+    "tr": "./",
+    "en": "../en/surec/"
+   },
+   "meta": {
+    "description": "Stajdan önce, staj sırasında ve stajdan sonra yapılacaklar: kayıt formu, EK-1 sigorta, çizelge, Cumartesi yazısı ve belge teslimi.",
+    "og:locale": "tr_TR",
+    "og:title": "Staj Süreci · Boğaziçi EM — Zorunlu Staj Kılavuzu",
+    "og:description": "Stajdan önce, staj sırasında ve stajdan sonra yapılacaklar: kayıt formu, EK-1 sigorta, çizelge, Cumartesi yazısı ve belge teslimi.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/surec/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "1-dogru-staj-secin-sure-tur-donem",
+    "1-hesap-islerine-teslim-edilecekler",
+    "2-staj-asistanlarna-teslim-edilecekler",
+    "2-staj-zorunluluk-belgesi",
+    "3-sigorta-ve-devlet-katks-ek-1",
+    "oncesi",
+    "opsiyonel-belgeler-duruma-gore",
+    "sirasinda",
+    "sonrasi",
+    "staj-sureci",
+    "zorunlu-belgeler"
+   ]
+  },
+  "teslim/": {
+   "lang": "tr",
+   "title": "Teslim · Zorunlu Staj Kılavuzu",
+   "canonical": "https://bogazici-ie-internships.github.io/staj/teslim/",
+   "alternates": {
+    "tr": "./",
+    "en": "../en/teslim/"
+   },
+   "meta": {
+    "description": "Staj raporu ve belgelerin online teslimi: son teslim tarihi ve saati, geç teslim kuralı, yükleme formu ve gönderemezseniz ne yapmalı.",
+    "og:locale": "tr_TR",
+    "og:title": "Teslim · Boğaziçi EM — Zorunlu Staj Kılavuzu",
+    "og:description": "Staj raporu ve belgelerin online teslimi: son teslim tarihi ve saati, geç teslim kuralı, yükleme formu ve gönderemezseniz ne yapmalı.",
+    "og:image": "https://bogazici-ie-internships.github.io/staj/assets/og-image.png",
+    "og:url": "https://bogazici-ie-internships.github.io/staj/teslim/",
+    "twitter:card": "summary_large_image"
+   },
+   "ids": [
+    "gonderemiyorsanz",
+    "suf-ack",
+    "suf-captcha-note",
+    "suf-closed",
+    "suf-countdown",
+    "suf-done",
+    "suf-email",
+    "suf-email-warn",
+    "suf-gate",
+    "suf-gate-text",
+    "suf-hp",
+    "suf-late",
+    "suf-late-head",
+    "suf-late-text",
+    "suf-msg",
+    "suf-name",
+    "suf-name-warn",
+    "suf-retry",
+    "suf-rev-pay",
+    "suf-rev-sat",
+    "suf-sid",
+    "suf-sid-warn",
+    "suf-sit-pay",
+    "suf-sit-sat",
+    "suf-submit",
+    "sufForm",
+    "teslim"
+   ]
+  }
+ },
+ "sitemap": [
+  "https://bogazici-ie-internships.github.io/staj/",
+  "https://bogazici-ie-internships.github.io/staj/formlar/",
+  "https://bogazici-ie-internships.github.io/staj/iletisim/",
+  "https://bogazici-ie-internships.github.io/staj/kurallar/",
+  "https://bogazici-ie-internships.github.io/staj/rapor/",
+  "https://bogazici-ie-internships.github.io/staj/sonuclar/",
+  "https://bogazici-ie-internships.github.io/staj/sss/",
+  "https://bogazici-ie-internships.github.io/staj/teslim/",
+  "https://bogazici-ie-internships.github.io/staj/surec/",
+  "https://bogazici-ie-internships.github.io/staj/en/",
+  "https://bogazici-ie-internships.github.io/staj/en/formlar/",
+  "https://bogazici-ie-internships.github.io/staj/en/iletisim/",
+  "https://bogazici-ie-internships.github.io/staj/en/kurallar/",
+  "https://bogazici-ie-internships.github.io/staj/en/rapor/",
+  "https://bogazici-ie-internships.github.io/staj/en/sonuclar/",
+  "https://bogazici-ie-internships.github.io/staj/en/sss/",
+  "https://bogazici-ie-internships.github.io/staj/en/teslim/",
+  "https://bogazici-ie-internships.github.io/staj/en/surec/"
+ ],
+ "documents": [
+  "belgeler/Compulsory-Internship-Letter-EN.pdf",
+  "belgeler/Compulsory-Internship-Letter-TR.pdf",
+  "belgeler/EK-1-Form.docx",
+  "belgeler/Internship-Timetable.docx",
+  "belgeler/Revised-Handbook-of-Internship.pdf",
+  "belgeler/State-Contribution-Guide.pdf",
+  "belgeler/Student-Internship-Survey.pdf",
+  "belgeler/Trainee-Evaluation-Form.pdf"
+ ],
+ "public_assets": [
+  "assets/bulogo.svg",
+  "assets/favicon-192.png",
+  "assets/favicon-48.png",
+  "assets/favicon-512.png",
+  "assets/favicon-96.png",
+  "assets/og-image.png"
+ ]
+}

@@ -1,0 +1,47 @@
+# sonuclar — migrated from main docs/sonuclar.md (+ .en.md) by scripts/migrate/convert.mjs,
+# then reviewed by hand (UPDATE-06 Phase 2a; voice UPDATE-03, terms UPDATE-05). `src` = source
+# lines on main, used by the coverage report. The results lookup panel was cancelled (D-79):
+# this page keeps the live content — announcement timing and the restricted results folder.
+page: sonuclar
+anchor: { tr: sonuclar, en: results }
+title: { tr: Sonuçlar, en: Results }
+src: sonuclar.md:8 · sonuclar.en.md:8
+meta:
+  src: sonuclar.md:2 · sonuclar.en.md:2
+  note: → chrome.yaml pages.description (already migrated, UPDATE-03)
+lead:
+  - kind: p
+    text:
+      tr: Kabul edilen gün sayısı, eksikler ve notlar, periyodik olarak ilan edilen sonuç listesinde yer alır.
+      en: Accepted workdays, missing items and notes appear in the results list, which is published periodically.
+    src: sonuclar.md:10 · sonuclar.en.md:10
+sections:
+  # REVIEW-06 Note 3: the left column (results folder button + announcement timing) gets a heading with the same
+  # rule as the right column, so the two tops line up.
+  - anchor: { tr: sonuc-listesi, en: results-list }
+    title: { tr: "Sonuç Listesi", en: "Results List" }
+    src: new — REVIEW-06 Note 3, heading for the results-folder button and the announcement timing
+    blocks:
+      - kind: action
+        label: { tr: "Sonuç klasörünü aç", en: "Open the results folder" }
+        href: link:sonuclar_klasoru
+        src: sonuclar.md:12 · sonuclar.en.md:12
+      - kind: callout
+        tone: note
+        title: { tr: "İlan Zamanı", en: "Announcement Timing" }
+        src: sonuclar.md:14 · sonuclar.en.md:14
+        blocks:
+          - kind: p
+            text:
+              tr: Sabit bir takvim yoktur; sonuçlar **periyodik olarak** ilan edilir. Mezuniyet gibi acil bir durumunuz varsa staj asistanlarına **yazılı olarak** bildiriniz.
+              en: There is no fixed schedule; results are published **periodically**. If you have an urgent situation such as graduation, notify the internship assistants **in writing**.
+            src: sonuclar.md:15 · sonuclar.en.md:15
+  - anchor: { tr: sonucunuzda-bir-sorun-mu-var, en: something-wrong-with-your-result }
+    title: { tr: "Sonuçla İlgili Sorunlar", en: "Problems with Your Result" }
+    src: sonuclar.md:17 · sonuclar.en.md:17
+    blocks:
+      - kind: p
+        text:
+          tr: Adınızı listede bulamıyorsanız veya kabul edilen gün sayısını hatalı görüyorsanız önce [Sık Sorulan Sorular](page:sss) sayfasını gözden geçiriniz; sorun çözülmezse [staj asistanlarına](page:iletisim) başvurunuz.
+          en: If you cannot find your name on the list, or the accepted day count appears incorrect, first review the [Frequently Asked Questions](page:sss) page; if the problem remains, contact the [internship assistants](page:iletisim).
+        src: sonuclar.md:19 · sonuclar.en.md:19

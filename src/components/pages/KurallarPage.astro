@@ -1,0 +1,157 @@
+---
+// Kurallar — Akademi Gazetesi voice (reference/Akademi.dc.html, DESIGN.md §2–3).
+// Rules come from src/content/rules/*.yaml (typed, § numbered, TR+EN).
+// Signature move: the § number sits in the left margin on wide screens.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHead from "../layout/PageHead.astro";
+import Rail from "../layout/Rail.astro";
+import { copy, glossary, rules, t } from "../../lib/content";
+import { md } from "../../lib/inline-md";
+import { termId } from "../../lib/search/ids";
+import Icon from "../../icons/Icon.astro";
+import type { Lang } from "../../lib/dates";
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const page = await copy("kurallarPage");
+const sections = await rules();
+const terms = await glossary();
+const ruleId = (no: string) => `k-${no.replace(".", "-")}`;
+const figures = sections.flatMap((s) => s.rules.filter((r) => r.highlight).map((r) => ({ no: r.no, ...r.highlight! })));
+// A term's margin note appears once, next to the first rule that uses it.
+const noted = new Set<string>();
+const noteFor = (r: { terms: string[] }) => r.terms.filter((k) => !noted.has(k) && noted.add(k)).map((k) => terms.find((x) => x.id === k)!);
+const lede = md(t(page.lede, lang), lang);
+const railLinks = sections.map((s) => ({ href: `#${s.anchor[lang]}`, label: t(s.title, lang), n: String(s.section) }));
+---
+<BaseLayout lang={lang} page="kurallar" voice="gazete">
+  <article class="gz">
+    <PageHead lang={lang} voice="gazete" panel={false}>
+      <h1 class="gz__title" id={lang === "en" ? "rules" : "kurallar"}>{t(page.masthead, lang)}</h1>
+      {/* REVIEW-06 Note 2 (D-165): the Handbook sentence is the lead (it was the stub "Zorunlu staja ilişkin kurallar" here and a paragraph under the figures). */}
+      <p class="ph__lead ph__lead--always gz__lede" set:html={lede} />
+    </PageHead>
+
+    <div class="band figs-band">
+      <div class="wrap">
+          <section class="figs" aria-labelledby="figs-title">
+            <h2 id="figs-title" class="visually-hidden">{t(page.keyFigures, lang)}</h2>
+            <ol role="list" class="figs__list draw draw--double">
+              {figures.map((f) => (
+                <li class="fig">
+                  <a class="fig__no" href={`#${ruleId(f.no)}`}>{f.no}</a>
+                  <span class="fig__value">{t(f.value, lang)}</span>
+                  <span class="fig__cap">{t(f.caption, lang)}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
+      </div>
+    </div>
+
+    <div class="wrap gz__grid with-rail">
+      <Rail lang={lang} links={railLinks} factsTitle={t(page.ajanda.terms, lang)}>
+        <div slot="facts" class="rail__box">
+          <dl class="aj__terms">
+            {terms.map((g) => (<div id={termId(g.id)}><dt><dfn>{t(g.term, lang)}</dfn></dt><dd>{t(g.definition, lang)}</dd></div>))}
+          </dl>
+        </div>
+      </Rail>
+
+      <div class="gz__body">
+        {sections.map((s) => (
+          <section class="sec" aria-labelledby={s.anchor[lang]}>
+            <h2 class="sec__title draw draw--double numbered" id={s.anchor[lang]}><span class="num" aria-hidden="true">{s.section}</span><span><span class="visually-hidden">{s.section}. </span>{t(s.title, lang)}</span></h2>
+            {s.intro && <p class="sec__intro" set:html={md(t(s.intro, lang), lang)} />}
+            {s.rules.length > 0 && (
+              <ol role="list" class="rules">
+                {s.rules.map((r) => (
+                  <li class="rule numbered" id={ruleId(r.no)}>
+                    <a class="rule__no num" href={`#${ruleId(r.no)}`}>{r.no}</a>
+                    <p class="rule__body" set:html={md(t(r.body, lang), lang)} />
+                    {r.pull && <p class="pull" aria-hidden="true">{t(r.pull, lang)}</p>}
+                    {noteFor(r).map((g) => (
+                      <aside class="rule__note"><b>{t(g.term, lang)}</b> {t(g.definition, lang)}</aside>
+                    ))}
+                  </li>
+                ))}
+              </ol>
+            )}
+            {s.pull && <p class="pull" aria-hidden="true">{t(s.pull, lang)}</p>}
+            {s.callout && (
+              <aside class={`callout callout--${s.callout.kind}`} aria-label={t(s.callout.title, lang)}>
+                <p class="callout__title"><Icon name={s.callout.kind === "deadline" ? "triangle-alert" : "info"} size={22} />{t(s.callout.title, lang)}</p>
+                <p set:html={md(t(s.callout.body, lang), lang)} />
+              </aside>
+            )}
+            {s.topics && (
+              <div class="topics">
+                {s.topics.map((tp) => (
+                  <section class="topic" aria-labelledby={`topic-${tp.id}`}>
+                    <h3 class="topic__title" id={`topic-${tp.id}`}>{t(tp.title, lang)}</h3>
+                    <p set:html={md(t(tp.intro, lang), lang)} />
+                    <ul>{tp.items.map((it) => <li set:html={md(t(it, lang), lang)} />)}</ul>
+                  </section>
+                ))}
+              </div>
+            )}
+          </section>
+        ))}
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+<style>
+  .gz { --body: var(--font-editorial); }
+  .gz__title { font-family: var(--font-editorial); font-weight: 600; font-size: clamp(52px, 8vw, 104px); line-height: 0.95; letter-spacing: -0.025em; }
+  .gz__grid { display: grid; row-gap: var(--space-6); padding-block: var(--space-6) var(--space-7); }
+  /* Numbers sit in the shared number column (REVIEW-01 Note 4, D-114); the rail joins at 1024 px (D-105, D-176). */
+  .gz__body { font-family: var(--body); font-size: var(--gz-body); line-height: 1.6; display: grid; gap: var(--space-6); }
+  /* The text fills the column (REVIEW-07, D-170): every block uses its full width. */
+  .gz__lede :global(a) { font-weight: 700; }
+
+  .figs-band { margin-top: var(--space-6); }
+  .figs { padding-block: var(--space-6); }
+  /* Four figures: four in a row from 961 px, 2 × 2 from 481 px, one column below (REVIEW-01 Note 5). */
+  .figs__list { display: grid; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 481px) { .figs__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .fig:nth-child(2n) { padding-left: 20px; border-left: 1px solid var(--rule); } }
+  @media (min-width: 961px) { .figs__list { grid-template-columns: repeat(4, minmax(0, 1fr)); } .fig + .fig { padding-left: 20px; border-left: 1px solid var(--rule); } }
+  .fig { display: grid; gap: 6px; align-content: start; padding: 14px 20px 18px 0; border-bottom: 1px solid var(--rule); }
+  .figs-band .fig__value { color: var(--ink); }
+  .fig__no { font-family: var(--font-ui); font-size: 14px; font-weight: 700; color: var(--accent-text); text-decoration: none; justify-self: start; min-height: 24px; min-width: 44px; display: inline-flex; align-items: center; }   /* FINAL-CHECK F-16: ≥ 24 × 24 px target */
+  .fig__no:hover { text-decoration: underline; }
+  .fig__value { font-family: var(--font-editorial); font-weight: 600; font-size: clamp(32px, 4vw, 40px); line-height: 1; }
+  .fig__cap { font-size: 16px; line-height: 1.45; color: var(--ink-2); }
+
+  .sec { display: grid; gap: var(--space-4); scroll-margin-top: var(--space-5); }
+  .sec__title { font-family: var(--font-editorial); font-weight: 600; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.05; letter-spacing: -0.015em; padding-top: var(--space-4); }
+  .sec__title { position: relative; }
+  .rules { display: grid; gap: var(--space-4); }
+  .rule { position: relative; display: grid; gap: 6px; scroll-margin-top: var(--space-5); }
+  .rule__no { padding-block: 6px; margin-block: -6px; }   /* 24 px target (WCAG 2.5.8) */
+  .rule:target { background: var(--primary-tint); outline: 8px solid var(--primary-tint); }
+  .rule__body :global(strong) { font-weight: 700; }
+  .rule__body :global(a), .sec__intro :global(a), .topic :global(a) { font-weight: 600; }
+  .rule__note { font-family: var(--font-ui); font-size: 14px; line-height: 1.45; color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 6px; }   /* fills the column (REVIEW-07, D-170) */
+  /* REVIEW-06 Note 3 (D-167): the rail's Terimler box says the same on desktop; the inline note is for the collapsed rail only. */
+  @media (min-width: 1024px) { .rule__note { display: none; } }
+
+  /* B11: pull-quotes and the warning card (2 px signal frame + icon, no fill). */
+  .pull { font-family: var(--font-editorial); font-weight: 600; font-size: clamp(26px, 2.2vw + 14px, 34px); line-height: 1.15; letter-spacing: -0.01em;
+    color: var(--ink); border-top: 2px solid var(--ink); padding-top: 14px; margin-block: 6px 2px; text-wrap: balance; }
+  .pull::before { content: "“"; color: var(--accent-text); margin-right: 0.04em; }
+  .pull::after { content: "”"; color: var(--accent-text); }
+  .callout { border: 2px solid var(--signal); background: var(--surface); padding: 16px 18px 18px; display: grid; gap: 6px; }
+  .callout--note { border-color: var(--ink); }
+  .callout__title { font-family: var(--font-ui); font-weight: 800; font-size: 17px; color: var(--signal-text); display: flex; align-items: center; gap: 10px; }
+  .callout--note .callout__title { color: var(--ink); }
+  .topics { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5) var(--space-6); }
+  @media (min-width: 761px) { .topics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }   /* two topics */
+  .topic { display: grid; gap: 10px; align-content: start; border-top: 1px solid var(--rule-strong); padding-top: 12px; }
+  .topic__title { font-family: var(--font-editorial); font-weight: 600; font-size: 28px; line-height: 1.1; }
+  .topic ul { padding-left: 20px; display: grid; gap: 4px; }
+
+  .aj__sub { font-size: 14px; font-weight: 800; }
+  .aj__terms { display: grid; gap: 10px; font-size: 14px; line-height: 1.45; }
+  .aj__terms dfn { font-style: normal; font-weight: 700; }
+  .aj__terms dd { margin: 0; color: var(--ink-2); }
+</style>

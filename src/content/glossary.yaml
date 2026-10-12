@@ -1,0 +1,12 @@
+# Terms defined where they appear (margin notes on Gazete pages, <dfn> in flows).
+# PRODUCT.md principle 4: define EK-1, Sicil Formu, SGK where they appear.
+- id: ek1
+  term: { tr: "EK-1", en: "EK-1" }
+  definition:
+    tr: Staj öncesinde sigorta girişi için doldurulan form; şirkete imzalatılarak staj koordinatörüne iletilir. Şirket devlet katkısı talep ediyorsa aynı form kullanılır.
+    en: The form completed before the internship so that the University can register your insurance; it is signed by the company and sent to the internship coordinator. The same form is used if the company claims the government contribution.
+- id: sicil
+  term: { tr: "Staj Sicil Formu", en: "Trainee Evaluation Form" }
+  definition:
+    tr: Şirketin stajınızı değerlendirdiği, imzalı ve kaşeli form.
+    en: The signed and stamped form in which the company evaluates your internship.

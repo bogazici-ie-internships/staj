@@ -1,0 +1,248 @@
+{
+ "tr": {
+  "aylar": [
+   {
+    "etiket": "Oca",
+    "orta": 4.25
+   },
+   {
+    "etiket": "Şub",
+    "orta": 12.33
+   },
+   {
+    "etiket": "Mar",
+    "orta": 20.41
+   },
+   {
+    "etiket": "Nis",
+    "orta": 28.77
+   },
+   {
+    "etiket": "May",
+    "orta": 37.12
+   },
+   {
+    "etiket": "Haz",
+    "orta": 45.48
+   },
+   {
+    "etiket": "Tem",
+    "orta": 53.84
+   },
+   {
+    "etiket": "Ağu",
+    "orta": 62.33
+   },
+   {
+    "etiket": "Eyl",
+    "orta": 70.68
+   },
+   {
+    "etiket": "Eki",
+    "orta": 79.04
+   },
+   {
+    "etiket": "Kas",
+    "orta": 87.4
+   },
+   {
+    "etiket": "Ara",
+    "orta": 95.75
+   }
+  ],
+  "bloklar": [
+   {
+    "anahtar": "Bahar Dönemi",
+    "kategori": "block",
+    "sol": 10.68,
+    "genislik": 26.3,
+    "aralik": "9 Şubat 2026 – 15 Mayıs 2026"
+   },
+   {
+    "anahtar": "Yaz Okulu",
+    "kategori": "cond",
+    "sol": 47.67,
+    "genislik": 13.7,
+    "aralik": "24 Haziran 2026 – 12 Ağustos 2026"
+   },
+   {
+    "anahtar": "Güz Dönemi",
+    "kategori": "block",
+    "sol": 72.05,
+    "genislik": 22.47,
+    "aralik": "21 Eylül 2026 – 11 Aralık 2026"
+   }
+  ],
+  "isaretler": [
+   {
+    "anahtar": "Yaz Stajı Teslimi",
+    "sol": 77.81,
+    "aralik": "12 Ekim 2026, 10:00",
+    "etiket": "12 Ekim"
+   }
+  ],
+  "liste": [
+   {
+    "tur": "kapali",
+    "ad": "Bahar Dönemi",
+    "hukum": "Yapılamaz",
+    "anahtar": "Bahar Dönemi",
+    "notu": "",
+    "aralik": "9 Şubat 2026 – 15 Mayıs 2026"
+   },
+   {
+    "tur": "kosullu",
+    "ad": "Yaz Okulu",
+    "hukum": "Koşullu",
+    "anahtar": "Yaz Okulu",
+    "notu": "Ders almıyorsanız bu dönemde staj yapabilirsiniz.",
+    "aralik": "24 Haziran 2026 – 12 Ağustos 2026"
+   },
+   {
+    "tur": "kapali",
+    "ad": "Güz Dönemi",
+    "hukum": "Yapılamaz",
+    "anahtar": "Güz Dönemi",
+    "notu": "",
+    "aralik": "21 Eylül 2026 – 11 Aralık 2026"
+   },
+   {
+    "tur": "teslim",
+    "ad": "Yaz Stajı Teslimi",
+    "hukum": "Son teslim",
+    "anahtar": "Yaz Stajı Teslimi",
+    "notu": "",
+    "aralik": "12 Ekim 2026, 10:00"
+   }
+  ],
+  "bas_yil": 2026,
+  "bit_yil": 2026,
+  "bas_iso": "2026-01-01",
+  "bit_iso": "2026-12-31"
+ },
+ "en": {
+  "aylar": [
+   {
+    "etiket": "Jan",
+    "orta": 4.25
+   },
+   {
+    "etiket": "Feb",
+    "orta": 12.33
+   },
+   {
+    "etiket": "Mar",
+    "orta": 20.41
+   },
+   {
+    "etiket": "Apr",
+    "orta": 28.77
+   },
+   {
+    "etiket": "May",
+    "orta": 37.12
+   },
+   {
+    "etiket": "Jun",
+    "orta": 45.48
+   },
+   {
+    "etiket": "Jul",
+    "orta": 53.84
+   },
+   {
+    "etiket": "Aug",
+    "orta": 62.33
+   },
+   {
+    "etiket": "Sep",
+    "orta": 70.68
+   },
+   {
+    "etiket": "Oct",
+    "orta": 79.04
+   },
+   {
+    "etiket": "Nov",
+    "orta": 87.4
+   },
+   {
+    "etiket": "Dec",
+    "orta": 95.75
+   }
+  ],
+  "bloklar": [
+   {
+    "anahtar": "Spring Semester",
+    "kategori": "block",
+    "sol": 10.68,
+    "genislik": 26.3,
+    "aralik": "February 9, 2026 – May 15, 2026"
+   },
+   {
+    "anahtar": "Summer School",
+    "kategori": "cond",
+    "sol": 47.67,
+    "genislik": 13.7,
+    "aralik": "June 24, 2026 – August 12, 2026"
+   },
+   {
+    "anahtar": "Fall Semester",
+    "kategori": "block",
+    "sol": 72.05,
+    "genislik": 22.47,
+    "aralik": "September 21, 2026 – December 11, 2026"
+   }
+  ],
+  "isaretler": [
+   {
+    "anahtar": "Summer Internship Deadline",
+    "sol": 77.81,
+    "aralik": "October 12, 2026, 10:00",
+    "etiket": "October 12"
+   }
+  ],
+  "liste": [
+   {
+    "tur": "kapali",
+    "ad": "Spring Semester",
+    "hukum": "Not possible",
+    "anahtar": "Spring Semester",
+    "notu": "",
+    "aralik": "February 9, 2026 – May 15, 2026"
+   },
+   {
+    "tur": "kosullu",
+    "ad": "Summer School",
+    "hukum": "Conditional",
+    "anahtar": "Summer School",
+    "notu": "You may complete an internship in this period if you are not taking courses.",
+    "aralik": "June 24, 2026 – August 12, 2026"
+   },
+   {
+    "tur": "kapali",
+    "ad": "Fall Semester",
+    "hukum": "Not possible",
+    "anahtar": "Fall Semester",
+    "notu": "",
+    "aralik": "September 21, 2026 – December 11, 2026"
+   },
+   {
+    "tur": "teslim",
+    "ad": "Summer Internship Deadline",
+    "hukum": "Deadline",
+    "anahtar": "Summer Internship Deadline",
+    "notu": "",
+    "aralik": "October 12, 2026, 10:00"
+   }
+  ],
+  "bas_yil": 2026,
+  "bit_yil": 2026,
+  "bas_iso": "2026-01-01",
+  "bit_iso": "2026-12-31"
+ },
+ "son_teslim": {
+  "tr": "12 Ekim 2026, 10:00",
+  "en": "October 12, 2026, 10:00"
+ }
+}

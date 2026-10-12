@@ -36,3 +36,32 @@ tests/e2e/playwright-report/
 
 # Design-tool context (impeccable) — local only, not part of the site
 /PRODUCT.md
+
+# Astro (redesign)
+/dist/
+/node_modules/
+/.astro/
+/test-results/
+/playwright-report/
+/.lighthouseci/
+/dist-*/
+/tests/visual/__screenshots__/
+
+# Review images and reports are generated, not committed (UPDATE-07, D-142): the public repo keeps the text
+# reports only. Regenerate: npm run shots / grid / states / receipts, scripts/lighthouse.sh.
+/design/polish/**/*.jpg
+/design/polish/**/*.png
+/design/screenshots/**/*.jpg
+/design/reviews/teslim-states/
+/design/reviews/makbuz/
+/design/lighthouse/*.json
+# MkDocs (removed in UPDATE-07): an old local build or virtualenv must not come back.
+/site/
+
+# Review server logs (scripts/review-servers.sh)
+/.review-logs/
+
+# Internal process material (reviews, decisions log, briefs, review and comparison pages) stays local; only the
+# release runbook is public. Review build settings live in scripts/review-settings/.
+/design/*
+!/design/RELEASE.md

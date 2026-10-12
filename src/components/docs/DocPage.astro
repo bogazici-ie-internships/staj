@@ -1,0 +1,99 @@
+---
+// Phase 2a pages (UPDATE-06): Süreç, Rapor, SSS in the Gazete voice; Formlar, Sonuçlar, İletişim in
+// the Kronometre voice (DESIGN.md). Content: src/content/docs/<page>.yaml.
+import { getEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Blocks from "./Blocks.astro";
+import DocSection from "./DocSection.astro";
+import PageHead from "../layout/PageHead.astro";
+import Rail, { type RailLink } from "../layout/Rail.astro";
+import Icon from "../../icons/Icon.astro";
+import { copy, docPage, t } from "../../lib/content";
+import { md } from "../../lib/inline-md";
+import { pagePath } from "../../lib/paths";
+import { settings, site } from "../../lib/settings";
+import { longDateTime } from "../../lib/dates";
+import "../../styles/docs.css";
+import type { Lang } from "../../lib/dates";
+interface Props { lang: Lang; page: "surec" | "rapor" | "formlar" | "sss" | "sonuclar" | "iletisim" }
+const { lang, page } = Astro.props;
+const doc = await docPage(page);
+const chrome = await copy("chrome");
+const voice = page === "surec" || page === "rapor" || page === "sss" ? "gazete" : "kronometre";
+const about = chrome.about;
+const aboutText = t(about.text, lang).replace("{name}", about.maintainer.name).replace("{role}", t(about.maintainer.role, lang));
+// SSS: a short group index (the questions are deep-linkable: #<question anchor>).
+const groups = page === "sss" ? doc.sections : [];
+// REVIEW-01 Note 1: the Gazete pages get the right rail (D-105); every page gets the header band (D-104).
+const gazete = voice === "gazete";
+const lay = await copy("layout");
+const F = lay.facts;
+const links: RailLink[] = doc.sections.map((s, i) => ({ href: `#${t(s.anchor, lang)}`, label: t(s.title, lang), n: page === "sss" ? String(i + 1) : undefined }));
+const deadline = site.deadlineMs == null ? t(lay.panel.none, lang) : longDateTime(lang, site.deadlineMs);
+const phase = (i: number) => links[i]?.href ?? "#";
+// The lead's first paragraph also sits in the header band on desktop (REVIEW-01: "h1 + lead on the left");
+// only one copy is ever displayed (CSS, 961 px), and the band copy is not indexed.
+const leadP = doc.lead[0]?.kind === "p" ? md(t(doc.lead[0].text, lang), lang) : null;
+---
+<BaseLayout lang={lang} page={page} voice={voice}>
+  <article class={`doc doc--${voice} doc--${page}${leadP ? " has-ph-lead" : ""}`}>
+    <PageHead lang={lang} voice={voice} panel={page === "surec"}>{/* term summary only where it helps (REVIEW-02 Note 4) */}
+      <h1 class="doc__title" id={t(doc.anchor, lang)}>{t(doc.title, lang)}</h1>
+      {leadP && <p class="ph__lead" set:html={leadP} />}
+    </PageHead>
+    <div class={`wrap doc__body${gazete ? " with-rail" : ""}`}>
+      {gazete && (
+        <Rail lang={lang} links={links} phoneHidden={page === "sss"} facts={page === "surec"}>
+          {page === "surec" && (
+            <dl slot="facts" class="rail__facts">
+              <div><dt><a href={phase(0)}>{t(F.before, lang)}</a></dt><dd>{t(F.ek1, lang)}</dd></div>
+              <div><dt><a href={phase(1)}>{t(F.during, lang)}</a></dt><dd set:html={md(t(F.duringRule, lang), lang)} /></div>
+              <div><dt><a href={phase(2)}>{t(F.after, lang)}</a></dt><dd>{t(F.submitBy, lang).replace("{deadline}", deadline)}</dd></div>
+            </dl>
+          )}
+        </Rail>
+      )}
+      <div class="doc__main">
+      {doc.lead.length > 0 && <div class="doc__lead"><Blocks blocks={doc.lead} lang={lang} /></div>}
+      {groups.length > 0 && (
+        <nav class="doc__toc rail-narrow-only" aria-label={t(chrome.ui.contents, lang)}>
+          <ol role="list">{groups.map((g, i) => <li><a href={`#${t(g.anchor, lang)}`}><span class="num" aria-hidden="true">{i + 1}</span><span><span class="visually-hidden">{i + 1}. </span><Fragment set:html={md(t(g.title, lang), lang)} /></span></a></li>)}</ol>
+        </nav>
+      )}
+      {doc.sections.map((s, i) => page === "sss" ? <DocSection section={s} lang={lang} level={2} n={String(i + 1)} qaBase={String(i + 1)} /> : <DocSection section={s} lang={lang} level={2} />)}
+      {page === "iletisim" && (
+        /* UPDATE-04 §1: the site credit ends the İletişim page (the footer links here). */
+        <section class="about" id={t(about.anchor, lang)} aria-labelledby="about-title">
+          <h2 id="about-title" class="about__title">{t(about.title, lang)}</h2>
+          <p>{aboutText}</p>
+          <p><a class="mono" href={`mailto:${settings.iletisim.genel_eposta}`}>{settings.iletisim.genel_eposta}</a></p>
+        </section>
+      )}
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+{page === "sss" && (
+  <script>
+    // Deep links open their answer (load and hashchange); "Bu bilgi yardımcı oldu mu?" sends one
+    // categorical Umami event — question anchor + yes/no, nothing else (no text, no PII). D-83.
+    const openHash = () => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      const det = id ? document.getElementById(id)?.closest("details") : null;
+      if (det) { det.open = true; det.scrollIntoView({ block: "start" }); det.querySelector("summary")?.focus({ preventScroll: true }); }
+    };
+    openHash();
+    addEventListener("hashchange", openHash);
+    document.addEventListener("click", (ev) => {
+      const b = (ev.target as Element).closest<HTMLButtonElement>(".qa__vote");
+      if (!b) return;
+      const box = b.closest<HTMLElement>("[data-helpful]")!;
+      if (box.dataset.done) return;
+      box.dataset.done = "1";
+      box.querySelectorAll("button").forEach((x) => { x.disabled = true; });
+      (window as any).stajTrack?.("faq_helpful", { q: box.dataset.helpful, v: b.dataset.v });
+      const thanks = box.querySelector<HTMLElement>(".qa__thanks")!;
+      thanks.textContent = thanks.dataset.text ?? "";
+    });
+  </script>
+)}

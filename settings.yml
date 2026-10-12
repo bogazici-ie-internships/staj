@@ -4,7 +4,7 @@
 #  Grader/config/campaign.yaml exactly; validate_campaign_contract.py checks
 #  settings alone in CI, and Code.gs / Grader when those paths are present.
 #  See _maintainer/DEPLOYMENT.md for the safe deployment order.
-#  Umami analytics ID: mkdocs.yml → extra.umami_website_id (deploy secret).
+#  Umami analytics ID: the UMAMI_WEBSITE_ID repo secret, read at build time (src/lib/build-info.ts).
 # ============================================================================
 
 # --- Generated current term & dates ------------------------------------
@@ -50,7 +50,6 @@ iletisim:
 
 # --- Links ----------------------------------------------------------
 baglantilar:
-  kayit_formu: "https://forms.gle/SzyvatVjATsLY7ZR7" # internship registration / announcement form
   portal_url: "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec" # Submission form upload address
   # THIS IS A PUBLIC VALUE — NOT SECRET. It is printed into the published HTML
   # of the Submission page; anyone who clicks "View source" can read it. It is NOT
@@ -80,6 +79,7 @@ baglantilar:
 # If the date is not yet known: { tarih: "Güncellenecektir", ... }
 # Small footnote for a temporary/estimated date: { ..., notu: "..." }
 #
+
 # --- Strip range (homepage visual timeline) ---------------------
 # The strip shows the span between these two dates and generates the month labels itself.
 # CURRENTLY: a plain calendar year (January–December 2026). The range can be
@@ -144,3 +144,18 @@ takvim:
       baslik_en: "Summer Internship Deadline",
       kategori: "teslim",
     }
+
+# --- Duyuru bandı (optional, UPDATE-06) ------------------------------
+# A short site-wide notice above the deadline strip, until `bitis` (Türkiye time).
+# Leave it commented out when there is nothing to announce. Inline Markdown links are allowed.
+# Students can close the band (remembered in their browser); add `kapatilamaz: true` for urgent notices.
+# duyuru:
+#   mesaj: "Sonuçlar klasörü güncellendi."
+#   mesaj_en: "The results folder has been updated."
+#   bitis: "2026-10-20 23:59"
+#   kapatilamaz: false
+
+duyuru:
+  mesaj: "Zamanında teslim edilen stajların 2026 Yaz sonuçları ilan edildi; geç teslimlerin sonuçları ayrıca duyurulacak. [Sonuçlar](page:sonuclar) sayfasından ulaşabilirsiniz."
+  mesaj_en: "Summer 2026 results for internships submitted on time have been announced; results for late submissions will be announced separately. See the [Results](page:sonuclar) page."
+  bitis: "2026-11-15 23:59"

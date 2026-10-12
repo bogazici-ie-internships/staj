@@ -1,0 +1,62 @@
+{
+  "name": "staj",
+  "private": true,
+  "type": "module",
+  "description": "Boğaziçi IE compulsory internship guide + submission portal (Astro, static, base /staj/).",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "build:review": "STAJ_PORTAL=fake STAJ_OUT=dist-review-main astro build",
+    "build:test": "astro build",
+    "preview": "node scripts/serve.mjs",
+    "check": "astro check",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "tokens": "node scripts/tokens.mjs",
+    "tokens:check": "node scripts/tokens.mjs --check",
+    "guard:fake": "node scripts/guard-fake-portal.mjs",
+    "test:visual": "STAJ_BUILD_DATE=2026-10-09 astro build && playwright test -c playwright.visual.config.ts",
+    "grid": "node scripts/screenshot-grid.mjs",
+    "shots": "playwright test -c playwright.shots.config.ts --reporter=line",
+    "og": "node scripts/og.mjs",
+    "lint:copy": "node scripts/copy/lint.mjs",
+    "copy:review": "node scripts/copy/review.mjs",
+    "test:visual:docker": "scripts/visual-docker.sh",
+    "states": "playwright test -c playwright.states.config.ts",
+    "receipts": "STAJ_BUILD_DATE=2026-10-09 STAJ_OUT=dist-receipts astro build && playwright test -c playwright.receipts.config.ts",
+    "smoke": "node scripts/smoke.mjs",
+    "review": "scripts/review-servers.sh"
+  },
+  "dependencies": {
+    "@astrojs/react": "7.0.1",
+    "@fontsource-variable/bricolage-grotesque": "5.3.0",
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@fontsource-variable/newsreader": "5.3.0",
+    "@fontsource-variable/schibsted-grotesk": "5.3.0",
+    "@number-flow/react": "0.6.2",
+    "@starwind-ui/astro": "1.3.0",
+    "@starwind-ui/runtime": "1.3.0",
+    "astro": "7.3.8",
+    "lucide-static": "1.48.0",
+    "minisearch": "7.1.2",
+    "pdfjs-dist": "6.4.299",
+    "react": "19.3.0",
+    "react-aria-components": "1.22.0",
+    "react-dom": "19.3.0",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.13.0",
+    "@google/design.md": "0.4.0",
+    "@playwright/test": "1.64.0",
+    "@types/node": "24.19.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "6.0.3",
+    "vitest": "5.0.3"
+  }
+}

@@ -1,0 +1,75 @@
+name: Denetim (pull request)
+
+# main'e açılan her pull request'te deploy.yml'nin build ve test adımları, yayın olmadan (UPDATE-07, D-141).
+# Sır kullanılmaz: form anahtarı yerine sahte bir değer yazılır, Umami boştur. Bir adımı değiştirirseniz
+# deploy.yml'yi de değiştirin.
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Workflow action sürümlerini doğrula
+        run: python3 scripts/validate_workflow_actions.py
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-ci.txt
+      - run: pip install -r requirements-ci.txt
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Sahte form anahtarı (yalnız denetim; gerçek anahtar yalnız deploy'da)
+        run: |
+          python3 - <<'PY'
+          import re, pathlib
+          p = pathlib.Path("settings.yml")
+          s, n = re.subn(r'form_key:\s*"[^"]*"', 'form_key: "ci-dummy-key"', p.read_text(encoding="utf-8"), count=1)
+          assert n == 1, "settings.yml icinde form_key alani bulunamadi"
+          p.write_text(s, encoding="utf-8")
+          PY
+      - name: Kampanya sözleşmesini doğrula
+        run: |
+          python3 scripts/validate_campaign_contract.py --settings settings.yml
+          if [ -f ../Grader/config/campaign.yaml ]; then
+            python3 scripts/validate_campaign_contract.py --settings settings.yml \
+              --grader ../Grader/config/campaign.yaml
+          else
+            echo "Grader campaign.yaml yok (ayrı checkout) — Grader eşlemesi atlandı"
+          fi
+      - name: Tür denetimi, birim testleri, metin ve token denetimi
+        run: |
+          npx astro check
+          npm run test:unit
+          npm run lint:copy
+          npm run tokens:check
+      - name: Siteyi build et
+        run: |
+          npm run build
+          npm run guard:fake
+          test -s dist/search/tr.json && test -s dist/search/en.json
+      - name: Tarayıcı testleri
+        run: |
+          npx playwright install --with-deps chromium
+          npx playwright test
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: playwright-results
+          path: test-results
+          retention-days: 14

@@ -1,0 +1,50 @@
+# § 3 — Rapor ve Teslim Kuralları / Report and Submission Rules (from docs/kurallar*.md; UPDATE-03 voice)
+section: 3
+anchor: { tr: "rapor-ve-teslim-kurallar", en: "report-and-submission-rules" }
+title: { tr: "Rapor ve Teslim Kuralları", en: "Report and Submission Rules" }
+rules:
+  - no: "3.1"
+    body:
+      tr: Rapor, **[Outline for Internship Report](page:rapor)** belgesinde belirtilen biçimde hazırlanır. Teslimden önce sorularınızı staj asistanlarına iletebilirsiniz.
+      en: The report must be prepared as set out in the **[Outline for Internship Report](page:rapor)**. You may send any questions to the internship assistants before submission.
+  - no: "3.2"
+    body:
+      tr: Rapor **İngilizce** yazılır. Tablo ve grafik eklenebilir; şirketten alınan Türkçe bilgilerin İngilizceye çevrilmesi zorunlu değildir.
+      en: The report must be written in **English**. Tables and figures may be included; company information provided in Turkish does not have to be translated into English.
+  - no: "3.3"
+    highlight:
+      value: { tr: "20 sayfa", en: "20 pages" }
+      caption: { tr: "İngilizce rapor için ekler hariç üst sınır.", en: "Upper limit for the English report, excluding appendices." }
+    body:
+      tr: Rapor **ekler hariç en fazla 20 sayfa** olmalıdır.
+      en: The report must not exceed **20 pages, excluding appendices**.
+  - no: "3.4"
+    body:
+      tr: Rapor, **izleyen dönemin başlangıcından itibaren 21 gün** içinde teslim edilir.
+      en: The report must be submitted **within 21 days of the start of the following semester**.
+  - no: "3.5"
+    body:
+      tr: "**Geçerli son teslim tarihi her dönem ayrıca duyurulur** ve [Belge Teslimi](page:teslim) sayfasında gösterilir; bu tarih 21 günlük genel kuraldan farklı olabilir. **Bağlayıcı olan, duyurulan tarihtir.**"
+      en: "**The applicable deadline is announced separately each term** and shown on the [Document Submission](page:teslim) page; it may differ from the general 21-day rule. **The announced deadline is binding.**"
+  - no: "3.6"
+    source: department   # not in the Handbook (UPDATE-02 A2)
+    body:
+      tr: "Stajınızı Boğaziçi'nin **ders dönemi içinde**, örneğin **Erasmus veya değişim** programındayken yaptıysanız raporunuz **staj bitiminden itibaren en geç 3 hafta içinde** teslim edilir; aksi hâlde **geç teslim kuralları** uygulanır."
+      en: "If you complete an internship **during a Boğaziçi academic term**, for example while on **Erasmus or another exchange** programme, the report must be submitted **within 3 weeks of the end of the internship**; otherwise the **late-submission rules** apply."
+  - no: "3.7"
+    terms: [sicil]
+    body:
+      tr: Raporla birlikte **Staj Sicil Formu** ve **Öğrenci Staj Anketi** teslim edilir. Ayrıntılar [Stajdan Sonra](page:surec#sonrasi) bölümündedir.
+      en: The **Trainee Evaluation Form** and the **Student Internship Survey** are submitted with the report. Details are given under [After the Internship](page:surec#sonrasi).
+  - no: "3.8"
+    source: department   # deliberate departure from the Handbook (p. 7, item 3), REVIEW-05 Addition (H-01)
+    body:
+      tr: "**Her staj için ayrı bir rapor** hazırlanır; aynı şirkette yapılan farklı stajlar da ayrı raporlarla teslim edilir."
+      en: "**A separate report** must be prepared for each internship; different internships completed at the same company are also submitted with separate reports."
+# FINAL-CHECK F-05: the pull-quote is gone; it repeated the first sentence of the "Geç Teslim Cezası" callout below.
+callout:
+  kind: deadline
+  title: { tr: "Geç Teslim Cezası", en: "Late Submission Penalty" }
+  body:
+    tr: "Staj raporunun veya diğer belgelerin son teslim tarihinden sonra teslim edildiği **her geç gün için toplam staj süresinden 1 iş günü düşülür.** Son teslimden sonra başlayan her 24 saat 1 geç gün sayılır; birkaç dakika geç kalan bir teslim de 1 gün geç sayılır. Eksik belgeler tamamlanana kadar teslim tamamlanmış sayılmaz. Teslimden sonra eksik veya hatalı bir belgeyi tamamlamak üzere aynı stajın formunu yeniden göndermeyiniz; belgeyi referans numaranızı belirterek e-posta ile [staj asistanlarına](page:iletisim) iletiniz. Eksik belge staj asistanlarına ulaştığında teslim tamamlanmış sayılır."
+    en: "**1 workday is deducted from the total internship period for each day** that the report or any other required document is submitted after the deadline. Every 24 hours that begin after the deadline count as 1 late day, so a submission even a few minutes late counts as 1 day late. A submission is not considered complete until all missing documents have been provided. To complete a missing or incorrect document after submission, do not submit the form again for the same internship; email the document to the [internship assistants](page:iletisim) and quote your reference number. The submission is complete once the missing document reaches the internship assistants."

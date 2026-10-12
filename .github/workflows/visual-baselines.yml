@@ -1,0 +1,46 @@
+name: Görsel temel görüntüler (Linux)
+
+# Yalnız elle çalışır (UPDATE-07, D-141): görsel testleri resmî Playwright Docker imajında çalıştırır ve Linux
+# temel görüntülerini artifact olarak yükler — depoya commit edilmez (UPDATE-02 A4: Git LFS yok).
+# İmaj sürümü package.json'daki @playwright/test ile aynı olmalı. Tarih npm run test:visual ile aynı sabitlenir.
+on:
+  workflow_dispatch:
+    inputs:
+      update:
+        description: "Temel görüntüleri yeniden kaydet"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.0-noble
+      options: --ipc=host
+    env:
+      VISUAL_PLATFORM: linux
+      STAJ_BUILD_DATE: "2026-10-09"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        if: ${{ !inputs.update }}
+        continue-on-error: true
+        with:
+          name: visual-baselines-linux
+          path: tests/visual/__screenshots__/linux
+      - run: npm ci --no-audit --no-fund
+      - name: Sahte form anahtarı (CI=true anahtarsız build'i durdurur)
+        run: |
+          sed -i 's/form_key: ""/form_key: "ci-dummy-key"/' settings.yml
+          grep -q 'form_key: "ci-dummy-key"' settings.yml
+      - run: npx astro build
+      - run: npx playwright test -c playwright.visual.config.ts ${{ inputs.update && '--update-snapshots' || '' }}
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: visual-baselines-linux
+          path: tests/visual/__screenshots__/linux
+          retention-days: 90
