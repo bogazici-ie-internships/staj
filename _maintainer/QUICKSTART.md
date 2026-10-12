@@ -66,20 +66,20 @@ block when it is no longer needed.
 
 ### Publish the results list
 
-The Sonuçlar page shows the term's results PDF from `public/internships/` (`New_Internships_<campaign>.pdf`), with
-an embedded viewer on desktop and an "open" button. "Son güncelleme" is the time the file was committed. The file
-of `settings.yml › donem.campaign_id` is shown first (or the newest one); other terms' files are listed under it.
-On a `main` checkout that is up to date with GitHub, with `../Data Store` next to this folder:
+The Sonuçlar page shows the results list, Data Store's "All Internships" report, from
+`public/internships/All_Internships.pdf`: an embedded viewer on desktop, an "open" button on phones.
+"Son güncelleme" is the time the file was committed. On a `main` checkout that is up to date with GitHub, with
+`../Data Store` next to this folder:
 
 ```bash
-npm run results:publish -- 2026-summer     # Data Store generates the PDF, the script checks it and commits it
+npm run results:publish                    # Data Store generates the PDF, the script checks it and commits it
 git push origin main                       # publishes it (about 5 minutes)
 ```
 
-The script runs `reports/generate_report.py --campaign <id> --out public/internships/New_Internships_<id>.pdf` in
-Data Store (with its `.venv`; set `DATA_STORE_DIR` if Data Store is elsewhere), checks the PDF, prints its size
-and page count and commits only that file; it never pushes. `--no-commit` generates and checks only.
-**Manual alternative:** copy the PDF into `public/internships/` under the same name, commit it and push.
+The script runs `reports/generate_report.py --out public/internships/All_Internships.pdf` in Data Store (with its
+`.venv` and default `report_config.yaml`; set `DATA_STORE_DIR` if Data Store is elsewhere), checks the PDF, prints
+its size and page count and commits only that file; it never pushes. `-- --no-commit` generates and checks only.
+**Manual alternative:** copy `All_Internships.pdf` into `public/internships/`, commit it and push.
 For a one-line remark under the file (e.g. that late submissions follow), fill `settings.yml › sonuclar.not` and
 `not_en`. A published file stays in the repository's history; publish only the final list.
 

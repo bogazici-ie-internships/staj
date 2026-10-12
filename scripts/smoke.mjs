@@ -88,7 +88,7 @@ for (const lang of ["tr", "en"]) {
   ok(state === "file" || state === "empty", `sonuclar (${lang}): no results card`);
   if (state === "file") {
     const href = await page.locator("[data-results-open]").getAttribute("href");
-    ok(/^\/staj\/internships\/New_Internships_[\w-]+\.pdf\?v=\d+$/.test(href || ""), `sonuclar (${lang}): unexpected results link ${href}`);
+    ok(/^\/staj\/internships\/All_Internships\.pdf\?v=\d+$/.test(href || ""), `sonuclar (${lang}): unexpected results link ${href}`);
     const r = await ctx.request.get(base + (href || "").replace(/^\/staj\//, ""));
     ok(r.status() === 200 && /^application\/pdf/.test(r.headers()["content-type"] || ""), `sonuclar (${lang}): ${href} HTTP ${r.status()} ${r.headers()["content-type"]}`);
   } else ok(await page.locator(".results__empty").isVisible(), `sonuclar (${lang}): empty state not shown`);

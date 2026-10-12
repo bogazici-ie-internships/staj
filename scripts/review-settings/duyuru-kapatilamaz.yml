@@ -71,7 +71,7 @@ baglantilar:
   recaptcha_site_key: "6LdtE78tAAAAANYycOhRc8c8r-Fzda6wlHO2ErGJ"
 
 # --- Sonuçlar (RESULTS-01) ----------------------------------------------------
-# The results list is the PDF in public/internships/ (npm run results:publish -- <campaign>; see QUICKSTART.md).
+# The results list is public/internships/All_Internships.pdf (npm run results:publish; see QUICKSTART.md).
 # Optional one-line remark shown under it, both languages or neither, e.g.
 #   not: "Geç teslimlerin sonuçları ayrıca eklenecek."
 #   not_en: "Results for late submissions will be added separately."

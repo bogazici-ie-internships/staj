@@ -1,8 +1,8 @@
-// Publishes a term's results list on the Sonuçlar page (RESULTS-01):
-//   npm run results:publish -- 2026-summer            generate with Data Store, check, commit (no push)
-//   npm run results:publish -- 2026-summer --no-commit generate and check only
-// 1. runs Data Store's generator in ../Data Store (or DATA_STORE_DIR) with its own .venv and DB settings:
-//      reports/generate_report.py --campaign <id> --out public/internships/New_Internships_<id>.pdf
+// Publishes the results list (Data Store's "All Internships" report) on the Sonuçlar page (RESULTS-01):
+//   npm run results:publish                  generate with Data Store, check, commit (no push)
+//   npm run results:publish -- --no-commit   generate and check only
+// 1. runs Data Store's generator in ../Data Store (or DATA_STORE_DIR) with its own .venv, DB settings and its
+//    default report_config.yaml:  reports/generate_report.py --out public/internships/All_Internships.pdf
 // 2. checks the result is a real, non-empty PDF and prints its size and page count;
 // 3. commits only that file on an up-to-date main. Pushing is left to you: it redeploys the site, and the page
 //    shows the commit time as "Son güncelleme".
@@ -14,11 +14,10 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
-const id = args.find((a) => !a.startsWith("--"));
 const commit = !args.includes("--no-commit");
 const fail = (msg) => { console.error(`results:publish: ${msg}`); process.exit(1); };
 
-if (!id || !/^\d{4}-(spring|summer|fall)$/.test(id)) fail("usage: npm run results:publish -- <campaign_id> [--no-commit]   (e.g. 2026-summer)");
+if (args.some((a) => !a.startsWith("--")) || args.some((a) => a.startsWith("--") && a !== "--no-commit")) fail("usage: npm run results:publish [-- --no-commit]");
 const git = (...a) => execFileSync("git", ["-C", ROOT, ...a], { encoding: "utf8" }).trim();
 
 // A publish commit belongs on main, on top of what is live; anything else could push unrelated work with it.
@@ -35,14 +34,14 @@ if (!existsSync(gen)) fail(`Data Store generator not found: ${gen} (set DATA_STO
 const venvPy = join(ds, ".venv", "bin", "python3");
 const python = process.env.DATA_STORE_PYTHON || (existsSync(venvPy) ? venvPy : "python3");
 
-const file = `New_Internships_${id}.pdf`;
+const file = "All_Internships.pdf";
 const out = join(ROOT, "public", "internships", file);
 mkdirSync(dirname(out), { recursive: true });
 const before = existsSync(out) ? statSync(out).mtimeMs : 0;
 
 console.log(`Generating ${file} with Data Store …`);
 // The generator's own output (counts, paths) is not echoed; on failure only its error text is, without DB URLs.
-const run = spawnSync(python, ["reports/generate_report.py", "--campaign", id, "--out", out], { cwd: ds, encoding: "utf8" });
+const run = spawnSync(python, ["reports/generate_report.py", "--out", out], { cwd: ds, encoding: "utf8" });
 if (run.status !== 0) {
   const err = `${run.stderr || ""}${run.error ? String(run.error) : ""}`.replace(/postgres(?:ql)?:\/\/[^\s'"]+/gi, "postgresql://…").trim();
   fail(`Data Store failed (exit ${run.status}):\n${err.split("\n").slice(-12).join("\n")}`);
@@ -64,5 +63,5 @@ const rel = relative(ROOT, out);
 git("add", "--", rel);
 if (spawnSync("git", ["-C", ROOT, "diff", "--cached", "--quiet", "--", rel]).status === 0) { console.log("The file is unchanged since the last publish; nothing to commit."); process.exit(0); }
 const now = new Date(Date.now() + 3 * 3600_000).toISOString().slice(0, 16).replace("T", " ");
-git("commit", "--only", "-m", `Results: ${id} (${now} TSİ)`, "--", rel);
+git("commit", "--only", "-m", `Results: all internships (${now} TSİ)`, "--", rel);
 console.log(`Committed ${git("rev-parse", "--short", "HEAD")}. Push to publish it (the site redeploys in a few minutes):\n  git push origin main`);

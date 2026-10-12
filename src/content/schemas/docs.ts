@@ -20,8 +20,8 @@ export type Block =
   | { kind: "qa"; items: { anchor: { tr: string; en: string }; q: { tr: string; en: string }; src: string; blocks: Block[] }[] }
   | { kind: "doctable"; src: string; head: Record<"name" | "purpose" | "when" | "signer" | "format" | "download", { tr: string; en: string }>; groups: { anchor: { tr: string; en: string }; title: { tr: string; en: string }; src: string; rows: { doc: string; name: { tr: string; en: string }; purpose: { tr: string; en: string }; signer?: { tr: string; en: string }; signerSrc?: string; src: string }[] }[] }
   | { kind: "action"; label: { tr: string; en: string }; href: string; src: string }
-  | { kind: "results"; src: string; open: { tr: string; en: string }; newTab: { tr: string; en: string };
-      updated: { tr: string; en: string }; viewer: { tr: string; en: string }; empty: { tr: string; en: string }; earlier: { tr: string; en: string } }
+  | { kind: "results"; src: string; scope: { tr: string; en: string }; open: { tr: string; en: string }; newTab: { tr: string; en: string };
+      updated: { tr: string; en: string }; viewer: { tr: string; en: string }; empty: { tr: string; en: string } }
   | { kind: "contacts"; src: string; primary: { role: { tr: string; en: string }; name: { tr: string; en: string }; note: { tr: string; en: string } };
       mail: { src: string }; people: { src: string }; coordinator: { role: { tr: string; en: string }; note: { tr: string; en: string }; src: string } };
 
@@ -41,9 +41,9 @@ export const Block: z.ZodType<Block> = z.lazy(() => z.discriminatedUnion("kind",
       signerSrc: z.string().regex(/^([\w/.-]+\.md:\d+( · [\w/.-]+\.md:\d+)*|maintainer: .+)$/).optional(), src: Src }).strict()).min(1) }).strict()).min(1) }).strict(),
   /** A button-styled link; href is "link:<settings.yml baglantilar key>" or a page:/doc: target. */
   z.object({ kind: z.literal("action"), label: L, href: z.string().regex(/^(link:\w+|page:[\w#-]+|doc:[\w.-]+)$/), src: Src }).strict(),
-  /** Sonuçlar (RESULTS-01): the results PDF from public/internships (src/lib/results.ts); only the labels live here.
-   *  Placeholders: {time} in `updated`, {term} in `viewer`. Open only, no download button (maintainer, RESULTS-01). */
-  z.object({ kind: z.literal("results"), src: Src, open: L, newTab: L, updated: L, viewer: L, empty: L, earlier: L }).strict(),
+  /** Sonuçlar (RESULTS-01): the All Internships PDF from public/internships (src/lib/results.ts); only the labels
+   *  live here. Placeholder: {time} in `updated`. Open only, no download button (maintainer, RESULTS-01). */
+  z.object({ kind: z.literal("results"), src: Src, scope: L, open: L, newTab: L, updated: L, viewer: L, empty: L }).strict(),
   /** İletişim people: names and addresses come from settings.yml (iletisim.*); only the labels live here. */
   z.object({ kind: z.literal("contacts"), src: Src,
     primary: z.object({ role: L, name: L, note: L }).strict(), mail: z.object({ src: Src }).strict(), people: z.object({ src: Src }).strict(),

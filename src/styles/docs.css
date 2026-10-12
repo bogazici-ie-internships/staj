@@ -56,10 +56,9 @@ ol.dl > li > * { grid-column: 2; }
 .results__updated { color: var(--muted); font-size: 15px; }
 .results__updated time { color: var(--ink); font-weight: 600; }
 .results__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
+.results[data-embedded] .results__actions { display: none; }   /* the PDF is shown below: no separate "open" button */
 .results__viewer { border: 1px solid var(--rule-strong); background: var(--surface); }
 .results__viewer iframe { display: block; width: 100%; height: 80vh; min-height: 480px; border: 0; }
-.results__earlier { display: grid; gap: 8px; max-width: min(40rem, 68ch); }
-.results__earlier-title { font-family: var(--font-display); font-stretch: 80%; font-weight: 800; font-size: 20px; }
 .results__empty { font-weight: 600; }
 
 /* Callouts (as on Kurallar, D-50): framed card, no fill */

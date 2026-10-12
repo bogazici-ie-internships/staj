@@ -24,12 +24,12 @@ sections:
     blocks:
       - kind: results
         src: new — RESULTS-01, the results PDF on the page
+        scope: { tr: "Tüm Stajlar", en: "All Internships" }
         open: { tr: "Sonuç dosyasını aç", en: "Open the results file" }
         newTab: { tr: "yeni sekmede açılır", en: "opens in a new tab" }
         updated: { tr: "Son güncelleme: {time}", en: "Last updated: {time}" }
-        viewer: { tr: "{term} sonuç listesi (PDF)", en: "{term} results list (PDF)" }
+        viewer: { tr: "Sonuç listesi, tüm stajlar (PDF)", en: "Results list, all internships (PDF)" }
         empty: { tr: "Sonuçlar henüz yayımlanmadı.", en: "Results have not been published yet." }
-        earlier: { tr: "Önceki Dönemler", en: "Earlier Terms" }
       - kind: callout
         tone: note
         title: { tr: "İlan Zamanı", en: "Announcement Timing" }
