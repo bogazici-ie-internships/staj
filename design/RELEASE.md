@@ -1,8 +1,13 @@
 # Release runbook — redesign (Astro) → `main`
 
-The release happens only after the maintainer says "yayına al". The new site goes onto `main` as **one commit**
-on top of the MkDocs history (`4553fcd`), as a fast-forward: no merge commit, and the redesign's working history
-stays local. Internal process files (`design/*` except this file) are not part of the public commit.
+> Released 2026-10-12 as f2aee6b (fast-forward, single commit on top of 4553fcd); kept as history. `main` has
+> since been folded to two commits (old site + new site); day-to-day changes and rollbacks follow CLAUDE.md and
+> `_maintainer/DEPLOYMENT.md` §6a.
+
+The release happened only after the maintainer said "yayına al" (it had first been planned for no earlier than
+22 October, after the late window). The new site went onto `main` as **one commit** on top of the MkDocs history,
+which then ended at `4553fcd`, as a fast-forward: no merge commit, and the redesign's working history stayed local.
+Internal process files (`design/*` except this file) were not part of the public commit.
 
 Times below are Türkiye time.
 

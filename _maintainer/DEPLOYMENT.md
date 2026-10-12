@@ -312,16 +312,31 @@ Code.gs is not in the repo, so the tests read a snapshot of what the site depend
 
 ---
 
-## 6a. Rolling back a release
+## 6a. Rolling back
 
-Only `main` may deploy to Pages (environment rule), so a rollback is a commit on `main`:
+`main` is two commits: the old MkDocs site (tagged `pre-redesign`) and the new site on top. Every change is folded
+into the new-site commit (CLAUDE.md, "How a change goes live"), and the `main` before each fold is kept on a local
+`backup/prev-main` branch on the machine that folded it. Only `main` may deploy to Pages (environment rule), so a
+rollback is always a push to `main`:
 
-```bash
-git revert -m 1 <merge-commit>   # undoes a merged release; push → the previous site is rebuilt and published
-```
+- **Undo the last change:** fold the tree of `backup/prev-main` again, the same way.
 
-The revert also restores the previous workflow, so the old site builds the way it used to. Expect about 5–10
-minutes from push to the old site being live. Details, the pre-redesign tag and the smoke test: `design/RELEASE.md`.
+  ```bash
+  git fetch origin
+  OLD=$(git rev-parse origin/main^)    # the old-site commit
+  NEW=$(git commit-tree backup/prev-main^{tree} -p "$OLD" -m "New site: Astro redesign of the compulsory internship guide")
+  git push --force-with-lease=main:$(git rev-parse origin/main) origin "$NEW":main
+  ```
+
+- **Back to the old site:** revert the new-site commit. It is an ordinary commit, not a merge, so there is no `-m 1`:
+
+  ```bash
+  git revert <new-site commit>   # push → the MkDocs site is rebuilt and published
+  ```
+
+  The revert also restores the previous workflow, so the old site builds the way it used to.
+
+Expect about 5–10 minutes from push to the restored site being live. Smoke test: `design/RELEASE.md` §3.
 
 ---
 

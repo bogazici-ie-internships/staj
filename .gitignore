@@ -1,7 +1,7 @@
-# MkDocs build output
+# Old MkDocs build output (the MkDocs site was replaced in 2026-10): it must not come back.
 /site/
 
-# Claude Code local preview setting (mkdocs serve)
+# Claude Code local settings and preview servers (.claude/launch.json)
 /.claude/
 
 # Internal design exploration / preview images (not part of the site, not needed in the public repo)
@@ -55,8 +55,6 @@ tests/e2e/playwright-report/
 /design/reviews/teslim-states/
 /design/reviews/makbuz/
 /design/lighthouse/*.json
-# MkDocs (removed in UPDATE-07): an old local build or virtualenv must not come back.
-/site/
 
 # Review server logs (scripts/review-servers.sh)
 /.review-logs/
