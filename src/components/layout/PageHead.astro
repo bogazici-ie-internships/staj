@@ -1,0 +1,35 @@
+---
+// REVIEW-01 Note 1 (D-104): the page header band. Title (and lead) on the left; from 961 px a short
+// "Dönem Özeti" panel on the right (term, deadline, end of late submission, Belgeleri gönder), so the band
+// is never half empty. The double rule spans the content box on desktop (aligned with the header) and stays
+// full-bleed on phones and tablets, exactly as before. Values from settings.yml (D-78).
+import { copy, t } from "../../lib/content";
+import { shortDateYear, trClock, trYmd, type Lang } from "../../lib/dates";
+import { ui } from "../../i18n/ui";
+import { pagePath } from "../../lib/paths";
+import { site } from "../../lib/settings";
+import "../../styles/layout.css";
+interface Props { lang: Lang; voice: "gazete" | "kronometre"; panel?: boolean }
+const { lang, voice, panel = true } = Astro.props;
+const L = (await copy("layout")).panel;
+// Same compact form as the deadline strip ("12.10.2026 · 10:00 TSİ"), so each row fits on one line.
+const when = (ms: number) => `${shortDateYear(lang, trYmd(ms))} · ${trClock(ms)} ${ui[lang].strip.zone}`;
+---
+<header class={`wrap ph ph--${voice}${panel ? " ph--panel" : ""}`}>
+  <div class="ph__in">
+    <div class="ph__main"><slot /></div>
+    {panel && (
+      <aside class="ph__panel" aria-labelledby="ph-panel">
+        <h2 class="ph__ptitle mono" id="ph-panel">{t(L.title, lang)}</h2>
+        {site.deadlineMs == null ? <p class="ph__none">{t(L.none, lang)}</p> : (
+          <dl class="ph__dl">
+            <div><dt>{t(L.term, lang)}</dt><dd>{site.term[lang]}</dd></div>
+            <div><dt>{t(L.deadline, lang)}</dt><dd>{when(site.deadlineMs)}</dd></div>
+            {site.closesMs != null && site.graceDays > 0 && <div><dt>{t(L.lateEnd, lang)}</dt><dd>{when(site.closesMs)}</dd></div>}
+          </dl>
+        )}
+        <a class="ph__cta" href={pagePath(lang, "teslim")}>{t(L.submit, lang)} <span aria-hidden="true">→</span></a>
+      </aside>
+    )}
+  </div>
+</header>

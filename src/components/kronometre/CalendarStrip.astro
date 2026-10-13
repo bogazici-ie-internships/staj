@@ -1,0 +1,152 @@
+---
+// DESIGN.md §3.3 — 12 month columns, terms as primary fills, Yaz Okulu as a
+// teal hatch, Teslim as a signal line + chip, Bugün as a dashed ink line.
+// The strip is role="img" (decorative + labelled); the list below it is the
+// accessible truth. Geometry: src/lib/calendar.ts (= main.py, golden-tested).
+import { site } from "../../lib/settings";
+import { AY_KISA_EN, AY_KISA_TR, dayIndex, longRange, shortDate, shortDateYear, shortRange, trYmd, type Lang } from "../../lib/dates";
+import { md } from "../../lib/inline-md";
+import { t } from "../../lib/content";
+interface Props { lang: Lang; text: any }
+const { lang, text } = Astro.props;
+const S = site.serit[lang];
+const months: { label: string; left: number; width: number }[] = [];
+{
+  // Equal-width columns are a lie for 28-day February; use the real day span.
+  const total = dayIndex(site.stripEnd) - dayIndex(site.stripStart) + 1;
+  let y = site.stripStart.y, m = site.stripStart.m;
+  while (y * 100 + m <= site.stripEnd.y * 100 + site.stripEnd.m) {
+    const a = Math.max(dayIndex({ y, m, d: 1 }), dayIndex(site.stripStart));
+    const next = m === 12 ? { y: y + 1, m: 1, d: 1 } : { y, m: m + 1, d: 1 };
+    const b = Math.min(dayIndex(next) - 1, dayIndex(site.stripEnd));
+    const kisa = (lang === "en" ? AY_KISA_EN : AY_KISA_TR)[m - 1];
+    months.push({ label: `${String(m).padStart(2, "0")} ${kisa}`, left: ((a - dayIndex(site.stripStart)) / total) * 100, width: ((b - a + 1) / total) * 100 });
+    ({ y, m } = next);
+  }
+}
+const terms = site.terms;
+const nameOf = (r: any) => (lang === "en" ? r.baslik_en : r.baslik) || r.baslik;
+const listRows = S.liste.map((x) => {
+  const term = terms.find((tt) => nameOf(tt.row) === x.ad);
+  const date = term?.start && term?.end ? shortRange(lang, term.start, term.end) : x.tur === "teslim" ? `${shortDateYear(lang, site.lock!.date)} · ${site.lock!.time}` : x.aralik;
+  return { ...x, date, verdict: t(text.verdict[x.tur], lang) };
+});
+// The late-submission window (D-184): drawn here from settings.yml, beside the golden-tested geometry (which stays
+// main.py's). It runs from the deadline to the end of the late window; a list row follows the deadline row.
+const late = (() => {
+  if (!site.lock || site.closesMs == null || !(site.graceDays > 0)) return null;
+  const start = site.lock.date, end = trYmd(site.closesMs);
+  const total = dayIndex(site.stripEnd) - dayIndex(site.stripStart) + 1;
+  const pct = (d: number) => Math.max(0, Math.min(100, (d / total) * 100));
+  const left = pct(dayIndex(start) - dayIndex(site.stripStart)), right = pct(dayIndex(end) - dayIndex(site.stripStart) + 1);
+  return { left: Math.round(left * 100) / 100, width: Math.round((right - left) * 100) / 100, end,
+    row: { ad: t(text.lateRow, lang), tur: "late", date: `${shortRange(lang, start, end)} · ${site.lock.time}`, verdict: t(text.lateVerdict, lang), aralik: shortRange(lang, start, end), notu: "" } };
+})();
+if (late) { const i = listRows.findIndex((r) => r.tur === "teslim"); listRows.splice(i < 0 ? listRows.length : i + 1, 0, late.row as any); }
+// Screen-reader summary of the strip, in the same words as the visible list (UPDATE-03).
+const aria = `${t(text.aria, lang)} ${site.stripStart.y}: ` + listRows.map((x) => `${x.ad} ${x.aralik} (${x.verdict})`).join("; ");
+// B6: each term segment is a button; tap/click/Enter opens its exact dates (native popover, no JS).
+const segs = S.bloklar.map((b, i) => {
+  const term = terms.find((tt) => nameOf(tt.row) === b.anahtar);
+  const row = listRows.find((r) => r.ad === b.anahtar);
+  const range = term?.start && term?.end ? longRange(lang, term.start, term.end) : b.aralik;
+  return { ...b, id: `cal-pop-${i}`, range, verdict: row ? (row.notu || row.verdict) : "" };
+});
+---
+{/* data-nosnippet (MkDocs b36bbaa): Google shows the meta description, not these dates run together. */}
+<div class="cal" data-nosnippet>
+  <div class="cal__scroll" data-strip-scroll tabindex="0" role="region" aria-label={t(text.scrollHint, lang)}>
+    <div class="cal__inner" data-today-track data-start={S.bas_iso} data-end={S.bit_iso}>
+      <p class="visually-hidden">{aria}</p>
+      <div class="cal__months" aria-hidden="true">
+        {months.map((mo) => <span style={`left:${mo.left}%;width:${mo.width}%`}>{mo.label}</span>)}
+      </div>
+      <div class="cal__track">
+        {months.slice(1).map((mo) => <i class="cal__rule" style={`left:${mo.left}%`} aria-hidden="true"></i>)}
+        {segs.map((b) => (
+          <>
+            {/* REVIEW-01 Note 3 (D-113): a picture of the list below, no longer a popover button (same facts). */}
+            <span class={`cal__seg cal__seg--${b.kategori}`} style={`left:${b.sol}%;width:${b.genislik}%`} aria-hidden="true">
+              {b.kategori === "block" && <span class="cal__seg-label">{b.anahtar}</span>}
+            </span>
+          </>
+        ))}
+        {late && (
+          <>
+            <span class="cal__late" style={`left:${late.left}%;width:${late.width}%`} aria-hidden="true"></span>
+            <span class="cal__late-chip chip chip--signal" style={`left:${late.left + late.width}%`} aria-hidden="true">{t(text.lateChip, lang)} {shortDate(lang, late.end)}</span>
+          </>
+        )}
+        {S.isaretler.map((m) => (
+          <>
+            <span class="cal__mark" style={`left:${m.sol}%`} aria-hidden="true"></span>
+            <span class="cal__mark-chip chip chip--signal" style={`left:${m.sol}%`} aria-hidden="true">{t(text.deadlineChip, lang)} {shortDate(lang, site.lock!.date)}</span>
+          </>
+        ))}
+        <span class="cal__today" data-today hidden aria-hidden="true"><span class="chip chip--ink">{t(text.today, lang)}</span></span>
+      </div>
+    </div>
+  </div>
+  <ul role="list" class="cal__legend" aria-hidden="true">
+    <li><i class="sw sw--ok"></i>{t(text.legend.ok, lang)}</li>
+    <li><i class="sw sw--block"></i>{t(text.legend.block, lang)}</li>
+    <li><i class="sw sw--cond"></i>{t(text.legend.cond, lang)}</li>
+    <li><i class="sw sw--mark"></i>{t(text.legend.mark, lang)}</li>
+    {late && <li><i class="sw sw--late"></i>{t(text.legend.late, lang)}</li>}
+  </ul>
+  <ol role="list" class="cal__list draw">
+    {listRows.map((x) => (
+      <li class={`cal__row cal__row--${x.tur}`}>
+        <span class="cal__name">{x.ad}</span>
+        <span class="cal__date mono">{x.date}</span>
+        <span class="cal__verdict">{x.notu || x.verdict}</span>
+      </li>
+    ))}
+  </ol>
+</div>
+<style>
+  .cal { display: grid; gap: var(--space-5); }
+  .cal__scroll { overflow-x: auto; border: var(--border-strong); background: var(--surface); scrollbar-width: thin; }
+  .cal__scroll:focus-visible { outline-offset: 2px; }
+  .cal__inner { position: relative; min-width: 860px; }
+  .cal__months { position: relative; height: 34px; border-bottom: 1px solid var(--rule-strong); font-family: var(--font-mono); font-size: var(--text-small); color: var(--muted); }
+  .cal__months span { position: absolute; top: 0; bottom: 0; display: flex; align-items: center; padding-left: 10px; border-left: 1px solid var(--rule); white-space: nowrap; }
+  .cal__months span:first-child { border-left: 0; }
+  .cal__track { position: relative; height: 140px; }
+  .cal__rule { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--rule); }
+  .cal__seg { position: absolute; top: 20px; bottom: 20px; border: 0; padding: 0; margin: 0; font: inherit; border-radius: 0;
+    transition: transform var(--dur-short) var(--ease), box-shadow var(--dur-short) var(--ease); }
+  .cal__seg--block { background: var(--primary); color: var(--on-primary); display: flex; align-items: flex-end; justify-content: flex-end; padding: 0 12px 10px 12px; font-weight: 700; font-size: 15px; overflow: hidden; }
+  .cal__seg-label { white-space: nowrap; }
+  .cal__seg--cond { border: 2px solid var(--conditional); background: repeating-linear-gradient(135deg, var(--conditional) 0 2px, transparent 2px 9px); }
+  .cal__mark { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1px; background: var(--signal); }
+  .cal__mark-chip { position: absolute; top: 4px; margin-left: 8px; }
+  /* D-184: the late window — a signal hatch from the deadline line to the end of late submission. */
+  .cal__late { position: absolute; top: 20px; bottom: 20px; border: 2px solid var(--signal);
+    background: repeating-linear-gradient(135deg, var(--signal) 0 3px, color-mix(in srgb, var(--surface) 78%, transparent) 3px 9px); }   /* readable over a term */
+  .cal__late-chip { position: absolute; bottom: 30px; margin-left: 8px; }
+  .cal__today { position: absolute; top: 0; bottom: 0; left: var(--x, 0); border-left: 2px dashed var(--ink); }
+  .cal__today .chip { position: absolute; bottom: 4px; right: 6px; }
+  .cal__today[hidden] { display: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    [data-today-ready] .cal__today { animation: today-in 320ms var(--ease) both; }
+    @keyframes today-in { from { transform: translateY(6px); } }
+  }
+  .cal__legend { display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 15px; color: var(--ink-2); }
+  .cal__legend li { display: flex; align-items: center; gap: 8px; }
+  .sw { width: 16px; height: 16px; display: inline-block; }
+  .sw--ok { border: 1px solid var(--ink-2); }
+  .sw--block { background: var(--primary); }
+  .sw--cond { border: 2px solid var(--conditional); background: repeating-linear-gradient(135deg, var(--conditional) 0 2px, transparent 2px 6px); }
+  .sw--mark { background: var(--signal); }
+  .sw--late { border: 2px solid var(--signal); background: repeating-linear-gradient(135deg, var(--signal) 0 2px, transparent 2px 6px); }
+  .cal__list { }
+  .cal__row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px 24px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  /* Name · date · verdict on one line from 761 px; stacked below (auto-fit gave 2 + 1 at tablet widths, D-115). */
+  @media (min-width: 761px) { .cal__row { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(0, 1.6fr); } }
+  .cal__name { font-weight: 700; font-size: 18px; }
+  .cal__date { font-size: 15px; }
+  .cal__verdict { color: var(--ink-2); }
+  .cal__note { color: var(--muted); }
+  .cal__row--teslim .cal__date, .cal__row--late .cal__date { color: var(--signal-text); font-weight: 700; }
+</style>

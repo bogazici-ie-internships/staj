@@ -1,0 +1,469 @@
+{
+  "note": "REVIEW-02 Note 3: each query's expected anchors must all be in the top 3 results (tests/e2e/search.spec.ts). Expected answers were chosen by reading the content, not taken from the engine. REVIEW-05: `notTop3` lists anchors that must NOT be in the top 3 (B-13: exchange ≠ abroad).",
+  "queries": [
+    {
+      "lang": "tr",
+      "q": "sigorta",
+      "top3": [
+        "sss/#sigorta",
+        "surec/#3-sigorta-ve-devlet-katks-ek-1"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "geç teslim",
+      "top3": [
+        "sss/#gec-teslim"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "gec teslim",
+      "top3": [
+        "sss/#gec-teslim"
+      ],
+      "why": "no diacritics"
+    },
+    {
+      "lang": "tr",
+      "q": "kaç gün",
+      "top3": [
+        "sss/#kac-gun"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "kac gun",
+      "top3": [
+        "sss/#kac-gun"
+      ],
+      "why": "no diacritics"
+    },
+    {
+      "lang": "tr",
+      "q": "cumartesi",
+      "top3": [
+        "sss/#cumartesi-tatil"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "cumartsi",
+      "top3": [
+        "sss/#cumartesi-tatil"
+      ],
+      "why": "typo"
+    },
+    {
+      "lang": "tr",
+      "q": "sicil",
+      "top3": [
+        "formlar/#belge-trainee-evaluation-form"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "ek1",
+      "top3": [
+        "formlar/#belge-ek-1-form",
+        "surec/#3-sigorta-ve-devlet-katks-ek-1"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "EK-1",
+      "top3": [
+        "surec/#3-sigorta-ve-devlet-katks-ek-1"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "rapor kaç sayfa",
+      "top3": [
+        "sss/#rapor-dili",
+        "rapor/"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "hesap işleri",
+      "top3": [
+        "surec/#1-hesap-islerine-teslim-edilecekler"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "hesap isleri",
+      "top3": [
+        "surec/#1-hesap-islerine-teslim-edilecekler"
+      ],
+      "why": "no diacritics"
+    },
+    {
+      "lang": "tr",
+      "q": "erasmus",
+      "top3": [
+        "teslim/#suf-exc",
+        "kurallar/#k-3-6"
+      ],
+      "notTop3": [
+        "sss/#yurt-disi",
+        "kurallar/#k-2-7"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "sonuç ne zaman",
+      "top3": [
+        "sss/#sonuc-zamani"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "sonuc ne zaman",
+      "top3": [
+        "sss/#sonuc-zamani"
+      ],
+      "why": "no diacritics"
+    },
+    {
+      "lang": "tr",
+      "q": "sigortamı",
+      "top3": [
+        "sss/#sigorta"
+      ],
+      "why": "suffix"
+    },
+    {
+      "lang": "tr",
+      "q": "belgeleri",
+      "top3": [
+        "sss/#teslim-zamani"
+      ],
+      "why": "suffix"
+    },
+    {
+      "lang": "tr",
+      "q": "raporu",
+      "top3": [
+        "rapor/"
+      ],
+      "why": "suffix"
+    },
+    {
+      "lang": "tr",
+      "q": "dekont",
+      "top3": [
+        "surec/#opsiyonel-belgeler-duruma-gore"
+      ],
+      "why": "FINAL-CHECK F-12 (D-179): Formlar's box is now 'Şablonu Olmayan Belgeler'; the Süreç section says when a receipt is needed"
+    },
+    {
+      "lang": "tr",
+      "q": "bordro",
+      "top3": [
+        "formlar/"
+      ],
+      "why": "keyword group with dekont"
+    },
+    {
+      "lang": "tr",
+      "q": "çap",
+      "top3": [
+        "sss/#cap",
+        "kurallar/#k-1-2"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "cift anadal",
+      "top3": [
+        "sss/#cap"
+      ],
+      "why": "no diacritics"
+    },
+    {
+      "lang": "tr",
+      "q": "yandal",
+      "top3": [
+        "sss/#yandal"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "çizelge",
+      "top3": [
+        "sss/#cizelge-sablonu"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "timetable",
+      "top3": [
+        "formlar/#belge-internship-timetable"
+      ],
+      "why": "English term on the TR index"
+    },
+    {
+      "lang": "tr",
+      "q": "zorunluluk belgesi",
+      "top3": [
+        "surec/#2-staj-zorunluluk-belgesi"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "yurt dışı",
+      "top3": [
+        "sss/#yurt-disi",
+        "kurallar/#k-2-7"
+      ],
+      "notTop3": [
+        "teslim/#suf-exc",
+        "kurallar/#k-3-6",
+        "sss/#ders-almadan"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "üretim stajı",
+      "top3": [
+        "kurallar/#topic-uretim",
+        "sss/#uretim"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "koordinatör",
+      "top3": [
+        "iletisim/#ct-coord"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "değerlendirme formu",
+      "top3": [
+        "sss/#sicil-formu"
+      ],
+      "why": "keyword group with Sicil Formu"
+    },
+    {
+      "lang": "tr",
+      "q": "anket",
+      "top3": [
+        "formlar/#belge-student-internship-survey"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "tamamlama belgesi",
+      "top3": [
+        "surec/#sirasinda"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "PDF boyutu",
+      "top3": [
+        "teslim/#help"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "40 gün",
+      "top3": [
+        "kurallar/#k-1-1"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "hafta sonu",
+      "top3": [
+        "sss/#cumartesi-tatil"
+      ],
+      "why": "keyword group with Cumartesi"
+    },
+    {
+      "lang": "en",
+      "q": "insurance",
+      "top3": [
+        "en/sss/#insurance"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "late submission",
+      "top3": [
+        "en/sss/#late-submission"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "saturday",
+      "top3": [
+        "en/sss/#saturdays-holidays"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "saturdy",
+      "top3": [
+        "en/sss/#saturdays-holidays"
+      ],
+      "why": "typo"
+    },
+    {
+      "lang": "en",
+      "q": "trainee evaluation",
+      "top3": [
+        "en/formlar/#belge-trainee-evaluation-form"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "how many days",
+      "top3": [
+        "en/sss/#days-required"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "report pages",
+      "top3": [
+        "en/kurallar/#k-3-3"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "results",
+      "top3": [
+        "en/sonuclar/"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "ek1",
+      "top3": [
+        "en/formlar/#belge-ek-1-form"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "payslip",
+      "top3": [
+        "en/formlar/"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "double major",
+      "top3": [
+        "en/sss/#double-major"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "abroad",
+      "top3": [
+        "en/sss/#abroad",
+        "en/kurallar/#k-2-7"
+      ],
+      "notTop3": [
+        "en/teslim/#suf-exc",
+        "en/kurallar/#k-3-6"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "timetable",
+      "top3": [
+        "en/formlar/#belge-internship-timetable"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "accounting",
+      "top3": [
+        "en/surec/#1-documents-for-the-department-of-accounting-affairs"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "survey",
+      "top3": [
+        "en/formlar/#belge-student-internship-survey"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "coordinator",
+      "top3": [
+        "en/iletisim/#ct-coord"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "erasmus",
+      "top3": [
+        "en/kurallar/#k-3-6",
+        "en/teslim/#suf-exc"
+      ],
+      "notTop3": [
+        "en/sss/#abroad",
+        "en/kurallar/#k-2-7"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "iki staj",
+      "top3": [
+        "sss/#ayri-rapor"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "ayrı rapor",
+      "top3": [
+        "sss/#ayri-rapor",
+        "kurallar/#k-3-8"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "aynı şirket",
+      "top3": [
+        "sss/#ayri-rapor",
+        "kurallar/#k-3-8"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "two internships",
+      "top3": [
+        "en/sss/#separate-reports",
+        "en/kurallar/#k-3-8"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "geç gün",
+      "top3": [
+        "sss/#gec-teslim"
+      ]
+    },
+    {
+      "lang": "tr",
+      "q": "ikinci staj",
+      "top3": [
+        "sss/#ayri-rapor"
+      ]
+    },
+    {
+      "lang": "en",
+      "q": "second internship",
+      "top3": [
+        "en/sss/#separate-reports"
+      ]
+    }
+  ]
+}

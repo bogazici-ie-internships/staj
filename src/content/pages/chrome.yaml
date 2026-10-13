@@ -1,0 +1,114 @@
+# Site chrome: names, navigation, per-page <title> / meta description, footer and 404 copy.
+# <title>s follow the page headings (UPDATE-04 §6; URLs unchanged); descriptions follow the UPDATE-03 voice.
+# Every title/description that differs from the MkDocs site is listed in tests/e2e/parity.spec.ts.
+brand:
+  service: { tr: "Zorunlu Staj", en: "Compulsory Internship" }
+  institution: { tr: "Boğaziçi Üniversitesi · Endüstri Mühendisliği", en: "Boğaziçi University · Industrial Engineering" }
+  titleSuffix: { tr: "Zorunlu Staj Kılavuzu", en: "Compulsory Internship Guide" }
+  seal: { tr: "Boğaziçi Üniversitesi mührü", en: "Boğaziçi University seal" }
+  ogAlt: { tr: "Boğaziçi Üniversitesi Endüstri Mühendisliği — Zorunlu Staj Kılavuzu", en: "Boğaziçi University Industrial Engineering — Compulsory Internship Guide" }
+  ogTitle: { tr: "Boğaziçi Üniversitesi Endüstri Mühendisliği · Zorunlu Staj Kılavuzu", en: "Boğaziçi University Industrial Engineering · Compulsory Internship Guide" }
+  siteName: { tr: "Boğaziçi Üniversitesi — Endüstri Mühendisliği Zorunlu Staj", en: "Boğaziçi University — Industrial Engineering Compulsory Internship" }
+# Order = header order. `short` is the nav label, `title` the page title.
+pages:
+  - { key: home, path: "", title: { tr: Ana Sayfa, en: Home }, short: { tr: Ana sayfa, en: Home },
+      head: { tr: "Zorunlu Staj Kılavuzu · Boğaziçi Üniversitesi Endüstri Mühendisliği", en: "Compulsory Internship Guide · Boğaziçi University Industrial Engineering" },
+      description: { tr: "Boğaziçi Üniversitesi Endüstri Mühendisliği zorunlu staj kılavuzu: staj tarihleri, sigorta (EK-1), rapor hazırlama, belge teslimi ve sık sorulan sorular.", en: "Boğaziçi University Industrial Engineering compulsory internship guide: dates, insurance (EK-1), report preparation, document submission and frequently asked questions." } }
+  - { key: surec, path: surec/, title: { tr: Staj Süreci, en: Internship Process }, short: { tr: Süreç, en: Process },
+      description: { tr: "Stajdan önce, staj sırasında ve stajdan sonra yapılması gerekenler: EK-1 ve sigorta, çizelge, Cumartesi Yazısı ve belge teslimi.", en: "Steps before, during and after the internship: the EK-1 and insurance, the timetable, the Saturday Work Letter and document submission." } }
+  - { key: kurallar, path: kurallar/, title: { tr: Kurallar, en: Rules }, short: { tr: Kurallar, en: Rules },
+      description: { tr: "Zorunlu staj kuralları: 40 iş günü ve en az 15 iş günü üretim stajı şartı, staj kuralları, rapor ve teslim kuralları ile rapor konu rehberi.", en: "Compulsory internship rules: the 40-workday requirement and at least 15 workdays of Production Internship, internship rules, report and submission rules, and the topic guide." } }
+  - { key: rapor, path: rapor/, title: { tr: Rapor Hazırlama, en: Report Preparation }, short: { tr: Rapor, en: Report },
+      description: { tr: "Staj raporu nasıl hazırlanır: rapor şablonunun sekiz zorunlu bölümü, duruma göre eklenen Appendices ve References bölümleri ve her bölümde neyin yazılacağı.", en: "How to prepare the internship report: the eight required sections of the report template, the Appendices and References sections added when needed, and what each section should cover." } }
+  - { key: formlar, path: formlar/, title: { tr: "Formlar ve Belgeler", en: "Forms and Documents" }, short: { tr: "Belgeler", en: "Documents" },
+      description: { tr: "Zorunlu staj formları ve belgeleri: Staj Zorunluluk Belgesi, EK-1, Staj Sicil Formu, Öğrenci Staj Anketi ve çizelge şablonu.", en: "Compulsory internship forms and documents: the Compulsory Internship Letter, EK-1, Trainee Evaluation Form, Student Internship Survey and timetable template." } }
+  - { key: sss, path: sss/, title: { tr: Sık Sorulan Sorular, en: Frequently Asked Questions }, short: { tr: SSS, en: FAQ },
+      description: { tr: "Zorunlu staj hakkında sık sorulan sorular: uygunluk ve zamanlama, süre ve gün sayımı, staj türü, belgeler, teslim ve sonuç.", en: "Frequently asked questions about the compulsory internship: eligibility and timing, duration and day counting, internship type, documents, submission and results." } }
+  - { key: sonuclar, path: sonuclar/, title: { tr: Sonuçlar, en: Results }, short: { tr: Sonuçlar, en: Results },
+      description: { tr: "Zorunlu staj değerlendirme sonuçlarının ilan edildiği sayfa ve güncel sonuç listesi (PDF).", en: "Where compulsory internship evaluation results are announced, with the current results list (PDF)." } }
+  - { key: iletisim, path: iletisim/, title: { tr: İletişim, en: Contact }, short: { tr: İletişim, en: Contact },
+      description: { tr: "Staj asistanları ve staj koordinatörünün iletişim bilgileri ile hangi konularda kime başvurulacağı.", en: "Contact details for the internship assistants and the internship coordinator, and whom to contact about which matters." } }
+  - { key: teslim, path: teslim/, title: { tr: Belge Teslimi, en: Document Submission }, short: { tr: Belgeleri gönder, en: Submit documents },
+      description: { tr: "Staj raporu ve belgelerin online teslimi: son teslim tarihi ve saati, geç teslim kuralı, yükleme formu ve teslimde sorun yaşanması durumunda izlenecek yol.", en: "Online submission of the internship report and documents: the deadline and time, the late-submission rule, the upload form and what to do if the submission fails." } }
+ui:
+  skip: { tr: "İçeriğe geç", en: "Skip to content" }
+  navLabel: { tr: "Ana menü", en: "Main menu" }
+  menuOpen: { tr: "Menü", en: "Menu" }
+  menuClose: { tr: "Menüyü kapat", en: "Close menu" }
+  langSwitch: { tr: "English", en: "Türkçe" }
+  langSwitchLabel: { tr: "EN, Switch to English", en: "TR, Türkçeye geç" }   # contains the visible label (WCAG 2.5.3, D-88)
+  themeLabel: { tr: "Tema", en: "Theme" }
+  themeLight: { tr: "Açık", en: "Light" }
+  themeDark: { tr: "Koyu", en: "Dark" }
+  themeSystem: { tr: "Sistem", en: "System" }
+  home: { tr: "Ana sayfaya dön", en: "Return to the home page" }
+  contents: { tr: "Bu sayfada", en: "On this page" }
+  helpfulQ: { tr: "Bu bilgi yardımcı oldu mu?", en: "Was this information helpful?" }
+  helpfulYes: { tr: "Evet", en: "Yes" }
+  helpfulNo: { tr: "Hayır", en: "No" }
+  helpfulThanks: { tr: "Geri bildiriminiz için teşekkür ederiz.", en: "Thank you for your feedback." }
+  announcement: { tr: "Duyuru", en: "Announcement" }
+  announcementClose: { tr: "Duyuruyu kapat", en: "Close announcement" }
+  searchLabel: { tr: "Ara", en: "Search" }
+  searchTitle: { tr: "Sitede Arama", en: "Search the Site" }
+  searchPlaceholder: { tr: "Aramak istediğiniz konuyu yazınız", en: "Type what you are looking for" }
+  searchHint: { tr: "Örnek: EK-1, Cumartesi Yazısı, geç teslim", en: "For example: EK-1, Saturday Work Letter, late submission" }
+  searchLoading: { tr: "Arama yükleniyor…", en: "Loading search…" }
+  searchEmpty: { tr: "Bu aramayla eşleşen bir sonuç bulunamadı.", en: "No results match this search." }
+  searchError: { tr: "Arama şu anda kullanılamıyor.", en: "Search is currently unavailable." }
+  searchClose: { tr: "Kapat", en: "Close" }
+  searchSuggest: { tr: "Önerilen aramalar", en: "Suggested searches" }
+  searchResults: { tr: "Arama sonuçları", en: "Search results" }
+  searchCount: { tr: "{n} sonuç", en: "{n} results" }
+  searchNoneHelp: { tr: "Aradığınızı [Sık Sorulan Sorular](page:sss) sayfasında bulabilir veya staj asistanlarına [{generalEmail}](mailto:{generalEmail}) adresinden ulaşabilirsiniz.", en: "You may find what you are looking for on the [Frequently Asked Questions](page:sss) page, or contact the internship assistants at [{generalEmail}](mailto:{generalEmail})." }
+# Search palette (REVIEW-02 Note 3): suggested searches in the empty state.
+search:
+  suggestions:
+    - { tr: "Geç teslim", en: "Late submission" }
+    - { tr: "EK-1", en: "EK-1" }
+    - { tr: "Cumartesi", en: "Saturday" }
+    - { tr: "Rapor sayfa sınırı", en: "Report page limit" }
+    - { tr: "Sonuçlar", en: "Results" }
+    - { tr: "Staj Sicil Formu", en: "Trainee Evaluation Form" }
+footer:
+  lastUpdated: { tr: "Son güncelleme", en: "Last updated" }
+  department: { tr: "Bölüm web sitesi", en: "Department website" }
+  departmentUrl: "https://ie.bogazici.edu.tr/"
+  about: { tr: "Site Hakkında", en: "About this site" }   # link to the İletişim page's "Site Hakkında" block (UPDATE-04 §1)
+  help: { tr: "Sorularınız için:", en: "For enquiries:" }
+  # From Home's contact band, which repeated the footer and was merged into it (REVIEW-01 Note 7).
+  ek1: { tr: "EK-1 gönderimi için staj koordinatörü: {coordinatorName} ({coordinatorEmail}). Diğer sorularınızı staj asistanlarına iletiniz.", en: "EK-1 submissions: the internship coordinator, {coordinatorName} ({coordinatorEmail}). Send all other questions to the internship assistants." }
+# "Site Hakkında" block at the end of the İletişim page (UPDATE-04 §1). {name} and {role} are filled in below.
+about:
+  anchor: { tr: "site-hakkinda", en: "about-this-site" }
+  title: { tr: "Site Hakkında", en: "About This Site" }
+  maintainer:
+    name: Berat Kubilay Güngez
+    role: { tr: "staj asistanı", en: "internship assistant" }
+  text:
+    tr: "Bu site, Boğaziçi Üniversitesi Endüstri Mühendisliği Bölümü {role} {name} tarafından hazırlanır ve güncellenir. Siteyle ilgili teknik sorunları staj asistanlarına e-postayla bildirebilirsiniz."
+    en: "This website was created and is maintained by {name}, {role} at the Department of Industrial Engineering, Boğaziçi University. Please report technical problems with the site to the internship assistants by email."
+# University units named in the copy. ONE place for the name (UPDATE-04 §2): other files write
+# {accounting} / {accountingEmail}, filled in by src/lib/content.ts. The TR suffix in those files
+# ("{accounting}'ne") assumes a name ending in -i (İşleri, Birimi). Name as on the live site and
+# the maintainer's decision (UPDATE-05 §1, D-71).
+units:
+  accounting:
+    name: { tr: "Hesap İşleri", en: "Accounting Affairs" }   # address: settings.yml iletisim.hesap_isleri_eposta (D-78)
+notFound:
+  title: { tr: "Sayfa Bulunamadı", en: "Page Not Found" }
+  lead: { tr: "Aradığınız sayfa taşınmış, adı değiştirilmiş veya kaldırılmış olabilir. Aşağıdaki bağlantılar aracılığıyla devam edebilirsiniz.", en: "The page you are looking for may have been moved, renamed or removed. Please continue from one of the links below." }
+placeholder:
+  lead: { tr: "Bu sayfa bir sonraki aşamada yeni tasarıma aktarılacaktır. Sayfanın güncel içeriğine yayındaki siteden ulaşabilirsiniz:", en: "This page will be moved to the new design in the next phase. Its current content is available on the live site:" }
+  live: { tr: "Yayındaki sayfayı aç", en: "Open the live page" }
+# Open Graph card (src/pages/og-card, `npm run og`). Evergreen: no dates.
+og:
+  flap: { tr: "TESLİM", en: "SUBMIT" }
+  head: { tr: "Takvim · Kurallar · Teslim", en: "Calendar · Rules · Submission" }
+  rows:
+    - label: { tr: "Staj dönemleri", en: "Internship periods" }
+      value: { tr: "Takvim", en: "Calendar" }
+    - label: { tr: "Gerekli belgeler", en: "Required documents" }
+      value: { tr: "Formlar ve Belgeler", en: "Forms and Documents" }
+    - label: { tr: "Rapor teslimi", en: "Report submission" }
+      value: { tr: "Online teslim", en: "Online submission" }

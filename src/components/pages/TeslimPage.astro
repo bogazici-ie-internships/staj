@@ -1,0 +1,100 @@
+---
+import { SITE_URL } from "../../lib/paths";
+// Teslim — Kronometre. The island holds all five screens; its first screen
+// (Hazırlık) is server-rendered, so the requirements are readable without JS.
+// data-form-key / data-portal-url live on #sufForm exactly as in the MkDocs
+// site (deploy.yml injects the key; the e2e harness relies on the attribute).
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Submission, { type TeslimText } from "../../islands/teslim/Submission";
+import "../../styles/teslim.css";
+import { copy, t } from "../../lib/content";
+import { md } from "../../lib/inline-md";
+import { formKey, settings, site } from "../../lib/settings";
+import { longDateTime, type Lang } from "../../lib/dates";
+import type { Campaign } from "../../lib/submission/contract";
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = await copy("teslim");
+const chrome = await copy("chrome");
+const pick = (o: any): any => Array.isArray(o) ? o.map(pick) : o && typeof o === "object" ? ("tr" in o && "en" in o && Object.keys(o).length === 2 ? o[lang] : Object.fromEntries(Object.entries(o).map(([k, v]) => [k, pick(v)]))) : o;
+const text = pick(c) as TeslimText & { help: { title: string; items: string[] }; noscript: string };
+const d = settings.donem;
+// data-term is the CONTRACT value (Code.gs CURRENT_TERM) and is never translated.
+const campaign: Campaign = { contractVersion: d.contract_version, campaignId: d.campaign_id, term: d.etiket, yearDone: d.year_done,
+  semester: d.semester, internshipStart: d.staj_baslangic, internshipEnd: d.staj_bitis, deadline: d.teslim_kilit, graceDays: d.gec_teslim_gun };
+// Review builds (fake portal) get a stand-in key; production gets the real one from deploy.yml.
+const key = formKey(settings) || (import.meta.env.PUBLIC_PORTAL_MODE === "fake" ? "local-review" : "");
+const title = t(chrome.pages.find((p) => p.key === "teslim")!.title, lang);
+// REVIEW-01 Note 1 (D-108): desktop side panel — steps, deadline, required documents and a short help box
+// pointing to the troubleshooting list, which stays below the form at every width. Hidden below 961 px (D-178).
+const lay = await copy("layout");
+const side = { steps: t(lay.teslim.steps, lang), docs: t(lay.teslim.documents, lang), deadline: t(lay.teslim.deadline, lang), lateEnd: t(lay.panel.lateEnd, lang) };
+---
+<BaseLayout lang={lang} page="teslim">
+  <div class="wrap"><div class="teslim">{/* searchable (D-88): prep text, documents, help */}
+    <header class="teslim__head">
+      <span class="teslim__eyebrow mono">{text.prep.eyebrow.replace("{term}", site.term[lang])}</span>
+      <h1 class="teslim__title">{text.prep.title}</h1>
+      <p class="teslim__lead">{text.prep.lead}</p>
+      <span class="visually-hidden">{title}</span>
+    </header>
+    <div id="sufForm" class="teslim__flow" data-form-key={key} data-portal-url={settings.baglantilar.portal_url} data-contract="checking" data-locale={lang}>
+      <Submission client:paint="eager" lang={lang} text={text} campaign={campaign} portalUrl={settings.baglantilar.portal_url}
+        recaptchaSiteKey={import.meta.env.PUBLIC_PORTAL_MODE === "fake" ? "" : settings.baglantilar.recaptcha_site_key.trim()} termDisplay={site.term[lang]}
+        deadlineMs={site.deadlineMs} graceDays={site.graceDays} />
+    </div>
+    {/* REVIEW-04 Note 2 (D-140): on the printed receipt only — where to reach the assistants, since links do nothing on paper. */}
+    <p class="teslim__printfoot" set:html={md(text.receipt.printFoot, lang, { site: SITE_URL.replace(/^https:\/\//, "").replace(/\/$/, "") + (lang === "en" ? "/en" : ""), email: settings.iletisim.genel_eposta })} />
+    <noscript><p class="suf-noscript" set:html={md(text.noscript, lang)} /></noscript>
+    <aside class="teslim__side" aria-labelledby="ts-steps">
+      <section class="ts-box ts-wide" aria-labelledby="ts-steps">
+        <h2 id="ts-steps" class="ts-h mono">{side.steps}</h2>
+        <ol class="ts-steps" data-ts-steps>{text.steps.map((s: string, i: number) => <li data-n={i + 1}><span class="mono">{i + 1}</span>{s}</li>)}</ol>
+      </section>
+      {site.deadlineMs != null && (
+        <section class="ts-box ts-wide" aria-labelledby="ts-deadline">
+          <h2 id="ts-deadline" class="ts-h mono">{side.deadline}</h2>
+          <p class="ts-date">{longDateTime(lang, site.deadlineMs)}</p>
+          {site.closesMs != null && site.graceDays > 0 && <p class="ts-note">{side.lateEnd}: <b>{longDateTime(lang, site.closesMs)}</b></p>}
+        </section>
+      )}
+      <section class="ts-box ts-wide" aria-labelledby="ts-docs">
+        <h2 id="ts-docs" class="ts-h mono">{side.docs}</h2>
+        <dl class="ts-docs">
+          <div><dt>{text.prep.required}</dt><dd>{(["rapor", "sicil", "anketi"] as const).map((k) => text.docs[k]).join(" · ")}</dd></div>
+          <div><dt>{text.situations.saturday.when}</dt><dd>{text.docs.cumartesi}</dd></div>
+          <div><dt>{text.situations.reimbursement.when}</dt><dd>{text.docs.dekont} · {text.docs.ek1}</dd></div>
+        </dl>
+      </section>
+      <section class="ts-box ts-help" aria-labelledby="ts-help">
+        <h2 id="ts-help" class="ts-h mono">{t(lay.rail.help.title, lang)}</h2>
+        <p>{t(lay.rail.help.text, lang)}</p>
+        <p><a class="ts-help__link" href="#help">{text.help.title}</a></p>
+        <p><a class="mono" href={`mailto:${settings.iletisim.genel_eposta}`}>{settings.iletisim.genel_eposta}</a></p>
+      </section>
+    </aside>
+    <section class="teslim__help" id={lang === "en" ? "if-you-cannot-submit" : "gonderemiyorsanz"} aria-labelledby="help">{/* live anchor (REVIEW-05 B-14) */}
+      <h2 id="help" class="suf-sub">{text.help.title}</h2>
+      {/* D-181 (RELEASE-CHECK R-08): an item with a `late` variant carries both; the clock script marks the late window on
+          <html data-phase>, and the CSS shows the matching one. Without JavaScript the regular wording stays. */}
+      <ul>{c.help.items.map((x: any) => x.late
+        ? <li><span data-when="regular" set:html={md(t(x, lang), lang)} /><span data-when="late" set:html={md(t(x.late, lang), lang, { closes: site.closesMs != null ? longDateTime(lang, site.closesMs) : "" })} /></li>
+        : <li set:html={md(t(x, lang), lang)} />)}</ul>
+    </section>
+  </div></div>
+</BaseLayout>
+<script>
+  // The side panel follows the flow: the step being filled in gets aria-current="step" (the island's
+  // root carries data-step; nothing in the submission code changes).
+  const list = document.querySelector<HTMLElement>("[data-ts-steps]");
+  const order = ["kimlik", "belgeler", "kontrol"];
+  const sync = () => {
+    const step = document.querySelector<HTMLElement>(".suf[data-step]")?.dataset.step ?? "hazirlik";
+    const cur = order.indexOf(step), done = step === "makbuz" ? order.length : cur;
+    list?.querySelectorAll("li").forEach((li, i) => {
+      if (i === cur) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
+      li.toggleAttribute("data-done", i < done);
+    });
+  };
+  if (list) { new MutationObserver(sync).observe(document.getElementById("sufForm")!, { subtree: true, attributes: true, attributeFilter: ["data-step"], childList: true }); sync(); }
+</script>
