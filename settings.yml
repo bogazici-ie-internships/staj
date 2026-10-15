@@ -4,7 +4,7 @@
 #  Grader/config/campaign.yaml exactly; validate_campaign_contract.py checks
 #  settings alone in CI, and Code.gs / Grader when those paths are present.
 #  See _maintainer/DEPLOYMENT.md for the safe deployment order.
-#  Umami analytics ID: mkdocs.yml → extra.umami_website_id (deploy secret).
+#  Umami analytics ID: the UMAMI_WEBSITE_ID repo secret, read at build time (src/lib/build-info.ts).
 # ============================================================================
 
 # --- Generated current term & dates ------------------------------------
@@ -50,7 +50,6 @@ iletisim:
 
 # --- Links ----------------------------------------------------------
 baglantilar:
-  kayit_formu: "https://forms.gle/SzyvatVjATsLY7ZR7" # internship registration / announcement form
   portal_url: "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec" # Submission form upload address
   # THIS IS A PUBLIC VALUE — NOT SECRET. It is printed into the published HTML
   # of the Submission page; anyone who clicks "View source" can read it. It is NOT
@@ -67,8 +66,15 @@ baglantilar:
   # the portal also skips verification until RECAPTCHA_SECRET is set in Apps
   # Script Script Properties. Never put the secret here. See DEPLOYMENT.md.
   recaptcha_site_key: "6LdtE78tAAAAANYycOhRc8c8r-Fzda6wlHO2ErGJ"
-  # Results folder — sharing must be RESTRICTED (authorized people/students), NOT "public".
-  sonuclar_klasoru: "https://drive.google.com/drive/folders/16EzmFYGdXy477NIv4Z49AkiJIRAOdIdi"
+
+# --- Sonuçlar (RESULTS-01) ----------------------------------------------------
+# The results list is public/internships/All_Internships.pdf (npm run results:publish; see QUICKSTART.md).
+# Optional one-line remark shown under it, both languages or neither, e.g.
+#   not: "Geç teslimlerin sonuçları ayrıca eklenecek."
+#   not_en: "Results for late submissions will be added separately."
+sonuclar:
+  not: ""
+  not_en: ""
 
 # --- Homepage "Important Dates" (from BU's academic calendar) ----------------
 # Each row can be EITHER a single day OR a date range:
@@ -80,6 +86,7 @@ baglantilar:
 # If the date is not yet known: { tarih: "Güncellenecektir", ... }
 # Small footnote for a temporary/estimated date: { ..., notu: "..." }
 #
+
 # --- Strip range (homepage visual timeline) ---------------------
 # The strip shows the span between these two dates and generates the month labels itself.
 # CURRENTLY: a plain calendar year (January–December 2026). The range can be
@@ -144,3 +151,18 @@ takvim:
       baslik_en: "Summer Internship Deadline",
       kategori: "teslim",
     }
+
+# --- Duyuru bandı (optional, UPDATE-06) ------------------------------
+# A short site-wide notice above the deadline strip, until `bitis` (Türkiye time).
+# Leave it commented out when there is nothing to announce. Inline Markdown links are allowed.
+# Students can close the band (remembered in their browser); add `kapatilamaz: true` for urgent notices.
+# duyuru:
+#   mesaj: "Sonuç listesi güncellendi."
+#   mesaj_en: "The results list has been updated."
+#   bitis: "2026-10-20 23:59"
+#   kapatilamaz: false
+
+duyuru:
+  mesaj: "2026 Yaz sonuçları kısım kısım ilan edilmektedir; şu ana kadar yalnızca e-posta ile bilgilendirilen öğrencilerin sonuçları açıklanmıştır. [Sonuçlar](page:sonuclar) sayfasından ulaşabilirsiniz."
+  mesaj_en: "Summer 2026 results are being announced in stages; so far, only the results of students notified by email have been announced. See the [Results](page:sonuclar) page."
+  bitis: "2026-10-29 23:59"

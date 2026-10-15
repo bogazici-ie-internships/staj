@@ -1,0 +1,49 @@
+---
+// Site-wide announcement band from settings.yml › duyuru (UPDATE-06 Phase 2b). Rendered only while
+// the end time is in the future at build. The inline script runs as soon as the band is parsed (before
+// first paint, so no layout shift): it hides the band once it has expired or when this browser closed
+// this very notice (its id is a digest of the texts + end time, D-102). `kapatilamaz: true` removes the
+// close button for urgent notices.
+import { settings, activeAnnouncement } from "../../lib/settings";
+import { md } from "../../lib/inline-md";
+import Icon from "../../icons/Icon.astro";
+import type { Lang } from "../../lib/dates";
+interface Props { lang: Lang; label: string; closeLabel: string }
+const { lang, label, closeLabel } = Astro.props;
+const a = activeAnnouncement(settings);
+---
+{a && (
+  <div class="duyuru" role="region" aria-label={label} data-until={a.untilMs} data-duyuru-id={a.id} data-dismissible={a.dismissible ? "" : undefined}>
+    <div class="wrap duyuru__in">
+      <Icon name="info" size={18} /><p set:html={md(lang === "en" ? a.en : a.tr, lang)} />
+      {a.dismissible && <button type="button" class="duyuru__close" aria-label={closeLabel} data-duyuru-close><Icon name="x" size={18} /></button>}
+    </div>
+  </div>
+)}
+{a && (
+  <script is:inline>
+    (function () {
+      var el = document.querySelector(".duyuru[data-duyuru-id]"); if (!el) return;
+      var KEY = "staj-duyuru-kapatildi", id = el.getAttribute("data-duyuru-id");
+      var closed = null; try { closed = localStorage.getItem(KEY); } catch (e) {}
+      if (Date.now() >= Number(el.getAttribute("data-until")) || (el.hasAttribute("data-dismissible") && closed === id)) { el.hidden = true; return; }
+      var btn = el.querySelector("[data-duyuru-close]");
+      if (btn) btn.addEventListener("click", function () {
+        try { localStorage.setItem(KEY, id); } catch (e) {}
+        el.hidden = true;
+        var main = document.getElementById("main"); if (main) main.focus({ preventScroll: true });
+      });
+    })();
+  </script>
+)}
+<style>
+  .duyuru { background: var(--primary-tint); border-bottom: 1px solid var(--rule-strong); }
+  .duyuru[hidden] { display: none; }
+  .duyuru__in { display: flex; gap: 10px; align-items: center; min-height: 40px; padding-block: 4px; font-size: 15px; }
+  .duyuru__in > p { flex: 1; padding-block: 4px; }
+  .duyuru__in :global(.icon) { color: var(--accent-text); flex: none; }
+  .duyuru a { font-weight: 700; }
+  .duyuru__close { flex: none; min-width: 44px; min-height: 44px; display: inline-grid; place-items: center; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
+  .duyuru__close:hover { background: color-mix(in oklab, var(--ink) 8%, transparent); }
+  .duyuru__close :global(.icon) { color: var(--ink); }
+</style>

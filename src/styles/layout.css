@@ -1,0 +1,110 @@
+/* REVIEW-01 Note 1 (D-104 – D-108): content uses the container's width on desktop.
+   One centred container for every page: `.wrap` (max 1320 px, same gutters as the header).
+   Breakpoints: 961 px — header-band panel, Kronometre two-column grids; 1024 px — the Gazete rail (D-176)
+   (same edge as the header's menu button, D-98). Everything below 961 px is as before. */
+
+/* --- Header band ------------------------------------------------------------------------------- */
+.ph__in { padding-block: var(--space-7) var(--space-5); border-bottom: var(--border-double); }
+.ph__main { display: grid; gap: 10px; align-content: end; min-width: 0; }
+.ph__panel, .ph__lead { display: none; }
+.ph__lead.ph__lead--always { display: block; }
+.ph__lead { max-width: min(40rem, 68ch); color: var(--ink-2); }
+/* The Gazete lead may use the column's width (REVIEW-07, D-170); it is a little larger than the running text (D-176,
+   D-178), which also keeps its lines at about 100 characters at most. */
+.ph--gazete .ph__lead { max-width: none; font-family: var(--font-editorial); font-size: max(clamp(19px, 1.1rem + 0.25vw, 21px), calc(var(--gz-body) * 1.08)); line-height: 1.55; }
+.ph--kronometre .ph__lead { font-size: 18px; line-height: 1.5; }
+.ph__lead :is(a, strong) { font-weight: 700; }
+@media (max-width: 960px) {
+  /* Phones/tablets: the rule stays full-bleed, as it was when it sat on the padded .wrap. */
+  .ph__in { margin-inline: calc(-1 * max(var(--gutter), env(safe-area-inset-left))); padding-inline: max(var(--gutter), env(safe-area-inset-left)); }
+}
+/* Phones: no double rule under the title (REVIEW-06 Note 3, D-167); the content follows the title directly. */
+@media (max-width: 600px) { .ph__in { border-bottom: 0; padding-bottom: var(--space-3); } }
+@media (min-width: 961px) {
+  /* REVIEW-06 Note 2 (D-165): a second column only when there is a panel (Süreç); otherwise title and lead use the band. */
+  .ph__in { display: grid; grid-template-columns: minmax(0, 1fr); column-gap: var(--space-7); align-items: end; }
+  .ph--panel .ph__in { grid-template-columns: minmax(0, 1fr) minmax(17rem, 21rem); }
+  .ph__lead { display: block; margin-top: var(--space-3); }
+  .has-ph-lead .doc__lead > p:first-child, .has-ph-lead .doc__lead:not(:has(> :nth-child(2))) { display: none; }
+  .ph__panel { display: grid; gap: 6px; align-content: start; border: var(--border-strong); background: var(--surface); padding: 12px 16px 10px; font-family: var(--font-ui); }
+}
+.ph__ptitle { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
+.ph__dl { display: grid; margin: 0; }
+.ph__dl div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 10px; align-items: baseline; padding-block: 6px; border-bottom: 1px solid var(--rule); }   /* a date never breaks inside; it drops under its label if needed */
+.ph__dl dt { font-size: 13px; color: var(--muted); }
+.ph__dl dd { margin: 0; font-weight: 700; font-size: 13px; line-height: 1.35; text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+.ph__none { font-size: 15px; color: var(--ink-2); }
+.ph__cta { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 800; color: var(--accent-text); text-decoration: underline; text-underline-offset: 0.2em; justify-self: start; }
+
+/* --- Gazete pages: reading column + right rail ------------------------------------------------- */
+.rail { font-family: var(--font-ui); font-size: 15px; line-height: 1.45; }
+.rail__c { border-top: var(--border-strong); border-bottom: 1px solid var(--rule-strong); }
+.rail__toggle { width: 100%; min-height: 52px; display: flex; align-items: center; justify-content: space-between; background: transparent; border: 0; font: inherit; font-weight: 700; font-size: 16px; color: var(--ink); padding: 0; cursor: pointer; }
+.rail__toggle svg { transition: transform var(--dur-short) var(--ease); }
+.rail__toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .rail__toggle svg { transition: none; } }
+.rail__panel { gap: var(--space-5); padding-block: 8px 18px; }
+.rail__panel:not([hidden]) { display: grid; }
+.rail__box { display: grid; gap: 8px; }
+.rail__h { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
+.rail__toc { display: grid; }
+.rail__toc a { display: flex; gap: 10px; align-items: center; min-height: 40px; padding: 4px 0 4px 12px; border-left: 2px solid var(--rule); text-decoration: none; font-weight: 600; color: var(--ink); }
+.rail__toc a:hover { border-left-color: var(--ink-2); text-decoration: underline; }
+.rail__toc a[aria-current] { border-left-color: var(--accent-text); color: var(--accent-text); }
+.rail__n { min-width: calc(var(--num-col) - 10px); flex: none; }
+.rail__links { display: grid; gap: 2px; }
+.rail__links a { display: inline-flex; align-items: center; min-height: 36px; font-weight: 700; }
+.rail__links a::before { content: "→"; color: var(--accent-text); margin-right: 8px; text-decoration: none; }
+.rail__help { border: 1px solid var(--rule-strong); background: var(--surface); padding: 12px 14px; }
+.rail__help a { font-weight: 700; display: inline-block; padding-block: 4px; }
+.rail__mail { overflow-wrap: anywhere; }
+.rail__facts { display: grid; gap: 10px; margin: 0; }
+.rail__facts > div { display: grid; gap: 2px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.rail__facts dt { font-weight: 800; }
+.rail__facts dt a { text-decoration: none; }
+.rail__facts dt a:hover { text-decoration: underline; }
+.rail__facts dd { margin: 0; color: var(--ink-2); }
+.rail__facts dd a { font-weight: 700; }
+.rail__chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.rail__search { justify-self: start; min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; border: 1px solid var(--rule-strong); background: var(--surface); color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
+.rail__search:hover { border-color: var(--ink); }
+
+@media (max-width: 1023px) { .rail--wide-only { display: none; } }
+@media (min-width: 1024px) {
+  /* D-176: the rail joins at 1024 px (it was 1181 px). REVIEW-07 (D-170): the Gazete pages use the header's container
+     and gutters. The main column starts at the logo's
+     edge and takes what the rail leaves (container − --rail-w − --rail-gap); the rail ends at the header's right edge.
+     Every block in the column (text, lists, callouts, tables, SSS rows, section rules) uses that width. */
+  .wrap.with-rail { display: grid; grid-template-columns: minmax(0, 1fr) var(--rail-w); column-gap: var(--rail-gap); align-items: start; }
+  /* The Gazete header band uses the same two tracks: title and lead over the column, Süreç's panel over the rail. */
+  .ph--gazete .ph__in { grid-template-columns: minmax(0, 1fr) var(--rail-w); column-gap: var(--rail-gap); }
+  .wrap.with-rail > .rail { grid-column: 2; grid-row: 1; position: sticky; top: var(--space-4); max-height: calc(100dvh - 2 * var(--space-4)); overflow: auto; overscroll-behavior: contain; padding-right: 4px; }
+  .wrap.with-rail > :not(.rail, script, style) { grid-column: 1; grid-row: 1; min-width: 0; }
+  .rail__c { border: 0; }
+  .rail__toggle { display: none !important; }
+  .rail__panel { display: grid !important; content-visibility: visible !important; padding-top: 0; }
+  .with-rail .rail-narrow-only { display: none; }
+}
+
+/* --- Without the rail (≤ 1023 px): the contents disclosure and the column use the full container (REVIEW-07, D-170) --- */
+:root {
+  --rail-w: 20rem; --rail-gap: var(--space-8);
+  /* Gazete running text: one continuous size, never above 22 px (D-176, replacing D-175). Three terms, the largest wins:
+     - the D-170 size: 17 px on phones as before, 21 px from ~1440 px (1440 / 1920 unchanged);
+     - below the rail (full-width column) the size grows with the column, (100vw − 64px) × 0.024, so a line stays near
+       100 characters; it reaches the 22 px cap at 1000 px;
+     - from 1024 px (rail) it eases from 22 px back to 21 px at 1440 px, so nothing jumps at any width. */
+  --gz-body: max(clamp(17px, 1rem + 0.2vw, 19px), clamp(17px, 0.9rem + 0.46vw, 21px),
+    min(22px, calc((100vw - 64px) * 0.024), max(21px, calc(22px - (100vw - 1024px) / 416))));
+}
+@media (min-width: 961px) and (max-width: 1023px) {
+  /* The band's title, lead and panel share the container; the panel becomes a strip under the lead. */
+  .ph--gazete .ph__in { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-5); }
+  .ph--gazete .ph__panel { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: var(--space-5); row-gap: 4px; padding: 10px 16px 12px; }
+  .ph--gazete .ph__ptitle { grid-column: 1; grid-row: 1; }
+  .ph--gazete .ph__cta { grid-column: 2; grid-row: 1; min-height: 36px; }
+  .ph--gazete .ph__dl, .ph--gazete .ph__none { grid-column: 1 / -1; grid-row: 2; }
+  .ph--gazete .ph__dl { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); column-gap: var(--space-4); }
+  .ph--gazete .ph__dl div { border-bottom: 0; flex-direction: column; justify-content: flex-start; padding-block: 2px; }
+  .ph--gazete .ph__dl dd { text-align: left; }
+}

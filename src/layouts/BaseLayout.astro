@@ -1,0 +1,130 @@
+---
+// Every page: head (title, meta, canonical, hreflang, OG), theme bootstrap,
+// deadline strip, header, main, footer. Pages pass their key + language.
+import "../styles/tokens.css";
+import "../styles/fonts.css";
+import "../styles/base.css";
+import DeadlineStrip from "../components/layout/DeadlineStrip.astro";
+import Announcement from "../components/layout/Announcement.astro";
+import SiteHeader from "../components/layout/SiteHeader.astro";
+import SiteFooter from "../components/layout/SiteFooter.astro";
+import { copy, t } from "../lib/content";
+import { umamiId } from "../lib/build-info";
+import { settings } from "../lib/settings";
+import { BASE, SITE_URL, alternatePath, assetPath, type PageKey } from "../lib/paths";
+import type { Lang } from "../lib/dates";
+
+interface Props {
+  lang: Lang;
+  page: PageKey | "404";
+  /** Override the <title> (404). */
+  title?: string;
+  description?: string;
+  voice?: "kronometre" | "gazete";
+  /** Pages with a bilingual 404 or no translation pair. */
+  noAlternates?: boolean;
+}
+const { lang, page, voice = "kronometre", noAlternates = false } = Astro.props;
+const chrome = await copy("chrome");
+const meta = chrome.pages.find((p) => p.key === page);
+const title = Astro.props.title ?? (meta?.head ? t(meta.head, lang) : `${meta ? t(meta.title, lang) : ""} · ${t(chrome.brand.titleSuffix, lang)}`);
+const description = Astro.props.description ?? (meta ? t(meta.description, lang) : "");
+const path = Astro.url.pathname;
+const canonical = new URL(path.replace(/^\/staj\//, ""), SITE_URL).href;
+const trHref = new URL(alternatePath(path, "tr").replace(/^\/staj\//, ""), SITE_URL).href;
+const enHref = new URL(alternatePath(path, "en").replace(/^\/staj\//, ""), SITE_URL).href;
+// TR keeps the URL the old site used (link previews already cached); EN gets its own card (B14).
+const ogImage = lang === "en" ? "og-image-en.png" : "og-image.png";
+const ogTitle = `${page !== "home" && meta ? t(meta.title, lang) + " · " : ""}${t(chrome.brand.ogTitle, lang)}`;
+const campaign = settings.donem.campaign_id;
+---
+<!doctype html>
+<html lang={lang} data-voice={voice}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#F6F4EE" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B1020" media="(prefers-color-scheme: dark)" />
+    <link rel="canonical" href={canonical} />
+    {!noAlternates && <link rel="alternate" hreflang="tr" href={trHref} />}
+    {!noAlternates && <link rel="alternate" hreflang="en" href={enHref} />}
+    {!noAlternates && <link rel="alternate" hreflang="x-default" href={trHref} />}
+    <link rel="icon" href={assetPath("assets/bulogo.svg")} type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="48x48" href={assetPath("assets/favicon-48.png")} />
+    <link rel="icon" type="image/png" sizes="96x96" href={assetPath("assets/favicon-96.png")} />
+    <link rel="icon" type="image/png" sizes="192x192" href={assetPath("assets/favicon-192.png")} />
+    <link rel="apple-touch-icon" href={assetPath("assets/favicon-192.png")} />
+    <link rel="preload" href={`${BASE}fonts/ui-latin.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${BASE}fonts/display-latin.woff2`} as="font" type="font/woff2" crossorigin />
+    {/* Every page has Turkish letters (ğ ş ı İ) above the fold, if only in the brand line. */}
+    <link rel="preload" href={`${BASE}fonts/ui-tr.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${BASE}fonts/display-tr.woff2`} as="font" type="font/woff2" crossorigin />
+    {voice === "gazete" && <link rel="preload" href={`${BASE}fonts/editorial-latin.woff2`} as="font" type="font/woff2" crossorigin />}
+    {voice === "gazete" && lang === "tr" && <link rel="preload" href={`${BASE}fonts/editorial-tr.woff2`} as="font" type="font/woff2" crossorigin />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={t(chrome.brand.siteName, lang)} />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "tr_TR"} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${SITE_URL}assets/${ogImage}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t(chrome.brand.ogAlt, lang)} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${SITE_URL}assets/${ogImage}`} />
+    {page === "home" && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org", "@type": "WebSite", name: "Boğaziçi EM Zorunlu Staj",
+        alternateName: ["Boğaziçi Endüstri Mühendisliği Zorunlu Staj", "Boğaziçi IE Compulsory Internship"],
+        url: SITE_URL, inLanguage: lang,
+        publisher: { "@type": "Organization", name: "Boğaziçi Üniversitesi Endüstri Mühendisliği Bölümü",
+          url: chrome.footer.departmentUrl, logo: `${SITE_URL}assets/favicon-512.png` },
+      })} />
+    )}
+    <!-- Theme before first paint: a saved choice wins, otherwise the OS decides (tokens.css). -->
+    <script is:inline>
+      try { var t = localStorage.getItem("staj-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
+    {umamiId && (
+      <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id={umamiId}
+        data-domains="bogazici-ie-internships.github.io" data-tag={campaign}></script>
+    )}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">{t(chrome.ui.skip, lang)}</a>
+    <Announcement lang={lang} label={t(chrome.ui.announcement, lang)} closeLabel={t(chrome.ui.announcementClose, lang)} />
+    <DeadlineStrip lang={lang} />
+    <SiteHeader lang={lang} current={page} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter lang={lang} helpId={page === "home" ? (lang === "en" ? "contact" : "iletisim") : undefined} />
+    <slot name="end" />
+    <script>
+      import "../scripts/track.ts";
+      import "../scripts/clock.ts";
+      import "../scripts/theme.ts";
+      import "../scripts/search.ts";
+    </script>
+  </body>
+</html>
+<style is:global>
+  /* Cross-document view transitions (zero JS): the h1 morphs between pages. */
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition { navigation: auto; }
+  }
+  h1 { view-transition-name: page-title; }
+  .skip {
+    position: absolute; left: var(--space-3); top: -100px; z-index: var(--z-toast);
+    background: var(--ink); color: var(--paper); padding: var(--space-3) var(--space-4); font-weight: 700;
+  }
+  .skip:focus { top: var(--space-3); }
+  main:focus { outline: none; }
+</style>
