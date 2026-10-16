@@ -163,6 +163,6 @@ takvim:
 #   kapatilamaz: false
 
 duyuru:
-  mesaj: "2026 Yaz sonuçları kısım kısım ilan edilmektedir; şu ana kadar yalnızca e-posta ile bilgilendirilen öğrencilerin sonuçları açıklanmıştır. [Sonuçlar](page:sonuclar) sayfasından ulaşabilirsiniz."
-  mesaj_en: "Summer 2026 results are being announced in stages; so far, only the results of students notified by email have been announced. See the [Results](page:sonuclar) page."
-  bitis: "2026-10-29 23:59"
+  mesaj: "2026 Yaz staj sonuçları açıklandı. [Sonuçlar](page:sonuclar) sayfasından ulaşabilirsiniz."
+  mesaj_en: "Summer 2026 internship results have been announced. See the [Results](page:sonuclar) page."
+  bitis: "2026-11-15 23:59"
