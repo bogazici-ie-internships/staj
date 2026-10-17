@@ -1,0 +1,460 @@
+# sss — migrated from main docs/sss.md (+ .en.md) by scripts/migrate/convert.mjs, then reviewed by
+# hand (UPDATE-06 Phase 2a; voice UPDATE-03, terms UPDATE-05). Where the live TR and EN answers
+# differed, a contradiction follows the TR text and non-contradicting extra information is given in
+# both languages (D-81; every case is listed in design/reviews/coverage-report.md). Each question has
+# its own anchor for deep links. `src` = source lines on main.
+page: sss
+anchor: { tr: sk-sorulan-sorular, en: frequently-asked-questions }
+title: { tr: Sık Sorulan Sorular, en: Frequently Asked Questions }
+src: sss.md:6 · sss.en.md:6
+meta:
+  src: sss.md:2 · sss.en.md:2
+  note: → chrome.yaml pages.description (already migrated, UPDATE-03)
+lead:
+  - kind: p
+    text:
+      tr: Aradığınız yanıtı bulamazsanız sayfanın üst kısmındaki **arama** düğmesini kullanabilir veya [İletişim](page:iletisim) sayfasından staj asistanlarına ulaşabilirsiniz.
+      en: If you cannot find the answer you need, use the **search** button at the top of the page or contact the internship assistants through the [Contact](page:iletisim) page.
+    src: sss.md:8 · sss.en.md:8
+sections:
+  - anchor: { tr: uygunluk-zamanlama, en: uygunluk-zamanlama }
+    # D-182: the removed registration question's anchor lands here (its topic, finding an internship, is in this section).
+    alias: { tr: kayit, en: registration }
+    title: { tr: Uygunluk ve Zamanlama, en: Eligibility and Timing }
+    src: sss.md:11 · sss.en.md:11
+    blocks:
+      - kind: qa
+        items:
+          - anchor: { tr: staj-yeri, en: finding-an-internship }
+            q: { tr: "Staj yerimi kendim mi bulurum, yoksa bölüm mü yerleştirir?", en: "Do I find my own internship, or does the department place me?" }
+            src: sss.md:13 · sss.en.md:13
+            blocks:
+              - kind: p
+                text:
+                  tr: "Staj yerini **kendiniz bulursunuz**. Bölüm doğrudan yerleştirme yapmaz."
+                  en: "You **find the internship yourself**. The department does not place students directly."
+                src: sss.md:14 · sss.en.md:14
+          - anchor: { tr: ne-zaman, en: when }
+            q: { tr: Stajı ne zaman yapabilirim? Ders dönemi içinde yapılabilir mi?, en: When can I do my internship? Can it take place during a term? }
+            src: sss.md:24 · sss.en.md:25
+            blocks:
+              - kind: p
+                text:
+                  tr: "Stajlar **ders almadığınız** dönemlerde (yaz veya dönem arası tatilinde) yapılır. Belirleyici olan takvim dönemi değil, **o dönemde ders alıp almadığınızdır**: staj, ders aldığınız bir dönemle (Güz, Bahar veya Yaz Okulu) **çakışamaz**. Ders almıyorsanız (dersleriniz tamamlandıysa veya değişim programındaysanız) o dönemde de staj yapabilirsiniz; bu durumda teslim için **özel bir tarih** geçerlidir (aşağıdaki sorulara ve [Kurallar](page:kurallar) sayfasına bakınız)."
+                  en: "Internships take place in periods when you are **not taking courses** (summer or semester breaks). What matters is not the name of the term but **whether you take courses in it**: an internship **cannot overlap** with a term in which you take courses (Fall, Spring or Summer School). If you are not taking courses (because you have completed them or are on an exchange programme), you may do an internship in that term as well; a **special submission deadline** then applies (see the questions below and the [Rules](page:kurallar) page)."
+                src: sss.md:25 · sss.en.md:26
+          - anchor: { tr: yariyil, en: which-semester }
+            q: { tr: Stajıma kaçıncı yarıyıldan sonra başlayabilirim?, en: After which semester may I begin an internship? }
+            src: sss.md:32 · sss.en.md:36
+            blocks:
+              - kind: p
+                text:
+                  tr: "Stajlara genellikle **4. yarıyıl** (2. sınıf) derslerini tamamladıktan sonra başlamanızı öneririz. **Düzensiz (irregular)** öğrenciler **3. yarıyıldan** sonra da başlayabilir. Ayrıntılar: [Kurallar](page:kurallar)."
+                  en: "Students are generally advised to begin after completing their **4th-semester** (2nd-year) courses. For **irregular** students, starting after the **3rd semester** is also possible. Details: [Rules](page:kurallar)."
+                src: sss.md:33 · sss.en.md:37
+          - anchor: { tr: yaz-okulu, en: summer-school }
+            q: { tr: Yaz Okuluna devam ederken staj yapabilir miyim?, en: Can I do an internship while attending Summer School? }
+            src: sss.md:37 · sss.en.md:41
+            blocks:
+              - kind: p
+                text:
+                  tr: "Belirleyici olan **ders alıp almadığınızdır**. Staj, Yaz Okulunda **ders aldığınız** tarihlerle çakışamaz. Bu tarihlerle çakışan bir staj planlıyorsanız **önce [staj asistanlarına](page:iletisim), ardından staj koordinatörüne danışınız**; mezuniyet gibi özel durumlarda istisna yapılabilir. **Ders almıyorsanız** sorun yoktur."
+                  en: "What matters is **whether you take courses**. An internship cannot overlap with the dates on which you **take Summer School courses**. If you are planning an internship that overlaps with these dates, **first consult the [internship assistants](page:iletisim) and then the internship coordinator**; exceptions may be made in special circumstances such as graduation. **If you are not taking courses**, nothing prevents you from doing an internship."
+                src: sss.md:38 · sss.en.md:42
+          - anchor: { tr: ders-almadan, en: no-courses-this-term }
+            q: { tr: "Dönem içinde ders almayacağım (derslerim tamamlandı veya değişim programındayım); staj yapabilir miyim?", en: "I will not take courses this term (my courses are complete or I am on exchange). Can I do an internship?" }
+            src: sss.md:43 · sss.en.md:48
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Evet.** Belirleyici olan dönem değil, **ders alıp almadığınızdır**: bir dönemde hiç ders almıyorsanız (tüm derslerinizi tamamladıysanız veya **Erasmus ya da değişim** programındaysanız) o dönemde de staj yapabilirsiniz. Bu durumda rapor için **özel bir teslim tarihi** geçerlidir: rapor, staj bitiminden itibaren **en geç 3 hafta içinde** teslim edilir. Ayrıntılar: [Kurallar](page:kurallar)."
+                  en: "**Yes.** What matters is not the term but **whether you take courses**: if you take no courses in a term (because you have completed all of them or are on **Erasmus or another exchange**), you may do an internship in that term. A **special report deadline** then applies: the report is submitted **within 3 weeks** of the end of the internship. Details: [Rules](page:kurallar)."
+                src: sss.md:44 · sss.en.md:49
+          - anchor: { tr: mezuniyet-asamasi, en: close-to-graduation }
+            q: { tr: Derslerimi tamamladım veya mezuniyet aşamasındayım; staj yapabilir miyim?, en: I have completed my courses or am close to graduation. Can I do an internship? }
+            src: sss.md:50 · sss.en.md:55
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Kaydınız devam ettiği** (henüz mezun olmadığınız) sürece staj yapabilirsiniz. Durumunuzdan emin değilseniz **kayıtlı olduğunuz programın akademik danışmanına** veya staj asistanlarına danışabilirsiniz."
+                  en: "You may do an internship as long as **your registration continues** (that is, before you graduate). If you are unsure, you may consult **the academic advisor of your programme** or the internship assistants."
+                src: sss.md:51 · sss.en.md:56
+          - anchor: { tr: yurt-disi, en: abroad }
+            q: { tr: Yurt dışında staj yapabilir miyim?, en: Can I do an internship abroad? }
+            src: sss.md:55 · sss.en.md:60
+            blocks:
+              - kind: p
+                text:
+                  tr: "Evet. **Kuralların çoğu yurt dışı stajlar için de geçerlidir**; ancak **EK-1, devlet katkısı ve sigorta gibi Türkiye'ye özgü işlemler** uygulanmaz. Önce [staj koordinatörüne veya staj asistanlarına](page:iletisim) danışabilirsiniz."
+                  en: "Yes. **Most rules also apply to internships abroad**; however, **Türkiye-specific procedures such as the EK-1, the government contribution and insurance** do not apply. You may first consult the [internship coordinator or the internship assistants](page:iletisim)."
+                src: sss.md:56 · sss.en.md:61
+          - anchor: { tr: uzaktan, en: remote-part-time }
+            q: { tr: Yarı zamanlı veya uzaktan staj kabul edilir mi?, en: Are part-time or remote internships accepted? }
+            src: sss.md:60 · sss.en.md:65
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Uzaktan (online) staj kabul edilir** ve günler normal şekilde sayılır; ancak staj **tam zamanlı** olmalıdır; **yarı zamanlı (part-time) staj kabul edilmez**."
+                  en: "**Remote (online) internships are accepted**, and the days are counted normally; however, the internship must be **full-time**, and **part-time internships are not accepted**."
+                src: sss.md:61 · sss.en.md:66
+          - anchor: { tr: mevcut-is, en: current-job }
+            q: { tr: Hâlen çalıştığım veya uzun dönem staj yaptığım şirkette zorunlu stajımı yapabilir miyim?, en: Can I do my compulsory internship at the company where I currently work or do a long-term internship? }
+            src: sss.md:64 · sss.en.md:69
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Evet.** **[Staj kurallarına](page:kurallar) uygun olduğu sürece** uzun süreli bir program kapsamında da zorunlu staj yapabilirsiniz."
+                  en: "**Yes.** **As long as it complies with the [internship rules](page:kurallar)**, you may do the compulsory internship as part of a longer programme."
+                src: sss.md:65 · sss.en.md:70
+          - anchor: { tr: yatay-gecis, en: transfer-students }
+            q: { tr: Yatay geçişle geldim; önceki stajlarım sayılır mı?, en: I am a transfer student. Do my previous internships count? }
+            src: sss.md:68 · sss.en.md:73
+            blocks:
+              - kind: p
+                text:
+                  tr: Önceki stajlarınızın iş günleri serbest/genel staj olarak sayılabilir.
+                  en: Workdays from your previous internships may count towards the General IE Internship.
+                src: sss.md:69 · sss.en.md:74
+          - anchor: { tr: cap, en: double-major }
+            q: { tr: Çift Anadal (ÇAP) öğrencisiyim; staj gün şartım farklı mı?, en: I am a double-major (ÇAP) student. Is my internship-day requirement different? }
+            src: sss.md:71 · sss.en.md:76
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Ana bölümünüze bağlıdır.** Ana bölümünüz **EM ise** şartlar aynıdır (40 iş günü, en az 15 iş günü üretim stajı). Ana bölümünüz **EM değilse**, EM için yalnızca **en az 15 iş günü üretim stajı** yeterlidir; 40 iş günlük toplam şartı aranmaz. Ayrıntılar: [Kurallar](page:kurallar)."
+                  en: "**It depends on your primary major.** If your primary major **is IE**, the requirements are the same (40 workdays, at least 15 workdays of Production Internship). If your primary major **is not IE**, only **at least 15 workdays of Production Internship** are required on the IE side; the 40-workday total does not apply. Details: [Rules](page:kurallar)."
+                src: sss.md:72 · sss.en.md:77
+          - anchor: { tr: yandal, en: minor }
+            q: { tr: Yandal öğrencisiyim; EM için staj yapmam gerekiyor mu?, en: I am a minor (Yandal) student. Do I need to do an internship for IE? }
+            src: sss.md:77 · sss.en.md:83
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Hayır.** Yandal öğrencileri için EM tarafında **herhangi bir staj zorunluluğu yoktur**."
+                  en: "**No.** Minor students have **no internship requirement** on the IE side."
+                src: sss.md:78 · sss.en.md:84
+          - anchor: { tr: universite, en: university-work }
+            q: { tr: Üniversitede veya araştırma asistanı olarak yaptığım çalışma staj sayılır mı?, en: Does work at a university or as a research assistant count as an internship? }
+            src: sss.md:81 · sss.en.md:86
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Hayır.** Üniversite ortamındaki çalışmalar (araştırma asistanlığı vb.) staj sayılmaz. Ayrıntılar: [Kurallar](page:kurallar)."
+                  en: "**No.** Work carried out in a university setting (research assistantships and similar) is not accepted as an internship. Details: [Rules](page:kurallar)."
+                src: sss.md:82 · sss.en.md:87
+  - anchor: { tr: sure-gun-saym, en: duration-workday-counting }
+    title: { tr: Süre ve Gün Sayımı, en: Duration and Workday Counting }
+    src: sss.md:85 · sss.en.md:91
+    blocks:
+      - kind: qa
+        items:
+          - anchor: { tr: kac-gun, en: days-required }
+            q: { tr: Mezuniyet için kaç gün staj gerekir?, en: How many internship days are required for graduation? }
+            src: sss.md:87 · sss.en.md:93
+            blocks:
+              - kind: p
+                text:
+                  tr: "Toplam **40 iş günü**. Tek tür şartı, bunun **en az 15 iş gününün üretim stajı** olmasıdır; kalan günler için tür kısıtı yoktur. Bu günler serbest/genel staj ya da üretim stajı olabilir."
+                  en: "A total of **40 workdays**. The only type requirement is that **at least 15 workdays must be Production Internship**; the remaining days carry no type restriction. They may be completed as General IE Internship or as further Production Internship."
+                src: sss.md:88 · sss.en.md:94
+          - anchor: { tr: en-az, en: minimum-length }
+            q: { tr: Bir staj en az kaç gün sürmelidir?, en: What is the minimum length of one internship? }
+            src: sss.md:92 · sss.en.md:99
+            blocks:
+              - kind: p
+                text:
+                  tr: Bir stajın kabul edilmesi için **en az 15 iş günü** sürmesi gerekir.
+                  en: An internship must last **at least 15 workdays** to be accepted.
+                src: sss.md:93 · sss.en.md:100
+          - anchor: { tr: bolme, en: splitting }
+            q: { tr: Stajımı birden fazla şirkette veya döneme bölerek yapabilir miyim?, en: Can I split the requirement across companies or periods? }
+            src: sss.md:95 · sss.en.md:102
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Evet.** Toplam **40 iş gününü** farklı şirketlerde veya dönemlerde tamamlayabilirsiniz; her staj **en az 15 iş günü** sürmeli ve toplamın **en az 15 iş günü üretim stajı** olmalıdır."
+                  en: "**Yes.** You may complete the **40 workdays** at different companies or in different periods; each internship must last **at least 15 workdays**, and the total must include **at least 15 workdays of Production Internship**."
+                src: sss.md:96 · sss.en.md:103
+          - anchor: { tr: cumartesi-tatil, en: saturdays-holidays }
+            q: { tr: Cumartesi ve resmî tatil günleri iş gününe sayılır mı?, en: Do Saturdays and public holidays count as workdays? }
+            src: sss.md:100 · sss.en.md:107
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Cumartesi** günleri, şirketten **imzalı veya kaşeli bir yazı** (Cumartesi Yazısı) alıp **raporla birlikte** teslim etmeniz koşuluyla iş gününe **sayılır**. **Resmî tatil** günleri **sayılmaz**."
+                  en: "**Saturdays** **count** as workdays provided that you obtain a **signed or stamped letter** from the company (the Saturday Work Letter) and submit it **with the report**. **Public holidays** **do not count**."
+                src: sss.md:101 · sss.en.md:108
+          - anchor: { tr: izin, en: leave }
+            q: { tr: Staj sırasında izin alabilir miyim?, en: Can I take leave during the internship? }
+            src: sss.md:105 · sss.en.md:112
+            blocks:
+              - kind: p
+                text:
+                  tr: İzin kararı **şirkete aittir**; bölümün onayı gerekmez. Şirket izin verirse izin alabilirsiniz; ancak bu günler **staj gününden düşülür**.
+                  en: Leave is **the company's decision**; department approval is not required. If the company grants leave, it may be taken, but those days are **deducted from your internship days**.
+                src: sss.md:106 · sss.en.md:113
+          - anchor: { tr: ust-sinir, en: maximum }
+            q: { tr: 40 iş gününden fazla staj yapabilir miyim? Bir üst sınır var mı?, en: Can I do more than 40 workdays? Is there a maximum? }
+            src: sss.md:109 · sss.en.md:117
+            blocks:
+              - kind: p
+                text:
+                  tr: "Üniversite sigortası zorunlu staj içindir; toplam staj sürenizi **mümkün olduğunca 40 iş gününe yakın** tutmanız beklenir. Kesin bir üst sınır yoktur; ancak toplam staj sürenizin **46–47 iş gününü aşmaması** istenir. Çok daha uzun bir staj planlıyorsanız **başlamadan önce staj asistanlarına danışabilirsiniz**."
+                  en: "University insurance is intended for the compulsory internship, so you are expected to keep your total **as close to 40 workdays as possible**. Although no strict maximum is defined, your total should **not exceed 46–47 workdays**. If you are planning a much longer internship, **you may consult the internship assistants before you start**."
+                src: sss.md:110 · sss.en.md:118
+  - anchor: { tr: staj-turu, en: internship-type }
+    title: { tr: Staj Türü, en: Internship Type }
+    src: sss.md:115 · sss.en.md:123
+    blocks:
+      - kind: qa
+        items:
+          - anchor: { tr: tur-degisikligi, en: changing-type }
+            q: { tr: Staj türümü sonradan değiştirebilir miyim?, en: Can I change my internship type later? }
+            src: sss.md:117 · sss.en.md:125
+            blocks:
+              - kind: p
+                text:
+                  tr: "Hayır. Tür **staja başlamadan önce** belirlenir ve aynı staj süresince işyeri, departman veya tür değiştirilemez. Emin değilseniz önce staj asistanlarına danışabilirsiniz; nihai onay **staj koordinatörüne** aittir."
+                  en: "No. The type is determined **before the internship begins**, and the workplace, department or type cannot be changed during the same internship. If you are unsure, you may first consult the internship assistants; final approval rests with the **internship coordinator**."
+                src: sss.md:118 · sss.en.md:126
+          - anchor: { tr: uretim, en: production-internship }
+            q: { tr: Üretim stajı olarak ne kabul edilir?, en: What is accepted as a Production Internship? }
+            src: sss.md:121 · sss.en.md:131
+            blocks:
+              - kind: p
+                text:
+                  tr: "Üretim stajı, **üretim/imalat bağlamında**, EM derslerinde öğrenilen **araç ve kavramların fiilen uygulandığı** bir staj olmalıdır. **Üretimle ilgili ofis rolleri de üretim sayılır**; tedarik zinciri, üretim planlama, ERP ve kalite bunlara örnektir. Sınırda kalan durumlarda **staja başlamadan önce [staj asistanlarına](page:iletisim), ardından staj koordinatörüne danışınız.** Ayrıntılar: [Kurallar](page:kurallar) · [Konu Rehberi](page:kurallar#konu-rehberi)."
+                  en: "A Production Internship must take place **in a production or manufacturing context** and involve **the practical application of tools and concepts from IE courses**. **Office roles connected to production also count as production**; supply chain, production planning, ERP and quality are examples. In borderline cases, **consult the [internship assistants](page:iletisim) and then the internship coordinator before the internship begins.** Details: [Rules](page:kurallar) · [Topic Guide](page:kurallar#konu-rehberi)."
+                src: sss.md:122 · sss.en.md:132
+          - anchor: { tr: serbest, en: general-internship }
+            q: { tr: Serbest/genel staj olarak ne kabul edilir?, en: What is accepted as a General IE Internship? }
+            src: sss.md:129 · sss.en.md:140
+            blocks:
+              - kind: p
+                text:
+                  tr: "Üretim dışındaki, **EM ile ilgili** roller serbest/genel staj sayılır; finans, pazarlama, bilişim ve danışmanlık bunlara örnektir. **Hizmet sektöründe olması zorunlu değildir.** 40 iş gününün **15 iş günlük üretim şartı dışında kalan kısmı** bu kapsamda olabilir. Ayrıntılar: [Kurallar](page:kurallar)."
+                  en: "Non-production roles **related to industrial engineering** count as General IE Internship; finance, marketing, information technology and consulting are examples. **A service industry is not required.** **The part of the 40 workdays outside the 15-workday production requirement** may fall into this category. Details: [Rules](page:kurallar)."
+                src: sss.md:130 · sss.en.md:141
+          - anchor: { tr: amir, en: supervisor }
+            q: { tr: Staj amirimin endüstri mühendisi olması zorunlu mu?, en: Must my workplace supervisor be an industrial engineer? }
+            src: sss.md:135 · sss.en.md:146
+            blocks:
+              - kind: p
+                text:
+                  tr: "Amirin endüstri mühendisi olması **tercih edilir, zorunlu değildir**; ilgili bir mühendis veya yönetici de olabilir. Üretim stajında uygunluktan emin değilseniz staj asistanlarına veya staj koordinatörüne danışabilirsiniz."
+                  en: "An industrial engineer as supervisor is **preferred but not required**; another relevant engineer or manager may also supervise you. If you are unsure whether a Production Internship is eligible, you may consult the internship assistants or the internship coordinator."
+                src: sss.md:136 · sss.en.md:147
+  - anchor: { tr: belgeler, en: documents }
+    title: { tr: Belgeler, en: Documents }
+    src: sss.md:140 · sss.en.md:151
+    blocks:
+      - kind: qa
+        items:
+          - anchor: { tr: ek-belge, en: other-documents }
+            q: { tr: Formlar ve Belgeler sayfasındaki belgeler dışında belge veriliyor mu?, en: Does the department issue documents other than those on the Forms and Documents page? }
+            src: sss.md:142 · sss.en.md:153
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Hayır.** [Formlar ve Belgeler](page:formlar) sayfasında listelenen belgeler dışında öğrencilere ek belge verilmez. İhtiyaç duyduğunuz diğer evrakları (ör. Cumartesi Yazısı, ödeme dekontu veya bordro) **şirketinizden** alınız."
+                  en: "**No.** No documents other than those listed on the [Forms and Documents](page:formlar) page are issued to students. Any other paperwork you need (e.g. the Saturday Work Letter or a payment receipt or payslip) is obtained from **your company**."
+                src: sss.md:143 · sss.en.md:154
+          - anchor: { tr: kim-doldurur, en: who-completes }
+            q: { tr: "Belgeleri kim doldurur? (EK-1, Staj Sicil Formu, çizelge)", en: "Who completes each document? (EK-1, Trainee Evaluation Form, timetable)" }
+            src: sss.md:147 · sss.en.md:158
+            blocks:
+              - kind: list
+                items:
+                  - text:
+                      tr: "**EK-1:** **öğrenci** doldurur, **işveren firmaya imzalatır** ve staj koordinatörüne iletir."
+                      en: "**EK-1:** the **student** completes it, **has it signed by the employer** and sends it to the internship coordinator."
+                    src: sss.md:148 · sss.en.md:159
+                  - text:
+                      tr: "**Staj Sicil Formu:** **işyeri** doldurur, **imzalar ve kaşeler**."
+                      en: "**Trainee Evaluation Form:** the **workplace** completes it and **signs and stamps** it."
+                    src: sss.md:150 · sss.en.md:161
+                  - text:
+                      tr: "**Staj çizelgesi** ve **Öğrenci Staj Anketi:** **öğrenci** doldurur."
+                      en: "**Internship timetable** and **Student Internship Survey:** the **student** completes them."
+                    src: sss.md:151 · sss.en.md:162
+                  - text:
+                      tr: "**Cumartesi Yazısı, ödeme dekontu veya bordro (ve EK-1):** **şirket** verir (imzalı veya kaşeli); EK-1, staj başındaki aynı formun kopyasıdır."
+                      en: "**Saturday Work Letter, payment receipt or payslip (and EK-1):** issued by the **company** (signed or stamped); the EK-1 is a copy of the same form used at the start of the internship."
+                    src: sss.md:152 · sss.en.md:164
+          - anchor: { tr: zorunluluk-belgesi, en: compulsory-internship-letter }
+            q: { tr: Staj Zorunluluk Belgesini nereden alabilirim?, en: Where can I obtain the Compulsory Internship Letter? }
+            src: sss.md:155 · sss.en.md:168
+            blocks:
+              - kind: p
+                text:
+                  tr: Belgenin Türkçe ve İngilizce sürümlerini [Formlar ve Belgeler](page:formlar) sayfasından indirebilirsiniz.
+                  en: You can download the Turkish and English versions from the [Forms and Documents](page:formlar) page.
+                src: sss.md:156 · sss.en.md:169
+          - anchor: { tr: ek1-zaman, en: ek1-when }
+            q: { tr: EK-1'i ne zaman ve kime göndermeliyim?, en: When and to whom should I send the EK-1? }
+            src: sss.md:159 · sss.en.md:172
+            blocks:
+              - kind: p
+                text:
+                  tr: "Sigorta girişiniz bu formla yapılır. Form, staj başlangıcından **en erken 1 hafta, en geç 2 gün önce**, **PDF** biçiminde ve **1 MB'tan küçük** olarak [{coordinatorEmail}](mailto:{coordinatorEmail}) adresine e-posta ile gönderilir. En geç gönderim günü hafta sonuna veya resmî tatile denk gelirse formu bu günden önceki son iş gününe kadar gönderiniz. Şirket **devlet katkısı** talep ediyorsa aynı form bu süreci de kapsar. Ayrıntılar: [Stajdan Önce](page:surec#oncesi)."
+                  en: "Your insurance registration is made with this form. It is sent by email to [{coordinatorEmail}](mailto:{coordinatorEmail}) **no earlier than 1 week and no later than 2 days** before the internship starts, as a **PDF** **smaller than 1 MB**. If the latest sending day falls on a weekend or a public holiday, send the form by the last workday before it. If the company claims the **government contribution**, the same form covers that process as well. Details: [Before the Internship](page:surec#oncesi)."
+                src: sss.md:160 · sss.en.md:173
+          - anchor: { tr: sigorta, en: insurance }
+            q: { tr: Sigorta işlemleri nasıl yapılır?, en: How is the insurance procedure carried out? }
+            src: sss.md:166 · sss.en.md:180
+            blocks:
+              - kind: p
+                text:
+                  tr: "Sigorta girişi **EK-1** ile yapılır: formu doldurup işveren firmaya imzalatır ve staj koordinatörüne e-posta ile iletirsiniz; bölüm onayından sonra {accounting} sigorta primini başlatır ve size **sigorta başlangıç onayı** gönderir. **Sigorta girişi tamamlanmadan staja başlayamazsınız.** Ayrıntılar: [Stajdan Önce](page:surec#oncesi)."
+                  en: "Insurance registration is made with the **EK-1**: you complete the form, have the employer sign it and send it by email to the internship coordinator; after the department's approval, {accounting} starts the insurance premium and you receive an **insurance start confirmation**. **The internship cannot start before the insurance registration is complete.** Details: [Before the Internship](page:surec#oncesi)."
+                src: sss.md:167 · sss.en.md:181
+          - anchor: { tr: ek1-sigorta-formu, en: ek1-insurance-form }
+            q: { tr: EK-1 ile sigorta formu aynı belge mi?, en: Are the EK-1 and the insurance form the same document? }
+            src: sss.md:173 · sss.en.md:188
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Evet. Sigorta girişi EK-1 ile yapılır; ayrı bir sigorta formu yoktur.**"
+                  en: "**Yes. Insurance registration is made with the EK-1; there is no separate insurance form.**"
+                src: sss.md:174 · sss.en.md:189
+          - anchor: { tr: ucretsiz, en: unpaid }
+            q: { tr: Staj ücretsiz olabilir mi? Bu durumda sigortayı yine Üniversite mi yapar?, en: Can an internship be unpaid? Does the University still provide the insurance? }
+            src: sss.md:176 · sss.en.md:192
+            blocks:
+              - kind: p
+                text:
+                  tr: "Ücret zorunlu değildir; **ücretsiz staj yapılabilir**. Kanun gereği **sigortayı yine Boğaziçi Üniversitesi** yapar. **Devlet katkısı** ise yalnızca şirket talep ederse uygulanır. Ayrıntılar: [Stajdan Önce](page:surec#oncesi)."
+                  en: "Pay is not required; **an internship may be unpaid**. By law, **the insurance is still provided by Boğaziçi University**. **The government contribution** applies only if the company claims it. Details: [Before the Internship](page:surec#oncesi)."
+                src: sss.md:177 · sss.en.md:193
+          - anchor: { tr: gonullu, en: voluntary }
+            q: { tr: Gönüllü stajların sigortasını Üniversite karşılıyor mu?, en: Does the University cover insurance for voluntary internships? }
+            src: sss.md:181 · sss.en.md:198
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Hayır.** Boğaziçi Üniversitesi gönüllü stajların sigortasını karşılamaz. Üniversite sigortası yalnızca **zorunlu staj** içindir."
+                  en: "**No.** Boğaziçi University does not cover insurance for voluntary internships. University insurance is only for the **compulsory internship**."
+                src: sss.md:182 · sss.en.md:199
+          - anchor: { tr: tarih-degisikligi, en: changing-dates }
+            q: { tr: EK-1'i gönderdikten sonra staj tarihlerimi değiştirebilir miyim?, en: Can I change my internship dates after sending the EK-1? }
+            src: sss.md:185 · sss.en.md:202
+            blocks:
+              - kind: p
+                text:
+                  tr: "Hayır. **Ciddi sağlık sorunları dışında** staj tarihlerinde değişiklik yapılamaz."
+                  en: "No. The internship dates cannot be changed **except for serious health reasons**."
+                src: sss.md:186 · sss.en.md:203
+          - anchor: { tr: sigorta-kapatma, en: closing-insurance }
+            q: { tr: Sigortam EK-1 ile açıldı; staj bitince ne yapmalıyım?, en: My insurance was started with the EK-1. What do I do when the internship ends? }
+            src: sss.md:189 · sss.en.md:206
+            blocks:
+              - kind: p
+                text:
+                  tr: "Şirketten, stajı bildirilen tarihlerde tamamladığınızı gösteren **imzalı veya kaşeli bir belge** alıp **{accounting}'ne** ([{accountingEmail}](mailto:{accountingEmail})) iletiniz. **Özel bir biçim aranmaz**; staj başlangıç ve bitiş tarihleriniz ile kimlik bilgileriniz yeterlidir. **Bu belge {accounting}'ne ulaşmadan stajınızın sigortası kapanmaz**; belgeyi göndermezseniz başka bir zorunlu staj yapamazsınız. Ayrıntılar: [Stajdan Sonra](page:surec#sonrasi)."
+                  en: "Obtain a **signed or stamped document** from the company confirming that you completed the internship on the reported dates, and send it to **{accounting}** ([{accountingEmail}](mailto:{accountingEmail})). **No specific format is required**; your internship start and end dates and your identifying information are sufficient. **Your internship insurance is not closed until this document reaches {accounting}**; without it, you cannot complete another compulsory internship. Details: [After the Internship](page:surec#sonrasi)."
+                src: sss.md:190 · sss.en.md:207
+          - anchor: { tr: rapor-dili, en: report-language }
+            q: { tr: Rapor hangi dilde ve kaç sayfa olmalıdır?, en: In which language and at what length must the report be written? }
+            src: sss.md:199 · sss.en.md:218
+            blocks:
+              - kind: p
+                text:
+                  tr: "Rapor **İngilizce** yazılır. Ana gövdeyi oluşturan 1–8. bölümler **ekler hariç en fazla 20 sayfa** olmalıdır."
+                  en: "The report is written in **English**. Sections 1–8, which form the main report, must not exceed **20 pages excluding appendices**."
+                src: sss.md:200 · sss.en.md:219
+          - anchor: { tr: appendices, en: appendices }
+            q: { tr: Rapora Appendices ve References bölümlerini eklemem gerekiyor mu? Eklenmezlerse gün kesintisi uygulanır mı?, en: Do I need to add Appendices and References sections? Does leaving them out lead to a deduction of days? }
+            src: sss.md:203 · sss.en.md:222
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Duruma göre.** Raporda başka bir kaynaktan (kitap, makale, şirket dokümanı, web sitesi, veri) yararlandıysanız **References** eklemeniz gerekir; grafik, tablo, fotoğraf veya kod gibi destekleyici materyaliniz varsa **Appendices** bölümüne koyabilirsiniz. İkisi de raporun sonuna eklenir ve **20 sayfa sınırına sayılmaz**. Böyle bir içeriğiniz yoksa eklemeniz gerekmez; bu iki bölümün eklenmemesi **gün kesintisine yol açmaz**. Ayrıntılar: [Rapor Hazırlama](page:rapor#duruma-gore-eklenen-bolumler)."
+                  en: "**Depending on your content.** If you used any outside source (a book, article, company document, website or data), add a **References** section; supporting material such as charts, tables, pictures or code may be placed in **Appendices**. Both go at the end of the report and **do not count towards the 20-page limit**. If you have no such content, you do not need to add them, and leaving these two sections out **does not lead to a deduction of days**. Details: [Report Preparation](page:rapor#sections-added-when-needed)."
+                src: sss.md:204 · sss.en.md:223
+          - anchor: { tr: cizelge-sablonu, en: timetable-template }
+            q: { tr: Çizelge (timetable) şablonu nerede?, en: Where is the timetable template? }
+            src: sss.md:212 · sss.en.md:232
+            blocks:
+              - kind: p
+                text:
+                  tr: "[Formlar ve Belgeler](page:formlar) sayfasında “Staj Timetable Şablonu” adıyla yer alır. Her iş günü için bir satır ve 4 sütun (Gün, Yapılan İş, Sayfa No, Çalışma Saati) bulunur."
+                  en: "It is on the [Forms and Documents](page:formlar) page as “Internship Timetable Template”. It has one row for each workday and 4 columns (Day, Work Accomplished, Page Nr., Working Hours)."
+                src: sss.md:213 · sss.en.md:233
+          - anchor: { tr: sicil-formu, en: trainee-evaluation-form }
+            q: { tr: "Staj Sicil Formu nedir; nasıl ve ne zaman teslim edilir?", en: "What is the Trainee Evaluation Form, and how and when is it submitted?" }
+            src: sss.md:216 · sss.en.md:237
+            blocks:
+              - kind: p
+                text:
+                  tr: "İşyeriniz tarafından doldurulan resmî staj değerlendirme formudur; boş formu [Formlar ve Belgeler](page:formlar) sayfasından indirebilirsiniz. Formda **hem imza hem kaşe** bulunması istenir; şirketiniz bunlardan yalnızca birini sağlayabiliyorsa bu da kabul edilir. Form **raporla birlikte** teslim edilir ve **zorunlu** bir belgedir; eksikse teslim tamamlanmış sayılmaz ve geç teslim cezası işlemeye devam eder. Teslimden sonra eksik veya hatalı bir belgeyi tamamlamak üzere aynı stajın formunu yeniden göndermeyiniz; belgeyi referans numaranızı belirterek e-posta ile [staj asistanlarına](page:iletisim) iletiniz. Eksik belge staj asistanlarına ulaştığında teslim tamamlanmış sayılır. Süreç: [Stajdan Sonra](page:surec#sonrasi)."
+                  en: "It is the official internship evaluation completed by your workplace; the blank form can be downloaded from the [Forms and Documents](page:formlar) page. **Both a signature and a stamp** are requested on the form; if your company can provide only one of them, that is also accepted. The form is submitted **with the report** and is a **required** document; if it is missing, the submission is not complete and the late-submission penalty continues to run. To complete a missing or incorrect document after submission, do not submit the form again for the same internship; email the document to the [internship assistants](page:iletisim) and quote your reference number. The submission is complete once the missing document reaches the internship assistants. Procedure: [After the Internship](page:surec#sonrasi)."
+                src: sss.md:217 · sss.en.md:238
+          - anchor: { tr: dijital-imza, en: digital-signature }
+            q: { tr: Belgeler dijital olarak imzalanıp kaşelenebilir mi?, en: May documents be signed and stamped digitally? }
+            src: sss.md:225 · sss.en.md:246
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Evet.** Elektronik imza ile imzalanmış belgeler kabul edilir; **dijital kaşe** de aynı şekilde geçerlidir. Staj Sicil Formu dâhil, imza ve kaşenin ıslak olması gerekmez; şirket formu dijital olarak imzalayıp kaşeleyebilir. Teslim online olarak ve **PDF** üzerinden yapıldığından imza ve kaşenin belgede okunaklı görünmesi yeterlidir."
+                  en: "**Yes.** Documents signed with an electronic signature are accepted, and a **digital stamp** is equally valid. Wet-ink signatures and stamps are not required, including for the Trainee Evaluation Form; the company may sign and stamp the form digitally. Because submission is online and in **PDF** form, the signature and stamp need only be legible in the document."
+                src: sss.md:226 · sss.en.md:247
+  - anchor: { tr: teslim-sonuc, en: submission-results }
+    title: { tr: Teslim ve Sonuç, en: Submission and Results }
+    src: sss.md:232 · sss.en.md:253
+    blocks:
+      - kind: qa
+        items:
+          - anchor: { tr: teslim-zamani, en: when-to-submit }
+            q: { tr: Belgeleri ne zaman teslim etmeliyim?, en: When are the documents submitted? }
+            src: sss.md:234 · sss.en.md:255
+            blocks:
+              - kind: p
+                text:
+                  tr: "Belgeler, yeni dönemin derslerinin başlamasından itibaren **en geç 3 hafta (21 gün) içinde** **online** olarak teslim edilir. Güncel tarih: [Belge Teslimi](page:teslim)."
+                  en: "The documents are submitted **online** **within 3 weeks (21 days)** of the start of classes in the following semester. Current deadline: [Document Submission](page:teslim)."
+                src: sss.md:235 · sss.en.md:256
+          - anchor: { tr: ayri-rapor, en: separate-reports }
+            q: { tr: Birden fazla stajımı tek raporda teslim edebilir miyim?, en: Can I submit more than one internship in a single report? }
+            src: new — REVIEW-05 Addition (H-01), one report and one submission per internship
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Hayır.** Her staj için ayrı bir rapor hazırlanır; aynı şirkette yapılan farklı stajlar da ayrı raporlarla teslim edilir. Birden fazla staj yaptıysanız (aynı şirkette yapılmış olsalar da) formu her staj için ayrı ayrı gönderiniz. Her gönderime o stajın raporunu, Staj Sicil Formu'nu ve Öğrenci Staj Anketi'ni, varsa o stajın durumuna göre gereken belgelerle birlikte ekleyiniz. Ayrıntılar: [Belge Teslimi](page:teslim)."
+                  en: "**No.** A separate report must be prepared for each internship; different internships completed at the same company are also submitted with separate reports. If you completed more than one internship (even at the same company), submit the form separately for each internship. With each submission, include that internship's report, Trainee Evaluation Form and Student Internship Survey, plus any documents its situation requires. Details: [Document Submission](page:teslim)."
+                src: new — REVIEW-05 Addition (H-01)
+          - anchor: { tr: gec-teslim, en: late-submission }
+            q: { tr: Geç teslim edersem ne olur?, en: What happens if I submit late? }
+            src: sss.md:239 · sss.en.md:260
+            blocks:
+              - kind: p
+                text:
+                  tr: "**Her geç gün için toplam staj süresinden 1 iş günü düşülür.** Son teslimden sonra başlayan her 24 saat 1 geç gün sayılır; birkaç dakika geç kalan bir teslim de 1 gün geç sayılır. Teslim anı, gönderimin sunucuya ulaştığı andır; büyük dosyalarda gönderim birkaç dakika sürebileceğinden son ana bırakmayınız. Ayrıca eksik belge varsa teslim tamamlanmış sayılmaz. Teslimden sonra eksik veya hatalı bir belgeyi tamamlamak üzere aynı stajın formunu yeniden göndermeyiniz; belgeyi referans numaranızı belirterek e-posta ile [staj asistanlarına](page:iletisim) iletiniz. Eksik belge staj asistanlarına ulaştığında teslim tamamlanmış sayılır."
+                  en: "**1 workday is deducted from your total internship period for each late day.** Every 24 hours that begin after the deadline count as 1 late day, so a submission even a few minutes late counts as 1 day late. The time of submission is when the submission reaches the server; because large files can take a few minutes to send, do not leave it to the last moment. In addition, a submission with missing documents is not complete. To complete a missing or incorrect document after submission, do not submit the form again for the same internship; email the document to the [internship assistants](page:iletisim) and quote your reference number. The submission is complete once the missing document reaches the internship assistants."
+                src: sss.md:240 · sss.en.md:261
+          - anchor: { tr: teslim-teyidi, en: confirming-upload }
+            q: { tr: Rapor ve belgeleri doğru yüklediğimi nasıl teyit edebilirim?, en: How can I confirm that my report and documents were uploaded correctly? }
+            src: sss.md:243 · sss.en.md:264
+            blocks:
+              - kind: p
+                text:
+                  tr: "Yükleme tamamlandığında ekranda bir **başarı onayı** ve referans numarası görüntülenir. Ek teyit gerekirse staj asistanlarına e-posta göndererek tüm belgelerin alınıp alınmadığını sorabilirsiniz; eksik bir belge varsa sizinle iletişime geçeriz. Teslimin nasıl ve nereye yapılacağı: [Belge Teslimi](page:teslim)."
+                  en: "When the upload is complete, a **success confirmation** with a reference number appears on screen. If you need further confirmation, you may email the internship assistants and ask whether all documents were received; you will be contacted if anything is missing. How and where to submit: [Document Submission](page:teslim)."
+                src: sss.md:244 · sss.en.md:265
+          - anchor: { tr: sonuc-yeri, en: where-results }
+            q: { tr: Staj sonucumu nereden öğrenebilirim?, en: Where can I find my internship result? }
+            src: sss.md:247 · sss.en.md:270
+            blocks:
+              - kind: p
+                text:
+                  tr: Sonuçlar doğrudan bu sitede yayımlanmaz; erişim bilgisi [Sonuçlar](page:sonuclar) sayfasındadır.
+                  en: Results are not published directly on this site; access information is given on the [Results](page:sonuclar) page.
+                src: sss.md:248 · sss.en.md:271
+          - anchor: { tr: sonuc-zamani, en: when-results }
+            q: { tr: Sonuçlar ne zaman açıklanır?, en: When are results announced? }
+            src: sss.md:250 · sss.en.md:274
+            blocks:
+              - kind: p
+                text:
+                  tr: Sabit bir takvim yoktur; sonuçlar **periyodik olarak** ilan edilir. Mezuniyet gibi acil bir durumunuz varsa durumu **staj asistanlarına yazılı olarak** bildiriniz.
+                  en: There is no fixed schedule; results are announced **periodically**. If you have an urgent situation such as graduation, inform the **internship assistants in writing**.
+                src: sss.md:251 · sss.en.md:275

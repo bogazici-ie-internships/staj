@@ -1,0 +1,176 @@
+---
+// Header: seal + name (home link), main nav, EN/TR, theme, primary CTA.
+// Phones: the nav moves into a bottom sheet (Starwind headless Drawer on a
+// native <dialog>: focus trap, Esc, outside click, focus return).
+import { Drawer } from "@starwind-ui/astro/drawer";
+import Seal from "./Seal.astro";
+import Icon from "../../icons/Icon.astro";
+import { copy, t } from "../../lib/content";
+import { md } from "../../lib/inline-md";
+import { alternatePath, pagePath, type PageKey } from "../../lib/paths";
+import type { Lang } from "../../lib/dates";
+interface Props { lang: Lang; current: PageKey | "404" }
+const { lang, current } = Astro.props;
+const chrome = await copy("chrome");
+const nav = chrome.pages.filter((p) => p.key !== "home" && p.key !== "teslim");
+const other: Lang = lang === "en" ? "tr" : "en";
+const altHref = alternatePath(Astro.url.pathname, other);
+const cta = chrome.pages.find((p) => p.key === "teslim")!;
+const ui = chrome.ui;
+const reload = (k: string) => (k === "teslim" || current === "teslim" ? { "data-astro-reload": "" } : {});
+---
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="hdr__brand" href={pagePath(lang, "home")} aria-current={current === "home" ? "page" : undefined}>
+      <Seal alt={t(chrome.brand.seal, lang)} />
+      <span class="hdr__names">
+        <span class="hdr__service">{t(chrome.brand.service, lang)}</span>
+        <span class="hdr__inst">{t(chrome.brand.institution, lang)}</span>
+      </span>
+    </a>
+    <nav class="hdr__nav" aria-label={t(ui.navLabel, lang)}>
+      <ul role="list">
+        {nav.map((p) => (
+          <li><a href={pagePath(lang, p.key)} aria-current={current === p.key ? "page" : undefined}>{t(p.short, lang)}</a></li>
+        ))}
+      </ul>
+    </nav>
+    {current !== "teslim" && <a class={`btn btn--primary hdr__cta${current === "home" ? " hdr__cta--home" : ""}`} href={pagePath(lang, "teslim")} data-astro-reload>{t(cta.short, lang)}</a>}
+    <div class="hdr__tools">
+      {/* ⌘K / Ctrl+K search (REVIEW-02 Note 3): plain HTML; the palette and its index load only when opened. */}
+      <button class="tool tool--search" type="button" data-search-open aria-haspopup="dialog" aria-keyshortcuts="Meta+K Control+K" aria-label={t(ui.searchLabel, lang)}
+        data-strings={JSON.stringify({ ...Object.fromEntries(["searchTitle", "searchPlaceholder", "searchHint", "searchLoading", "searchEmpty", "searchError", "searchClose", "searchLabel", "searchSuggest", "searchResults", "searchCount"].map((k) => [k, t(ui[k], lang)])),
+          searchNoneHelp: md(t(ui.searchNoneHelp, lang), lang), suggestions: chrome.search.suggestions.map((x) => t(x, lang)) })}>
+        <Icon name="search" size={18} /><span class="tool__label">{t(ui.searchLabel, lang)}</span><kbd class="tool__kbd" aria-hidden="true">⌘K</kbd>
+      </button>
+      <a class="tool tool--lang" href={altHref} hreflang={other} lang={other} aria-label={t(ui.langSwitchLabel, lang)}>{other.toUpperCase()}</a>
+      <button class="tool tool--theme" type="button" data-theme-toggle data-prefix={t(ui.themeLabel, lang)}
+        data-label-system={t(ui.themeSystem, lang)} data-label-light={t(ui.themeLight, lang)} data-label-dark={t(ui.themeDark, lang)}
+        aria-label={`${t(ui.themeLabel, lang)}: ${t(ui.themeSystem, lang)}`}>
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+        <span class="tool__label" data-theme-label>{t(ui.themeSystem, lang)}</span>
+      </button>
+      <Drawer.Root class="hdr__menu">
+        <Drawer.Trigger class="tool tool--menu" aria-label={t(ui.menuOpen, lang)}>
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+          <span class="tool__label">{t(ui.menuOpen, lang)}</span>
+        </Drawer.Trigger>
+        <Drawer.Portal>
+          <Drawer.Backdrop class="sheet__backdrop" />
+          <Drawer.Viewport>
+            <Drawer.Popup side="bottom" class="sheet" aria-label={t(ui.navLabel, lang)}>
+              <div class="sheet__head">
+                <p class="sheet__title" data-sw-drawer-title>{t(chrome.brand.service, lang)}</p>{/* not a heading (REVIEW-02 Note 4); still labels the sheet */}
+                <Drawer.Close class="tool" aria-label={t(ui.menuClose, lang)}>
+                  <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </Drawer.Close>
+              </div>
+              <ul role="list" class="sheet__nav">
+                <li><a href={pagePath(lang, "home")} aria-current={current === "home" ? "page" : undefined} {...reload("home")}>{t(chrome.pages[0].short, lang)}</a></li>
+                {nav.map((p) => (<li><a href={pagePath(lang, p.key)} aria-current={current === p.key ? "page" : undefined} {...reload(p.key)}>{t(p.title, lang)}</a></li>))}
+              </ul>
+              {/* Phones: "Belgeleri gönder" lives here on every page but Home and Teslim (REVIEW-06 Note 3, D-167). */}
+              {current !== "teslim" && <a class="btn btn--primary sheet__cta" href={pagePath(lang, "teslim")} data-astro-reload>{t(cta.short, lang)}</a>}
+              <div class="sheet__tools">
+        <button class="tool tool--theme tool--sheet" type="button" data-theme-toggle data-prefix={t(ui.themeLabel, lang)}
+                data-label-system={t(ui.themeSystem, lang)} data-label-light={t(ui.themeLight, lang)} data-label-dark={t(ui.themeDark, lang)}
+                aria-label={`${t(ui.themeLabel, lang)}: ${t(ui.themeSystem, lang)}`}>
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+                <span class="tool__label tool__label--on" data-theme-label>{t(ui.themeSystem, lang)}</span>
+              </button>
+              </div>
+            </Drawer.Popup>
+          </Drawer.Viewport>
+        </Drawer.Portal>
+      </Drawer.Root>
+    </div>
+  </div>
+</header>
+<style>
+  .hdr { border-bottom: 1px solid var(--rule-strong); background: var(--paper); }
+  .hdr__in { display: flex; align-items: center; justify-content: space-between; gap: 14px 16px; padding-block: 14px; }
+  .hdr__brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); min-height: 44px; }
+  .hdr__names { display: flex; flex-direction: column; gap: 2px; }
+  .hdr__service { font-family: var(--font-display); font-stretch: 80%; font-weight: 800; font-size: 22px; line-height: 1; }
+  .hdr__inst { font-size: 13px; color: var(--muted); }
+  .hdr__nav ul { display: flex; flex-wrap: wrap; }
+  .hdr__nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none; position: relative; }
+  .hdr__nav a::after { content: ""; position: absolute; left: 6px; right: 6px; bottom: 6px; height: 2px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 180ms var(--ease); }
+  .hdr__nav a:hover::after, .hdr__nav a[aria-current="page"]::after { transform: scaleX(1); }
+  .hdr__nav a[aria-current="page"] { color: var(--accent-text); }
+  .hdr__nav a[aria-current="page"]::after { background: currentColor; }
+  .hdr__tools { display: flex; align-items: center; gap: 6px; }
+  .tool { height: 44px; min-width: 44px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--muted); background: transparent; color: var(--ink); font-family: var(--font-mono); font-size: 13px; text-decoration: none; border-radius: var(--radius-field); transition: background-color var(--dur-short) var(--ease); }
+  .tool:hover { background: var(--primary-tint); }
+  .tool__label { font-family: var(--font-mono); }
+  .hdr__tools > .tool--theme .tool__label { display: none; }
+  .tool--search { gap: 8px; font-family: var(--font-ui); font-size: 14px; font-weight: 600; }
+  .tool__kbd { font-family: var(--font-mono); font-size: 11px; color: var(--muted); border: 1px solid var(--rule-strong); padding: 1px 4px; border-radius: 3px; }
+  /* Eight nav items since Araçlar was removed (REVIEW-01 Note 2, D-112): the "Ara" label is back on every desktop
+     width; the ⌘K hint returns from 1321 px (D-180: below that it would push the EN institution line onto two lines);
+     the menu still takes over at 1180 px. */
+  @media (max-width: 1180px) { .tool--search .tool__label { display: none; } }
+  @media (max-width: 1320px) { .tool__kbd { display: none; } }
+  /* D-180: the institution line is shown on desktop wherever it fits on one line beside the menu (measured: TR from
+     1220 px, EN from 1260 px); only on the narrowest desktops does it step aside, as the header must stay one row. */
+  @media (min-width: 1181px) and (max-width: 1219px) { .hdr__inst { display: none; } }
+  /* D-181 (RELEASE-CHECK R-04): on small tablets (601–819 px) the button keeps one line and the institution line steps aside;
+     the brand may shrink (and the EN name wrap beside the logo), so nothing overflows. */
+  @media (min-width: 601px) and (max-width: 819px) { .hdr__inst { display: none; } .hdr__brand, .hdr__names { min-width: 0; } .hdr__brand { flex: 1 1 0; } }
+  @media (min-width: 1220px) and (max-width: 1259px) { :root[lang="en"] .hdr__inst { display: none; } }
+  /* Desktop (D-180, replaces D-178's trade-off): the menu says "Belgeler" / "Documents" (the page itself and every other
+     place keep "Formlar ve Belgeler"), which frees the room for the institution line under the name again. The menu, the
+     button and the tools never shrink; if space runs out, the brand wraps beside the logo, never the menu. */
+  @media (min-width: 1181px) {
+    .hdr__nav, .hdr__cta, .hdr__tools { flex: none; }
+    .hdr__nav ul { flex-wrap: nowrap; }
+    .hdr__brand, .hdr__names { min-width: 0; }
+  }
+  .hdr__cta { min-height: 44px; padding: 0 18px; font-size: 15px; order: 3; white-space: nowrap; }   /* never two lines (D-181, R-04) */
+  .hdr__nav { order: 1; margin-left: auto; }
+  .hdr__tools { order: 2; }
+  .hdr__menu { display: none; }
+  @media (max-width: 1180px) {
+    .hdr__nav { display: none; }
+    .hdr__menu { display: block; }
+    .hdr__tools { margin-left: auto; }   /* FINAL-CHECK F-07: the tools sit next to "Belgeleri gönder", not in the middle */
+  }
+  @media (max-width: 600px) {
+    .hdr__in { flex-wrap: wrap; }
+    .hdr__inst { display: none; }
+    .hdr__cta { order: 10; flex: 1 1 100%; min-height: 52px; font-size: 16px; }
+    /* The full-width button only on Home (Teslim is the form itself); elsewhere it is in the menu (REVIEW-06 Note 3). */
+    .hdr__cta:not(.hdr__cta--home) { display: none; }
+    .hdr__tools { margin-left: auto; }
+    .tool--menu .tool__label { display: none; }
+    .hdr__tools > .tool--theme { display: none; }
+    .hdr__service { font-size: 20px; }
+    /* FINAL-CHECK F-01: a long service name (EN "Compulsory Internship") wraps beside the logo instead of pushing the
+       tools onto a second row, so the header is as tall in EN as in TR. */
+    .hdr__brand { flex: 1 1 0; min-width: 0; }
+    .hdr__names { min-width: 0; }
+  }
+</style>
+<style is:global>
+  /* Bottom sheet (Starwind Drawer is headless; this is its whole look). */
+  .sheet__backdrop { position: fixed; inset: 0; background: var(--scrim); z-index: var(--z-overlay); }
+  .sheet__backdrop[hidden] { display: none; }
+  dialog.sheet {
+    position: fixed; inset: auto 0 0 0; margin: 0; width: 100%; max-width: 100%; max-height: 85dvh;
+    border: 0; border-top: 2px solid var(--ink); background: var(--paper); color: var(--ink);
+    padding: var(--space-4) max(var(--gutter), env(safe-area-inset-right)) calc(var(--space-6) + env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left)); z-index: var(--z-dialog);
+  }
+  dialog.sheet::backdrop { background: var(--scrim); }
+  @media (prefers-reduced-motion: no-preference) {
+    dialog.sheet[data-state="open"] { animation: sheet-in 220ms var(--ease); }
+    @keyframes sheet-in { from { transform: translateY(24px); } }
+  }
+  .sheet__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+  .sheet__title { font-family: var(--font-display); font-stretch: 80%; font-weight: 800; font-size: 24px; }
+  .sheet__nav { border-top: 2px solid var(--ink); }
+  .sheet__nav a { display: flex; min-height: 52px; align-items: center; border-bottom: 1px solid var(--rule); font-size: 18px; font-weight: 600; text-decoration: none; color: var(--ink); }
+  .sheet__tools { margin-top: var(--space-4); display: flex; }
+  .sheet__cta { margin-top: var(--space-4); width: 100%; min-height: 52px; justify-content: center; }
+  .sheet__tools .tool__label--on { display: inline; }
+  .sheet__nav a[aria-current="page"] { color: var(--accent-text); text-decoration: underline; text-underline-offset: 0.25em; }
+</style>

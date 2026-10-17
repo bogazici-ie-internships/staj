@@ -1,0 +1,221 @@
+# Teslim (submission) copy. Limits in MB are NOT written here: they come from the
+# frozen contract (src/lib/submission/contract.ts = Code.gs FILE_MAP) and are
+# inserted where {mb} appears. Deadlines come from settings.yml.
+# Voice: UPDATE-03 (TR "siz" + -iniz in body text; short -in forms only on buttons).
+docs:   # slot key → name shown on the slot, the check page and the receipt
+  rapor: { tr: "Staj Raporu", en: "Internship Report" }
+  sicil: { tr: "İmzalı ve Kaşeli Staj Sicil Formu", en: "Signed and Stamped Trainee Evaluation Form" }
+  anketi: { tr: "Öğrenci Staj Anketi", en: "Student Internship Survey" }
+  cumartesi: { tr: "Cumartesi Yazısı", en: "Saturday Work Letter" }
+  dekont: { tr: "Ödeme Dekontu veya Bordro", en: "Payment Receipt or Payslip" }
+  ek1: { tr: "EK-1 Formu", en: "EK-1 Form" }
+situations:
+  saturday:
+    label: { tr: "Staj süresince cumartesi günleri çalıştım", en: "I worked on Saturdays during the internship" }
+    hint: { tr: "Şirketten alınmış imzalı veya kaşeli Cumartesi Yazısı gerekir.", en: "A signed or stamped Saturday Work Letter from the company is required." }
+    when: { tr: "Cumartesi günleri çalıştıysanız", en: "If you worked on Saturdays" }
+  reimbursement:
+    label: { tr: "Şirket, staj ücretim için devlet katkısı talep ediyor", en: "The company is claiming the government contribution for my internship pay" }
+    hint: { tr: "Ödeme dekontu veya bordro ile staj başında kullanılan aynı EK-1 gerekir. Yüklemeden önce EK-1'in eksiksiz doldurulduğundan emin olunuz.", en: "A payment receipt or payslip and the same EK-1 used at the start of the internship are required. Before uploading, make sure that the EK-1 is filled in completely." }
+    when: { tr: "Şirket devlet katkısı talep ediyorsa", en: "If the company claims the government contribution" }
+prep:
+  eyebrow: { tr: "Teslim · {term}", en: "Submission · {term}" }
+  title: { tr: "Belge Teslimi", en: "Document Submission" }
+  lead: { tr: "Başlamadan önce tüm belgelerinizi PDF biçiminde hazırlayınız.", en: "Before you begin, prepare all your documents in PDF format." }   # FINAL-CHECK F-04: the duration sentence removed
+  deadline: { tr: "Son teslim tarihi", en: "Deadline" }
+  lateRule:
+    tr: "Bu tarihten sonra **{closes}** tarihine kadar geç teslim kabul edilir. Her geç gün için toplam staj süresinden 1 iş günü düşülür; bu sürenin sonunda online teslim kapanır. Son teslimden sonra başlayan her 24 saat 1 geç gün sayılır; birkaç dakika geç kalan bir teslim de 1 gün geç sayılır. Teslim anı, gönderimin sunucuya ulaştığı andır; büyük dosyalarda gönderim birkaç dakika sürebileceğinden son ana bırakmayınız."
+    en: "After this date, late submissions are accepted until **{closes}**. 1 workday is deducted from the total internship period for each late day; online submission closes at the end of this period. Every 24 hours that begin after the deadline count as 1 late day, so a submission even a few minutes late counts as 1 day late. The time of submission is when the submission reaches the server; because large files can take a few minutes to send, do not leave it to the last moment."
+  required: { tr: "Tüm Öğrenciler için Zorunlu", en: "Required for All Students" }
+  situational: { tr: "Durumunuza Göre Gerekli", en: "Required Depending on Your Situation" }
+  # REVIEW-05 Addition (H-01): one submission per internship.
+  multiple:
+    tr: "Birden fazla staj yaptıysanız (aynı şirkette yapılmış olsalar da) formu her staj için ayrı ayrı gönderiniz. Her gönderime o stajın raporunu, Staj Sicil Formu'nu ve Öğrenci Staj Anketi'ni, varsa o stajın durumuna göre gereken belgelerle birlikte ekleyiniz."
+    en: "If you completed more than one internship (even at the same company), submit the form separately for each internship. With each submission, include that internship's report, Trainee Evaluation Form and Student Internship Survey, plus any documents its situation requires."
+  limits: { tr: "Dosyaların toplam boyutu {total} MB'tan küçük olmalıdır. @std.bogazici.edu.tr uzantılı e-posta adresinizi kullanınız.", en: "The total file size must be less than {total} MB. Use your email address ending in @std.bogazici.edu.tr." }
+  exceptionsTitle: { tr: "Aşağıdaki durumlarda bu form kullanılmamalıdır", en: "This form must not be used in the following cases" }
+  exceptions:
+    - tr: "Stajınızı ders dönemi içinde (ör. Erasmus veya değişim programı sırasında) yaptıysanız belgelerinizi staj bitiminden itibaren en geç 3 hafta içinde [e-posta ile](page:iletisim) iletiniz ([SSS: Uygunluk ve Zamanlama](page:sss#uygunluk-zamanlama))."
+      en: "If you completed your internship during an academic term (e.g. on Erasmus or another exchange programme), send your documents [by email](page:iletisim) within 3 weeks of the end of the internship ([FAQ: Eligibility and Timing](page:sss#uygunluk-zamanlama))."
+    - tr: "Mezuniyet için yalnızca stajınız kaldıysa belgelerinizi [genel staj e-posta adresine](page:iletisim) iletiniz."
+      en: "If the internship is the only remaining requirement for your graduation, send your documents to the [general internship email address](page:iletisim)."
+  ek1Note:
+    tr: "Sigortanız EK-1 ile başlatıldıysa bu teslim **yeterli değildir**: şirketten alacağınız tamamlama belgesini ayrıca [{accounting}'ne](page:surec#sonrasi) ([{accountingEmail}](mailto:{accountingEmail})) iletiniz. Bu belgeyi iletmezseniz sigortanız kapanmaz ve başka bir zorunlu staj yapamazsınız."
+    en: "If your insurance was started with the EK-1, this submission is **not sufficient**: you must also submit the completion document from the company to [{accounting}](page:surec#sonrasi) ([{accountingEmail}](mailto:{accountingEmail})). If you do not send it, your insurance is not closed and you cannot do another compulsory internship."
+  start: { tr: "Başla", en: "Start" }
+  forms: { tr: "Formları indir", en: "Download the forms" }
+steps:
+  - { tr: "Öğrenci Bilgileri", en: "Student Information" }
+  - { tr: "Belgeler", en: "Documents" }
+  - { tr: "Kontrol", en: "Review" }
+stepOf: { tr: "Adım {n} / {total}", en: "Step {n} of {total}" }
+back: { tr: "Geri", en: "Back" }
+next: { tr: "Devam", en: "Continue" }
+identity:
+  title: { tr: "Öğrenci Bilgileri", en: "Student Information" }
+  name: { tr: "Ad Soyad", en: "Full name" }
+  nameHint: { tr: "Belgelerinizde yer aldığı şekilde yazınız.", en: "Enter your name as it appears on your documents." }
+  sid: { tr: "Öğrenci numarası", en: "Student ID number" }
+  sidHint: { tr: "20 ile başlayan 10 haneli numara; ör. 20xx402xxx", en: "10 digits beginning with 20, e.g. 20xx402xxx" }
+  email: { tr: "Öğrenci e-posta adresi", en: "Student email address" }
+  emailHint: { tr: "@std.bogazici.edu.tr uzantılı adresiniz", en: "Your address ending in @std.bogazici.edu.tr" }
+  situationsTitle: { tr: "Durumunuza uygun seçenekleri işaretleyiniz", en: "Select the options that apply" }
+  situationsHint: { tr: "Hiçbiri durumunuza uymuyorsa boş bırakınız. Seçimleriniz, bir sonraki adımda istenecek belgeleri belirler.", en: "Leave them blank if none applies. Your selection determines which documents are requested in the next step." }
+  honeypot: { tr: "Bu alanı boş bırakınız", en: "Leave this field empty" }
+documents:
+  title: { tr: "Belgeleri Yükleyin", en: "Upload Your Documents" }
+  lead: { tr: "Her belgeyi ayrı bir PDF dosyası olarak yükleyiniz. Seçtiğiniz dosyalar bu adımda kontrol edilir; gönderim son adımda yapılır.", en: "Upload each document as a separate PDF file. The files you choose are checked at this step; they are sent only at the final step." }
+  situational: { tr: "Durumunuza Göre Gerekli", en: "Required Depending on Your Situation" }
+  limit: { tr: "PDF ≤ {mb} MB", en: "PDF ≤ {mb} MB" }
+  waiting: { tr: "Bekleniyor", en: "Pending" }
+  added: { tr: "Eklendi; henüz gönderilmedi", en: "Added; not yet sent" }
+  choose: { tr: "Dosya seç", en: "Choose file" }
+  change: { tr: "Değiştir", en: "Change" }
+  remove: { tr: "Kaldır", en: "Remove" }
+  drop: { tr: "veya PDF dosyasını buraya sürükleyiniz", en: "or drag the PDF file here" }
+  total: { tr: "Toplam", en: "Total" }
+  preview: { tr: "İlk sayfa önizlemesi: {name}", en: "First-page preview: {name}" }
+  pages: { tr: "{n} sayfa", en: "{n} pages" }
+  previewHint: { tr: "Doğru dosyayı seçtiğinizi ilk sayfa önizlemesinden kontrol ediniz.", en: "Use the first-page preview to check that you have chosen the correct file." }
+review:
+  title: { tr: "Bilgilerinizi Kontrol Edin", en: "Review Your Submission" }
+  you: { tr: "Öğrenci bilgileri", en: "Student information" }
+  situations: { tr: "Durumunuz", en: "Your situation" }
+  none: { tr: "Yok", en: "None" }
+  files: { tr: "Belgeler", en: "Documents" }
+  change: { tr: "Değiştir", en: "Change" }
+  declaration:
+    tr: "Yüklediğim belgelerin bana ait, eksiksiz ve doğru olduğunu; eksik veya hatalı belgelerin değerlendirme sürecini geciktirebileceğini kabul ederim."
+    en: "I confirm that the documents I have uploaded are my own, complete and accurate, and I acknowledge that missing or incorrect documents may delay the evaluation."
+  submit: { tr: "Onaylıyorum ve gönder", en: "Confirm and submit" }
+  captcha:
+    tr: "Bu form reCAPTCHA ile korunur. Google [Gizlilik Politikası](https://policies.google.com/privacy) ve [Hizmet Şartları](https://policies.google.com/terms) geçerlidir."
+    en: "This form is protected by reCAPTCHA. The Google [Privacy Policy](https://policies.google.com/privacy) and [Terms of Service](https://policies.google.com/terms) apply."
+# Teslim kurtarma (UPDATE-06 Phase 2b): the flow is kept on this device until it is submitted or discarded.
+recovery:
+  found: { tr: "Bu cihazda yarım kalmış bir teslim bulundu ({date} tarihinde kaydedildi). Kaldığınız yerden devam edebilir veya kaydı silebilirsiniz.", en: "An unfinished submission was found on this device (saved on {date}). You can continue where you left off or delete it." }
+  restore: { tr: "Devam et", en: "Continue" }
+  discard: { tr: "Vazgeç", en: "Discard" }
+  notice: { tr: "Girdiğiniz bilgiler ve seçtiğiniz dosyalar yalnızca bu cihazda (tarayıcınızda) en fazla 24 saat saklanır; teslim tamamlandığında veya Vazgeç seçildiğinde bu süre beklenmeden silinir.", en: "The details you enter and the files you choose are kept only on this device (in your browser) for up to 24 hours; they are deleted as soon as the submission is complete or you choose Discard." }
+  discarded: { tr: "Bu cihazdaki kayıt silindi.", en: "The record on this device has been deleted." }
+receipt:
+  title: { tr: "Belgeleriniz Alındı", en: "Your Documents Have Been Received" }
+  reference: { tr: "Referans numarası", en: "Reference number" }
+  referenceHint: { tr: "Tesliminiz bu numara ile kaydedilmiştir.", en: "Your submission has been recorded under this number." }
+  received: { tr: "Alındı", en: "Received" }
+  term: { tr: "Dönem", en: "Term" }
+  status: { tr: "Durum", en: "Status" }
+  onTime: { tr: "Zamanında", en: "On time" }
+  docs: { tr: "Alınan Belgeler ({n})", en: "Documents Received ({n})" }
+  download: { tr: "İndir", en: "Download" }
+  downloadHint: { tr: "Gönderdiğiniz dosyaları indirerek doğru belgeleri yüklediğinizi kontrol edebilirsiniz. Bu bağlantılar sayfa kapatıldığında geçerliliğini yitirir.", en: "You can download the files you sent to check that you uploaded the correct documents. These links expire when the page is closed." }
+  nextTitle: { tr: "Sonraki Adımlar", en: "Next Steps" }
+  next:
+    - { tr: "Bu sayfa teslim belgenizdir; yazdırınız veya PDF olarak kaydediniz.", en: "This page is your proof of submission; print it or save it as a PDF." }
+    - { tr: "Değerlendirme sonuçları periyodik olarak ilan edilir; sonuç listesine [Sonuçlar](page:sonuclar) sayfasından erişebilirsiniz.", en: "Evaluation results are announced periodically; you can access the results list through the [Results](page:sonuclar) page." }
+    - { tr: "Teslimden sonra eksik veya hatalı bir belgeyi tamamlamak üzere aynı stajın formunu yeniden göndermeyiniz; belgeyi referans numaranızı belirterek e-posta ile [staj asistanlarına](page:iletisim) iletiniz. Eksik belge staj asistanlarına ulaştığında teslim tamamlanmış sayılır.", en: "To complete a missing or incorrect document after submission, do not submit the form again for the same internship; email the document to the [internship assistants](page:iletisim) and quote your reference number. The submission is complete once the missing document reaches the internship assistants." }
+    # REVIEW-06 Note 4 (N-02): a second internship is a separate submission; a sentence, no new button.
+    # FINAL-CHECK F-03: "this page" meant the receipt in item 1; this item now says which page to reopen, and to save the receipt first.
+    - { tr: "Başka bir stajınız için teslim yapacaksanız önce bu makbuzu kaydediniz; ardından Belge Teslimi sayfasını yeniden açarak formu o staj için ayrıca gönderiniz.", en: "If you have another internship to submit, first save this receipt; then reopen the Document Submission page and submit the form separately for that internship." }
+  ek1: { tr: "Sigortanız EK-1 ile başlatıldıysa tamamlama belgesini [{accounting}'ne](page:surec#sonrasi) ([{accountingEmail}](mailto:{accountingEmail})) iletiniz.", en: "If your insurance was started with the EK-1, submit the completion document to [{accounting}](page:surec#sonrasi) ([{accountingEmail}](mailto:{accountingEmail}))." }
+  print: { tr: "Yazdır / PDF olarak kaydet", en: "Print / save as PDF" }
+  zone: { tr: "TSİ", en: "GMT+3" }
+  # Printed receipt only (REVIEW-04 Note 2): links do nothing on paper, so the page says where to write.
+  printFoot: { tr: "Zorunlu Staj Kılavuzu · {site} · Sorularınız için staj asistanları: {email}", en: "Compulsory Internship Guide · {site} · Questions: the internship assistants, {email}" }
+# REVIEW-04 Note 1 (D-137): what the student reads when the server refuses a submission. One text per server
+# message (src/lib/submission/contract.ts › SERVER_ERRORS); the server's own wording is never shown for these.
+# Placeholders: {doc} the document ("Staj Raporu (rapor.pdf)"), {mb} a size limit, {max} the name length limit,
+# {sec} the duplicate-submission interval (DEDUP_SEC = Code.gs CONFIG.DEDUP_SEC).
+serverErrors:
+  invalid_key:
+    tr: "Form anahtarı geçersiz; sayfa güncel olmayabilir. Sayfayı yenileyip yeniden deneyiniz."
+    en: "The form key is not valid; the page may be out of date. Refresh the page and try again."
+  captcha_failed:
+    tr: "Güvenlik doğrulaması başarısız oldu. Sayfayı yenileyip yeniden deneyiniz; VPN kullanıyorsanız kapatarak deneyebilirsiniz."
+    en: "The security check failed. Refresh the page and try again; if you are using a VPN, you can try without it."
+  invalid_request_id:
+    tr: "Gönderim anahtarı geçersiz. Sayfayı yenileyip yeniden deneyiniz."
+    en: "The submission key is not valid. Refresh the page and try again."
+  closed:
+    tr: "Teslim süresi sona erdi; çevrim içi yükleme kapandı. Teslim yapmanız gerekiyorsa belgelerinizi **zip dosyası** olarak, durumunuzu açıklayan bir e-posta ile [staj asistanlarına](page:iletisim) iletiniz."
+    en: "The submission period has ended and online uploads are closed. If you still need to submit, email your documents as a **zip file** to the [internship assistants](page:iletisim) with a short explanation."
+  required_fields:
+    tr: "Ad Soyad, öğrenci numarası ve e-posta adresi zorunludur. Öğrenci Bilgileri adımına dönüp eksik alanları doldurunuz."
+    en: "Full name, student ID and email address are required. Go back to the Student Information step and fill in the missing fields."
+  name_too_long:
+    tr: "Ad Soyad en fazla {max} karakter olabilir. Öğrenci Bilgileri adımında adınızı kısaltınız."
+    en: "The full name can be at most {max} characters long. Shorten it in the Student Information step."
+  name_invalid:
+    tr: "Ad Soyad alanında geçersiz bir karakter var. Öğrenci Bilgileri adımında adınızı yeniden yazınız."
+    en: "The full name contains an invalid character. Type it again in the Student Information step."
+  email_too_long:
+    tr: "E-posta adresi çok uzun. Öğrenci Bilgileri adımında adresinizi kontrol ediniz."
+    en: "The email address is too long. Check it in the Student Information step."
+  email_invalid:
+    tr: "E-posta adresi geçerli değil. Öğrenci Bilgileri adımında adresinizi kontrol ediniz."
+    en: "The email address is not valid. Check it in the Student Information step."
+  email_domain:
+    tr: "**@std.bogazici.edu.tr** uzantılı öğrenci e-posta adresinizi kullanınız. Öğrenci Bilgileri adımında adresinizi değiştiriniz."
+    en: "Use your student email address ending in **@std.bogazici.edu.tr**. Change it in the Student Information step."
+  sid_format:
+    tr: "Öğrenci numarası 20 ile başlayan 10 haneli bir sayı olmalıdır. Öğrenci Bilgileri adımında numaranızı kontrol ediniz."
+    en: "The student ID must be a 10-digit number beginning with 20. Check it in the Student Information step."
+  rate_limited:
+    tr: "Bu e-posta adresiyle birkaç saniye önce bir gönderim başlatıldı. Önceki gönderiminizin üzerinden en az {sec} saniye geçmeden yeni gönderim yapılamaz. Süre dolunca bilgilerinizi değiştirmeden **Tekrar dene** düğmesine basınız; önceki gönderim bu sayfadan yapıldıysa ve tamamlandıysa makbuzunuz gösterilir, ikinci bir kayıt oluşmaz.\n\nAynı staj için belgeleri başka bir sekmeden veya cihazdan zaten gönderdiyseniz formu yeniden göndermeyiniz; eksik veya hatalı bir belge varsa onu, o gönderimin referans numarasını belirterek e-posta ile [staj asistanlarına](page:iletisim) iletiniz."
+    en: "A submission was started with this email address a few seconds ago. A new submission cannot be made until at least {sec} seconds have passed since your previous one. When the time is up, select **Try again** without changing your details; if the previous submission was made from this page and has completed, your receipt is shown and no second record is created.\n\nIf you have already sent the documents for the same internship from another tab or device, do not submit the form again; if a document is missing or incorrect, email it to the [internship assistants](page:iletisim) and quote that submission's reference number."
+  bad_package:
+    tr: "Belgeler sunucuya eksiksiz ulaşmadı. Yeniden deneyiniz; sorun sürerse [staj asistanlarına](page:iletisim) başvurunuz."
+    en: "The documents did not reach the server complete. Try again; if the problem continues, contact the [internship assistants](page:iletisim)."
+  unknown_field:
+    tr: "Gönderimde tanınmayan bir belge alanı var. Sayfayı yenileyip yeniden deneyiniz."
+    en: "The submission contains an unrecognised document field. Refresh the page and try again."
+  missing_doc:
+    tr: "Zorunlu bir belge eksik: {doc}. Belgeler adımında bu belgeyi ekleyiniz."
+    en: "A required document is missing: {doc}. Add it in the Documents step."
+  missing_cumartesi:
+    tr: "Cumartesi çalıştığınızı belirttiniz; bu durumda **Cumartesi Yazısı** zorunludur. Belgeler adımında ekleyiniz."
+    en: "You indicated Saturday work, so the **Saturday Work Letter** is required. Add it in the Documents step."
+  missing_dekont:
+    tr: "Devlet katkısı için **Ödeme Dekontu veya Bordro** zorunludur. Belgeler adımında ekleyiniz."
+    en: "A **Payment Receipt or Payslip** is required for the government contribution. Add it in the Documents step."
+  missing_ek1:
+    tr: "Devlet katkısı için staj başında kullanılan **EK-1** zorunludur. Belgeler adımında ekleyiniz."
+    en: "The **EK-1** used at the start of the internship is required for the government contribution. Add it in the Documents step."
+  bad_content:
+    tr: "{doc} dosyasının içeriği okunamadı. Dosyayı yeniden PDF olarak kaydedip Belgeler adımında yeniden seçiniz."
+    en: "The content of {doc} could not be read. Save the file as a PDF again and select it again in the Documents step."
+  total_size:
+    tr: "Dosyaların toplam boyutu {mb} MB sınırını aşıyor. Belgeler adımında dosyalarınızı küçültüp yeniden seçiniz."
+    en: "The combined file size exceeds the {mb} MB limit. Make your files smaller and select them again in the Documents step."
+  too_large:
+    tr: "{doc} en fazla {mb} MB olabilir. Dosyayı küçültüp Belgeler adımında yeniden seçiniz."
+    en: "{doc} can be at most {mb} MB. Make the file smaller and select it again in the Documents step."
+  not_pdf:
+    tr: "{doc} geçerli bir PDF dosyası değil. Dosyayı PDF olarak kaydedip Belgeler adımında yeniden seçiniz."
+    en: "{doc} is not a valid PDF file. Save it as a PDF and select it again in the Documents step."
+  busy:
+    tr: "Teslim sunucusu önceki bir isteği tamamlıyor. Birkaç saniye bekleyip bilgilerinizi değiştirmeden **Tekrar dene** düğmesine basınız."
+    en: "The submission server is finishing a previous request. Wait a few seconds, then select **Try again** without changing your details."
+  in_progress:
+    tr: "Bu gönderim hâlâ işleniyor. Birkaç saniye bekleyip bilgilerinizi değiştirmeden **Tekrar dene** düğmesine basınız; gönderim tamamlandıysa makbuzunuz gösterilir."
+    en: "This submission is still being processed. Wait a few seconds, then select **Try again** without changing your details; if it has completed, your receipt is shown."
+  rollback:
+    tr: "Gönderim tamamlanamadı; oluşturulan geçici dosya geri alındı ve kayıt yapılmadı. Yeniden deneyiniz. Sorun sürerse bu ekranın görüntüsünü [staj asistanlarına](page:iletisim) e-posta ile iletiniz."
+    en: "The submission could not be completed; the temporary file was removed and nothing was recorded. Try again. If the problem continues, email a screenshot of this screen to the [internship assistants](page:iletisim)."
+  contract_mismatch:
+    tr: "Teslim dönemi bilgileri sunucuyla uyuşmuyor. Sayfayı yenileyiniz; sorun sürerse [staj asistanlarına](page:iletisim) başvurunuz."
+    en: "The submission-term details do not match the server. Refresh the page; if the problem continues, contact the [internship assistants](page:iletisim)."
+  server_error:
+    tr: "Sunucuda beklenmeyen bir hata oluştu. Yeniden deneyiniz; sorun sürerse [staj asistanlarına](page:iletisim) başvurunuz."
+    en: "An unexpected error occurred on the server. Try again; if the problem continues, contact the [internship assistants](page:iletisim)."
+help:
+  title: { tr: "Teslimde Sorun Yaşarsanız", en: "If You Have Problems Submitting" }
+  items:
+    - { tr: "Tüm belgeler **PDF** biçiminde olmalıdır. Her belgenin boyut sınırı kendi alanında yazar; toplam boyut **45 MB'tan küçük** olmalıdır.", en: "All documents must be in **PDF** format. Each document's size limit is shown in its field; the total must be **less than 45 MB**." }
+    - { tr: "**@std.bogazici.edu.tr** uzantılı öğrenci e-posta adresinizi kullanınız.", en: "Use your student email address ending in **@std.bogazici.edu.tr**." }
+    - { tr: "Bağlantı hatası durumunda girdiğiniz bilgiler ve seçtiğiniz dosyalar sayfada korunur. Önce bağlantınızı kontrol ederek **Tekrar dene** düğmesine basınız. Sayfa yenilense bile bilgileriniz ve dosyalarınız bu cihazda 24 saat saklanır ve kaldığınız yerden devam edebilirsiniz.", en: "If a connection error occurs, your details and selected files remain on the page. First check your connection and select **Try again**. Even if the page is refreshed, your details and files are kept on this device for 24 hours, and you can continue where you left off." }
+    - tr: "Sorun devam ederse belgelerinizi **son teslim tarihinden önce** e-posta ile [staj asistanlarına](page:iletisim) iletiniz."
+      en: "If the problem persists, email your documents to the [internship assistants](page:iletisim) **before the deadline**."
+      # RELEASE-CHECK R-08 (D-181): shown instead during the late window, when the deadline has already passed.
+      late: { tr: "Sorun devam ederse belgelerinizi **geç teslim süresi sona ermeden önce** e-posta ile [staj asistanlarına](page:iletisim) iletiniz. Geç teslim süresi {closes} tarihinde sona erer.", en: "If the problem persists, email your documents to the [internship assistants](page:iletisim) **before the late-submission window closes**. The late-submission window closes on {closes}." }
+noscript: { tr: "Teslim formu, tarayıcınızda **JavaScript etkin olduğunda** çalışır. JavaScript'i etkinleştiremiyorsanız belgelerinizi son teslim tarihinden veya geç teslim süresinin sonundan önce e-posta ile [staj asistanlarına](page:iletisim) iletiniz.", en: "The submission form requires **JavaScript to be enabled** in your browser. If you cannot enable it, email your documents to the [internship assistants](page:iletisim) before the deadline or before the end of the late-submission window." }

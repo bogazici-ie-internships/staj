@@ -1,0 +1,38 @@
+note: 'Frozen inputs of tests/baseline/calendar-golden.json (UPDATE-07, D-144): the settings.yml values main.py (the MkDocs strip) was run on. The TypeScript port must reproduce the golden from these, so
+  a new campaign in settings.yml never breaks this test.'
+serit_baslangic: 1 Ocak 2026
+serit_bitis: 31 Aralık 2026
+donem:
+  teslim_kilit: 2026-10-12 10:00
+takvim:
+- baslangic: 9 Şubat 2026
+  bitis: 15 Mayıs 2026
+  baslik: Bahar Dönemi
+  baslangic_en: February 9, 2026
+  bitis_en: May 15, 2026
+  baslik_en: Spring Semester
+  kategori: akademik
+  staj_durum: kapali
+- baslangic: 24 Haziran 2026
+  bitis: 12 Ağustos 2026
+  baslik: Yaz Okulu
+  baslangic_en: June 24, 2026
+  bitis_en: August 12, 2026
+  baslik_en: Summer School
+  kategori: akademik
+  staj_durum: kosullu
+  notu: Ders almıyorsanız bu dönemde staj yapabilirsiniz.
+  notu_en: You may complete an internship in this period if you are not taking courses.
+- baslangic: 21 Eylül 2026
+  bitis: 11 Aralık 2026
+  baslik: Güz Dönemi
+  baslangic_en: September 21, 2026
+  bitis_en: December 11, 2026
+  baslik_en: Fall Semester
+  kategori: akademik
+  staj_durum: kapali
+- tarih: 12 Ekim 2026
+  baslik: Yaz Stajı Teslimi
+  tarih_en: October 12, 2026
+  baslik_en: Summer Internship Deadline
+  kategori: teslim

@@ -1,0 +1,276 @@
+/* Teslim (submission flow) — Kronometre voice, DESIGN.md §4 + §6.
+   Global because the markup comes from the React island. No motion inside
+   validation feedback; only the progress bar and screen changes move. */
+
+.teslim { padding-block: var(--space-6) 0; display: grid; gap: var(--space-6); }   /* the header's container at every width (REVIEW-07, D-171) */
+.teslim__head { display: grid; gap: 10px; }
+.teslim__eyebrow { font-size: var(--text-label); color: var(--muted); }
+.teslim__title { font-family: var(--font-display); font-stretch: 75%; font-weight: 800; font-size: clamp(46px, 7vw, 84px); line-height: 0.92; letter-spacing: -0.03em; }
+.teslim__lead { font-size: max(18px, var(--step-0)); color: var(--ink-2); }   /* follows the form column (REVIEW-07, D-171); never smaller than the notes (D-178) */
+.teslim__help { border-top: var(--border-strong); padding-top: var(--space-4); display: grid; gap: var(--space-3); }
+.teslim__help ul { padding-left: 20px; display: grid; gap: 8px; color: var(--ink-2); }
+.suf-noscript { border: var(--border-strong); padding: var(--space-4); background: var(--surface); }
+
+.suf { display: grid; gap: var(--space-5); }
+.suf-h { font-family: var(--font-display); font-stretch: 80%; font-weight: 800; font-size: clamp(34px, 5vw, 48px); line-height: 0.95; letter-spacing: -0.02em; }
+.suf-h:focus { outline: none; }
+.suf-sub { font-family: var(--font-display); font-stretch: 85%; font-weight: 700; font-size: 22px; line-height: 1.1; }
+.suf-lead { color: var(--ink-2); }
+.suf-note { font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+.suf-hint { font-size: 14px; color: var(--muted); }
+.suf-limit { font-size: 13px; color: var(--muted); white-space: nowrap; }
+.suf-size { color: var(--muted); font-size: 13px; }
+.suf-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding-top: var(--space-2); }
+.suf-actions .btn--primary { min-width: min(100%, 14rem); }
+@media (max-width: 600px) { .suf-actions .btn--primary { flex: 1 1 100%; } }
+.suf-back { display: inline-flex; gap: 6px; }
+
+/* Hazırlık */
+.suf-deadline { border: var(--border-strong); background: var(--surface); }
+.suf-deadline__top { padding: 14px 16px; background: var(--signal-tint); border-bottom: 1px solid var(--rule); display: grid; gap: 2px; }
+.suf-deadline__label { font-size: 12px; color: var(--muted); }
+.suf-deadline__date { font-weight: 700; font-size: clamp(18px, 3vw, 22px); color: var(--signal-text); text-wrap: balance; }
+.suf-deadline__left { font-size: 14px; font-weight: 700; color: var(--ink); min-height: 1.4em; }
+/* FINAL-CHECK F-08 (D-178): every note and box on the preparation screen uses the running-text size (--step-0, 17–19 px):
+   the deadline rule, the exceptions box, the two framed notes and the help list. */
+.suf-deadline__rule { padding: 12px 16px; font-size: var(--step-0); color: var(--ink-2); }
+.suf-deadline__rule strong { color: var(--ink); }
+.suf-prep { display: grid; gap: var(--space-6); }
+.suf-prep__cols { display: grid; gap: var(--space-6); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 700px) { .suf-prep__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }   /* two lists (D-115) */
+.suf-doclist { list-style: none; padding: 0; border-top: var(--border-strong); margin-top: 8px; }
+.suf-doclist > li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 16px; }
+.suf-doclist__group { flex-direction: column; }
+.suf-doclist__when { font-size: 14px; color: var(--muted); }
+.suf-doclist__row { display: flex; justify-content: space-between; gap: 12px; }
+.suf-callout { border: var(--border-strong); background: var(--surface); padding: 14px 16px; display: grid; gap: 8px; }
+.suf-callout h3 { font-size: var(--step-0); font-weight: 800; }
+.suf-callout ul { padding-left: 18px; display: grid; gap: 6px; font-size: var(--step-0); line-height: 1.45; color: var(--ink-2); }
+.suf-callout a, .suf-deadline a { font-weight: 700; color: var(--ink); }
+.suf-callout__ek1, .suf-multiple { font-size: var(--step-0); color: var(--ink-2); }
+
+/* Stepper */
+.suf-steps { display: grid; gap: 8px; }
+.suf-steps ol { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+.suf-steps li { display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+.suf-steps__bar { height: 6px; border: 1px solid var(--muted); }
+.suf-steps li[data-done] .suf-steps__bar { background: var(--ink-2); border-color: var(--ink-2); }
+.suf-steps li[aria-current="step"] { color: var(--ink); font-weight: 800; }
+.suf-steps li[aria-current="step"] .suf-steps__bar { background: var(--primary); border-color: var(--primary); }
+.suf-steps__count { font-size: 12px; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) {
+  .suf-steps__bar { transition: background-color 220ms var(--ease); }
+  .suf-step { animation: suf-in 200ms var(--ease); }
+  @keyframes suf-in { from { transform: translateY(6px); } }
+}
+.suf-step { display: grid; gap: var(--space-5); }
+
+/* Error summary (GOV.UK pattern, DESIGN.md §4) */
+.suf-summary { border: 2px solid var(--error); background: var(--surface); padding: 16px; display: grid; gap: 6px; }
+.suf-summary:focus { outline: 2px solid var(--focus); outline-offset: 2px; }
+.suf-summary h3 { font-size: 18px; font-weight: 800; color: var(--error); }
+.suf-summary ul { padding-left: 18px; display: grid; gap: 4px; }
+.suf-summary a { color: var(--error); font-weight: 700; }
+
+/* Fields */
+.suf-fields { display: grid; gap: var(--space-5); }
+.suf-field { display: grid; gap: 6px; }
+.suf-field label { font-weight: 700; font-size: 16px; }
+.suf-field [slot="description"] { font-size: 14px; color: var(--muted); }
+.suf-field .react-aria-FieldError { color: var(--error); font-weight: 700; font-size: 15px; }
+.suf-field input {
+  height: 50px; border: 2px solid var(--ink); border-radius: var(--radius-field); background: var(--surface);
+  padding: 0 12px; font-size: 17px; color: var(--ink); width: 100%;
+}
+.suf-field--short input { max-width: 14rem; letter-spacing: 0.04em; }
+.suf-field input::placeholder { color: var(--muted); }
+.suf-field input[aria-invalid="true"] { border-color: var(--error); box-shadow: inset 0 0 0 1px var(--error); }
+.suf-field input[data-focus-visible], .suf-field input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.suf-hp { position: absolute; left: -10000px; width: 1px; height: 1px; opacity: 0; }
+
+/* Checkboxes: the late acknowledgement and the situation cards */
+.suf-sits { border: 0; padding: 0; display: grid; gap: 10px; }
+.suf-sits legend { font-weight: 800; font-size: 18px; padding: 0 0 6px; }
+.suf-check, .suf-sit { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; }
+.suf-sit { padding: 14px; border: 2px solid var(--muted); background: var(--surface); transition: border-color var(--dur-short) var(--ease), background-color var(--dur-short) var(--ease); }
+.suf-sit[data-selected] { border-color: var(--primary); background: var(--primary-tint); }
+.suf-sit[data-hovered]:not([data-selected]) { border-color: var(--ink); }
+.suf-sit__text { display: grid; gap: 2px; }
+.suf-sit__text b { font-size: 16px; }
+.suf-sit__text span { font-size: 14px; line-height: 1.4; color: var(--ink-2); }
+.suf-check__box { flex: 0 0 24px; width: 24px; height: 24px; border: 2px solid var(--ink); border-radius: var(--radius-field); background: var(--surface); display: grid; place-items: center; margin-top: 1px; }
+[data-selected] > .suf-check__box { background: var(--primary); border-color: var(--primary); }
+[data-selected] > .suf-check__box::after { content: ""; width: 12px; height: 7px; border: solid var(--on-primary); border-width: 0 0 3px 3px; transform: translateY(-2px) rotate(-45deg); }
+[data-focus-visible] > .suf-check__box { outline: 2px solid var(--focus); outline-offset: 2px; }
+[data-invalid] > .suf-check__box { border-color: var(--error); }
+.suf-inline-err { color: var(--error); font-weight: 700; }
+
+/* Late banner — deadline semantics, so signal tint. */
+.suf-late { border: 2px solid var(--signal); background: var(--signal-tint); padding: 14px 16px; display: grid; gap: 10px; }
+.suf-late__head { font-family: var(--font-mono); font-weight: 700; color: var(--signal-text); }
+
+/* Gate / closed / message */
+.suf-gate { border: 2px solid var(--error); background: var(--surface); padding: 14px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
+.suf-closed { border: var(--border-strong); background: var(--surface); padding: var(--space-5); display: grid; gap: var(--space-3); }
+.suf-msg:empty { display: none; }
+.suf-msg { border: 2px solid var(--error); background: var(--surface); padding: 14px 16px; color: var(--ink); font-weight: 600; }
+.suf-msg:focus { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* Document slots (DESIGN.md §4) */
+.suf-slots { display: grid; gap: 12px; }
+.suf-slot { border: 2px dashed var(--muted); background: var(--surface); padding: 14px 16px; display: grid; gap: 12px; position: relative; }
+.suf-slot.is-added { border-style: solid; border-color: var(--ink); }
+.suf-slot.is-error { border: 2px solid var(--error); }
+.suf-slot.is-drop { border-style: solid; border-color: var(--primary); background: var(--primary-tint); }
+.suf-slot[data-focus-visible] { outline: 2px solid var(--focus); outline-offset: 2px; }
+.suf-slot__meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.suf-slot__meta:focus { outline: none; }
+.suf-slot__name { font-weight: 700; font-size: 17px; flex: 1 1 auto; }
+.suf-slot__state { flex-basis: 100%; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--ink-2); }
+.suf-slot__state--added { color: var(--success); font-weight: 700; }
+.suf-slot__state--error { color: var(--error); font-weight: 700; }
+.suf-slot__fix { flex-basis: 100%; font-size: 14px; color: var(--ink-2); }
+.suf-slot__file { display: flex; gap: 12px; align-items: flex-start; }
+.suf-slot__file img { width: 64px; height: auto; border: 1px solid var(--rule-strong); background: #fff; }
+.suf-slot__thumb { width: 64px; height: 84px; border: 1px solid var(--rule); background: repeating-linear-gradient(135deg, var(--rule) 0 1px, transparent 1px 6px); }
+.suf-slot__fname { display: grid; gap: 2px; min-width: 0; overflow-wrap: anywhere; font-size: 14px; }
+.suf-slot__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.suf-slot__pick { min-height: 44px; padding: 0 16px; }
+.suf-slot__drop { font-size: 13px; color: var(--muted); }
+@media (hover: none) { .suf-slot__drop { display: none; } }
+
+/* Meter / progress */
+.suf-meter, .suf-progress { display: grid; gap: 6px; }
+.suf-meter__row { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+.suf-meter__row label { font-weight: 700; }
+.suf-meter__track { height: 8px; border: 1px solid var(--ink); background: var(--surface); }
+.suf-meter__fill { height: 100%; width: 100%; background: var(--primary); transform-origin: left; transform: scaleX(var(--p, 0)); }
+.suf-meter.is-over .suf-meter__fill { background: var(--error); }
+@media (prefers-reduced-motion: no-preference) { .suf-progress .suf-meter__fill { transition: transform 240ms var(--ease); } }
+
+/* Check answers */
+.suf-review { border-top: var(--border-strong); }
+.suf-review__row { display: grid; grid-template-columns: minmax(9rem, 1fr) 2fr auto; gap: 4px 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+.suf-review__row dt { font-weight: 700; }
+.suf-review__row dd { margin: 0; overflow-wrap: anywhere; }
+.suf-review__change .btn { min-height: 44px; padding: 0 4px; }
+@media (max-width: 600px) { .suf-review__row { grid-template-columns: 1fr auto; } .suf-review__row dd:not(.suf-review__change) { grid-column: 1; } .suf-review__change { grid-row: 1; grid-column: 2; } }
+.suf-summaryline { font-size: 14px; color: var(--ink-2); }
+.suf-declaration { font-size: 16px; line-height: 1.5; }
+
+/* Receipt (printable) */
+.suf-receipt { border: var(--border-strong); background: var(--surface); padding: var(--space-5); display: grid; gap: var(--space-4); }
+/* REVIEW-03 Note 2 (D-134): formal confirmation head. Success colour on the check only; the time and reference on
+   one mono line under the title; the print button on the right (below on phones). No stamp, rotation or animation. */
+.suf-receipt__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-3) var(--space-4); padding-bottom: var(--space-4); border-bottom: 2px solid var(--ink); }
+.suf-receipt__title { display: grid; gap: 8px; min-width: 0; flex: 1 1 auto; }
+.suf-receipt__head h2 { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-stretch: 80%; font-weight: 800; font-size: clamp(28px, 4vw, 40px); line-height: 1; }
+.suf-receipt__head h2:focus { outline: none; }
+.suf-receipt__check { color: var(--success); flex: none; }
+.suf-receipt__line { font-size: 14px; color: var(--ink-2); overflow-wrap: anywhere; }
+.suf-receipt__save { align-self: center; flex: none; }
+@media (max-width: 600px) { .suf-receipt__head { flex-direction: column; align-items: stretch; } .suf-receipt__save { align-self: flex-start; } }
+.suf-receipt__facts { display: grid; gap: 10px; }
+.suf-receipt__facts > div { display: grid; grid-template-columns: minmax(8rem, 1fr) 3fr; gap: 2px 16px; }
+.suf-receipt__facts dt { color: var(--muted); font-size: 14px; }
+.suf-receipt__facts dd { margin: 0; }
+.suf-receipt__ref dd.mono { font-size: clamp(14px, 2.4vw, 18px); font-weight: 700; overflow-wrap: anywhere; }
+.suf-receipt__ref .suf-note { grid-column: 2; }
+@media (max-width: 600px) { .suf-receipt__facts > div { grid-template-columns: 1fr; } .suf-receipt__ref .suf-note { grid-column: 1; } }
+.suf-receipt__docs { list-style: none; padding: 0; border-top: 1px solid var(--rule-strong); }
+.suf-receipt__docs li { display: flex; flex-wrap: wrap; gap: 4px 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+.suf-receipt__docs .mono { font-size: 14px; overflow-wrap: anywhere; flex: 1 1 12rem; }
+.suf-done__dl { font-weight: 700; min-height: 44px; display: inline-flex; align-items: center; }
+.suf-next { padding-left: 20px; display: grid; gap: 6px; }
+
+@page { size: A4; margin: 14mm; }
+@media print {
+  /* D-185: a settings.yml › duyuru band is site chrome too; it never prints on the receipt. */
+  .duyuru, .strip, .hdr, .ftr, .teslim__help, .teslim__head, .suf-noprint, .skip { display: none !important; }
+  .suf-receipt { border: 1px solid var(--ink); }
+  /* REVIEW-05 (D-162): the longer next steps (B-04, B-07) still fit one A4 page in both languages; print spacing only. */
+  .suf-receipt { padding: 18px; gap: 14px; }
+  .suf-receipt__head { padding-bottom: 12px; }
+  .suf-receipt__docs li { padding: 6px 0; }
+  /* REVIEW-06 (D-168): one more next step (N-02); the list is set a little smaller on paper so EN still fits one page. */
+  .suf-next { gap: 3px; font-size: 14.5px; line-height: 1.4; }
+  .suf-done__dl { display: none; }
+  /* REVIEW-04 Note 2 (D-140): white paper, no link styling (nothing to click), a contact line under the receipt. */
+  html, body, main, .teslim, .suf-receipt { background: #fff !important; }
+  .suf-receipt a { color: inherit; text-decoration: none; }
+  .teslim:has(#sufForm[data-step="makbuz"]) .teslim__printfoot { display: block; margin-top: 10px; font-size: 11px; color: var(--ink-2); }
+  :root { color-scheme: light; }
+}
+
+.teslim__printfoot { display: none; }
+/* Receipt closure: the page header and the "can't submit?" list step aside. */
+.teslim:has(#sufForm[data-step="makbuz"]) .teslim__head,
+.teslim:has(#sufForm[data-step="makbuz"]) .teslim__help,
+.teslim:has(#sufForm[data-step="makbuz"]) .teslim__side { display: none; }
+.suf-receipt__docs { border-top-style: dashed; }   /* perforated ticket edge, DESIGN.md §3.6 */
+.suf-receipt__ref { border-block: 1px dashed var(--rule-strong); padding-block: 10px; }
+.suf-receipt__head + .suf-receipt__facts > .suf-receipt__ref:first-child { border-top: 0; padding-top: 0; }   /* the head's rule already closes it */
+.suf-msg__title { font-weight: 800; color: var(--error); margin-bottom: 4px; }
+/* REVIEW-04 Note 1 (D-137): the site's longer server texts read as body copy, paragraphs spaced, bold only where marked. */
+.suf-msg__body { font-weight: 400; display: grid; gap: 8px; }   /* fills its frame (REVIEW-07, D-171) */
+.suf-msg__body strong { font-weight: 700; }
+
+/* REVIEW-01 Note 3 (D-113): "Aşağıdaki durumlarda bu form kullanılmamalıdır" as a plain, framed note. */
+.suf-exceptions { border: var(--border-strong); background: var(--surface); padding: 14px 16px 16px; display: grid; gap: 8px; }
+.suf-exceptions__title { font-weight: 800; font-size: var(--step-0); line-height: 1.35; }
+.suf-exceptions ul { padding-left: 1.2em; display: grid; gap: 8px; line-height: 1.5; }
+.suf-exceptions a { font-weight: 700; }
+.suf-callout__ek1, .suf-multiple { display: block; padding: 12px 14px; }
+
+/* Icons (D-44) */
+.icon { flex: none; }
+.icon--flip { transform: scaleX(-1); }
+.suf-slot__name, .suf-doc, .suf-summary h3, .suf-exceptions__title, .suf-late__head, .suf-msg__title { display: inline-flex; align-items: center; gap: 8px; }
+.suf-slot__icon { color: var(--accent-text); }
+.suf-doc .icon { color: var(--muted); }
+.suf-gate { align-items: flex-start; }
+.suf-gate > .icon { color: var(--error); margin-top: 2px; }
+
+/* Before hydration (UPDATE-03 §4.5): the flow is inert; draw its controls as unavailable, not as live buttons. */
+.suf:not([data-hydrated]) :is(.btn, button, input, label.suf-radio, .suf-drop) { opacity: 0.5; cursor: progress; box-shadow: none; }
+
+/* Teslim kurtarma (UPDATE-06 Phase 2b) */
+.suf-recovery { border: 2px solid var(--ink); background: var(--primary-tint); padding: 14px 16px; display: grid; gap: 10px; }
+.suf-recovery__note { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.suf-recovery__discard { min-height: 44px; padding: 0; }
+
+/* REVIEW-01 Note 1 (D-108): a sticky side panel sits on the right (steps, deadline, required documents, short help);
+   the form column fills the space up to it (REVIEW-07, D-171). From 961 px and as wide as the Gazete rail (D-178): a
+   full-width form at 961–1180 px ran its notes and hints to 105–150 characters a line. */
+.teslim__side { display: none; }
+@media (min-width: 961px) {
+  .teslim { grid-template-columns: minmax(0, 1fr) var(--rail-w); column-gap: var(--space-8); align-items: start; }
+  .teslim > :not(.teslim__side) { grid-column: 1; }
+  .teslim__side { grid-column: 2; grid-row: 1 / span 4; display: grid; gap: var(--space-5); align-content: start; font-family: var(--font-ui); }
+  .ts-box { display: grid; gap: 8px; }
+}
+@media (min-width: 961px) and (min-height: 640px) { .teslim__side { position: sticky; top: var(--space-4); } }
+/* While the form column is under ~600 px (961–1047 px), the two document lists stack. */
+@media (min-width: 961px) and (max-width: 1047px) { .suf-prep__cols { grid-template-columns: minmax(0, 1fr); } }
+/* Receipt step: the side panel is hidden, so the receipt takes the whole container (REVIEW-07, D-171). */
+@media (min-width: 961px) { .teslim:has(#sufForm[data-step="makbuz"]) { grid-template-columns: minmax(0, 1fr); } }
+.ts-h { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
+.ts-steps { list-style: none; padding: 0; display: grid; border-left: 2px solid var(--rule); }
+.ts-steps li { display: flex; gap: 10px; align-items: center; min-height: 32px; padding-left: 12px; margin-left: -2px; border-left: 2px solid transparent; font-weight: 600; color: var(--ink-2); }
+.ts-steps li span { font-size: 13px; color: var(--muted); }
+.ts-steps li[data-done] { color: var(--ink); }
+.ts-steps li[data-done] span { color: var(--success); }
+.ts-steps li[aria-current] { border-left-color: var(--accent-text); color: var(--accent-text); font-weight: 800; }
+.ts-steps li[aria-current] span { color: var(--accent-text); }
+.ts-date { font-weight: 800; font-size: 18px; color: var(--signal-text); }
+.ts-note { font-size: 14px; color: var(--ink-2); }
+.ts-docs { display: grid; gap: 8px; margin: 0; font-size: 14px; line-height: 1.4; }
+.ts-docs dt { font-size: 13px; color: var(--muted); }
+.ts-docs dd { margin: 0; font-weight: 600; }
+.ts-help { border: 1px solid var(--rule-strong); background: var(--surface); padding: 12px 14px; font-size: 14px; }
+.ts-help a { font-weight: 700; }
+
+/* D-181 (RELEASE-CHECK R-08): texts with a late-window variant. src/scripts/clock.ts sets <html data-phase>. */
+[data-when="late"] { display: none; }
+:root[data-phase="late"] [data-when="late"] { display: inline; }
+:root[data-phase="late"] [data-when="regular"] { display: none; }

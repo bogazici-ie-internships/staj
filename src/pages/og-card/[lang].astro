@@ -1,0 +1,61 @@
+---
+// Open Graph card template (UPDATE-02 B14). Built ONLY when STAJ_OG=1 (scripts/og.mjs),
+// screenshotted at 1200×630 into public/assets/og-image{,-en}.png; never part of the site.
+// Evergreen on purpose: no dates or counts, because link previews are cached for months.
+import "../../styles/tokens.css";
+import "../../styles/fonts.css";
+import "../../styles/base.css";
+import Contours from "../../components/art/Contours.astro";
+import Seal from "../../components/layout/Seal.astro";
+import { copy, t } from "../../lib/content";
+import type { Lang } from "../../lib/dates";
+
+export function getStaticPaths() {
+  return process.env.STAJ_OG === "1" ? [{ params: { lang: "tr" } }, { params: { lang: "en" } }] : [];
+}
+const lang = Astro.params.lang as Lang;
+const chrome = await copy("chrome");
+const [w1, ...rest] = t(chrome.brand.service, lang).split(" ");
+const og = chrome.og;
+const C = { flap: t(og.flap, lang), head: t(og.head, lang), rows: og.rows.map((r) => [t(r.label, lang), t(r.value, lang)]) };
+---
+<!doctype html>
+<html lang={lang} data-theme="light">
+<head><meta charset="utf-8" /><meta name="robots" content="noindex" /><title>og</title></head>
+<body>
+  <main class="og">
+    <Contours variant="hero" />
+    <div class="og__left">
+      <div class="og__inst"><Seal alt="" size={72} /><span>{t(chrome.brand.institution, lang)}</span></div>
+      <p class="og__word">{w1}<br /><span>{rest.join(" ")}</span></p>
+      <p class="og__url">bogazici-ie-internships.github.io/staj</p>
+    </div>
+    <div class="og__board">
+      <p class="og__head">{C.head}</p>
+      <p class="og__flaps">{[...C.flap].map((ch) => <span class="og__flap">{ch}</span>)}</p>
+      <ul>{C.rows.map(([q, a]) => <li><span>{q}</span><b>{a} →</b></li>)}</ul>
+    </div>
+  </main>
+</body>
+</html>
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  .og { position: relative; isolation: isolate; width: 1200px; height: 630px; box-sizing: border-box; padding: 56px 64px; display: grid; grid-template-columns: 1fr 440px; gap: 56px; align-items: center;
+    background-image: repeating-linear-gradient(90deg, var(--rule) 0 1px, transparent 1px 100%); background-size: calc(100% / 12) 100%; border-bottom: 14px solid var(--primary); }
+  .og :global(.contours) { z-index: -1; color: rgb(14 23 38 / 0.09); }
+  .og__left { display: grid; gap: 28px; align-content: space-between; height: 100%; }
+  .og__inst { display: flex; align-items: center; gap: 16px; font-family: var(--font-ui); font-weight: 700; font-size: 22px; color: var(--ink-2); }
+  .og__word { font-family: var(--font-display); font-stretch: 75%; font-weight: 800; font-size: 132px; line-height: 0.84; letter-spacing: -0.04em; color: var(--ink); }
+  :lang(en) .og__word { font-size: 104px; }
+  .og__word span { color: var(--primary); }
+  .og__url { font-family: var(--font-mono); font-size: 20px; color: var(--ink-2); }
+  .og__board { background: var(--surface); border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); padding: 26px 28px 18px; display: grid; gap: 22px; }
+  .og__head { font-family: var(--font-mono); font-size: 17px; color: var(--ink-2); }
+  .og__flaps { display: flex; gap: 6px; }
+  .og__flap { position: relative; flex: 1; display: grid; place-items: center; height: 92px; background: var(--ink); color: var(--paper); font-family: var(--font-mono); font-weight: 700; font-size: 58px; border-radius: 3px; }
+  .og__flap::after { content: ""; position: absolute; inset: 50% 0 auto; height: 2px; background: var(--paper); opacity: 0.55; }
+  .og__board ul { list-style: none; margin: 0; padding: 0; }
+  .og__board li { display: flex; justify-content: space-between; gap: 12px; padding: 13px 0; border-top: 1px solid var(--rule); font-family: var(--font-ui); font-size: 22px; }
+  .og__board li span { color: var(--ink-2); }
+  .og__board li b { color: var(--ink); }
+</style>

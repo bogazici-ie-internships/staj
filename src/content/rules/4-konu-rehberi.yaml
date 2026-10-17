@@ -1,0 +1,41 @@
+# § 4 — Konu Rehberi / Topic Guide (from docs/kurallar*.md; the tabs became two columns; UPDATE-03 voice)
+section: 4
+anchor: { tr: "konu-rehberi", en: "konu-rehberi" }
+title: { tr: "Konu Rehberi", en: "Topic Guide" }
+intro:
+  tr: Raporun ana bölümünde staj türünüze göre ele almanız beklenen konular aşağıda listelenmiştir. **Listedeki tüm konuları ele almanız zorunlu değildir**; staj türünüze uygun birkaç konuyu ayrıntılı olarak incelemeniz yeterlidir.
+  en: The topics you are expected to address in the main body of the report, according to your internship type, are listed below. **You are not required to cover every topic in the list**; it is sufficient to examine a few topics relevant to your internship type in depth.
+topics:
+  - id: uretim
+    title: { tr: "Üretim Stajı", en: "Production Internship" }
+    intro:
+      tr: "Üretim stajı **üretim/imalat bağlamında** yapılır; **üretimle ilgili ofis rolleri de üretim sayılır.** Doğrudan imalatta yer almasanız da EM derslerinde öğrendiklerinizi uygulamanız beklenir. Amirinizin endüstri mühendisi olması **tercih edilir, zorunlu değildir.** Aşağıdaki alanlardan **en az 2–3'ünde** çalışmış olmanız beklenir:"
+      en: "A Production Internship takes place in a **production or manufacturing context**; **office roles connected to production also count.** Even if you are not directly involved in manufacturing, you are expected to apply what you have learnt in IE courses. An IE supervisor is **preferred but not required.** You are expected to have worked in **at least 2–3** of the following areas:"
+    items:
+      - { tr: "Süreç analizi", en: "Process analysis" }
+      - { tr: "Üretim planlama ve çizelgeleme", en: "Production planning and scheduling" }
+      - { tr: "Üretim / proje yönetimi", en: "Production or project management" }
+      - { tr: "Kapasite ölçümü ve verimlilik analizi", en: "Capacity measurement and efficiency analysis" }
+      - { tr: "Tesis yerleşimi, malzeme taşıma ve depolama", en: "Facility layout, material handling, and warehousing" }
+      - { tr: "Talep tahmini", en: "Demand forecasting" }
+      - { tr: "Envanter yönetimi", en: "Inventory management" }
+      - { tr: "Kaynak tahsisi ve detaylı çizelgeleme", en: "Resource allocation and detailed scheduling" }
+      - { tr: "İç/dış lojistik planlaması", en: "Inbound and outbound logistics planning" }
+      - { tr: "Üretim teknolojileri: JIT, CIM, FMS, GT ve CAD/CAM", en: "Production technologies such as JIT, CIM, FMS, GT, and CAD/CAM" }
+      - { tr: "Ergonomi ve insan faktörleri", en: "Ergonomics and human factors" }
+      - { tr: "İş etüdü, yöntem etüdü ve zaman etüdü", en: "Work, method, and time studies" }
+      - { tr: "Yalın üretim ve Altı Sigma", en: "Lean production and Six Sigma" }
+      - { tr: "İstatistiksel kalite kontrol dâhil kalite planlama ve kontrol", en: "Quality planning and control, including statistical quality control" }
+      - { tr: "Üretime yönelik ERP modülleri; yalnızca **veri girişi** kabul edilmez", en: "Production-oriented ERP modules; **data entry** alone is not accepted" }
+  - id: serbest
+    title: { tr: "Serbest/Genel Staj", en: "General IE Internship" }
+    intro:
+      # UPDATE-05: live-site wording (main, docs/kurallar*.md); EN without the live EN's extra
+      # "a service industry is not required", which the live TR does not say (UPDATE-04 approval).
+      tr: "Serbest/genel staj, üretim dışında ve **EM ile ilgili** herhangi bir rolde yapılabilir. Sık görülen alanlar şunlardır: bilişim, sağlık, finans, ulaştırma, iletişim, danışmanlık, turizm yönetimi, pazarlama, yatırım planlaması, operasyon planlama, proje yönetimi, insan kaynakları, insan faktörleri, iş sağlığı ve güvenliği."
+      en: "A General IE Internship may be completed in any non-production role **related to industrial engineering**. Common fields include information technology, healthcare, finance, transportation, communications, consulting, tourism management, marketing, investment planning, operations planning, project management, human resources, human factors, and occupational health and safety."
+    items:
+      - { tr: "Yukarıda belirtilen EM araç ve teknikleri hizmet veya yönetim bağlamında uygulanır.", en: "The IE tools and techniques listed above are applied in a service or management context." }
+      - tr: "Serbest/genel staj bir **kamu kurumunda veya STK'da** da yapılabilir. Kızılay, KALDER ve Türkiye Eğitim Gönüllüleri Vakfı bu kuruluşlara örnektir. STK'da staj yapmak istiyorsanız staj koordinatöründen **sözlü izin** alınız."
+        en: "A General IE Internship may also be completed in a **public institution or NGO**. Examples include the Turkish Red Crescent, KALDER and the Educational Volunteers Foundation of Turkey. If you wish to intern at an NGO, obtain **verbal permission** from the internship coordinator."
+      - { tr: "Gereken süreyi aşan üretim stajı günleri de serbest/genel staja sayılabilir.", en: "Production internship days beyond the requirement may also count towards the General IE Internship." }

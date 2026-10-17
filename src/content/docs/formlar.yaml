@@ -1,0 +1,107 @@
+# formlar — migrated from main docs/formlar.md (+ .en.md), reviewed by hand (UPDATE-06 Phase 2a;
+# voice UPDATE-03, terms UPDATE-05). The four live tables became one document table grouped by
+# phase (the live section anchors sit on the group rows). Format and size come from the files in
+# public/belgeler at build. "Kimin imzası" is filled where the live site or the maintainer says who
+# signs (signerSrc); otherwise "—" (D-84, D-88).
+page: formlar
+anchor: { tr: formlar-belgeler, en: forms-documents }
+title: { tr: "Formlar ve Belgeler", en: "Forms and Documents" }   # FINAL-CHECK F-11: one name everywhere
+src: formlar.md:6 · formlar.en.md:6
+meta:
+  src: formlar.md:2 · formlar.en.md:2
+  note: → chrome.yaml pages.description (already migrated, UPDATE-03)
+lead:
+  - kind: p
+    text:
+      tr: Staj sürecinde ihtiyaç duyacağınız tüm form ve belgeler aşağıdadır.
+      en: All the forms and documents you will need during the internship process are listed below.
+    src: formlar.md:8 · formlar.en.md:8
+  - kind: doctable
+    src: formlar.md:12 · formlar.en.md:12
+    head:
+      name: { tr: Belge, en: Document }
+      purpose: { tr: Ne için, en: Purpose }
+      when: { tr: Ne zaman, en: When }
+      signer: { tr: Kimin imzası, en: Signed by }
+      format: { tr: Biçim, en: Format }
+      download: { tr: İndir, en: Download }
+    groups:
+      - anchor: { tr: rehber-kurallar, en: guide-and-rules }
+        title: { tr: Rehber ve Kurallar, en: Guide and Rules }
+        src: formlar.md:10 · formlar.en.md:10
+        rows:
+          - doc: Revised-Handbook-of-Internship.pdf
+            name: { tr: Internship Handbook, en: Internship Handbook }
+            purpose: { tr: Tüm staj kurallarının resmî metni, en: Official text of all internship rules }
+            src: formlar.md:14 · formlar.en.md:14
+      - anchor: { tr: stajdan-once, en: before-the-internship }
+        title: { tr: Stajdan Önce, en: Before the Internship }
+        src: formlar.md:16 · formlar.en.md:16
+        rows:
+          - doc: Compulsory-Internship-Letter-TR.pdf
+            name: { tr: Staj Zorunluluk Belgesi (Türkçe), en: Compulsory Internship Letter (Turkish) }
+            purpose: { tr: Şirket talep ederse şirkete verilir, en: Provided to the company if requested }
+            signer: { tr: "Hazır imzalı", en: "Pre-signed by the department" }
+            signerSrc: "maintainer: UPDATE-06 Phase 2a answers (D-88)"
+            src: formlar.md:20 · formlar.en.md:20
+          - doc: Compulsory-Internship-Letter-EN.pdf
+            name: { tr: Staj Zorunluluk Belgesi (İngilizce), en: Compulsory Internship Letter (English) }
+            purpose: { tr: Şirket talep ederse şirkete verilir, en: Provided to the company if requested }
+            signer: { tr: "Hazır imzalı", en: "Pre-signed by the department" }
+            signerSrc: "maintainer: UPDATE-06 Phase 2a answers (D-88)"
+            src: formlar.md:21 · formlar.en.md:21
+          - doc: EK-1-Form.docx
+            name: { tr: EK-1 Formu, en: EK-1 Form }
+            purpose: { tr: Sigorta girişi (ve şirket talep ederse devlet katkısı), en: Insurance registration (and the government contribution if the company claims it) }
+            signer: { tr: "İşveren firma; ardından bölüm onayı", en: "The employer; then department approval" }
+            signerSrc: surec/index.md:74 · surec/index.md:77 · sss.md:148
+            src: formlar.md:22 · formlar.en.md:22
+          - doc: State-Contribution-Guide.pdf
+            name: { tr: Devlet Katkısında İzlenecek Yol, en: Government Contribution Guide }
+            purpose: { tr: EK-1 sürecinin açıklaması, en: Explanation of the EK-1 process }
+            src: formlar.md:23 · formlar.en.md:23
+      - anchor: { tr: staj-srasnda, en: during-the-internship }
+        title: { tr: Staj Sırasında, en: During the Internship }
+        src: formlar.md:25 · formlar.en.md:25
+        rows:
+          - doc: Internship-Timetable.docx
+            name: { tr: Staj Timetable Şablonu, en: Internship Timetable Template }
+            purpose: { tr: Raporun 4. bölümünde kullanılan günlük çizelge, en: Daily timetable used in Section 4 of the report }
+            signer: { tr: "Öğrenci", en: "Student" }
+            signerSrc: "maintainer: UPDATE-06 Phase 2a answers (D-88)"
+            src: formlar.md:29 · formlar.en.md:29
+      - anchor: { tr: stajdan-sonra, en: after-the-internship }
+        title: { tr: Stajdan Sonra, en: After the Internship }
+        src: formlar.md:31 · formlar.en.md:31
+        rows:
+          - doc: Trainee-Evaluation-Form.pdf
+            name: { tr: Staj Sicil Formu, en: Trainee Evaluation Form }
+            purpose: { tr: İmzalı ve kaşeli olarak teslim edilir, en: Submitted signed and stamped }
+            signer: { tr: "İşyeri (imza ve kaşe)", en: "The workplace (signature and stamp)" }
+            signerSrc: sss.md:150 · surec/index.md:194
+            src: formlar.md:35 · formlar.en.md:35
+          - doc: Student-Internship-Survey.pdf
+            name: { tr: Öğrenci Staj Anketi, en: Student Internship Survey }
+            purpose: { tr: Öğrenci tarafından doldurularak teslim edilir, en: Completed by the student and submitted }
+            src: formlar.md:36 · formlar.en.md:36
+  - kind: callout
+    tone: note
+    title: { tr: Şablonu Olmayan Belgeler, en: Documents Without a Template }   # FINAL-CHECK F-12
+    src: formlar.md:38 · formlar.en.md:38
+    blocks:
+      - kind: p
+        text:
+          tr: "Bu belgelerin hazır bir şablonu yoktur; belgeler **şirketten** alınır: cumartesi günleri çalışıldıysa imzalı veya kaşeli bir yazı, şirket devlet katkısı talep ediyorsa ödeme dekontu veya bordro ile staj başındaki aynı EK-1. Ayrıntılar: [Stajdan Sonra](page:surec#sonrasi)."
+          en: "There is no template for these documents; they are obtained from the **company**: a signed or stamped letter if you worked on Saturdays, and, if the company claims the government contribution, a payment receipt or payslip together with the same EK-1 used at the start of the internship. Details: [After the Internship](page:surec#sonrasi)."
+        src: formlar.md:39 · formlar.en.md:39
+  - kind: callout
+    tone: note
+    title: { tr: Bu Belgeler Dışında Belge Verilmez, en: No Other Documents Are Issued }
+    src: formlar.md:44 · formlar.en.md:45
+    blocks:
+      - kind: p
+        text:
+          tr: "Yukarıda listelenen belgeler dışında öğrencilere ek belge verilmez. İhtiyaç duyduğunuz diğer evraklar (ör. Cumartesi Yazısı, ödeme dekontu veya bordro, EK-1 kopyası) **şirketinizden** veya kendi kayıtlarınızdan alınız."
+          en: "No documents other than those listed above are issued to students. Any other paperwork you need (e.g. the Saturday Work Letter, a payment receipt or payslip, or your copy of the EK-1) is obtained from **your company** or from your own records."
+        src: formlar.md:45 · formlar.en.md:46
+sections: []
