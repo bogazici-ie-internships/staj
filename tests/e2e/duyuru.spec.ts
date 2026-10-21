@@ -1,4 +1,5 @@
 // Duyuru bandı (D-95, D-102): a build with a sample settings.yml › duyuru (STAJ_SETTINGS, test builds only).
+// The build drops a notice past its end by the real clock, so the samples end in 2099.
 // Closable; the closed notice is remembered in localStorage by its id (texts + end time) and stays hidden;
 // a new notice shows again; `kapatilamaz: true` has no close button; nothing shifts the layout.
 import { execFileSync } from "node:child_process";
@@ -24,9 +25,9 @@ let a: string, b: string, urgent: string;
 test.describe.configure({ mode: "serial" });
 test.beforeAll(async () => {
   test.setTimeout(240_000);
-  a = build("a", '  mesaj: "Sonuç listesi güncellendi."\n  mesaj_en: "The results list has been updated."\n  bitis: "2026-10-20 23:59"\n');
-  b = build("b", '  mesaj: "Geç teslim süresi uzatıldı."\n  mesaj_en: "The late window has been extended."\n  bitis: "2026-10-20 23:59"\n');
-  urgent = build("u", '  mesaj: "Portal bakımda."\n  mesaj_en: "The portal is under maintenance."\n  bitis: "2026-10-20 23:59"\n  kapatilamaz: true\n');
+  a = build("a", '  mesaj: "Sonuç listesi güncellendi."\n  mesaj_en: "The results list has been updated."\n  bitis: "2099-10-20 23:59"\n');
+  b = build("b", '  mesaj: "Geç teslim süresi uzatıldı."\n  mesaj_en: "The late window has been extended."\n  bitis: "2099-10-20 23:59"\n');
+  urgent = build("u", '  mesaj: "Portal bakımda."\n  mesaj_en: "The portal is under maintenance."\n  bitis: "2099-10-20 23:59"\n  kapatilamaz: true\n');
 });
 const band = (p: Page) => p.locator(".duyuru");
 
@@ -44,7 +45,7 @@ test("duyuru: kapatılır, hatırlanır; yeni duyuru yeniden görünür", async 
 });
 
 test("duyuru: süresi dolunca görünmez; kapatılamaz duyuruda düğme yok", async ({ page }) => {
-  await open(page, "", { site: a, at: Date.parse("2026-10-20T21:00:00Z") });
+  await open(page, "", { site: a, at: Date.parse("2099-10-20T21:00:00Z") });
   await expect(band(page)).toBeHidden();
   await open(page, "en/", { site: urgent, at: AT });
   await expect(band(page)).toContainText("The portal is under maintenance.");
