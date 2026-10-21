@@ -1,0 +1,32 @@
+# iletisim — migrated from main docs/iletisim.md (+ .en.md) by scripts/migrate/convert.mjs,
+# then reviewed by hand (UPDATE-06 Phase 2a; voice UPDATE-03, terms UPDATE-05). Names and addresses
+# come from settings.yml (iletisim.*), as on the live site; only the labels live here. The page ends
+# with the "Site Hakkında" block from chrome.yaml › about (UPDATE-04 §1).
+page: iletisim
+anchor: { tr: iletisim, en: contact }
+title: { tr: İletişim, en: Contact }
+src: iletisim.md:8 · iletisim.en.md:8
+meta:
+  src: iletisim.md:2 · iletisim.en.md:2
+  note: → chrome.yaml pages.description (already migrated, UPDATE-03)
+lead:
+  - kind: p
+    text:
+      tr: Sorularınızın çoğunun yanıtı bu sitededir. Yazmadan önce ilgili sayfalara, özellikle [Sık Sorulan Sorular](page:sss) sayfasına bakmanızı öneririz.
+      en: Most questions are answered on this site. Before writing, please review the relevant pages, especially the [Frequently Asked Questions](page:sss).
+    src: iletisim.md:10 · iletisim.en.md:10
+  - kind: contacts
+    src: iletisim.md:21 · iletisim.en.md:23
+    primary:
+      role: { tr: "İlk iletişim", en: "First point of contact" }
+      name: { tr: "Staj Asistanlarının Genel Adresi", en: "The Internship Assistants' General Address" }
+      # REVIEW-06 Note 3: the "Genel İletişim Adresi" callout above repeated this card; its one extra fact (every
+      # assistant sees this address) moved here (live iletisim.md:13).
+      note: { tr: "Bu adrese gelen iletileri tüm asistanlar gördüğünden çoğu soruya en hızlı yanıt buradan verilir.", en: "Every assistant sees the messages sent to this address, so it is the fastest route for most questions." }
+    mail: { src: iletisim.md:25 · iletisim.en.md:27 }
+    people: { src: iletisim.md:27 · iletisim.en.md:29 }
+    coordinator:
+      role: { tr: "Staj koordinatörü", en: "Internship coordinator" }
+      note: { tr: "EK-1'inizi bu adrese gönderiniz; diğer konularda yalnızca staj asistanları yönlendirdiğinde başvurunuz.", en: "Send your EK-1 to this address; for other matters, write only when the internship assistants direct you here." }
+      src: iletisim.md:34 · iletisim.en.md:36
+sections: []

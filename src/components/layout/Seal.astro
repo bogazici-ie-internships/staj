@@ -1,0 +1,11 @@
+---
+// DESIGN.md §3.7 — the original full-colour BU seal on a white circle; never tinted.
+import { assetPath } from "../../lib/paths";
+interface Props { size?: number; alt: string }
+const { size = 46, alt } = Astro.props;
+---
+<span class="seal" style={`--s:${size}px`}><img src={assetPath("assets/bulogo.svg")} alt={alt} width={size - 4} height={size - 4} decoding="async" /></span>
+<style>
+  .seal { width: var(--s); height: var(--s); border-radius: 50%; background: #fff; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .seal img { width: calc(var(--s) - 4px); height: calc(var(--s) - 4px); }
+</style>

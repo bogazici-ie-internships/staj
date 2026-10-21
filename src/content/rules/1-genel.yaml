@@ -1,0 +1,46 @@
+# § 1 — Genel Bilgiler / General Information
+# Source: docs/kurallar.md + docs/kurallar.en.md (MkDocs site), reworded to the UPDATE-03 voice.
+# Edit a rule: change its `body` text (both tr and en). Links: [metin](page:surec#oncesi)
+# point at a site page in the reader's language; [metin](doc:Dosya.pdf) at /belgeler/.
+section: 1
+anchor: { tr: "genel-bilgiler", en: "general-information" }
+title: { tr: "Genel Bilgiler", en: "General Information" }
+rules:
+  - no: "1.1"
+    highlight:
+      value: { tr: "40 iş günü", en: "40 workdays" }
+      caption: { tr: "Toplam staj süresi mezuniyet şartıdır.", en: "The total internship period is a graduation requirement." }
+    body:
+      tr: Tüm Endüstri Mühendisliği (EM) öğrencileri 4 yıllık lisans eğitimi süresince **en az 40 iş günü** staj yapmak zorundadır. **40 iş günü staj mezuniyet şartıdır.**
+      en: All Industrial Engineering (IE) students must complete **at least 40 workdays** of internship during the 4-year undergraduate programme. **The 40-workday internship is a graduation requirement.**
+  - no: "1.2"
+    source: department   # not in the Handbook (UPDATE-02 A2)
+    body:
+      tr: "**Çift Anadal (ÇAP) öğrencileri:** ana bölümünüz **EM ise** şartlar aynıdır (40 iş günü, en az 15 iş günü üretim stajı). Ana bölümünüz **EM değilse**, EM için yalnızca **en az 15 iş günü üretim stajı** yeterlidir; 40 iş günlük toplam şartı aranmaz."
+      en: "**Double major (ÇAP) students:** if your primary major **is IE**, the same requirements apply (40 workdays, at least 15 workdays of Production Internship). If your primary major **is not IE**, only **at least 15 workdays of Production Internship** are required on the IE side; the 40-workday total does not apply."
+  - no: "1.3"
+    source: department   # not in the Handbook (UPDATE-02 A2)
+    body:
+      tr: "**Yandal öğrencileri** için EM tarafında **herhangi bir staj zorunluluğu yoktur.**"
+      en: "**Minor (yandal) students** have **no internship requirement** on the IE side."
+  - no: "1.4"
+    highlight:
+      value: { tr: "15 iş günü üretim", en: "15 workdays in production" }
+      caption: { tr: "Kalan günler için tür kısıtlaması yoktur.", en: "The remaining days are not restricted by type." }
+    body:
+      tr: "40 iş gününün **en az 15 iş günü üretim** stajı olmalıdır. **Zorunlu olan tek tür şartı budur:** kalan günler için tür kısıtlaması yoktur; bu günler serbest/genel staj olabilir, 15 iş gününü aşan üretim stajı süresi de bu günlere sayılır. Finans, pazarlama, bilişim ve benzeri roller **serbest/genel staj** olarak kabul edilir."
+      en: "At least **15 of the 40 workdays must be Production Internship**. **This is the only type requirement:** the remaining days are not restricted by type; they may be completed as General IE Internship, and Production Internship beyond 15 workdays also counts towards them. Finance, marketing, information technology and similar roles are accepted as **General IE Internship**."
+  - no: "1.5"
+    body:
+      tr: "**Staj türü staja başlamadan önce belirlenir** ve rapor buna göre hazırlanır. Staj türünüzden emin değilseniz staj asistanlarına danışabilirsiniz; nihai onay **staj koordinatörüne** aittir."
+      en: "**The internship type is determined before the internship begins**, and the report is prepared accordingly. If you are unsure of your internship type, you may consult the internship assistants; final approval rests with the **internship coordinator**."
+  - no: "1.6"
+    terms: [sicil]
+    body:
+      tr: Staj raporu teslim edilirken imzalı ve kaşeli **Staj Sicil Formu** ile **Öğrenci Staj Anketi** rapora eklenir.
+      en: The signed and stamped **Trainee Evaluation Form** and the **Student Internship Survey** must be submitted with the internship report.
+  - no: "1.7"
+    terms: [ek1]
+    body:
+      tr: "**Sigorta:** kanun gereği tüm stajyerler, staj süresince iş kazası ve meslek hastalıklarına karşı Boğaziçi Üniversitesi tarafından sigortalanır. İzlenecek adımlar [Stajdan Önce](page:surec#oncesi) bölümünde açıklanmıştır."
+      en: "**Insurance:** by law, Boğaziçi University insures all interns against occupational accidents and occupational diseases during the internship. The steps to follow are explained under [Before the Internship](page:surec#oncesi)."

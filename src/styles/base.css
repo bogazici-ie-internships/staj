@@ -1,0 +1,191 @@
+/* Global base: reset, type voices, focus, browser surfaces, layout primitives.
+   Components keep their own scoped styles; nothing here is page-specific. */
+@layer reset, base, utilities;
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  img, svg, video { display: block; max-width: 100%; }
+  input, button, textarea, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+  [hidden]:not([hidden="until-found"]) { display: none !important; }
+}
+
+@layer base {
+  :root {
+    --font-display: "Bricolage", "Arial Narrow", sans-serif;
+    --font-ui: "Schibsted", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    --font-editorial: "Newsreader", Georgia, serif;
+    --z-sticky: 10; --z-overlay: 30; --z-dialog: 40; --z-toast: 50;
+    font-synthesis: none;
+  }
+  html { background: var(--paper); color: var(--ink); scroll-padding-top: var(--space-6); }
+  /* Paper grain (D-43): a 180 px noise tile at ~3 % ink on the paper ground only (light theme).
+     A background tile, not an overlay: no extra layer, no blend mode, nothing to hit-test. */
+  html, body { background-image: var(--grain, none); }
+  :root { --grain-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.055  0 0 0 0 0.09  0 0 0 0 0.15  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.11'/%3E%3C/svg%3E"); }
+  :root:not([data-theme="dark"]) { --grain: var(--grain-tile); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --grain: none; } }
+  body {
+    font-family: var(--font-ui); font-size: var(--step-0); line-height: 1.5;
+    background-color: var(--paper); color: var(--ink); min-height: 100dvh;
+    display: flex; flex-direction: column;
+    text-rendering: optimizeLegibility;
+  }
+  main { flex: 1; }
+  h1, h2, h3, h4, .callout__title, .card__title, .contact__name, .suf-sub, .rail__h, summary { text-wrap: balance; }   /* REVIEW-01 Note 6 widened the list */
+  p, li, dd, dt, td, th, figcaption, blockquote { text-wrap: pretty; }
+  /* One bullet style (REVIEW-01 Notes 4, 6): nested lists would fall back to the browser's hollow circles. */
+  :where(ul ul, ol ul) { list-style-type: disc; }
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  a:hover { text-decoration-thickness: 2px; }
+  strong, b { font-weight: 700; }
+
+  /* Browser surfaces carry the design too (impeccable craft floor). */
+  ::selection { background: var(--primary); color: var(--on-primary); }
+  input, textarea { caret-color: var(--primary); }
+  html { scrollbar-color: var(--muted) transparent; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; box-shadow: 0 0 0 4px var(--paper); }
+
+  .mono, time, kbd, code { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .nw { white-space: nowrap; }   /* no line break inside (FINAL-CHECK F-10: "EK-1") */
+  .visually-hidden:not(:focus):not(:active) {
+    clip-path: inset(50%); height: 1px; width: 1px; overflow: hidden; position: absolute; white-space: nowrap;
+  }
+  .wrap { width: 100%; max-width: var(--max-width); margin-inline: auto; padding-inline: max(var(--gutter), env(safe-area-inset-left)) max(var(--gutter), env(safe-area-inset-right)); }
+
+  /* Full-bleed bands (D-42): the band re-points the tokens, so every component inside
+     (rules, links, focus ring, chips) keeps AA contrast without per-component overrides. */
+  .band, .band--ink {
+    --ink: var(--band-ink); --ink-2: var(--band-ink-2); --muted: var(--band-muted); --rule: var(--band-rule);
+    --rule-strong: var(--band-ink); --accent-text: var(--band-accent); --focus: var(--band-ink);
+    --paper: var(--band-bg); --primary-tint: rgb(255 255 255 / 0.08);
+    --border-hairline: 1px solid var(--band-rule); --border-strong: 2px solid var(--band-ink); --border-double: 3px double var(--band-ink);
+    background: var(--band-bg); color: var(--band-ink);
+  }
+  .band--ink {
+    --band-bg: var(--inkband-bg); --band-ink: var(--inkband-ink); --band-ink-2: var(--inkband-ink-2);
+    --band-muted: var(--inkband-ink-2); --band-accent: var(--inkband-accent); --band-rule: var(--inkband-rule);
+  }
+  .band ::selection { background: var(--band-ink); color: var(--band-bg); }
+
+  /* REVIEW-01 Note 4 (D-114): ONE numbering style for numbered items (Kurallar rules and sections, Rapor/Süreç
+     numbered headings, SSS questions): plain decimals, small muted mono, in a fixed column aligned to the
+     first line of the text it numbers. No "§". */
+  .numbered { display: grid; grid-template-columns: var(--num-col) minmax(0, 1fr); align-items: baseline; column-gap: 0; }
+  .numbered > .num { grid-column: 1; }
+  .numbered > :not(.num) { grid-column: 2; }
+  .num { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 500; line-height: 1; letter-spacing: 0; font-stretch: 100%;
+    font-variant-numeric: tabular-nums; color: var(--muted); text-decoration: none; white-space: nowrap; }
+  a.num:hover { color: var(--accent-text); text-decoration: underline; }
+
+  /* Detail popovers (D-45, D-62) were removed in REVIEW-01 Note 3: every detail is shown directly (D-113). */
+
+  /* Prose links: the underline thickens from the left on hover/focus (D-45). The 1 px
+     underline stays at rest so links never rely on colour alone. */
+  main :is(p, li, dd) a:not(.btn) {
+    text-decoration-thickness: 1px;
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat;
+    transition: background-size 200ms var(--ease);
+  }
+  main :is(p, li, dd) a:not(.btn):is(:hover, :focus-visible) { background-size: 100% 2px; text-decoration-color: transparent; }
+
+  /* Section index (Kronometre: "02 — Takvim"), DESIGN.md §3.4 — Home only. */
+  .index { font-family: var(--font-mono); font-size: var(--text-label); color: var(--muted); letter-spacing: 0; }
+  .display { font-family: var(--font-display); font-stretch: 80%; font-weight: 800; letter-spacing: -0.02em; line-height: 0.95; }
+  .h2 { font-family: var(--font-display); font-stretch: 80%; font-weight: 800; font-size: var(--display-h2); line-height: 0.95; letter-spacing: -0.02em; }
+
+  /* Buttons (DESIGN.md §4): primary with the hard shadow, secondary framed, tertiary link. */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+    min-height: 52px; padding: 0 22px; border-radius: var(--radius-field);
+    font-weight: 700; font-size: 1rem; text-decoration: none; border: 2px solid transparent; background: transparent; color: var(--ink);
+    transition: transform var(--dur-short) var(--ease), box-shadow var(--dur-short) var(--ease), background-color var(--dur-short) var(--ease);
+  }
+  /* Icons sit inline with text (the reset makes svg block). */
+  .icon { display: inline-block; vertical-align: -0.15em; flex: none; }
+  .btn .icon { flex: none; }
+  .btn--primary { background: var(--primary); color: var(--on-primary); box-shadow: var(--shadow-hard); }
+  /* Tactile primary (D-45): lifts 1 px on hover, the hard shadow collapses on press. */
+  .btn--primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+  .btn--primary:active, .btn--primary[data-pressed] { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); transition-duration: 60ms; }
+  .btn--secondary:active, .btn--secondary[data-pressed] { transform: translate(1px, 1px); }
+  .btn--secondary { border-color: var(--ink); color: var(--ink); background: transparent; }
+  .btn--secondary:hover { background: var(--primary-tint); }
+  .btn--tertiary { padding-inline: var(--space-2); text-decoration: underline; text-underline-offset: 0.25em; font-weight: 600; min-height: 44px; }
+  .btn[disabled], .btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; box-shadow: none; transform: none; }
+  @media (max-width: 600px) { .btn { min-height: 52px; } }
+
+  /* Status chip: mono 12px, fill + text, never colour alone (DESIGN.md §4). */
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: var(--text-small); font-weight: 700; padding: 4px 8px; line-height: 1.2; white-space: nowrap; }
+  .chip--signal { background: var(--signal); color: var(--on-signal); }
+  .chip--ink { background: var(--ink); color: var(--paper); }
+  .chip--quiet { color: var(--ink-2); padding-inline: 0; font-weight: 400; }
+  .chip--success { background: var(--success); color: #fff; }
+  :root[data-theme="dark"] .chip--success { color: var(--paper); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .chip--success { color: var(--paper); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+  }
+}
+
+/* Drawn rules (D-46): a top rule painted by ::before so it can draw in from the left. */
+.draw { position: relative; }
+.draw::before { content: ""; position: absolute; left: 0; right: 0; top: 0; border-top: var(--draw-rule, var(--border-strong)); transform-origin: left center; pointer-events: none; }
+.draw--double { --draw-rule: var(--border-double); }
+
+/* Page entrance (D-46), once per load, only when motion is allowed:
+   the h1 rises 12 px and fades in, then section indices fade in; rules below the
+   fold draw in as they scroll into view (scroll-driven, where supported; else static). */
+@media (prefers-reduced-motion: no-preference) {
+  main h1 { animation: enter-rise 480ms var(--ease) both; }
+  main .index { animation: enter-fade 360ms var(--ease) 140ms both; }
+  @supports (animation-timeline: view()) {
+    .draw::before { animation: draw-x linear both; animation-timeline: view(); animation-range: entry 0% cover 22%; }
+    .draw:nth-child(2)::before { animation-range: entry 5% cover 27%; }
+    .draw:nth-child(3)::before { animation-range: entry 10% cover 32%; }
+  }
+  /* 0.01, not 0: a fully transparent h1 is not an LCP candidate, which would delay LCP. */
+  @keyframes enter-rise { from { opacity: 0.01; transform: translateY(12px); } }
+  @keyframes enter-fade { from { opacity: 0; } }
+  @keyframes draw-x { from { transform: scaleX(0); } }
+}
+
+/* View transition: the h1 morphs between pages (DESIGN.md motion). */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 200ms; animation-timing-function: var(--ease); }
+}
+
+/* Search palette (REVIEW-02 Note 3; built on first open by src/scripts/search-ui.ts). */
+.srch-dlg { margin: max(8vh, 16px) auto auto; padding: 0; border: 0; background: transparent; width: min(42rem, calc(100% - 32px)); max-height: 80dvh; overflow: visible; }
+.srch-dlg::backdrop { background: var(--scrim); }
+.srch { display: flex; flex-direction: column; max-height: 80dvh; background: var(--surface); color: var(--ink); border: 2px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); }
+.srch__field input::-webkit-search-cancel-button { display: none; }
+.srch__field { display: flex; align-items: center; gap: 10px; padding: 0 12px; border-bottom: 1px solid var(--rule-strong); }
+.srch__input { flex: 1; min-width: 0; height: 56px; border: 0; background: transparent; color: var(--ink); font: 600 1.05rem var(--font-ui); outline: none; }
+.srch__input:focus-visible { outline: none; box-shadow: none; }
+.srch__field:focus-within { box-shadow: inset 0 -2px 0 var(--focus); }   /* the field row shows focus, not an inner box */
+.srch__close { min-height: 44px; padding: 0 10px; border: 1px solid var(--rule-strong); background: transparent; color: var(--ink); font: 600 14px var(--font-ui); cursor: pointer; }
+.srch__hint { padding: 10px 14px 6px; font: 14px var(--font-ui); color: var(--muted); }
+.srch__results { overflow: auto; min-height: 0; padding: 0 6px 8px; }
+.srch__results:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.srch__suggest { padding: 4px 8px 8px; display: grid; gap: 8px; }
+.srch__suggest[hidden], .srch__none[hidden] { display: none; }
+.srch__label { font: 700 12px var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
+.srch__chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.srch__chip { min-height: 40px; padding: 0 12px; border: 1px solid var(--rule-strong); background: var(--surface); color: var(--ink); font: 600 14px var(--font-ui); cursor: pointer; }
+.srch__chip:hover { border-color: var(--ink); }
+.srch__none { padding: 8px 10px 12px; font: 15px/1.5 var(--font-ui); color: var(--ink-2); }
+.srch__none a { font-weight: 700; }
+.srch__group { padding: 12px 10px 4px; font: 700 12px var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent-text); }
+.srch__item { display: grid; gap: 2px; padding: 10px; border-top: 1px solid var(--rule); cursor: pointer; color: var(--ink); }
+.srch__item[aria-selected="true"] { background: var(--primary-tint); outline: 2px solid var(--focus); outline-offset: -2px; }
+.srch__page { font: 12px var(--font-mono); color: var(--muted); }
+.srch__page:empty { display: none; }
+.srch__title { font: 700 1rem var(--font-ui); }
+.srch__excerpt { font: 14px/1.45 var(--font-ui); color: var(--ink-2); }
+.srch__excerpt mark { background: var(--primary-tint); color: var(--ink); font-weight: 700; }

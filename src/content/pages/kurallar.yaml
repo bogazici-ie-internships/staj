@@ -1,0 +1,8 @@
+# Kurallar page frame. The rules themselves live in src/content/rules/*.yaml.
+masthead: { tr: "Kurallar", en: "Rules" }
+lede:
+  tr: "Aşağıdaki kurallar resmî **[Internship Handbook](doc:Revised-Handbook-of-Internship.pdf)** esas alınarak özetlenmiştir. Bağlayıcı metin Internship Handbook'tur; tereddüt hâlinde Handbook'a ve bölüm duyurularına başvurunuz."
+  en: "The rules below are summarised from the official **[Internship Handbook](doc:Revised-Handbook-of-Internship.pdf)**. The Internship Handbook is the binding text; if in doubt, consult the Handbook and departmental announcements."
+keyFigures: { tr: "Temel Şartlar", en: "Key Requirements" }
+ajanda:   # the glossary heading in the right rail (contents and toggle labels come from layout.yaml since D-105)
+  terms: { tr: "Terimler", en: "Terms" }

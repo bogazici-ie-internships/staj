@@ -1,0 +1,54 @@
+---
+// Footer: consistent help location (WCAG 3.2.6), institution, build date in TSİ.
+// REVIEW-01 Note 7 (D-116): compact and institutional — the seal with a one-line wordmark, the contact line
+// (with the EK-1 coordinator sentence that Home's contact band used to repeat above the footer), and the
+// institution / department / "Site Hakkında" / last-updated row. The giant B8 wordmark and the contour art are gone.
+import { copy, t } from "../../lib/content";
+import { settings } from "../../lib/settings";
+import { buildYmd } from "../../lib/build-info";
+import { dotDateYear, longDate, type Lang } from "../../lib/dates";
+import { pagePath } from "../../lib/paths";
+import Icon from "../../icons/Icon.astro";
+import Seal from "./Seal.astro";
+/** `helpId`: the live Home page's "İletişim" anchor (#iletisim / #contact), kept on Home only (REVIEW-05 B-14). */
+interface Props { lang: Lang; helpId?: string }
+const { lang, helpId } = Astro.props;
+const chrome = await copy("chrome");
+const f = chrome.footer;
+const mail = settings.iletisim.genel_eposta;
+---
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <div class="ftr__top">
+      <p class="ftr__brand" aria-hidden="true"><Seal alt="" size={36} /><span class="ftr__word">{t(chrome.brand.service, lang)}</span></p>
+      <div class="ftr__help" id={helpId}>
+        <p>{t(f.help, lang)} <a class="mono" href={`mailto:${mail}`}>{mail}</a></p>
+        <p class="ftr__ek1">{t(f.ek1, lang)}</p>
+      </div>
+    </div>
+    <div class="ftr__row">
+      <span>{t(chrome.brand.institution, lang)} · <a href={f.departmentUrl} rel="noopener">{t(f.department, lang)}<Icon name="arrow-up-right" size={14} /></a></span>
+      <span><a href={`${pagePath(lang, "iletisim")}#${t(chrome.about.anchor, lang)}`}>{t(f.about, lang)}</a> · {t(f.lastUpdated, lang)} <time datetime={`${buildYmd.y}-${String(buildYmd.m).padStart(2, "0")}-${String(buildYmd.d).padStart(2, "0")}`} title={longDate(lang, buildYmd)}>{dotDateYear(buildYmd)}</time></span>
+    </div>
+  </div>
+</footer>
+<style>
+  .ftr { border-top: 1px solid var(--rule-strong); margin-top: var(--space-8); background: var(--paper); }
+  :global(main:has(> .band:last-child)) + .ftr { margin-top: 0; }   /* a page ending on a full-width band meets the footer */
+  .ftr__in { display: grid; gap: var(--space-3); padding-block: var(--space-4) var(--space-3); }
+  @media (min-width: 761px) { .ftr__in { gap: var(--space-5); padding-block: var(--space-6) var(--space-5); } }
+  .ftr__top { display: grid; gap: var(--space-2) var(--space-6); align-items: start; }
+  @media (min-width: 761px) { .ftr__top { grid-template-columns: auto minmax(0, 1fr); align-items: center; } }
+  .ftr__brand { display: inline-flex; align-items: center; gap: 10px; margin: 0; }
+  .ftr__word { font-family: var(--font-display); font-stretch: 80%; font-weight: 800; font-size: 20px; line-height: 1; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; }
+  .ftr__help { display: grid; gap: 2px; font-size: 15px; line-height: 1.4; }
+  @media (min-width: 761px) { .ftr__help { justify-items: end; text-align: right; } }
+  .ftr__help a { font-weight: 700; overflow-wrap: anywhere; }
+  .ftr__ek1 { color: var(--ink-2); font-size: 14px; text-wrap: pretty; }
+  /* D-181 (RELEASE-CHECK R-05): ≥ 24 px targets that never overlap when the two halves wrap onto two rows (phones). */
+  .ftr__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 24px; padding-top: var(--space-3); border-top: 1px solid var(--rule);
+    font-family: var(--font-mono); font-size: var(--text-small); color: var(--muted); }
+  .ftr__row a { color: var(--ink-2); display: inline-block; white-space: nowrap; padding-block: 3px; margin-block: -3px; }
+  @media (max-width: 600px) { .ftr__row { padding-top: var(--space-2); } }   /* keeps the phone footer as tall as before */
+  .ftr__row a :global(.icon) { vertical-align: -2px; margin-left: 2px; }
+</style>

@@ -1,0 +1,115 @@
+---
+// Renders the Phase 2a block tree (src/content/schemas/docs.ts). Recursive (callouts, cards, list
+// items and answers contain blocks). All text goes through inline-md, so content can never inject HTML.
+import type { Block } from "../../content/schemas/docs";
+import Icon from "../../icons/Icon.astro";
+import { copy, t } from "../../lib/content";
+import { md, resolveTarget } from "../../lib/inline-md";
+import { docPath } from "../../lib/paths";
+import { docRowId } from "../../lib/search/ids";
+import { settings } from "../../lib/settings";
+import { fileInfo } from "../../lib/belgeler";
+import Results from "./Results.astro";
+import type { Lang } from "../../lib/dates";
+interface Props { blocks: Block[]; lang: Lang; qaBase?: string }
+const { blocks, lang, qaBase } = Astro.props;
+const chrome = await copy("chrome");
+const u = chrome.ui;
+const T = (v: { tr: string; en: string }) => md(t(v, lang), lang);
+const TONE_ICON = { danger: "triangle-alert", warning: "triangle-alert", note: "info", tip: "check", summary: "clipboard-list" } as const;
+const href = (target: string) => target.startsWith("link:")
+  ? (settings.baglantilar as Record<string, string>)[target.slice(5)]
+  : resolveTarget(target, lang).href;
+const i = settings.iletisim;
+---
+{blocks.map((b) => (
+  b.kind === "p" ? <p set:html={T(b.text)} /> :
+  b.kind === "list" ? (
+    b.ordered
+      ? <ol class="dl">{b.items.map((it) => <li><span set:html={T(it.text)} />{it.blocks && <Astro.self blocks={it.blocks} lang={lang} />}</li>)}</ol>
+      : <ul class="dl">{b.items.map((it) => <li><span set:html={T(it.text)} />{it.blocks && <Astro.self blocks={it.blocks} lang={lang} />}</li>)}</ul>
+  ) :
+  b.kind === "files" ? (
+    <ul class="files" role="list">{b.items.map((f) => { const fi = fileInfo(f.doc, lang); return (
+      <li><a href={docPath(f.doc)} class="files__a"><Icon name={fi.kind === "pdf" ? "file-text" : "file-pen-line"} size={20} /><span class="files__name">{t(f.label, lang)}</span><span class="files__meta mono">{fi.format} · {fi.size}</span></a></li>
+    ); })}</ul>
+  ) :
+  b.kind === "callout" ? (
+    <aside class={`callout callout--${b.tone}`} aria-label={t(b.title, lang).replace(/\*\*/g, "")}>
+      <p class="callout__title"><Icon name={TONE_ICON[b.tone]} size={20} /><span set:html={T(b.title)} /></p>
+      <Astro.self blocks={b.blocks} lang={lang} />
+    </aside>
+  ) :
+  b.kind === "cards" ? (
+    <div class="cards" data-n={b.cards.length}>{b.cards.map((c) => (
+      <section class="card">
+        {(() => { const m = t(c.title, lang).match(/^(\d+)\.\s+(.*)$/s); return m
+          ? <h3 class="card__title"><span class="num card__num" aria-hidden="true">{m[1]}</span><Icon name={c.icon as any} size={24} /><span><span class="visually-hidden">{m[1]}. </span><Fragment set:html={md(m[2], lang)} /></span></h3>
+          : <h3 class="card__title"><Icon name={c.icon as any} size={24} /><span set:html={T(c.title)} /></h3>; })()}
+        <Astro.self blocks={c.blocks} lang={lang} />
+      </section>
+    ))}</div>
+  ) :
+  b.kind === "table" ? (
+    <div class="tbl" tabindex="0" role="region" aria-label={b.head.map((h) => t(h, lang)).join(", ")} lang={b.lang}>
+      <table><thead><tr>{b.head.map((h) => <th scope="col" set:html={T(h)} />)}</tr></thead>
+      <tbody>{b.rows.map((r) => <tr>{r.cells.map((c) => <td set:html={T(c)} />)}</tr>)}</tbody></table>
+    </div>
+  ) :
+  b.kind === "doctable" ? (
+    <div class="tbl tbl--docs" tabindex="0" role="region" aria-label={t(b.head.name, lang)}>
+      <table>
+        <thead><tr><th scope="col">{t(b.head.name, lang)}</th><th scope="col" class="tbl__when">{t(b.head.when, lang)}</th><th scope="col">{t(b.head.signer, lang)}</th><th scope="col">{t(b.head.format, lang)}</th><th scope="col"><span class="visually-hidden">{t(b.head.download, lang)}</span></th></tr></thead>
+        {b.groups.map((g) => (
+          <tbody>
+            <tr class="tbl__group" id={t(g.anchor, lang)}><th scope="rowgroup" colspan="5" set:html={T(g.title)} /></tr>
+            {g.rows.map((r) => { const fi = fileInfo(r.doc, lang); return (
+              <tr id={docRowId(r.doc)} class="tbl__row">{/* search result anchor (REVIEW-02 Note 3) */}
+                <th scope="row"><span class="tbl__doc"><Icon name={fi.kind === "pdf" ? "file-text" : "file-pen-line"} size={20} /><span><b>{t(r.name, lang)}</b><span class="tbl__purpose">{t(r.purpose, lang)}</span></span></span></th>
+                <td class="tbl__when" data-label={t(b.head.when, lang)}>{t(g.title, lang)}</td>
+                <td data-label={t(b.head.signer, lang)}>{r.signer ? t(r.signer, lang) : "—"}</td>
+                <td data-label={t(b.head.format, lang)} class="mono">{fi.format} · {fi.size}</td>
+                <td><a class="btn btn--secondary tbl__dl" href={docPath(r.doc)} aria-label={`${t(b.head.download, lang)}: ${t(r.name, lang)} (${fi.format}, ${fi.size})`}>{t(b.head.download, lang)}</a></td>
+              </tr>
+            ); })}
+          </tbody>
+        ))}
+      </table>
+    </div>
+  ) :
+  b.kind === "qa" ? (
+    <div class="qa">{b.items.map((q, j) => (
+      <details class="qa__item" data-qa>
+        <summary class={`qa__q${qaBase ? " numbered" : ""}`}>{qaBase && <span class="num" aria-hidden="true">{qaBase}.{j + 1}</span>}<h3 class="qa__h" id={t(q.anchor, lang)}>{qaBase && <span class="visually-hidden">{qaBase}.{j + 1} </span>}<Fragment set:html={T(q.q)} /></h3><Icon name="arrow-right" size={18} /></summary>
+        <div class="qa__a">
+          <Astro.self blocks={q.blocks} lang={lang} />
+          <p class="qa__help" data-helpful={t(q.anchor, "tr")}>
+            <span>{t(u.helpfulQ, lang)}</span>
+            <button type="button" class="qa__vote" data-v="yes">{t(u.helpfulYes, lang)}</button>
+            <button type="button" class="qa__vote" data-v="no">{t(u.helpfulNo, lang)}</button>
+            <span class="qa__thanks" role="status" data-text={t(u.helpfulThanks, lang)}></span>
+          </p>
+        </div>
+      </details>
+    ))}</div>
+  ) :
+  b.kind === "action" ? <p><a class="btn btn--primary" href={href(b.href)} rel={b.href.startsWith("link:") ? "noopener" : undefined}>{t(b.label, lang)}<Icon name="arrow-up-right" size={18} /></a></p> :
+  b.kind === "results" ? <Results labels={b} lang={lang} /> :
+  b.kind === "contacts" ? (
+    <div class="contacts">
+      <section class="contact contact--primary" aria-labelledby="ct-primary">
+        <p class="contact__role">{t(b.primary.role, lang)}</p>
+        <h2 class="contact__name" id="ct-primary">{t(b.primary.name, lang)}</h2>
+        <p class="contact__note">{t(b.primary.note, lang)}</p>
+        <p><a class="contact__mail mono" href={`mailto:${i.genel_eposta}`}>{i.genel_eposta}</a></p>
+        <ul class="people" role="list">{i.staj_asistanlari.map((a) => <li><span>{a.ad}</span><a class="mono" href={`mailto:${a.eposta}`}>{a.eposta}</a></li>)}</ul>
+      </section>
+      <section class="contact" aria-labelledby="ct-coord">
+        <p class="contact__role">{t(b.coordinator.role, lang)}</p>
+        <h2 class="contact__name" id="ct-coord">{i.staj_sorumlusu.ad}</h2>
+        <p><a class="contact__mail mono" href={`mailto:${i.staj_sorumlusu.eposta}`}>{i.staj_sorumlusu.eposta}</a></p>
+        <p class="contact__note">{t(b.coordinator.note, lang)}</p>
+      </section>
+    </div>
+  ) : null
+))}

@@ -1,0 +1,54 @@
+---
+// DESIGN.md §3.1 — ink band on every page: status · absolute deadline · signal chip.
+// The HTML holds the absolute date; src/scripts/clock.ts adds status + time left
+// (minute precision, no aria-live).
+import { site } from "../../lib/settings";
+import { shortDateYear, trClock, trYmd, type Lang } from "../../lib/dates";
+import { ui } from "../../i18n/ui";
+import { pagePath } from "../../lib/paths";
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const S = ui[lang].strip;
+const term = site.term[lang];
+const dl = site.deadlineMs;
+---
+<div class="strip" data-deadline-strip data-deadline={dl ?? ""} data-grace={site.graceDays} data-term={term} data-phase="unknown">
+  <div class="wrap strip__in">
+    <span class="strip__status"><span class="strip__dot" aria-hidden="true"></span><span data-status>{term}</span></span>
+    {dl != null ? (
+      <a class="strip__date" href={pagePath(lang, "teslim")} data-astro-reload>
+        <span class="strip__lbl">{S.deadline}</span><span class="strip__lbl-s" aria-hidden="true">{S.deadlineShort}</span><time datetime={new Date(dl).toISOString()}>{shortDateYear(lang, trYmd(dl)).slice(0, -5)}<span class="strip__yr">{shortDateYear(lang, trYmd(dl)).slice(-5)}</span> · {trClock(dl)}<span class="strip__zone"> {S.zone}</span></time>
+      </a>
+    ) : <span class="strip__date">{S.unlocked}</span>}
+    <span class="chip chip--signal strip__chip" data-chip data-empty aria-hidden="true">{lang === "en" ? "0 days 0 h left" : "0 gün 0 sa kaldı"}</span>
+  </div>
+</div>
+<style>
+  .strip { background: var(--ink); color: var(--paper); font-family: var(--font-mono); font-size: var(--text-label); }
+  .strip__in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 24px; padding-block: 9px; }
+  .strip__status { display: inline-flex; align-items: center; gap: 8px; }
+  .strip__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--paper); opacity: 0.5; }
+  [data-phase="open"] .strip__dot { background: var(--live); opacity: 1; }
+  [data-phase="late"] .strip__dot { background: var(--signal); opacity: 1; }
+  .strip__date { color: inherit; text-decoration: none; min-height: 24px; display: inline-flex; align-items: center; gap: 1ch; }
+  .strip__date:hover { text-decoration: underline; }
+  .strip__date:focus-visible { outline-color: var(--paper); box-shadow: none; }
+  /* Space is reserved from the first paint (no layout shift when the clock fills it in). */
+  .strip__lbl-s { display: none; }
+  .strip__chip[data-empty] { visibility: hidden; }
+  .strip__chip[hidden] { display: none; }
+  /* Phones (REVIEW-06 Note 3, D-167): one line — the status dot, a short label ("Son:" / "Due:", FINAL-CHECK F-17, D-178), the
+     date and time, the time left (wraps only below ~360 px). Screen readers get "Son teslim", the year and the time zone instead;
+     the status words stay for them too. The deadline is spelled out with its zone on Teslim and Home. */
+  @media (max-width: 600px) {
+    .strip__in { flex-wrap: wrap; gap: 2px 10px; padding-block: 7px; }
+    .strip__in > * { white-space: nowrap; }   /* one line at 375 px; on narrower screens the time left drops below, nothing overflows */
+    .strip__lbl-s { display: inline; }
+    .strip__status [data-status], .strip__lbl, .strip__yr, .strip__zone { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .strip__date { min-height: 30px; }
+    .strip__chip { margin-left: auto; }
+    /* Late: the passed deadline gives way to "Kapanış: … kaldı"; closed: the status words replace the date. */
+    [data-phase="late"] .strip__date, [data-phase="closed"] .strip__date { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    [data-phase="closed"] .strip__status [data-status] { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
+  }
+</style>
