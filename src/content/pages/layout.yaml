@@ -1,0 +1,31 @@
+# REVIEW-01 Note 1 (D-104 onward): the header-band summary panel, the right rail of the Gazete pages and the
+# Teslim side panel. Labels only: every date, count and limit is filled in from settings.yml or the content
+# collections at build time (D-78), so nothing here restates a rule. Voice: UPDATE-03; terms: UPDATE-05.
+panel:
+  title: { tr: "Dönem Özeti", en: "Term Overview" }
+  term: { tr: "Dönem", en: "Term" }
+  deadline: { tr: "Son teslim", en: "Deadline" }
+  lateEnd: { tr: "Geç teslim sonu", en: "End of late submission" }
+  none: { tr: "Son teslim tarihi henüz duyurulmamıştır.", en: "The deadline has not been announced yet." }
+  submit: { tr: "Belgeleri gönder", en: "Submit documents" }
+rail:
+  contents: { tr: "Bu Sayfada", en: "On This Page" }
+  toggle: { tr: "İçindekiler", en: "Contents" }
+  facts: { tr: "Önemli Bilgiler", en: "Key Facts" }
+  help:
+    title: { tr: "Yardım", en: "Help" }
+    text: { tr: "Sorularınızı staj asistanlarına iletebilirsiniz.", en: "You can send your questions to the internship assistants." }
+    contact: { tr: "İletişim bilgileri", en: "Contact details" }
+facts:
+  # Süreç: the three phases, each with its key point (values from the rules collection and settings.yml).
+  before: { tr: "Stajdan Önce", en: "Before the Internship" }
+  ek1: { tr: "EK-1, staj başlangıcından en erken 1 hafta, en geç 2 gün önce gönderilir; en geç gönderim günü hafta sonuna veya resmî tatile denk gelirse bu günden önceki son iş gününe kadar gönderilir.", en: "The EK-1 is sent no earlier than 1 week and no later than 2 days before the internship starts; if the latest sending day falls on a weekend or a public holiday, it is sent by the last workday before it." }
+  during: { tr: "Staj Sırasında", en: "During the Internship" }
+  # REVIEW-06 Note 3: one clear sentence instead of "En az 15 iş günü · 40 iş günü · 15 iş günü üretim".
+  duringRule: { tr: "[Her staj en az 15 iş günü](page:kurallar#k-2-3); [toplam en az 40 iş günü](page:kurallar#k-1-1), [bunun en az 15'i üretim stajı](page:kurallar#k-1-4).", en: "[Each internship lasts at least 15 workdays](page:kurallar#k-2-3); [at least 40 workdays in total](page:kurallar#k-1-1), [at least 15 of them Production Internship](page:kurallar#k-1-4)." }
+  after: { tr: "Stajdan Sonra", en: "After the Internship" }
+  submitBy: { tr: "Rapor ve belgeler {deadline} tarihine kadar teslim edilir.", en: "The report and documents are submitted by {deadline}." }
+teslim:
+  steps: { tr: "Adımlar", en: "Steps" }
+  deadline: { tr: "Son Teslim", en: "Deadline" }   # side-panel heading (Title Case, REVIEW-02); the band row label stays sentence case
+  documents: { tr: "Gerekli Belgeler", en: "Required Documents" }

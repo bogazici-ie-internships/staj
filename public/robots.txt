@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bogazici-ie-internships.github.io/staj/sitemap.xml

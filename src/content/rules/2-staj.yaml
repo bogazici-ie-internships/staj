@@ -1,0 +1,38 @@
+# § 2 — Staj Kuralları / Internship Rules (from docs/kurallar*.md; UPDATE-03 voice)
+section: 2
+anchor: { tr: "staj-kurallar", en: "internship-rules" }
+title: { tr: "Staj Kuralları", en: "Internship Rules" }
+rules:
+  - no: "2.1"
+    body:
+      tr: "Stajlar **yaz veya dönem arası tatillerinde**, yani **ders almadığınız** dönemlerde yapılır. **Ders aldığınız** tarihlerde (Güz, Bahar veya **Yaz Okulu**) staj kabul edilmez; Yaz Okulunda ders almıyorsanız staj yapabilirsiniz."
+      en: "Internships take place during **summer or semester breaks**, when you are **not taking courses**. An internship on dates when you **are taking courses** (Fall, Spring or **Summer School**) is not accepted; if you are not taking courses at Summer School, you may complete an internship during that period."
+  - no: "2.2"
+    body:
+      tr: Stajlara genellikle **4. yarıyıl** derslerini tamamladıktan sonra başlanması önerilir. Düzensiz (irregular) öğrenciler 3. yarıyıldan sonra da başlayabilir.
+      en: Students are generally advised to begin internships after completing their **4th-semester** courses. Irregular students may also begin after the 3rd semester.
+  - no: "2.3"
+    highlight:
+      value: { tr: "En az 15 iş günü", en: "At least 15 workdays" }
+      caption: { tr: "Bir stajın kabulü için gereklidir; bu süre içinde işyeri değiştirilemez.", en: "Required for an internship to be accepted; the workplace cannot change during this period." }
+    body:
+      tr: Bir stajın kabul edilmesi için **en az 15 iş günü** sürmesi gerekir. Bu süre içinde işyeri, departman veya staj türü değiştirilemez.
+      en: An internship must last **at least 15 workdays** to be accepted. The workplace, department and internship type cannot change during this period.
+  - no: "2.4"
+    body:
+      tr: "**Üretim stajı**, üretim/imalat bağlamında ve EM derslerinde öğrenilen kavramların fiilen uygulandığı bir staj olmalıdır. **Üretimle ilgili ofis rolleri de üretim sayılır.** Tedarik zinciri, üretim planlama, ERP ve kalite bu rollere örnektir. Sınırda kalan durumlarda **staj koordinatörünün** onayını alınız. Ayrıntılar için [Konu Rehberi](#konu-rehberi) bölümüne bakınız."
+      en: "A **Production Internship** must take place in a production or manufacturing context and involve the practical application of concepts from IE courses. **Office roles connected to production also count as production.** Examples include supply chain, production planning, ERP and quality. In borderline cases, obtain the approval of the **internship coordinator**. See the [Topic Guide](#konu-rehberi) for details."
+  - no: "2.5"
+    body:
+      tr: Üniversite ortamındaki çalışmalar staj sayılmaz.
+      en: Work carried out in a university setting is not accepted as an internship.
+  - no: "2.6"
+    body:
+      tr: "**Yatay geçiş öğrencileri:** önceki stajlarının iş günleri serbest/genel staj olarak sayılabilir."
+      en: "**Transfer students:** workdays from previous internships may count towards the General IE Internship."
+  - no: "2.7"
+    source: department   # not in the Handbook (UPDATE-02 A2)
+    terms: [ek1]
+    body:
+      tr: "Staj **yurt dışında** da yapılabilir. **Kuralların çoğu yurt dışı stajlar için de geçerlidir;** ancak **EK-1, devlet katkısı ve sigorta gibi Türkiye'ye özgü işlemler uygulanmaz.** Önce [staj koordinatörüne veya staj asistanlarına](page:iletisim) danışabilirsiniz."
+      en: "Internships may also be completed **abroad**. **Most rules also apply to internships abroad;** however, **Türkiye-specific procedures such as the EK-1, the government contribution and insurance do not apply.** You may first consult the [internship coordinator or the internship assistants](page:iletisim)."

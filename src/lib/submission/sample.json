@@ -1,0 +1,14 @@
+{
+  "_note": "REVIEW-03 Note 1 (D-132): the only sample identity used in previews, tests, the golden contract and docs. Clearly invented; passes SID_RE (/^20\\d{8}$/) with an impossible entry year. tests/unit/sample-data.test.ts fails on any other real-looking number or student address.",
+  "sid": "2099402001",
+  "sid2": "2099402002",
+  "name": "Örnek Öğrenci",
+  "nameInput": "örnek öğrenci",
+  "name3": "Örnek Öğrenci İkinci",
+  "name3Input": "örnek öğrenci ikinci",
+  "email": "ornek.ogrenci@std.bogazici.edu.tr",
+  "emailMixed": "Ornek.Ogrenci@std.bogazici.edu.tr",
+  "emailOther": "ornek.ogrenci@gmail.com",
+  "reportFile": "Staj_Raporu_Ornek_Ogrenci.pdf",
+  "sidHint": "20xx402xxx"
+}

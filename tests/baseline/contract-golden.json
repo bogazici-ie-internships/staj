@@ -1,0 +1,821 @@
+{
+ "happy_saturday": {
+  "requests": [
+   {
+    "method": "GET",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": null,
+    "cacheControl": null
+   },
+   {
+    "method": "POST",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": "text/plain;charset=UTF-8",
+    "cacheControl": null,
+    "keys": [
+     "token",
+     "contractVersion",
+     "campaignId",
+     "requestId",
+     "recaptchaToken",
+     "name",
+     "studentId",
+     "email",
+     "flags",
+     "hp",
+     "files"
+    ],
+    "payload": {
+     "token": "test-key",
+     "contractVersion": 1,
+     "campaignId": "2026-summer",
+     "requestId": "<id#0>",
+     "recaptchaToken": "test-token",
+     "name": "Örnek Öğrenci",
+     "studentId": "2099402001",
+     "email": "Ornek.Ogrenci@std.bogazici.edu.tr",
+     "flags": {
+      "saturday": true,
+      "reimbursement": false
+     },
+     "hp": "",
+     "files": {
+      "anketi": {
+       "filename": "anket.pdf",
+       "mimeType": "application/pdf",
+       "sha": "728701ca28c5454d"
+      },
+      "cumartesi": {
+       "filename": "cumartesi.pdf",
+       "mimeType": "application/pdf",
+       "sha": "ef278411665ba747"
+      },
+      "rapor": {
+       "filename": "rapor.pdf",
+       "mimeType": "application/pdf",
+       "sha": "de280991e1197a51"
+      },
+      "sicil": {
+       "filename": "sicil.pdf",
+       "mimeType": "application/pdf",
+       "sha": "3ab2e7529753fa9d"
+      }
+     }
+    }
+   }
+  ],
+  "events": [
+   [
+    "submit_start",
+    {
+     "term": "2026 Yaz",
+     "late": false
+    }
+   ],
+   [
+    "submit_attempt",
+    {
+     "files": 4,
+     "total_mb": 0
+    }
+   ],
+   [
+    "submit_success",
+    {
+     "seconds": "number",
+     "late_days": 0
+    }
+   ]
+  ]
+ },
+ "reimbursement": {
+  "requests": [
+   {
+    "method": "GET",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": null,
+    "cacheControl": null
+   },
+   {
+    "method": "POST",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": "text/plain;charset=UTF-8",
+    "cacheControl": null,
+    "keys": [
+     "token",
+     "contractVersion",
+     "campaignId",
+     "requestId",
+     "recaptchaToken",
+     "name",
+     "studentId",
+     "email",
+     "flags",
+     "hp",
+     "files"
+    ],
+    "payload": {
+     "token": "test-key",
+     "contractVersion": 1,
+     "campaignId": "2026-summer",
+     "requestId": "<id#0>",
+     "recaptchaToken": "test-token",
+     "name": "Örnek Öğrenci",
+     "studentId": "2099402001",
+     "email": "Ornek.Ogrenci@std.bogazici.edu.tr",
+     "flags": {
+      "saturday": false,
+      "reimbursement": true
+     },
+     "hp": "",
+     "files": {
+      "anketi": {
+       "filename": "anket.pdf",
+       "mimeType": "application/pdf",
+       "sha": "728701ca28c5454d"
+      },
+      "dekont": {
+       "filename": "dekont.pdf",
+       "mimeType": "application/pdf",
+       "sha": "26778d56cf7de767"
+      },
+      "ek1": {
+       "filename": "ek1.pdf",
+       "mimeType": "application/pdf",
+       "sha": "c84682c0f3c36790"
+      },
+      "rapor": {
+       "filename": "rapor.pdf",
+       "mimeType": "application/pdf",
+       "sha": "de280991e1197a51"
+      },
+      "sicil": {
+       "filename": "sicil.pdf",
+       "mimeType": "application/pdf",
+       "sha": "3ab2e7529753fa9d"
+      }
+     }
+    }
+   }
+  ],
+  "events": [
+   [
+    "submit_start",
+    {
+     "term": "2026 Yaz",
+     "late": false
+    }
+   ],
+   [
+    "submit_attempt",
+    {
+     "files": 5,
+     "total_mb": 0
+    }
+   ],
+   [
+    "submit_success",
+    {
+     "seconds": "number",
+     "late_days": 0
+    }
+   ]
+  ]
+ },
+ "situation_toggled_off_drops_files": {
+  "requests": [
+   {
+    "method": "GET",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": null,
+    "cacheControl": null
+   },
+   {
+    "method": "POST",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": "text/plain;charset=UTF-8",
+    "cacheControl": null,
+    "keys": [
+     "token",
+     "contractVersion",
+     "campaignId",
+     "requestId",
+     "recaptchaToken",
+     "name",
+     "studentId",
+     "email",
+     "flags",
+     "hp",
+     "files"
+    ],
+    "payload": {
+     "token": "test-key",
+     "contractVersion": 1,
+     "campaignId": "2026-summer",
+     "requestId": "<id#0>",
+     "recaptchaToken": "test-token",
+     "name": "Örnek Öğrenci",
+     "studentId": "2099402001",
+     "email": "Ornek.Ogrenci@std.bogazici.edu.tr",
+     "flags": {
+      "saturday": false,
+      "reimbursement": false
+     },
+     "hp": "",
+     "files": {
+      "anketi": {
+       "filename": "anket.pdf",
+       "mimeType": "application/pdf",
+       "sha": "728701ca28c5454d"
+      },
+      "rapor": {
+       "filename": "rapor.pdf",
+       "mimeType": "application/pdf",
+       "sha": "de280991e1197a51"
+      },
+      "sicil": {
+       "filename": "sicil.pdf",
+       "mimeType": "application/pdf",
+       "sha": "3ab2e7529753fa9d"
+      }
+     }
+    }
+   }
+  ],
+  "events": [
+   [
+    "submit_start",
+    {
+     "term": "2026 Yaz",
+     "late": false
+    }
+   ],
+   [
+    "submit_attempt",
+    {
+     "files": 3,
+     "total_mb": 0
+    }
+   ],
+   [
+    "submit_success",
+    {
+     "seconds": "number",
+     "late_days": 0
+    }
+   ]
+  ]
+ },
+ "late_with_ack": {
+  "requests": [
+   {
+    "method": "GET",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": null,
+    "cacheControl": null
+   },
+   {
+    "method": "POST",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": "text/plain;charset=UTF-8",
+    "cacheControl": null,
+    "keys": [
+     "token",
+     "contractVersion",
+     "campaignId",
+     "requestId",
+     "recaptchaToken",
+     "name",
+     "studentId",
+     "email",
+     "flags",
+     "hp",
+     "files"
+    ],
+    "payload": {
+     "token": "test-key",
+     "contractVersion": 1,
+     "campaignId": "2026-summer",
+     "requestId": "<id#0>",
+     "recaptchaToken": "test-token",
+     "name": "Örnek Öğrenci",
+     "studentId": "2099402001",
+     "email": "Ornek.Ogrenci@std.bogazici.edu.tr",
+     "flags": {
+      "saturday": false,
+      "reimbursement": false
+     },
+     "hp": "",
+     "files": {
+      "anketi": {
+       "filename": "anket.pdf",
+       "mimeType": "application/pdf",
+       "sha": "728701ca28c5454d"
+      },
+      "rapor": {
+       "filename": "rapor.pdf",
+       "mimeType": "application/pdf",
+       "sha": "de280991e1197a51"
+      },
+      "sicil": {
+       "filename": "sicil.pdf",
+       "mimeType": "application/pdf",
+       "sha": "3ab2e7529753fa9d"
+      }
+     }
+    }
+   }
+  ],
+  "events": [
+   [
+    "submit_start",
+    {
+     "term": "2026 Yaz",
+     "late": true
+    }
+   ],
+   [
+    "submit_error",
+    {
+     "stage": "validation",
+     "code": "late_ack"
+    }
+   ],
+   [
+    "submit_attempt",
+    {
+     "files": 3,
+     "total_mb": 0
+    }
+   ],
+   [
+    "submit_success",
+    {
+     "seconds": "number",
+     "late_days": 1
+    }
+   ]
+  ]
+ },
+ "en_server_error": {
+  "requests": [
+   {
+    "method": "GET",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": null,
+    "cacheControl": null
+   },
+   {
+    "method": "POST",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": "text/plain;charset=UTF-8",
+    "cacheControl": null,
+    "keys": [
+     "token",
+     "contractVersion",
+     "campaignId",
+     "requestId",
+     "recaptchaToken",
+     "name",
+     "studentId",
+     "email",
+     "flags",
+     "hp",
+     "files"
+    ],
+    "payload": {
+     "token": "test-key",
+     "contractVersion": 1,
+     "campaignId": "2026-summer",
+     "requestId": "<id#0>",
+     "recaptchaToken": "test-token",
+     "name": "Örnek Öğrenci",
+     "studentId": "2099402001",
+     "email": "Ornek.Ogrenci@std.bogazici.edu.tr",
+     "flags": {
+      "saturday": false,
+      "reimbursement": false
+     },
+     "hp": "",
+     "files": {
+      "anketi": {
+       "filename": "anket.pdf",
+       "mimeType": "application/pdf",
+       "sha": "728701ca28c5454d"
+      },
+      "rapor": {
+       "filename": "rapor.pdf",
+       "mimeType": "application/pdf",
+       "sha": "de280991e1197a51"
+      },
+      "sicil": {
+       "filename": "sicil.pdf",
+       "mimeType": "application/pdf",
+       "sha": "3ab2e7529753fa9d"
+      }
+     }
+    }
+   }
+  ],
+  "events": [
+   [
+    "submit_start",
+    {
+     "term": "2026 Yaz",
+     "late": false
+    }
+   ],
+   [
+    "submit_attempt",
+    {
+     "files": 3,
+     "total_mb": 0
+    }
+   ],
+   [
+    "submit_error",
+    {
+     "stage": "server",
+     "code": "email_invalid"
+    }
+   ]
+  ],
+  "message": "Submission failed: Invalid email address. Try again or contact the internship assistants."
+ },
+ "network_failure_then_retry_same_id": {
+  "requests": [
+   {
+    "method": "GET",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": null,
+    "cacheControl": null
+   },
+   {
+    "method": "POST",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": "text/plain;charset=UTF-8",
+    "cacheControl": null,
+    "keys": [
+     "token",
+     "contractVersion",
+     "campaignId",
+     "requestId",
+     "recaptchaToken",
+     "name",
+     "studentId",
+     "email",
+     "flags",
+     "hp",
+     "files"
+    ],
+    "payload": {
+     "token": "test-key",
+     "contractVersion": 1,
+     "campaignId": "2026-summer",
+     "requestId": "<id#0>",
+     "recaptchaToken": "test-token",
+     "name": "Örnek Öğrenci",
+     "studentId": "2099402001",
+     "email": "Ornek.Ogrenci@std.bogazici.edu.tr",
+     "flags": {
+      "saturday": false,
+      "reimbursement": false
+     },
+     "hp": "",
+     "files": {
+      "anketi": {
+       "filename": "anket.pdf",
+       "mimeType": "application/pdf",
+       "sha": "728701ca28c5454d"
+      },
+      "rapor": {
+       "filename": "rapor.pdf",
+       "mimeType": "application/pdf",
+       "sha": "de280991e1197a51"
+      },
+      "sicil": {
+       "filename": "sicil.pdf",
+       "mimeType": "application/pdf",
+       "sha": "3ab2e7529753fa9d"
+      }
+     }
+    }
+   },
+   {
+    "method": "POST",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": "text/plain;charset=UTF-8",
+    "cacheControl": null,
+    "keys": [
+     "token",
+     "contractVersion",
+     "campaignId",
+     "requestId",
+     "recaptchaToken",
+     "name",
+     "studentId",
+     "email",
+     "flags",
+     "hp",
+     "files"
+    ],
+    "payload": {
+     "token": "test-key",
+     "contractVersion": 1,
+     "campaignId": "2026-summer",
+     "requestId": "<id#0>",
+     "recaptchaToken": "test-token",
+     "name": "Örnek Öğrenci",
+     "studentId": "2099402001",
+     "email": "Ornek.Ogrenci@std.bogazici.edu.tr",
+     "flags": {
+      "saturday": false,
+      "reimbursement": false
+     },
+     "hp": "",
+     "files": {
+      "anketi": {
+       "filename": "anket.pdf",
+       "mimeType": "application/pdf",
+       "sha": "728701ca28c5454d"
+      },
+      "rapor": {
+       "filename": "rapor.pdf",
+       "mimeType": "application/pdf",
+       "sha": "de280991e1197a51"
+      },
+      "sicil": {
+       "filename": "sicil.pdf",
+       "mimeType": "application/pdf",
+       "sha": "3ab2e7529753fa9d"
+      }
+     }
+    }
+   }
+  ],
+  "events": [
+   [
+    "submit_start",
+    {
+     "term": "2026 Yaz",
+     "late": false
+    }
+   ],
+   [
+    "submit_attempt",
+    {
+     "files": 3,
+     "total_mb": 0
+    }
+   ],
+   [
+    "submit_error",
+    {
+     "stage": "upload",
+     "code": "network"
+    }
+   ],
+   [
+    "submit_attempt",
+    {
+     "files": 3,
+     "total_mb": 0
+    }
+   ],
+   [
+    "submit_success",
+    {
+     "seconds": "number",
+     "late_days": 0
+    }
+   ]
+  ]
+ },
+ "edit_then_retry_new_id": {
+  "requests": [
+   {
+    "method": "GET",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": null,
+    "cacheControl": null
+   },
+   {
+    "method": "POST",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": "text/plain;charset=UTF-8",
+    "cacheControl": null,
+    "keys": [
+     "token",
+     "contractVersion",
+     "campaignId",
+     "requestId",
+     "recaptchaToken",
+     "name",
+     "studentId",
+     "email",
+     "flags",
+     "hp",
+     "files"
+    ],
+    "payload": {
+     "token": "test-key",
+     "contractVersion": 1,
+     "campaignId": "2026-summer",
+     "requestId": "<id#0>",
+     "recaptchaToken": "test-token",
+     "name": "Örnek Öğrenci",
+     "studentId": "2099402001",
+     "email": "Ornek.Ogrenci@std.bogazici.edu.tr",
+     "flags": {
+      "saturday": false,
+      "reimbursement": false
+     },
+     "hp": "",
+     "files": {
+      "anketi": {
+       "filename": "anket.pdf",
+       "mimeType": "application/pdf",
+       "sha": "728701ca28c5454d"
+      },
+      "rapor": {
+       "filename": "rapor.pdf",
+       "mimeType": "application/pdf",
+       "sha": "de280991e1197a51"
+      },
+      "sicil": {
+       "filename": "sicil.pdf",
+       "mimeType": "application/pdf",
+       "sha": "3ab2e7529753fa9d"
+      }
+     }
+    }
+   },
+   {
+    "method": "POST",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": "text/plain;charset=UTF-8",
+    "cacheControl": null,
+    "keys": [
+     "token",
+     "contractVersion",
+     "campaignId",
+     "requestId",
+     "recaptchaToken",
+     "name",
+     "studentId",
+     "email",
+     "flags",
+     "hp",
+     "files"
+    ],
+    "payload": {
+     "token": "test-key",
+     "contractVersion": 1,
+     "campaignId": "2026-summer",
+     "requestId": "<id#1>",
+     "recaptchaToken": "test-token",
+     "name": "Örnek Öğrenci İkinci",
+     "studentId": "2099402001",
+     "email": "Ornek.Ogrenci@std.bogazici.edu.tr",
+     "flags": {
+      "saturday": false,
+      "reimbursement": false
+     },
+     "hp": "",
+     "files": {
+      "anketi": {
+       "filename": "anket.pdf",
+       "mimeType": "application/pdf",
+       "sha": "728701ca28c5454d"
+      },
+      "rapor": {
+       "filename": "rapor.pdf",
+       "mimeType": "application/pdf",
+       "sha": "de280991e1197a51"
+      },
+      "sicil": {
+       "filename": "sicil.pdf",
+       "mimeType": "application/pdf",
+       "sha": "3ab2e7529753fa9d"
+      }
+     }
+    }
+   }
+  ],
+  "events": [
+   [
+    "submit_start",
+    {
+     "term": "2026 Yaz",
+     "late": false
+    }
+   ],
+   [
+    "submit_attempt",
+    {
+     "files": 3,
+     "total_mb": 0
+    }
+   ],
+   [
+    "submit_error",
+    {
+     "stage": "server",
+     "code": "server_error"
+    }
+   ],
+   [
+    "submit_attempt",
+    {
+     "files": 3,
+     "total_mb": 0
+    }
+   ],
+   [
+    "submit_success",
+    {
+     "seconds": "number",
+     "late_days": 0
+    }
+   ]
+  ]
+ },
+ "validation_empty_and_bad_file": {
+  "requests": [
+   {
+    "method": "GET",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": null,
+    "cacheControl": null
+   }
+  ],
+  "events": [
+   [
+    "submit_error",
+    {
+     "stage": "validation",
+     "code": "required_fields"
+    }
+   ],
+   [
+    "submit_error",
+    {
+     "stage": "file",
+     "code": "not_pdf",
+     "doc": "rapor"
+    }
+   ],
+   [
+    "submit_error",
+    {
+     "stage": "file",
+     "code": "too_large",
+     "doc": "rapor"
+    }
+   ]
+  ]
+ },
+ "contract_mismatch": {
+  "requests": [
+   {
+    "method": "GET",
+    "url": "https://script.google.com/macros/s/AKfycbwP2gf33VohdQAaa6T9B4npVEIl6fDBt5bWS7j1-NvRJ8y5F9g2cLxzg8E4i8oBuhqo4Q/exec",
+    "contentType": null,
+    "cacheControl": null
+   }
+  ],
+  "events": [
+   [
+    "submit_error",
+    {
+     "stage": "gate",
+     "code": "mismatch"
+    }
+   ]
+  ]
+ },
+ "closed": {
+  "requests": [],
+  "events": [
+   [
+    "submit_error",
+    {
+     "stage": "closed",
+     "code": "closed"
+    }
+   ]
+  ]
+ },
+ "empty_form_key": {
+  "scriptGoogleRequests": 0,
+  "events": [
+   [
+    "submit_error",
+    {
+     "stage": "gate",
+     "code": "unavailable"
+    }
+   ]
+  ]
+ }
+}

@@ -1,0 +1,65 @@
+---
+// REVIEW-01 Note 1 (D-105): the right rail of the Gazete pages (Süreç, Kurallar, Rapor, SSS). One element:
+// from 1024 px (D-176) it is a sticky column ("Bu Sayfada" with scroll-spy, the page's key facts, help;
+// the related-tools box went with Araçlar, REVIEW-01 Note 2); below that the same element is an "İçindekiler" disclosure at the top of the page (Starwind
+// Collapsible, as Kurallar's contents were before). `phoneHidden`: SSS keeps its topic chips below 1024 px
+// instead of a second contents list.
+import { Collapsible } from "@starwind-ui/astro/collapsible";
+import { copy, t } from "../../lib/content";
+import { md } from "../../lib/inline-md";
+import { pagePath } from "../../lib/paths";
+import { settings } from "../../lib/settings";
+import type { Lang } from "../../lib/dates";
+import "../../styles/layout.css";
+export interface RailLink { href: string; label: string; n?: string }
+interface Props { lang: Lang; links: RailLink[]; phoneHidden?: boolean; facts?: boolean; factsTitle?: string }
+const { lang, links, phoneHidden = false, facts = true, factsTitle } = Astro.props;
+const L = (await copy("layout")).rail;
+---
+<aside class={`rail${phoneHidden ? " rail--wide-only" : ""}`} aria-label={t(L.toggle, lang)}>
+  <Collapsible.Root class="rail__c">
+    <Collapsible.Trigger class="rail__toggle">
+      <span>{t(L.toggle, lang)}</span>
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </Collapsible.Trigger>
+    <Collapsible.Panel class="rail__panel" hiddenUntilFound>
+      <nav class="rail__box rail__nav" aria-labelledby="rail-contents">
+        <h2 class="rail__h" id="rail-contents">{t(L.contents, lang)}</h2>
+        <ol role="list" class="rail__toc" data-spy>
+          {links.map((l) => <li><a href={l.href}>{l.n && <span class="num rail__n" aria-hidden="true">{l.n}</span>}<span>{l.n && <span class="visually-hidden">{l.n}. </span>}<Fragment set:html={md(l.label, lang)} /></span></a></li>)}
+        </ol>
+      </nav>
+      {facts && (
+        <section class="rail__box" aria-labelledby="rail-facts">
+          <h2 class="rail__h" id="rail-facts">{factsTitle ?? t(L.facts, lang)}</h2>
+          <slot name="facts" />
+        </section>
+      )}
+      <slot name="extra" />
+      <section class="rail__box rail__help" aria-labelledby="rail-help">
+        <h2 class="rail__h" id="rail-help">{t(L.help.title, lang)}</h2>
+        <p>{t(L.help.text, lang)}</p>
+        <p><a class="mono rail__mail" href={`mailto:${settings.iletisim.genel_eposta}`}>{settings.iletisim.genel_eposta}</a></p>
+        <p><a href={pagePath(lang, "iletisim")}>{t(L.help.contact, lang)}</a></p>
+      </section>
+    </Collapsible.Panel>
+  </Collapsible.Root>
+</aside>
+<script>
+  // Scroll-spy: the contents link of the section being read gets aria-current="location". Reads positions
+  // once per animation frame on scroll; changes only colour/rule, never layout or focus.
+  for (const list of document.querySelectorAll<HTMLElement>("[data-spy]")) {
+    const links = [...list.querySelectorAll<HTMLAnchorElement>('a[href*="#"]')];
+    const targets = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let queued = false;
+    const update = () => {
+      queued = false;
+      let cur = -1;
+      targets.forEach((el, i) => { if (el && el.getBoundingClientRect().top <= innerHeight * 0.3) cur = i; });
+      links.forEach((a, i) => (i === Math.max(cur, 0) ? a.setAttribute("aria-current", "location") : a.removeAttribute("aria-current")));
+    };
+    addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+    addEventListener("hashchange", update);
+    update();
+  }
+</script>

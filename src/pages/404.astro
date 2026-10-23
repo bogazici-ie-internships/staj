@@ -1,0 +1,35 @@
+---
+// GitHub Pages serves ONE /404.html for every missing path in either language,
+// so the page speaks both: Turkish first, English below, each with its own lang.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { copy } from "../lib/content";
+import { pagePath } from "../lib/paths";
+const chrome = await copy("chrome");
+const nf = chrome.notFound;
+const links = (["home", "surec", "kurallar", "teslim", "sss", "iletisim"] as const);
+const name = (k: string, l: "tr" | "en") => chrome.pages.find((p) => p.key === k)![k === "home" ? "short" : "title"][l];
+---
+<BaseLayout lang="tr" page="404" title={`${nf.title.tr} · ${nf.title.en} · ${chrome.brand.titleSuffix.tr}`} description="" noAlternates>
+  <div class="wrap nf">
+    <p class="nf__code mono" aria-hidden="true">404</p>
+    <section lang="tr" class="nf__block">
+      <h1 class="display nf__title">{nf.title.tr}</h1>
+      <p>{nf.lead.tr}</p>
+      <ul role="list" class="nf__links">{links.map((k) => <li><a href={pagePath("tr", k)}>{name(k, "tr")}</a></li>)}</ul>
+    </section>
+    <section lang="en" class="nf__block nf__block--en">
+      <h2 class="h2">{nf.title.en}</h2>
+      <p>{nf.lead.en}</p>
+      <ul role="list" class="nf__links">{links.map((k) => <li><a href={pagePath("en", k)}>{name(k, "en")}</a></li>)}</ul>
+    </section>
+  </div>
+</BaseLayout>
+<style>
+  .nf { padding-block: var(--space-8); display: grid; gap: var(--space-6); text-align: center; justify-items: center; }
+  .nf__code { font-size: clamp(64px, 14vw, 140px); font-weight: 700; color: var(--signal-text); line-height: 1; letter-spacing: -0.05em; }
+  .nf__title { font-size: var(--display-h2); }
+  .nf__block { display: grid; gap: var(--space-4); max-width: 52ch; justify-items: center; }
+  .nf__block--en { border-top: 1px solid var(--rule); padding-top: var(--space-6); }
+  .nf__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 var(--space-2); }
+  .nf__links a { display: inline-flex; min-height: 44px; align-items: center; padding: 0 var(--space-2); font-weight: 600; }
+</style>
